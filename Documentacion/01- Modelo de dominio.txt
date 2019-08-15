@@ -1,0 +1,70 @@
+# Primeros apuntes para construir el Modelo de Dominio
+
+Usuario
+	nickname (unico)
+	correo (unico)
+	contrasnia
+	nombre
+	apellido
+	fechaNacimiento
+	imagen (opcional)
+	seguidores (contador)
+	/*posee un canal*/
+	/*lista de usuario a los que sigue*/
+	/*lista de usuario a los que lo siguen*/
+	/*lista de videos a los que le dio likes o dislike (InteraccionLike)*/
+
+Canal
+	nombre (default = usuario.nickname)
+	descripcion
+	privacidad (PUBLICO, PRIVADO)
+	/*contiene videos de interes para el usuario*/
+	/*contiene listas de reproduccion*/
+	
+Video
+	nombre (unico dentro del canal)
+	descripcion
+	duracion
+	fechaPublicacion
+	urlVideoOriginal
+	privacidad (PUBLICO, PRIVADO)
+	categoria (Categoria)
+	likes (contador)
+	disLikes (contador)
+	/*lista de comentarios*/
+	/*Lista de interacciones (InteraccionLike)*/
+
+ListaDeReproduccion /*perteneciente a un canal de usuario*/
+	nombre (unico dentro del canal)
+	privacidad (PUBLICO, PRIVADO)
+	tipo (DEFAULT, PARTICULAR)
+	categoria (Categoria)
+	/*contiene videos*/
+
+
+Comentario
+	/* realizado por un usuario sobre un video*/
+	fecha
+	texto
+	/*lista de respuestas*/
+
+
+InteraccionLike // usuario le da like o dislike a un video
+	like (bool)
+
+enum extensible Categoria {UNDEFINED, Musica, Deporte...}
+
+
+
+
+
+
+---- Dudas: ----
+
+
+
+
+
+
+
+

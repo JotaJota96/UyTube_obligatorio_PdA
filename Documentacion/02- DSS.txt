@@ -1,0 +1,169 @@
+///////////////////////////////////////////////////////////////////////
+# Diagramas de secuencias de sistema
+
+# Lista de casos de uso:
+Alta de Usuario
+Consulta de Usuario
+Modificar Datos de Usuario
+Listar Usuarios Existentes
+
+Alta de Video
+Modificar Datos de Video
+Consulta de Video
+Comentar un Video
+Valorar un Video
+
+Seguir a un Usuario
+Dejar de Seguir a un Usuario
+
+Crear Lista de Reproducción
+Modificar Lista de Reproducción
+Agregar Video a Lista de Reproducción
+Quitar Video de Lista de Reproducción
+Consulta de Lista de Reproducción
+
+Alta de Categoría
+Consulta de Categoría
+Listar Categorías Existentes
+
+///////////////////////////////////////////////////////////////////////
+# Diagramas:
+
+## Alta de Usuario
+
+Solicita datos del usuario: nickname, correo electrónico, contraseña y verificacion, nombre, apellido, fecha de nacimiento e imagen.
+Solicita datos del canal: privacidad, nombre y descripcion.
+IF [el correo o nickname ya esta en uso]
+	Se avisa al administrador y se da la opcion de cancelar o modificar los datos ingresados anteriormente
+Se manda al sistema DataType con los datos de usuario y canal para que los cree
+
+-----------------------------------------------------------------------
+## Consulta de Usuario
+
+Se listan todos los usuarios
+Administrador elige uno
+Se muestran todos los datos básicos del usuario
+Se muestra la informacion basica del canal
+Se muestra una lista con todos los videos
+Se muestra una lista con todas las listas de reproduccion
+Se muestra una lista con los nombres de usuarios que sigue
+Se muestra una lista con los nombres de usuarios que lo sigueen a el
+IF [Selecciona un video]
+	muestra la informacion como en caso de uso Consulta de Video
+IF [Selecciona una lista de reproduccion]
+	muestra la informacion como en caso de uso Consulta de Lista de Reproducción
+
+-----------------------------------------------------------------------
+## Modificar Datos de Usuario
+Mostrar lista de todos los usuarios
+El administrador elige uno
+//Se selecciona una de las siguientes opciones
+IF [modificar datos usuario]
+	El sistema muestra datos del usuario
+	El sistema muestra datos del canal del usuario
+	El administrador modifica los datos que desee (excepto nickname o email)
+IF [modificar video]
+	Se listan los videos del usuario actual
+	El administrador selecciona un video
+	Se modifican los datos del video (incluyendo privacidad)
+IF [modificar lista de reproduccion]
+	caso de uso modiciar lista de reproduccion
+
+-----------------------------------------------------------------------
+## Listar Usuarios Existentes
+
+
+-----------------------------------------------------------------------
+## Alta de Video
+
+
+-----------------------------------------------------------------------
+## Modificar Datos de Video
+Descripto en modificar datos de usuario
+
+-----------------------------------------------------------------------
+## Consulta de Video
+
+Se listan todos los usuarios
+Administrador elige uno (dueño del video)
+Se listan los videos del usuario
+Administrador elige un video
+Se muestran todos los datos del video, lista de comentarios, a quienes les gusto y a quienes no
+
+-----------------------------------------------------------------------
+## Comentar un Video
+
+
+-----------------------------------------------------------------------
+## Valorar un Video
+
+
+-----------------------------------------------------------------------
+## Seguir a un Usuario
+
+
+-----------------------------------------------------------------------
+## Dejar de Seguir a un Usuario
+
+
+-----------------------------------------------------------------------
+## Crear Lista de Reproducción
+
+
+-----------------------------------------------------------------------
+## Modificar Lista de Reproducción
+
+
+-----------------------------------------------------------------------
+## Agregar Video a Lista de Reproducción
+
+
+-----------------------------------------------------------------------
+## Quitar Video de Lista de Reproducción
+
+
+-----------------------------------------------------------------------
+## Consulta de Lista de Reproducción
+
+Se listan todos los usuarios
+Administrador elige uno (dueño del video)
+Se listan las listas de reproducción del usuario
+Administrador elige una lista
+Se muestran los datos de la lista
+Se listan los videos de la lista
+IF [El administrador selecciona un video]
+	Se muestra su informacion como indica el caso de uso Consulta de Video
+
+-----------------------------------------------------------------------
+## Alta de Categoría
+
+
+-----------------------------------------------------------------------
+## Consulta de Categoría
+
+
+-----------------------------------------------------------------------
+## Listar Categorías Existentes
+
+
+
+-----------------------------------------------------------------------
+## Firma de Operaciones
+existeNickname(string nickname):boolean  			// Verifica si existe el nickname
+existeEmail(string mail): boolean				// Verifica si existe el mail
+altaUsuarioCanal(DtUsuario usr, DtCanal canal): void		// Crea el usuario y el canal
+listarUsuarios():set<DtUsuario>					// Devuelve todos los datos de los usuarios
+seleccionarUsuario(strign nickname): DtUsuario			// El sistema recuerda un link al usuario
+obtenerCanalDeUsuario(): DtCanal				// Devuelve los datos del canal del usuario actual
+listarVideosDeUsuario(): set<DtVideo>				// Devuelve todos los videos de usuario actual
+listarListasDeReproduccionDeUsuario(): set<DtListaReproduccion> // Devuelve todas las listas de reproduccion del usuario actual
+listarUsuarioSeguidos(): set<DtUsuario>				// Devuelve todos los usuarios seguidos del usuario actual
+listarUsuarioSeguidores(): set<DtUsuario>			// Devuelve todos los usuarios que siguen al usuario actual
+sleccionarVideoDeUsuario(string titulo): DtVideo		// Devuelve los datos del video seleccionado
+listarComentariosVideo(): set<DtComentario>			// Devuelve en forma recursiva todos los comentarios del video actual 
+obtenerValoracionesDeVideo(): set<DtValoraciones>		// Devuelve las valoraciones del video actual
+obtenerDatosListaReproduccionDeUsuario(): DtListaReproduccion	// Devuelve la información de la lista de reproduccion del usuario actual
+modificarDatosDeUsuario(DtUsuario usr, DtCanal canal):void	// Se modifican los datos del usuario actual y su canal
+modificarVideo(DtUsuario usr, DtCanal canal):void	// Se modifican los datos del usuario actual y su canal
+
+
