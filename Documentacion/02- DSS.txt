@@ -55,6 +55,7 @@ IF [Selecciona una lista de reproduccion]
 
 -----------------------------------------------------------------------
 ## Modificar Datos de Usuario
+
 Mostrar lista de todos los usuarios
 El administrador elige uno
 //Se selecciona una de las siguientes opciones
@@ -62,16 +63,23 @@ IF [modificar datos usuario]
 	El sistema muestra datos del usuario
 	El sistema muestra datos del canal del usuario
 	El administrador modifica los datos que desee (excepto nickname o email)
+	Se confirman los cambios
 IF [modificar video]
 	Se listan los videos del usuario actual
 	El administrador selecciona un video
 	Se modifican los datos del video (incluyendo privacidad)
+	Se confirman los cambios
 IF [modificar lista de reproduccion]
-	caso de uso modiciar lista de reproduccion
+	El sistema muestra datos del usuario
+	El sistema muestra datos del canal del usuario
+	El administrador modifica los datos que desee (excepto nickname o email)
+	Se confirman los cambios
+
 
 -----------------------------------------------------------------------
 ## Listar Usuarios Existentes
 
+El sistema lista todos los usuarios (solo nickname)
 
 -----------------------------------------------------------------------
 ## Alta de Video
@@ -79,7 +87,13 @@ IF [modificar lista de reproduccion]
 
 -----------------------------------------------------------------------
 ## Modificar Datos de Video
-Descripto en modificar datos de usuario
+
+Mostrar lista de todos los usuarios
+El administrador elige uno
+El sistema muestra datos del usuario
+El sistema muestra datos del canal del usuario
+El administrador modifica los datos que desee (excepto nickname o email)
+Se confirman los cambios
 
 -----------------------------------------------------------------------
 ## Consulta de Video
@@ -113,6 +127,13 @@ Se muestran todos los datos del video, lista de comentarios, a quienes les gusto
 -----------------------------------------------------------------------
 ## Modificar Lista de Reproducción
 
+Mostrar lista de todos los usuarios
+El administrador elige uno
+El sistema muestra datos del usuario
+El sistema muestra datos del canal del usuario
+El administrador modifica los datos que desee (excepto nickname o email)
+Se confirman los cambios
+
 
 -----------------------------------------------------------------------
 ## Agregar Video a Lista de Reproducción
@@ -137,6 +158,11 @@ IF [El administrador selecciona un video]
 -----------------------------------------------------------------------
 ## Alta de Categoría
 
+El administrador indica el nombre de la nueva categoria
+IF [la categoria ya existe en el sistema]
+	Se notifica al administrador y este puede modificar lo ingresado o cancelar
+IF [no se cancela]
+	se confirma la nueva categoria
 
 -----------------------------------------------------------------------
 ## Consulta de Categoría
@@ -145,25 +171,45 @@ IF [El administrador selecciona un video]
 -----------------------------------------------------------------------
 ## Listar Categorías Existentes
 
+El sistema lista todas las categorias
 
 
------------------------------------------------------------------------
-## Firma de Operaciones
-existeNickname(string nickname):boolean  			// Verifica si existe el nickname
-existeEmail(string mail): boolean				// Verifica si existe el mail
+///////////////////////////////////////////////////////////////////////
+# Firma de Operaciones
+
+altaCategoria(string cat):void					// crea una nueva categoria con el nombre indicado
 altaUsuarioCanal(DtUsuario usr, DtCanal canal): void		// Crea el usuario y el canal
-listarUsuarios():set<DtUsuario>					// Devuelve todos los datos de los usuarios
-seleccionarUsuario(strign nickname): DtUsuario			// El sistema recuerda un link al usuario
-obtenerCanalDeUsuario(): DtCanal				// Devuelve los datos del canal del usuario actual
-listarVideosDeUsuario(): set<DtVideo>				// Devuelve todos los videos de usuario actual
-listarListasDeReproduccionDeUsuario(): set<DtListaReproduccion> // Devuelve todas las listas de reproduccion del usuario actual
-listarUsuarioSeguidos(): set<DtUsuario>				// Devuelve todos los usuarios seguidos del usuario actual
-listarUsuarioSeguidores(): set<DtUsuario>			// Devuelve todos los usuarios que siguen al usuario actual
-sleccionarVideoDeUsuario(string titulo): DtVideo		// Devuelve los datos del video seleccionado
+existeCategoria(String cat):boolean				// Devuelve true si la categoria existe en el sistema
+existeEmail(string mail): boolean				// Verifica si existe el mail
+existeNickname(string nickname):boolean  			// Verifica si existe el nickname
+listarCategorias():set< ?? >						// Lista todas las categorias
 listarComentariosVideo(): set<DtComentario>			// Devuelve en forma recursiva todos los comentarios del video actual 
-obtenerValoracionesDeVideo(): set<DtValoraciones>		// Devuelve las valoraciones del video actual
-obtenerDatosListaReproduccionDeUsuario(): DtListaReproduccion	// Devuelve la información de la lista de reproduccion del usuario actual
-modificarDatosDeUsuario(DtUsuario usr, DtCanal canal):void	// Se modifican los datos del usuario actual y su canal
+listarListasDeReproduccionDeUsuario(): set<DtListaReproduccion> // Devuelve todas las listas de reproduccion del usuario actual
+listarUsuarioSeguidores(): set<DtUsuario>			// Devuelve todos los usuarios que siguen al usuario actual
+listarUsuarioSeguidos(): set<DtUsuario>				// Devuelve todos los usuarios seguidos del usuario actual
+listarUsuarios():set<DtUsuario>					// Devuelve todos los datos de los usuarios
+listarVideosDeUsuario(): set<DtVideo>				// Devuelve todos los videos de usuario actual
+modificarListaDeReproduccionDeUsuario(DtListaReproduccion lista):void	// Se modifican los datos de la lista de reproduccion del usuario actual
+modificarUsuarioYCanal(DtUsuario usr, DtCanal canal):void	// Se modifican los datos del usuario actual y su canal
 modificarVideo(DtUsuario usr, DtCanal canal):void	// Se modifican los datos del usuario actual y su canal
+obtenerCanalDeUsuario(): DtCanal				// Devuelve los datos del canal del usuario actual
+obtenerDatosListaReproduccionDeUsuario(): DtListaReproduccion	// Devuelve la información de la lista de reproduccion del usuario actual
+obtenerValoracionesDeVideo(): set<DtValoraciones>		// Devuelve las valoraciones del video actual
+seleccionarUsuario(strign nickname): DtUsuario			// El sistema recuerda un link al usuario
+sleccionarVideoDeUsuario(string titulo): DtVideo		// Devuelve los datos del video seleccionado
 
+
+//
+-la funcion listarListasDeReproduccionDeUsuario() dice que devuelve todas las listas de reproduccion del usuario, pero el caso de uso Modificar Lista de Reproduccion necesita listar SOLO las listas particulares. ¿Como hacemos?
+
+-agregue modificarListaDeReproduccionDeUsuario(..)
+
+-agregue listarCategorias():set< ?? > pero no se que debe devolver
+
+-agregue existeCategoria(String cat):boolean
+
+-agregue altaCategoria(string cat):void
+
+-hay que hacer funciones para liberar memoria del sistema
+Quiza en vez de hacer funciones para cada CDU, hacer una funcion que libere un dato especifico y que cada DSS llame a las que necesite
 
