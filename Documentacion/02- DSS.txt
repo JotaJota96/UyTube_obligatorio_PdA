@@ -177,7 +177,7 @@ ELSE [lista particular]
 Se muestra una lista con todos los usuarios
 El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
 Se muestra una lista con las lista de reproduccion particulares del usuario
-El administrador selecciona una lista de reproduccion (Sistema recuerda nombreListaSeleccionada)
+El administrador selecciona una lista de reproduccion (Sistema recuerda idListaSeleccionada)
 El sistema muestra datos de la lista seleccionada
 El administrador modifica los datos que desee (excepto nickname o email)
 Se confirman los cambios
@@ -192,7 +192,7 @@ El administrador selecciona un video (Sistema recuerda idVideoSeleccionado)
 Se muestra una lista con todos los usuarios
 El administrador selecciona el propietario de la lista (con seleccionarUsuarioActual()) (Sistema recuerda usuarioActual)
 Se muestra una lista con las lista de reproduccion del usuario (con parametro usuarioActual.nickname)
-El administrador selecciona una lista de reproduccion (Sistema recuerda nombreListaSeleccionada)
+El administrador selecciona una lista de reproduccion (Sistema recuerda idListaSeleccionada)
 El sistema agrega el video a la lista
 
 -----------------------------------------------------------------------
@@ -201,7 +201,7 @@ El sistema agrega el video a la lista
 Se muestra una lista con todos los usuarios
 El administrador selecciona el propietario del video (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
 Se muestra una lista con las lista de reproduccion del usuario (con parametro usuarioSeleccionado.nickname)
-El administrador selecciona una lista de reproduccion (Sistema recuerda nombreListaSeleccionada)
+El administrador selecciona una lista de reproduccion (Sistema recuerda idListaSeleccionada)
 El sistema  lista los datos de los videos pertenecientes a la lista
 El administrador selecciona un video (Sistema recuerda idVideoSeleccionado)
 El sistema quita el video a la lista
@@ -212,7 +212,7 @@ El sistema quita el video a la lista
 Se muestra una lista con todos los usuarios
 El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
 Se muestra una lista con las lista de reproduccion del usuario
-El administrador selecciona una lista de reproduccion (Sistema recuerda nombreListaSeleccionada)
+El administrador selecciona una lista de reproduccion (Sistema recuerda idListaSeleccionada)
 El sistema muestra datos de la lista seleccionada
 El sistema  lista los datos de los videos pertenecientes a la lista
 IF [El administrador selecciona un video]
@@ -269,6 +269,14 @@ existeEmail(mail:string):boolean
 	// Verifica si existe un usuario con el mail recibido
 existeNickname(nickname:string):boolean
 	// Verifica si existe un usuario con el nickname recibido
+liberarMemoriaListaDeReproduccion():void
+	// El sistema libera la memoria de idListaSeleccionada
+liberarMemoriaUsuario():void
+	// El sistema libera la memoria de usuarioSeleccionado
+liberarMemoriaUsuarioActual():void
+	// El sistema libera la memoria de usuarioActual
+liberarMemoriaVideo():void
+	// El sistema libera la memoria de idVideoSeleccionado
 listarCategorias():set<string>
 	// Devuelve todas las categorias existentes en el sistema
 listarComentariosDeVideo():set<DtComentario>
@@ -304,7 +312,7 @@ obtenerValoracionesDeVideo():set<DtValoraciones>
 obtenerValoracionDada() :DtValoracion
 	// Devuelve la valoracion dada por usuarioActual al video idVideoSeleccionado
 quitarVideoDeListaDeReproduccion():void
-	// Quita el video idVideoSeleccionado de la lista nombreListaSeleccionada
+	// Quita el video idVideoSeleccionado de la lista idListaSeleccionada
 seleccionarUsuario(nickname:string):DtUsuario
 	// El sistema recuerda un link al usuario como usuarioSeleccionado
 	// Devuelve los datos de usuarioSeleccionado
@@ -327,8 +335,10 @@ validarNuevaListaPorDefecto(nombre:string):bool
 
 
 
+
+
+
 //
-Todo tiene un ID unico
 Agregar funciones para liberar memoria
 Agregar ID a todas las clases
 Agregar nivel de Sub-Comentario
