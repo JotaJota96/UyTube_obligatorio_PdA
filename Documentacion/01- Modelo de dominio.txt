@@ -44,26 +44,26 @@ ListaDeReproduccion /*perteneciente a un canal de usuario*/
 
 Comentario
 	/* realizado por un usuario sobre un video*/
+	id
 	fecha
 	texto
 	/*lista de respuestas*/
 
 
-InteraccionLike // usuario le da like o dislike a un video
-	like (bool)
+ValoracionDeVideo // usuario le da like o dislike a un video
+	valoracion (LIKE, DISLIKE)
 
+
+// Sistema (no aparece en el modelo de dominio)
 enum extensible Categoria {UNDEFINED, Musica, Deporte...}
+	
 
 
-
-
-
-
----- Dudas: ----
-
-
-
-
+-------------------------------------------------------------------------------
+En el DCD el sistema va a tener:
+Categorias:set(string)
+usuarioActual:Usuario			// Usuario logueado o que realizara las acciones
+usuarioSeleccionado:Usuario		// Usuario sobre el que se realizaran acciones
 
 
 

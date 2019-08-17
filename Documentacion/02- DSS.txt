@@ -31,8 +31,8 @@ Listar Categorías Existentes
 
 ## Alta de Usuario
 
-Solicita datos del usuario: nickname, correo electrónico, contraseña y verificacion, nombre, apellido, fecha de nacimiento e imagen.
-Solicita datos del canal: privacidad, nombre y descripcion.
+El administrador ingresa los datos del usuario
+El administrador ingresa los datos del canal
 IF [el correo o nickname ya esta en uso]
 	Se avisa al administrador y se da la opcion de cancelar o modificar los datos ingresados anteriormente
 Se manda al sistema DataType con los datos de usuario y canal para que los cree
@@ -40,8 +40,8 @@ Se manda al sistema DataType con los datos de usuario y canal para que los cree
 -----------------------------------------------------------------------
 ## Consulta de Usuario
 
-Se listan todos los usuarios
-Administrador elige uno
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
 Se muestran todos los datos básicos del usuario
 Se muestra la informacion basica del canal
 Se muestra una lista con todos los videos
@@ -49,124 +49,191 @@ Se muestra una lista con todas las listas de reproduccion
 Se muestra una lista con los nombres de usuarios que sigue
 Se muestra una lista con los nombres de usuarios que lo sigueen a el
 IF [Selecciona un video]
-	muestra la informacion como en caso de uso Consulta de Video
+	// Se muestra la informacion igual a caso de uso Consulta de Video
 IF [Selecciona una lista de reproduccion]
-	muestra la informacion como en caso de uso Consulta de Lista de Reproducción
+	// Se muestra la informacion igual a caso de uso Consulta de Lista de Reproducción
 
 -----------------------------------------------------------------------
 ## Modificar Datos de Usuario
 
-Mostrar lista de todos los usuarios
-El administrador elige uno
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
 //Se selecciona una de las siguientes opciones
 IF [modificar datos usuario]
 	El sistema muestra datos del usuario
-	El sistema muestra datos del canal del usuario
+	El sistema muestra datos del canal
 	El administrador modifica los datos que desee (excepto nickname o email)
 	Se confirman los cambios
 IF [modificar video]
-	Se listan los videos del usuario actual
-	El administrador selecciona un video
-	Se modifican los datos del video (incluyendo privacidad)
-	Se confirman los cambios
+	// se procede como en el caso de uso Modificar Datos de Video
 IF [modificar lista de reproduccion]
-	El sistema muestra datos del usuario
-	El sistema muestra datos del canal del usuario
-	El administrador modifica los datos que desee (excepto nickname o email)
-	Se confirman los cambios
-
+	// se procede como en el caso de uso Modificar Datos de lista de Reproducción
 
 -----------------------------------------------------------------------
 ## Listar Usuarios Existentes
 
-El sistema lista todos los usuarios (solo nickname)
+Se muestra una lista con todos los usuarios (solo nickname)
 
 -----------------------------------------------------------------------
 ## Alta de Video
 
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+El administrador ingresa los datos del video (excepto la privacidad que debe ser PRIVADO)
+Se confirman los cambios
 
 -----------------------------------------------------------------------
 ## Modificar Datos de Video
 
-Mostrar lista de todos los usuarios
-El administrador elige uno
-El sistema muestra datos del usuario
-El sistema muestra datos del canal del usuario
-El administrador modifica los datos que desee (excepto nickname o email)
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se muestra una lista con los videos del usuario
+El administrador selecciona un video (Sistema recuerda idVideoSeleccionado)
+Se modifican los datos del video (incluyendo privacidad)
 Se confirman los cambios
 
 -----------------------------------------------------------------------
 ## Consulta de Video
 
-Se listan todos los usuarios
-Administrador elige uno (dueño del video)
-Se listan los videos del usuario
-Administrador elige un video
-Se muestran todos los datos del video, lista de comentarios, a quienes les gusto y a quienes no
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se muestra una lista con los videos del usuario
+El administrador selecciona un video (Sistema recuerda idVideoSeleccionado)
+Se muestran todos los datos del video
+Se muestra una lista de comentarios, 
+Se muestra una lista de a quienes les gusto y a quienes no
 
 -----------------------------------------------------------------------
 ## Comentar un Video
+
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno, dueño del video a comentar (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se muestra una lista con los videos del usuario
+El administrador selecciona un video (Sistema recuerda idVideoSeleccionado)
+Se muestra una lista con los comentarios del video seleccionado
+El administrador selecciona ingresando nickname, el usuario quen va a comentar (con seleccionarUsuarioActual()) (Sistema recuerda usuarioActual)
+El sistema verifica que el nickname exista, de lo contrario da error y solicita volver a ingresarlo o cancelar
+// el administrador puede seleccionar uno de los comentarios listados anteriormente
+IF	[hay comentario seleccionado]
+	Se comenta el comentario
+ELSE
+	Se comenta el video seleccionado
 
 
 -----------------------------------------------------------------------
 ## Valorar un Video
 
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se muestra una lista con los videos del usuario
+El administrador selecciona un video (Sistema recuerda idVideoSeleccionado)
+El administrador selecciona ingresando nickname, el usuario quen va a realizar la valoracion (con seleccionarUsuarioActual()) (Sistema recuerda usuarioActual)
+El sistema verifica que el nickname exista, de lo contrario da error y solicita volver a ingresarlo o cancelar
+El sistema devuelve la valoracion dada por el usuario a ese video
+IF [valoracion retornada == NULL]
+	El administrador ingresa la nueva valoración del video
+ELSE 
+	El sistema muestra la valoración dada
+	El administrador modifica la valoración
 
 -----------------------------------------------------------------------
 ## Seguir a un Usuario
 
+Se muestra dos listas con todos los usuarios
+El administrador selecciona el usuario que seguira a otro (con seleccionarUsuarioActual()) (Sistema recuerda usuarioActual)
+El administrador selecciona el usuario al que seguira (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se confirman los cambios
 
 -----------------------------------------------------------------------
 ## Dejar de Seguir a un Usuario
 
+Se muestra dos listas con todos los usuarios
+El administrador selecciona el usuario que dejara de seguir a otro (con seleccionarUsuarioActual()) (Sistema recuerda usuarioActual)
+El administrador selecciona el usuario al que se dejara de seguir (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se confirman los cambios
 
 -----------------------------------------------------------------------
 ## Crear Lista de Reproducción
 
+// El administrador elige si va a crear una lista por defecto, o una particular para un usuario
+IF	[listta por defecto]
+	El administrador ingresa el nombre de la lista (privacidad=PRIVADA, categoria=UNDEFINED)
+	IF	[existe un usuario con una lista que se llame igual]
+		Se informa al administrador y se debe ingresar otro nombre o cancelar
+	ELSE
+		Se confirma la nueva lista por defecto para todos los usuarios
+ELSE [lista particular]
+	Se muestra dos listas con todos los usuarios
+	El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+	El administrador ingresa los datos de la lista
+	IF	[el usuario ya posee una lista con ese nombre]
+		Se informa al administrador y se debe ingresar otro nombre o cancelar
+	ELSE
+		Se confirma la nueva lista particular para el usuario
 
 -----------------------------------------------------------------------
 ## Modificar Lista de Reproducción
 
-Mostrar lista de todos los usuarios
-El administrador elige uno
-El sistema muestra datos del usuario
-El sistema muestra datos del canal del usuario
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se muestra una lista con las lista de reproduccion particulares del usuario
+El administrador selecciona una lista de reproduccion (Sistema recuerda nombreListaSeleccionada)
+El sistema muestra datos de la lista seleccionada
 El administrador modifica los datos que desee (excepto nickname o email)
 Se confirman los cambios
-
 
 -----------------------------------------------------------------------
 ## Agregar Video a Lista de Reproducción
 
+Se muestra una lista con todos los usuarios
+El administrador selecciona el propietario del video (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se muestra una lista con los videos del usuario
+El administrador selecciona un video (Sistema recuerda idVideoSeleccionado)
+Se muestra una lista con todos los usuarios
+El administrador selecciona el propietario de la lista (con seleccionarUsuarioActual()) (Sistema recuerda usuarioActual)
+Se muestra una lista con las lista de reproduccion del usuario (con parametro usuarioActual.nickname)
+El administrador selecciona una lista de reproduccion (Sistema recuerda nombreListaSeleccionada)
+El sistema agrega el video a la lista
 
 -----------------------------------------------------------------------
 ## Quitar Video de Lista de Reproducción
 
+Se muestra una lista con todos los usuarios
+El administrador selecciona el propietario del video (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se muestra una lista con las lista de reproduccion del usuario (con parametro usuarioSeleccionado.nickname)
+El administrador selecciona una lista de reproduccion (Sistema recuerda nombreListaSeleccionada)
+El sistema  lista los datos de los videos pertenecientes a la lista
+El administrador selecciona un video (Sistema recuerda idVideoSeleccionado)
+El sistema quita el video a la lista
 
 -----------------------------------------------------------------------
 ## Consulta de Lista de Reproducción
 
-Se listan todos los usuarios
-Administrador elige uno (dueño del video)
-Se listan las listas de reproducción del usuario
-Administrador elige una lista
-Se muestran los datos de la lista
-Se listan los videos de la lista
+Se muestra una lista con todos los usuarios
+El administrador selecciona uno (con seleccionarUsuario()) (Sistema recuerda usuarioSeleccionado)
+Se muestra una lista con las lista de reproduccion del usuario
+El administrador selecciona una lista de reproduccion (Sistema recuerda nombreListaSeleccionada)
+El sistema muestra datos de la lista seleccionada
+El sistema  lista los datos de los videos pertenecientes a la lista
 IF [El administrador selecciona un video]
-	Se muestra su informacion como indica el caso de uso Consulta de Video
+	// Se muestra la informacion igual a caso de uso Consulta de Video
 
 -----------------------------------------------------------------------
 ## Alta de Categoría
 
-El administrador indica el nombre de la nueva categoria
+El administrador ingresa el nombre de la nueva categoria
 IF [la categoria ya existe en el sistema]
 	Se notifica al administrador y este puede modificar lo ingresado o cancelar
-IF [no se cancela]
-	se confirma la nueva categoria
+ELSE
+	Se confirma la nueva categoria
 
 -----------------------------------------------------------------------
 ## Consulta de Categoría
 
+El sistema lista todas las categorias
+El administrador selecciona una (esto no lo recuerda el sistema)
+Se muestra una lista con los videos pertenecientes a la categoria seleccionada
+Se muestra una lista con las lista de reproduccion pertenecientes a la categoria seleccionada
 
 -----------------------------------------------------------------------
 ## Listar Categorías Existentes
@@ -177,39 +244,98 @@ El sistema lista todas las categorias
 ///////////////////////////////////////////////////////////////////////
 # Firma de Operaciones
 
-altaCategoria(string cat):void					// crea una nueva categoria con el nombre indicado
-altaUsuarioCanal(DtUsuario usr, DtCanal canal): void		// Crea el usuario y el canal
-existeCategoria(String cat):boolean				// Devuelve true si la categoria existe en el sistema
-existeEmail(string mail): boolean				// Verifica si existe el mail
-existeNickname(string nickname):boolean  			// Verifica si existe el nickname
-listarCategorias():set< ?? >						// Lista todas las categorias
-listarComentariosVideo(): set<DtComentario>			// Devuelve en forma recursiva todos los comentarios del video actual 
-listarListasDeReproduccionDeUsuario(): set<DtListaReproduccion> // Devuelve todas las listas de reproduccion del usuario actual
-listarUsuarioSeguidores(): set<DtUsuario>			// Devuelve todos los usuarios que siguen al usuario actual
-listarUsuarioSeguidos(): set<DtUsuario>				// Devuelve todos los usuarios seguidos del usuario actual
-listarUsuarios():set<DtUsuario>					// Devuelve todos los datos de los usuarios
-listarVideosDeUsuario(): set<DtVideo>				// Devuelve todos los videos de usuario actual
-modificarListaDeReproduccionDeUsuario(DtListaReproduccion lista):void	// Se modifican los datos de la lista de reproduccion del usuario actual
-modificarUsuarioYCanal(DtUsuario usr, DtCanal canal):void	// Se modifican los datos del usuario actual y su canal
-modificarVideo(DtUsuario usr, DtCanal canal):void	// Se modifican los datos del usuario actual y su canal
-obtenerCanalDeUsuario(): DtCanal				// Devuelve los datos del canal del usuario actual
-obtenerDatosListaReproduccionDeUsuario(): DtListaReproduccion	// Devuelve la información de la lista de reproduccion del usuario actual
-obtenerValoracionesDeVideo(): set<DtValoraciones>		// Devuelve las valoraciones del video actual
-seleccionarUsuario(strign nickname): DtUsuario			// El sistema recuerda un link al usuario
-sleccionarVideoDeUsuario(string titulo): DtVideo		// Devuelve los datos del video seleccionado
+agregarVideoAListaDeReproduccion():void
+	// Agrega el video idVideoSeleccionado a la lista idListaSeleccionada
+altaCategoria(cat:string):void
+	// Crea la categoria con el nombre indicado
+altaComentario(com:DtComentario):void
+	// Comenta el video idVideoSeleccionado a nombre de usuarioActual
+altaComentario(com:DtComentario, idComPadre:int):void
+	// Comenta el comentario con dicho ID a nombre de usuarioActual
+altaListaDeReproduccionParticular(lista:DtListaDeReproduccion):void
+	// Crea la lista de reproduccion para usuarioSeleccionado
+altaListaDeReproduccionPorDefecto(lista:DtListaDeReproduccion):void
+	// Crea la lista de reproduccion para todos los usuarios del sistema y la agrega listas por defecto (para que se creen al crear un usuario nuevo)
+altaUsuarioCanal(usr:DtUsuario, canal:DtCanal):void
+	// Crea un usuario y su canal a partir de los datos recibidos
+altaValoracion(val:DtValoracion):void
+	// Se ingresa la nueva valoracion dada por usuarioActual al video idVideoSeleccionado
+	// Si el usuario ya habia valorado, se actualiza la valoracion dada
+altaVideo(video:DtVideo):void
+	//Se crea un video nuevo en el canal de usuarioSeleccionado
+existeCategoria(cat:string):boolean
+	// Verifica si existe una categoria con el nombre recibido
+existeEmail(mail:string):boolean
+	// Verifica si existe un usuario con el mail recibido
+existeNickname(nickname:string):boolean
+	// Verifica si existe un usuario con el nickname recibido
+listarCategorias():set<string>
+	// Devuelve todas las categorias existentes en el sistema
+listarComentariosDeVideo():set<DtComentario>
+	// Devuelve en forma ordenada (recursiva ) todos los comentarios de idVideoSeleccionado
+listarListasDeReproduccionEnCategoria(cat:string):set<DtVideo>
+	// Devuelve todos las listas de reproduccion del sistema que pertenezcan a la categoria indicada
+listarListasDeReproduccionDeUsuario(nickname:string):set<DtListaDeReproduccion>
+	// Devuelve todas las listas de reproduccion de usuarioSeleccionado o de usuarioActual segun el nickname indicado
+listarListasDeReproduccionParticularesDeUsuario() :set<DtListaDeReproduccion>
+	// Devuelve las listas de reproduccion particulares de usuarioSeleccionado
+listarUsuarioSeguidores():set<DtUsuario>
+	// Devuelve todos los usuarios que siguen a usuarioSeleccionado
+listarUsuarioSeguidos():set<DtUsuario>
+	// Devuelve todos los usuarios a quienes sigue usuarioSeleccionado
+listarUsuarios():set<DtUsuario>
+	// Devuelve todos los datos de todos los usuarios
+listarVideosEnCategoria(cat:string):set<DtVideo>
+	// Devuelve todos los videos del sistema que pertenezcan a la categoria indicada
+listarVideosDeUsuario():set<DtVideo>
+	// Devuelve todos los videos de usuarioSeleccionado
+listarVideosDeListaDeReproduccion():set<DtVideo>
+	// Devuelve los videos de la lista de reproduccion idListaSeleccionada
+modificarListaDeReproduccion(lista:DtListaDeReproduccion):void
+	// Se modifican los datos de la lista idListaSeleccionada
+modificarUsuarioYCanal(usr:DtUsuario, canal:DtCanal):void
+	// Se modifican los datos de usuarioActual y su canal
+modificarVideo(video:DtVideo):void
+	// Se modifican los datos del video idVideoSeleccionado
+obtenerCanalDeUsuario():DtCanal
+	// Devuelve los datos del canal del usuario en memoria usuarioSeleccionado
+obtenerValoracionesDeVideo():set<DtValoraciones>
+	// Devuelve las valoraciones de idVideoSeleccionado
+obtenerValoracionDada() :DtValoracion
+	// Devuelve la valoracion dada por usuarioActual al video idVideoSeleccionado
+quitarVideoDeListaDeReproduccion():void
+	// Quita el video idVideoSeleccionado de la lista nombreListaSeleccionada
+seleccionarUsuario(nickname:string):DtUsuario
+	// El sistema recuerda un link al usuario como usuarioSeleccionado
+	// Devuelve los datos de usuarioSeleccionado
+seleccionarUsuarioActual(nickname:string) :DtUsuario
+	// El sistema recuerda un link al usuario como usuarioActual
+	// Devuelve los datos de usuarioActual
+seleccionarVideo(idVideo:int):DtVideo
+	// El sistema recuerda el ID del video como idVideoSeleccionado
+	// Devuelve los datos del video seleccionado
+seleccionarListaDeReproduccion(idLista:int):DtListaDeReproduccion
+	// El sistema recuerda el ID de la lista como idListaSeleccionada
+	// Devuelve los datos de la lista de reproduccion seleccionada
+seguirUsuario() :void
+	// El usuario usuarioActual comienza a seguir a usuarioSeleccionado
+	// En caso de que este ya lo este siguiendo, lo deja de seguir
+validarNuevaListaParticular(nombre:string):bool
+	// Devuelve true si usuarioSeleccionado posee una lista de reproducion con ese nombre
+validarNuevaListaPorDefecto(nombre:string):bool
+	// Devuelve true si existe algun usuario en el sistema que posea una lista de reproduccion con ese nombre
+
 
 
 //
--la funcion listarListasDeReproduccionDeUsuario() dice que devuelve todas las listas de reproduccion del usuario, pero el caso de uso Modificar Lista de Reproduccion necesita listar SOLO las listas particulares. ¿Como hacemos?
-
--agregue modificarListaDeReproduccionDeUsuario(..)
-
--agregue listarCategorias():set< ?? > pero no se que debe devolver
-
--agregue existeCategoria(String cat):boolean
-
--agregue altaCategoria(string cat):void
-
--hay que hacer funciones para liberar memoria del sistema
-Quiza en vez de hacer funciones para cada CDU, hacer una funcion que libere un dato especifico y que cada DSS llame a las que necesite
+Todo tiene un ID unico
+Agregar funciones para liberar memoria
+Agregar ID a todas las clases
+Agregar nivel de Sub-Comentario
+Agregar Administrador al modelo de dominio
+El sistema tendra dos usuarios actuales
+El sistema tendra una coleccion de administradores
+se requerira login de administrador
+En DTCComentario va el nick del usuario que lo hizo
+idem para valoracion
 
