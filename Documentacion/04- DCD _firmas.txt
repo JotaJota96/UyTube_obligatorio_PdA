@@ -57,19 +57,20 @@ validarListaParticular(string):bool
 
 
 Video
-ListaDeReproduccion
 agregarComentario(DtComentario, Usuario):void
 agregarComentario(idCom:int, DtComentario, Usuario):void
 agregarModificarValoracion(DtValoracion, Usuario):void
-agregarVideoA(Video):void
-getDT():DtListaDeReproduccion
 getDT():DtVideo
 listarComentarios():set<DtComentario>
 listarValoraciones():set<DtValoracion>
-listarVideos():set<DtVideo>
-modificar(DtListaDeReproduccion):void
 modificar(DtVideo):void
 obtenerValoracion(nickname:string):DtValoracion
+
+ListaDeReproduccion
+agregarVideoA(Video):void
+getDT():DtListaDeReproduccion
+listarVideos():set<DtVideo>
+modificar(DtListaDeReproduccion):void
 quitarVideo(idVideo:int);void
 
 
