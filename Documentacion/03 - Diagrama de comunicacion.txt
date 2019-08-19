@@ -1,0 +1,104 @@
+Usuario
+actualizarListasPorDefecto():void
+agregarComentarioAVideo(id:int, DtComentario, Usuario):void
+agregarComentarioAVideo(id:int, idCom:int, DtComentario, Usuario):void
+agregarListaParticular(DtListaDeReproduccion):void
+agregarModificarValoracionDeVideo(id:int, DtValoracion, Usuario):void
+agregarOQuitarSeguido(Usuario):void // Agrega al usuario a la lista de seguidos y llama a agregarSeguidor pasandome yo como parametro para que el otro me registr en su lista de suscriptores
+agregarOQuitarSeguidor(Usuario):void
+agregarVideoACanal(DtVideo):void
+agregarVideoALista(idLista:int, idVideo:int, u:Usuario):void
+getDT():DtUsuario
+listarComentariosDeVideo(id:int):set<DtComentario>
+listarListasDeReproduccionDeCanal(soloParticulares:bool):set<DtListasDeReproduccion>
+listarUsuariosSeguidores():set<DtUsuario>
+listarUsuariosSeguidos():set<DtUsuario>
+listarValoracionesDeVideo(id:int):set<DtValoracion>
+listarVideosDeCanal():set<DtVideo>
+listarVideosDeListaDeReproduccion(id:int):set<DtVideo>
+modificar(DtUsuario, DtCanal):void
+modificarVideoDeCanal(DtVideo):void
+modificarListaDeReproduccionDeCanal(DtListaDeReproduccion):void
+obtenerCanal():DtCanal
+obtenerValoracion(id:int, nickname:string):DtValoracion
+obtenerVideoDeCanal(id:int):DtVideo
+validarListaParticular(string):bool
+obtenerVideo(id:int):Video
+quitarVideoDeListaDeReproduccion(idLista:int, idVideo:int);void
+obtenerVideosEnCategoria(cat:string):set<DtVideo>
+obtenerListasEnCategoria(cat:string):set<DtListaDeReproduccion>
+
+Canal
+getDT():DtCanal
+listarVideos():set<DtVideo>
+listarListasDeReproduccion(soloParticulares:bool):set<DtListaDeReproduccion>
+modificar(DtCanal):void
+agregarVideo(DtVideo):void // hace new video
+agregarValoracionAVideo(id:int, DtValoracion, Usuario):void
+agregarVideoALista(id:int, Video):void
+obtenerVideo(id:int):DtVideo
+modificarVideo(DtVideo):void
+modificarListaDeReproduccion(DtListaDeReproduccion):void
+listarComentariosDeVideo(id:int):set<DtComentario>
+listarValoracionesDeVideo(id:int):set<DtValoracion>
+listarVideosDeListaDeReproduccion(id:int):set<DtVideo>
+agregarComentarioAVideo(id:int, DtComentario, Usuario):void
+agregarComentarioAVideo(id:int, idCom:int, DtComentario, Usuario):void
+agregarModificarValoracion(id:int, nickname:string):DtValoracion
+agregarListaParticular(DtListaDeReproduccion):void
+actualizarListasPorDefecto():void
+	// verifica los nombres de las listas por defecto que se encuentran en la variable de clase de ListaDeReproduccion
+	// los nombres que existan en las listas instanciadas se deben crear como listas por defecto
+validarListaParticular(string):bool
+obtenerVideo(id:int):Video
+quitarVideoDeListaDeReproduccion(idLista:int, idVideo:int);void
+obtenerVideosEnCategoria(cat:string):set<DtVideo>
+obtenerListasEnCategoria(cat:string):set<DtListaDeReproduccion>
+
+Video
+getDT():DtVideo
+modificar(DtVideo):void
+listarComentarios():set<DtComentario>
+listarValoraciones():set<DtValoracion>
+agregarComentario(DtComentario, Usuario):void // hace new Comentario pasando como parametro Usurio
+agregarComentario(idCom:int, DtComentario, Usuario):void // recorre la coleccion de comentarios invocando a 
+agregarModificarValoracion(DtValoracion, Usuario):void
+	// Recorre las valoraciones llamando a modificar(..) hasta obtener un true
+	// si nunca lo obtiene hace un new Valoracion pasando como parametro al usuario
+obtenerValoracion(nickname:string):DtValoracion
+	// recorre las valoraciones mientras obtenga null llamando a la funcion getDT(nickname), sino devuelve nill
+
+ListaDeReproduccion
+getDT():DtListaDeReproduccion
+modificar(DtListaDeReproduccion):void
+listarVideos():set<DtVideo>
+agregarVideoA(Video):void
+quitarVideo(idVideo:int);void
+
+Comentario // el constructor vincula el comentario con el usuario
+getDT():DtComentario
+listarSubComentarios():set<DtComentario>
+agregarSubComentario(idCom:int, DtComentario, Usuario):bool
+	// si idCom es el propio agrego el comentario y devuelve true
+	// sino recorre los subComentarios mientras no obtenga un true
+	// si no tiene subcomentarios devuelve false
+Valoracion // el constructor vincula la valoracion con el usuario
+getDT():DtValoracion	// carga el nickname del usuario vinculado
+getDT(nickname:string):DtValoracion	// Devuelve el DT solo si el nickname recibido es igual al del usuario vinculado, sino NULL
+modificar(DtValoracion, nickname:string):bool // Si el nickname del usuariovinculado es igual al parametro: modifica la valoracion y devuelve true, sino solo devuelve false
+
+
+
+
+SISTEMA
+validarNuevaListaPorDefecto(nombre:string):bool
+	// LA clase ListaDeReproduccion posee una variable de clase: set<Strings> que representa los nombres de las listas por defecto
+	// La funcion verifica que el nombre recibido no exista en dicha lista
+
+altaListaDeReproduccionPorDefecto(lista:DtListaDeReproduccion):void
+	// llama a actualizarListasPorDefecto() para todos los usuarios
+	// agrega el string a la variable de clase de ListaDeReproduccion
+
+
+
+
