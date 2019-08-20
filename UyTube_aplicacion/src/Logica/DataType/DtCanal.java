@@ -1,12 +1,12 @@
-
 package Logica.DataType;
-import Logica.Enumerados.*;
-        
+
+import Logica.Enumerados.Privacidad;
+
 public class DtCanal {
-    int id;
-    String nombre;
-    String descripcion;
-    Privacidad privacidad;
+    private int id;
+    private String nombre;
+    private String descripcion;
+    private Privacidad privacidad;
 
     public DtCanal() {}
     

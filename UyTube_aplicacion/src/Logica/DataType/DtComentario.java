@@ -1,6 +1,6 @@
 package Logica.DataType;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class DtComentario {
     private int id;
@@ -8,6 +8,8 @@ public class DtComentario {
     private  Date fecha;
     private String texto;
     private int nivelSubComentario;
+
+    public DtComentario() {}
 
     public DtComentario(int id, String nickname, Date fecha, String texto, int nivelSubComentario) {
         this.id = id;

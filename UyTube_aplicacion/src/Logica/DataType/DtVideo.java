@@ -1,14 +1,74 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica.DataType;
 
-/**
- *
- * @author pc01
- */
+import java.sql.Time;
+import java.sql.Date;
+import Logica.Enumerados.Privacidad;
+
 public class DtVideo {
-    
+    private int id;
+    private String nombre;
+    private String descripcion;
+    private Time duracion;
+    private Date fechaPublicacion;
+    private String urlVideoOriginal;
+    private Privacidad privacidad;
+    private String categoria;
+    private int cantLikes;
+    private int cantDisLikes;
+
+    public DtVideo() {
+    }
+
+    public DtVideo(int id, String nombre, String descripcion, Time duracion, Date fechaPublicacion, String urlVideoOriginal, Privacidad privacidad, String categoria, int cantLikes, int cantDisLikes) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.fechaPublicacion = fechaPublicacion;
+        this.urlVideoOriginal = urlVideoOriginal;
+        this.privacidad = privacidad;
+        this.categoria = categoria;
+        this.cantLikes = cantLikes;
+        this.cantDisLikes = cantDisLikes;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public Time getDuracion() {
+        return duracion;
+    }
+
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public String getUrlVideoOriginal() {
+        return urlVideoOriginal;
+    }
+
+    public Privacidad getPrivacidad() {
+        return privacidad;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public int getCantLikes() {
+        return cantLikes;
+    }
+
+    public int getCantDisLikes() {
+        return cantDisLikes;
+    }
 }
