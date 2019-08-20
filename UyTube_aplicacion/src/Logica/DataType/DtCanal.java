@@ -1,14 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica.DataType;
 
-/**
- *
- * @author pc01
- */
 public class DtCanal {
+    int id;
+    String nombre;
+    String descripcion;
+    //privacidad privacidad;
+
+    public DtCanal() {}
+    
+    public DtCanal(int id, String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+     
+    
+    
     
 }
