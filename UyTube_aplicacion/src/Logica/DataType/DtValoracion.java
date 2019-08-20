@@ -1,14 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica.DataType;
 
-/**
- *
- * @author pc01
- */
+import Logica.Enumerados.TipoValoracion;
+
+
 public class DtValoracion {
-    
+    private TipoValoracion val;
+    private String nickname;
+
+    public DtValoracion(TipoValoracion val, String nickname) {
+        this.val = val;
+        this.nickname = nickname;
+    }
+    public String getNickname() {
+        return nickname;
+    }
+    public TipoValoracion getVal() {
+        return val;
+    }
 }
