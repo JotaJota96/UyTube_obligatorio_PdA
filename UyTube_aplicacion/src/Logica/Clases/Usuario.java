@@ -1,32 +1,41 @@
 package Logica.Clases;
-import java.util.Date;
+import java.sql.Date;
 import Logica.DataType.*;
 import java.util.ArrayList;
 
 public class Usuario extends Persona{
-    private String nikname;
+    private String nickname;
     private String correo;
     private Date fechaNacimiento;
     private String imagen;
     private int seguidores;
+    private Canal MiCanal;
 
     public Usuario() {
+        this.nickname = "";
+        this.correo = "";
+        this.fechaNacimiento = new Date(2000,1,1);
+        this.imagen = imagen;
+        this.seguidores = 0;
     }
     
-    public Usuario(String nikname, String correo, Date fechaNacimiento, String imagen) {
-        this.nikname = nikname;
+    public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido ,DtCanal DTC) {
+        super(nombre,apellido,contrasenia);
+        
+        this.nickname = nickname;
         this.correo = correo;
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
         this.seguidores = 0;
+        //this.MiCanal = new Canal(DTC.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());
     }
 
-    public String getNikname() {
-        return nikname;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNikname(String nikname) {
-        this.nikname = nikname;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getCorreo() {
@@ -61,7 +70,7 @@ public class Usuario extends Persona{
         this.seguidores = seguidores;
     }
     public DtUsuario getDT(){
-        return new DtUsuario();//Es el otro constructor
+        return new DtUsuario(nickname, contraseña, nombre, apellido, correo, fechaNacimiento, imagen, seguidores);//Es el otro constructor
     }
     public void actualizarListasPorDefecto(){}
     public void agregarComentarioAVideo(int id, DtComentario DtComentario, Usuario Usu){}
