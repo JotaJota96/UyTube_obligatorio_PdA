@@ -1,6 +1,6 @@
 package Logica.DataType;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class DtUsuario extends DtPersona{
     private String nickname;
