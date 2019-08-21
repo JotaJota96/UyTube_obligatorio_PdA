@@ -66,36 +66,121 @@ public class Usuario extends Persona{
     public DtUsuario getDT(){
         return new DtUsuario(this.nickname, this.contraseña, this.nombre, this.apellido, this.correo, this.fechaNacimiento, this.imagen, this.seguidores);//Es el otro constructor
     }
-    public void actualizarListasPorDefecto(){}
-    public void agregarComentarioAVideo(int id, DtComentario DtComentario, Usuario Usu){}
-    public void agregarComentarioAVideo(int id,int idCom, DtComentario DtComentario, Usuario Usu){}
-    public void agregarListaParticular(DtListaDeReproduccion DtValoracion){}
-    public void agregarModificarValoracionDeVideo(int id, DtValoracion DtValoracion, Usuario Usu){}
-    public void agregarOQuitarSeguido(Usuario Usu){}
-    public void agregarOQuitarSeguidor(Usuario Usu){}
-    public void agregarVideoACanal(DtVideo DtVideo){}
-    public void agregarVideoALista(int idLista , int idVideo, Usuario Usu){}
+    public void actualizarListasPorDefecto(){
+        this.MiCanal.actualizarListasPorDefecto();
+    }
+    public void agregarComentarioAVideo(int idVideo, DtComentario DtComentario, Usuario Usu){
+        //this.MiCanal.agregarComentarioAVideo(idVideo, DtComentario, Usu);
+    }
+    public void agregarComentarioAVideo(int idVideo,int idCom, DtComentario DtComentario, Usuario Usu){
+        //this.MiCanal.agregarComentarioAVideo(idVideo, idCom, DtComentario, Usu);
+    }
+    public void agregarListaParticular(DtListaDeReproduccion DtValoracion){
+        this.MiCanal.agregarListaParticular(DtValoracion);
+    }
+    public void agregarModificarValoracionDeVideo(int idVideo, DtValoracion DtValoracion, Usuario Usu){
+       // this.MiCanal.agregarModificarValoracion(idVideo , DtValoracion, Usu);
+    }
+    public void agregarOQuitarSeguido(Usuario Usu){
+        // ESTO YO ----------------------------------------------------------------------------------------------------------
+    }
+    public void agregarOQuitarSeguidor(Usuario Usu){
+        // ESTO YO ----------------------------------------------------------------------------------------------------------
+    }
     
-   // public ArrayList<DtComentario> listarComentariosDeVideo(int id){}
-   // public ArrayList<DtListasDeReproduccion> listarListasDeReproduccionDeCanal(bool porDefecto){}
-   // public ArrayList<DtUsuario> listarUsuariosSeguidores(){}
-   // public ArrayList<DtUsuario> listarUsuariosSeguidos(){}
-   // public ArrayList<DtValoracion> listarValoracionesDeVideo(int id){}
-   // public ArrayList<DtVideo> listarVideosDeCanal(){}
-   // public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id){}
-
-    public void modificar(DtUsuario Usu, DtCanal DtCanal){}
-    public void modificarListaDeReproduccionDeCanal(DtListaDeReproduccion DtListaDeReproduccion){}
-    public void modificarVideoDeCanal(DtVideo DtVideo){}
+    public void agregarVideoACanal(DtVideo DtVideo){
+        this.MiCanal.agregarVideo(DtVideo);
+    }
     
-   // public DtCanal obtenerCanal(){}
-   // public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(cat:string){}
-   // public DtValoracion obtenerValoracion(int id, string nickname){}
-   // public Video obtenerVideo(int id){}
-   // public DtVideo obtenerVideoDeCanal(int id){}
-   // public ArrayList<DtVideo> obtenerVideosEnCategoria(cat:string){}
+    public void agregarVideoALista(int idLista , int idVideo, Usuario Usu){
+        this.agregarVideoALista(idLista, idVideo, Usu);
+    }
     
-     public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){}
-   // public boolean validarListaParticular(String nombre){}
+    public ArrayList<DtComentario> listarComentariosDeVideo(int idVideo){
+        //return this.MiCanal.listalistarComentariosDeVideo(idVideo);
+        return null;//Esto se saca
+    }
+    
+    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeCanal(boolean porDefecto){
+        //return this.MiCanal.listarListasDeReproduccion(porDefecto);
+        return null;//Esto se saca
+    }
+    
+    public ArrayList<DtUsuario> listarUsuariosSeguidores(){
+        // ESTO YO ----------------------------------------------------------------------------------------------------------
+        return null;//Esto se saca
+    }
+    
+    public ArrayList<DtUsuario> listarUsuariosSeguidos(){
+        // ESTO YO ----------------------------------------------------------------------------------------------------------
+        return null;//Esto se saca
+    }
+    
+    public ArrayList<DtValoracion> listarValoracionesDeVideo(int id){
+        //this.MiCanal.listarValoracionesDeVideo(id);
+        return null;//Esto se saca
+    }
+    
+    public ArrayList<DtVideo> listarVideosDeCanal(){
+        //this.MiCanal.listarVideos();
+        return null;//Esto se saca
+    }
+    
+    public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id){
+        //return this.MiCanal.listarVideosDeListaDeReproduccion(id);
+        return null;//Esto se saca
+    }
+    
+    public void modificar(DtUsuario DtUsu, DtCanal DtCanal){
+        this.nombre = DtUsu.getNombre();
+        this.apellido = DtUsu.getApellido();
+        this.contraseña = DtUsu.getContrasenia();
+        this.fechaNacimiento = DtUsu.getFechaNacimiento();
+        this.imagen = DtUsu.getImagen();
+        
+        this.MiCanal.modificar(DtCanal);
+    }
+    
+    public void modificarListaDeReproduccionDeCanal(DtListaDeReproduccion DtListaDeReproduccion){
+        this.MiCanal.modificarListaDeReproduccion(DtListaDeReproduccion);
+    }
+    
+    public void modificarVideoDeCanal(DtVideo DtVideo){
+        this.MiCanal.modificarVideo(DtVideo);
+    }
+    
+    public DtCanal obtenerCanal(){
+       // return this.MiCanal.getDT();
+        return null;//Esto se saca
+    }
+    public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat){
+        //return this.MiCanal.obtenerListasEnCategoria(string cat);
+        return null;//Esto se saca
+    }
+    public DtValoracion obtenerValoracion(int id, String nickname){
+        //return this.MiCanal.obtenerValoracion(id, nickname);
+        return null;//Esto se saca
+    }
+    public Video obtenerVideo(int id){
+       // return this.MiCanal.obtenerVideo(id);
+        return null;//Esto se saca
+    }
+    public DtVideo obtenerVideoDeCanal(int id){
+        //return this.MiCanal.obtenerVideo(id);
+        return null;//Esto se saca
+    }
+    public ArrayList<DtVideo> obtenerVideosEnCategoria(String cat){
+        //return this.MiCanal.obtenerVideosEnCategoria(String cat){
+        return null;//Esto se saca
+    }
+    
+     public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){
+         this.MiCanal.quitarVideoDeListaDeReproduccion(idLista, idVideo);
+     }
+     
+    public boolean validarListaParticular(String nombre){
+        //return this.MiCanal.validarListaParticular(nombre);
+        return false;//Esto se saca
+    }
 }
 
