@@ -2,6 +2,7 @@ package Logica.Clases;
 import java.sql.Date;
 import Logica.DataType.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Usuario extends Persona{
     private String nickname;
@@ -10,6 +11,9 @@ public class Usuario extends Persona{
     private String imagen;
     private int seguidores;
     private Canal MiCanal;
+    private Map<String, Usuario> misSeguidores;
+    private Map<String, Usuario> SiguiendoA;
+    
 
     public Usuario() {}
     
@@ -21,7 +25,7 @@ public class Usuario extends Persona{
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
         this.seguidores = 0;
-        //this.MiCanal = new Canal(DTC.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());
+        this.MiCanal = new Canal(DTC.getId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());
     }
 
     public String getNickname() {
@@ -82,10 +86,29 @@ public class Usuario extends Persona{
        // this.MiCanal.agregarModificarValoracion(idVideo , DtValoracion, Usu);
     }
     public void agregarOQuitarSeguido(Usuario Usu){
-        // ESTO YO ----------------------------------------------------------------------------------------------------------
+        if(this.misSeguidores.isEmpty()){
+            this.misSeguidores.put(Usu.getNickname(), Usu);
+        }
+        
+        if (this.misSeguidores.containsKey(Usu.nickname)){
+            this.misSeguidores.remove(Usu.getNickname());
+        }else{
+            this.misSeguidores.put(Usu.getNickname(), Usu);
+        }
     }
     public void agregarOQuitarSeguidor(Usuario Usu){
-        // ESTO YO ----------------------------------------------------------------------------------------------------------
+        if(this.misSeguidores.isEmpty()){
+            this.misSeguidores.put(Usu.getNickname(), Usu);
+            this.seguidores++;
+        }
+        
+        if (this.misSeguidores.containsKey(Usu.nickname)){
+            this.misSeguidores.remove(Usu.getNickname());
+            this.seguidores--;
+        }else{
+            this.misSeguidores.put(Usu.getNickname(), Usu);
+            this.seguidores++;
+        }
     }
     
     public void agregarVideoACanal(DtVideo DtVideo){
@@ -107,14 +130,26 @@ public class Usuario extends Persona{
     }
     
     public ArrayList<DtUsuario> listarUsuariosSeguidores(){
-        // ESTO YO ----------------------------------------------------------------------------------------------------------
-        return null;//Esto se saca
-    }
+        // crea una lista de retorno
+        ArrayList<DtUsuario> ret = new ArrayList();
+        
+        for (Map.Entry<String,Usuario> i : this.misSeguidores.entrySet()){
+            // hace un getDT y lo agrega a la coleccion de retorno
+            ret.add(i.getValue().getDT());
+        }
+        return ret;
+    }//(Ctrl + C Ctrl + V) De la clase video
     
     public ArrayList<DtUsuario> listarUsuariosSeguidos(){
-        // ESTO YO ----------------------------------------------------------------------------------------------------------
-        return null;//Esto se saca
-    }
+        // crea una lista de retorno
+        ArrayList<DtUsuario> ret = new ArrayList();
+        
+        for (Map.Entry<String,Usuario> i : this.SiguiendoA.entrySet()){
+            // hace un getDT y lo agrega a la coleccion de retorno
+            ret.add(i.getValue().getDT());
+        }
+        return ret;
+    }//(Ctrl + C Ctrl + V) De la clase video
     
     public ArrayList<DtValoracion> listarValoracionesDeVideo(int id){
         //this.MiCanal.listarValoracionesDeVideo(id);
