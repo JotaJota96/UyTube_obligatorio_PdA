@@ -38,6 +38,11 @@ public class DtComentario {
     public int getNivelSubComentario() {
         return nivelSubComentario;
     }
+
+    @Override
+    public String toString() {
+        return "DtComentario{" + "id=" + id + ", nickname=" + nickname + ", fecha=" + fecha + ", texto=" + texto + ", nivelSubComentario=" + nivelSubComentario + '}';
+    }
     
     
 }

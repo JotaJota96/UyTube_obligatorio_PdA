@@ -26,4 +26,10 @@ public abstract class DtPersona {
     public String getContrasenia() {
         return contrasenia;
     }
+
+    @Override
+    public String toString() {
+        return "DtPersona{" + "nombre=" + nombre + ", apellido=" + apellido + ", contrasenia=" + contrasenia + '}';
+    }
+    
 }

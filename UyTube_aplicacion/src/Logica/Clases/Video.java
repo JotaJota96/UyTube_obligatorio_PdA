@@ -50,16 +50,18 @@ public class Video {
         
     }
     
-    public DtVideo getDtVideo(){
-        
-        
+    public DtVideo getDt(){
+        return new DtVideo(this.id, this.nombre, this.descripcion, this.duracion, this.fechaPublicacion, this.urlVideoOriginal, this.privacidad, this.categoria, this.cantLikes, this.cantDisLikes);
     }
     
     public ArrayList<DtComentario> listarComentarios(){
-        
+        // provisorio
+        return new ArrayList();
     }
    
     public ArrayList<DtValoracion> listarValoraciones(){
+        // provisorio
+        return new ArrayList();
         
     }
     
@@ -68,10 +70,11 @@ public class Video {
     }
     
     public DtValoracion obtenerValoracion(String nickname){
-        
+        // provisorio
+        return new DtValoracion();
     }
     
-    public static int obtenerNuevoId(){
+    public static int getNuevoId(){
         int nuevoId = idActual ++;
         return nuevoId;        
     }
@@ -155,6 +158,11 @@ public class Video {
 
     public void setCantDisLikes(int cantDisLikes) {
         this.cantDisLikes = cantDisLikes;
+    }
+
+    @Override
+    public String toString() {
+        return "Video{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", duracion=" + duracion + ", fechaPublicacion=" + fechaPublicacion + ", urlVideoOriginal=" + urlVideoOriginal + ", privacidad=" + privacidad + ", categoria=" + categoria + ", cantLikes=" + cantLikes + ", cantDisLikes=" + cantDisLikes + '}';
     }
     
     

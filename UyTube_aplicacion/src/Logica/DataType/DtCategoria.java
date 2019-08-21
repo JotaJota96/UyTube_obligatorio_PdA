@@ -12,4 +12,11 @@ public class DtCategoria {
     public String getNombre() {
         return nombre;
     }
+
+    @Override
+    public String toString() {
+        return "DtCategoria{" + "nombre=" + nombre + '}';
+    }
+    
+    
 }

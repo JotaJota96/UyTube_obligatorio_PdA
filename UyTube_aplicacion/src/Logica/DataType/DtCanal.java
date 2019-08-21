@@ -32,5 +32,11 @@ public class DtCanal {
     public Privacidad getPrivacidad() {
         return privacidad;
     }
+
+    @Override
+    public String toString() {
+        return "DtCanal{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", privacidad=" + privacidad + '}';
+    }
+    
     
 }
