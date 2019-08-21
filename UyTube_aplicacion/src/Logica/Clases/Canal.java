@@ -81,7 +81,9 @@ public void agregarListaParticular(DtListaDeReproduccion listaReproduccion){}
 public void agregarValoracionAVideo(int id, DtValoracion valoracion, int idUsuario){}
 public void agregarVideo(DtVideo video){}
 public void agregarVideoALista(int id, DtVideo video){}
-//public DtCanal getDT(){}
+public DtCanal getDT(){
+    return new DtCanal(this.id, this.nombre, this.descripcion, this.privacidad);
+}
 
 //public ArrayList<DtComentario> listarComentariosDeVideo(int id){}
 //public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(bool x){}
