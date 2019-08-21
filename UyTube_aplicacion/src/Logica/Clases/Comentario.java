@@ -2,8 +2,11 @@ package Logica.Clases;
 
 import Logica.DataType.DtComentario;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Comentario {
+    private static int contadorComentarios = 1;
+    
     private int id;
     private Date fecha;
     private String texto;
@@ -21,6 +24,10 @@ public class Comentario {
         this.usr = usr;
     }
 
+    public static int getNuevoID(){
+        return contadorComentarios++;
+    }
+    
     public int getId() {
         return id;
     }
@@ -59,18 +66,21 @@ public class Comentario {
 
     public void setUsr(Usuario usr) {
         this.usr = usr;
-    }/*
-    public boolean agregarSubComentario(int x, DtComentario dtC, Usuario usr){
-        
     }
+    
+    
+    public boolean agregarSubComentario(int idComPadre, DtComentario dtC, Usuario usr){
+        return true;
+    }
+    
     public DtComentario getDT(){
-        DtComentario dtC = new DtComentario(this.id, usr.getNickname, this.fecha, this.texto, this.nivelSubComentario);
+        DtComentario dtC = new DtComentario(this.id, this.usr.getNickname(), this.fecha, this.texto, this.nivelSubComentario);
         return dtC;
     }
-    public boolean agregarSubComentario(int x, DtComentario dtC, Usuario usr){
-        
+    
+    public ArrayList<DtComentario> listarSubComentarios(){
+        return new ArrayList();
     }
-    */
     
     
 }

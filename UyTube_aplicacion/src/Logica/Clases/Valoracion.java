@@ -29,21 +29,28 @@ public class Valoracion {
 
     public void setUsr(Usuario usr) {
         this.usr = usr;
-    }/*
+    }
+    
     private DtValoracion getDT(){
         DtValoracion dtV = new DtValoracion(this.val, this.usr.getNickname());
         return dtV;
     }
     private DtValoracion getDT(String nickname){
-        //faltan cosas-------------------------
-        DtValoracion dtV = new DtValoracion();
-        return dtV;
+        // si esta valoracion corresponde al usuario, devuelve su DT, sino null
+        if (nickname.equals(this.usr.getNickname())){
+            return this.getDT();
+        }else{
+            return null;
+        }
     }
     private boolean modificar(DtValoracion dtV, String nickname){
-        bolean b;
-        //faltan cosas-------------------------
-        return b;
+        if (nickname.equals(this.usr.getNickname())){
+            this.val = dtV.getVal();
+            return true;
+        }else{
+            return false;
+        }
     }
-    */
+    
     
 }
