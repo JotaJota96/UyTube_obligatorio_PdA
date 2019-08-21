@@ -12,9 +12,11 @@ public class Usuario extends Persona{
     private Canal MiCanal;
 
     public Usuario() {
+        super();
+        
         this.nickname = "";
         this.correo = "";
-        this.fechaNacimiento = new Date(2000,1,1);
+        this.fechaNacimiento = new Date(2000, 1, 1);
         this.imagen = imagen;
         this.seguidores = 0;
     }
@@ -70,7 +72,7 @@ public class Usuario extends Persona{
         this.seguidores = seguidores;
     }
     public DtUsuario getDT(){
-        return new DtUsuario(nickname, contraseña, nombre, apellido, correo, fechaNacimiento, imagen, seguidores);//Es el otro constructor
+        return new DtUsuario(this.nickname, this.contraseña, this.nombre, this.apellido, this.correo, this.fechaNacimiento, this.imagen, this.seguidores);//Es el otro constructor
     }
     public void actualizarListasPorDefecto(){}
     public void agregarComentarioAVideo(int id, DtComentario DtComentario, Usuario Usu){}

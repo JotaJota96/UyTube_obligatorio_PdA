@@ -5,7 +5,10 @@ public class Persona {
     String apellido;
     String contraseña;
 
-    public Persona() {
+    public Persona(){
+        this.nombre = "";
+        this.apellido = "";
+        this.contraseña = "";
     }
 
     public Persona(String nombre, String apellido, String contraseña) {
