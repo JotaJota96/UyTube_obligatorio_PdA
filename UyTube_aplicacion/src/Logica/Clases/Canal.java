@@ -72,26 +72,57 @@ public void actualizarListasPorDefecto(){}
 public void agregarComentarioAVideo(int id, DtComentario comentario, int idUsuario){}
 public void agregarComentarioAVideo(int id, int idComentario, DtComentario comentario, int idUsuario){}
 public void agregarListaParticular(DtListaDeReproduccion listaReproduccion){}
-//public DtValoracion agregarModificarValoracion(int id, string nickname){}
-public void agregarValoracionAVideo(int id, DtValoracion valoracion, int idUsuario){}
+public ArrayList<DtValoracion> quitarValoracion(int id, String nickname){
+    return new ArrayList();
+}
+public void agregarModificarValoracion(int id, DtValoracion valoracion, Usuario usuario){}
 public void agregarVideo(DtVideo video){}
 public void agregarVideoALista(int id, DtVideo video){}
-//public DtCanal getDT(){}
+public DtCanal getDT(){
+    return new DtCanal(this.id, this.nombre, this.descripcion, this.privacidad);
+}
 
-//public ArrayList<DtComentario> listarComentariosDeVideo(int id){}
-//public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(bool x){}
-//public ArrayList<DtValoracion> listarValoracionesDeVideo(int id){}
-//public ArrayList<DtVideo> listarVideos(){}
-//public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id){}
-public void modificar(DtCanal canal){}
-public void modificarListaDeReproduccion(DtListaDeReproduccion listaDeReproduccion){}
+
+public ArrayList<DtComentario> listarComentariosDeVideo(int id){
+    return new ArrayList();
+}
+public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(boolean x){
+    return new ArrayList();
+}
+public ArrayList<DtValoracion> listarValoracionesDeVideo(int id){
+    return new ArrayList();
+}
+public ArrayList<DtVideo> listarVideos(){
+    return new ArrayList();
+}
+public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id){
+    return new ArrayList();
+}
+public void modificar(DtCanal canal){
+        this.nombre = canal.getNombre();
+        this.descripcion = canal.getDescripcion();
+        this.privacidad = canal.getPrivacidad();
+}
+public void modificarListaDeReproduccion(DtListaDeReproduccion ldr){
+    
+}
 public void modificarVideo(DtVideo video){} 
-//public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(string cat){}
-//public DtVideo obtenerVideo(int id){}
-//public DtVideo obtenerVideo(int id){}
-//public ArrayList<DtVideo> obtenerVideosEnCategoria(string cat){}
+public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat){
+    return new ArrayList();
+}
+public DtVideo obtenerDtVideo(int id){
+    return new DtVideo();
+}
+public Video obtenerVideo(int id){
+    return new Video();
+}
+public ArrayList<DtVideo> obtenerVideosEnCategoria(String cat){
+    return new ArrayList();
+}
 public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){}
-//public bool validarListaParticular(string lista){}
+public boolean validarListaParticular(String lista){
+    return false;
+}
 
 }
 
