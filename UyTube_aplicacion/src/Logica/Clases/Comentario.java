@@ -15,6 +15,8 @@ public class Comentario {
     private ArrayList<Comentario> misComentario;
 
     public Comentario() {
+        this.id = Comentario.getNuevoID();
+        this.misComentario = new ArrayList();
     }
     
     public Comentario(int id, Date fecha, String texto, int nivelSubComentario, Usuario usr) {
@@ -69,21 +71,26 @@ public class Comentario {
     public void setUsr(Usuario usr) {
         this.usr = usr;
     }
+
+    @Override
+    public String toString() {
+        return "Comentario{" + "id=" + id + ", fecha=" + fecha + ", texto=" + texto + ", nivelSubComentario=" + nivelSubComentario + '}';
+    }
     
     
     public boolean agregarSubComentario(int idComPadre, DtComentario dtC, Usuario usr){
         if(this.id==idComPadre){
-            Comentario com = new Comentario();
-            com.setUsr(usr);
-            com.setId(Comentario.getNuevoID());
-            com.setFecha(dtC.getFecha());
-            com.setTexto(dtC.getTexto());
-            com.setNivelSubComentario(dtC.getNivelSubComentario());
+            Comentario com = new Comentario(Comentario.getNuevoID(),
+                    dtC.getFecha(),
+                    dtC.getTexto(),
+                    this.nivelSubComentario+1,
+                    usr);
             this.misComentario.add(com);
             return true;
         }
         else{
-            for(int i = 0; i< misComentario.size();i++){
+            
+            for (int i = 0; i< misComentario.size();i++){
                 if(this.misComentario.get(i).agregarSubComentario(idComPadre,dtC,usr)){
                     return true;
                 }
@@ -99,11 +106,11 @@ public class Comentario {
     
     public ArrayList<DtComentario> listarSubComentarios(){
         ArrayList lsc = new ArrayList();
-        for(int i = 0; i< lsc.size();i++){
+        
+        for(int i = 0; i< this.misComentario.size();i++){
             lsc.add(this.misComentario.get(i).getDT());
             lsc.addAll(this.misComentario.get(i).listarSubComentarios());
         }
-        return new ArrayList();
+        return lsc;
     }
-      
 }
