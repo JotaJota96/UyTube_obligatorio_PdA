@@ -71,4 +71,10 @@ public class DtVideo {
     public int getCantDisLikes() {
         return cantDisLikes;
     }
+
+    @Override
+    public String toString() {
+        return "DtVideo{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", duracion=" + duracion + ", fechaPublicacion=" + fechaPublicacion + ", urlVideoOriginal=" + urlVideoOriginal + ", privacidad=" + privacidad + ", categoria=" + categoria + ", cantLikes=" + cantLikes + ", cantDisLikes=" + cantDisLikes + '}';
+    }
+    
 }

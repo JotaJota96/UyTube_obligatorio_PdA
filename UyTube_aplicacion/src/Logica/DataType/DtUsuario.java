@@ -44,6 +44,10 @@ public class DtUsuario extends DtPersona{
         return cantSeguidores;
     }
 
+    @Override
+    public String toString() {
+        return "DtUsuario{" + super.toString() + ", nickname=" + nickname + ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", imagen=" + imagen + ", cantSeguidores=" + cantSeguidores + '}';
+    }
     
     
 }
