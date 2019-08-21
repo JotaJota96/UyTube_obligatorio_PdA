@@ -18,4 +18,10 @@ public class DtValoracion {
     public TipoValoracion getVal() {
         return val;
     }
+
+    @Override
+    public String toString() {
+        return "DtValoracion{" + "val=" + val + ", nickname=" + nickname + '}';
+    }
+    
 }

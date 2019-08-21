@@ -1,6 +1,6 @@
 package Logica.DataType;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class DtUsuario extends DtPersona{
     private String nickname;
@@ -44,6 +44,10 @@ public class DtUsuario extends DtPersona{
         return cantSeguidores;
     }
 
+    @Override
+    public String toString() {
+        return "DtUsuario{" + super.toString() + ", nickname=" + nickname + ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", imagen=" + imagen + ", cantSeguidores=" + cantSeguidores + '}';
+    }
     
     
 }

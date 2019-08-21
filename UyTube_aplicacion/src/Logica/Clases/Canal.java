@@ -1,16 +1,18 @@
 package Logica.Clases;
+
 import Logica.Enumerados.Privacidad;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import Logica.DataType.DtCanal;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 
 public class Canal {
+    
     private static int contadorCanal = 1;
     private int id;
     private String nombre;
@@ -22,7 +24,10 @@ public class Canal {
     
     public Canal() {
         this.id = getNuevoId();
+        this.listasDeReproducciones = new TreeMap();
+        this.Videos = new TreeMap();
     }
+    
     public Canal(int id, String nombre, String descripcion, Privacidad privacidad) {
         this.id = id;
         this.nombre = nombre;
