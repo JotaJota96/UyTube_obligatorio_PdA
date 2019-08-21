@@ -6,7 +6,7 @@ import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import Logica.DataType.DtCanal;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,13 +18,13 @@ public class Canal {
     private String nombre;
     private String descripcion;
     private Privacidad privacidad;
-    private Map<Integer,ListaDeReproduccion> listasDeReproducciones;
+    private Map<Integer,ListaDeReproduccion> misListas;
     private Map<Integer,Video> Videos;
     
     
     public Canal() {
         this.id = getNuevoId();
-        this.listasDeReproducciones = new TreeMap();
+        this.misListas = new TreeMap();
         this.Videos = new TreeMap();
     }
     
@@ -33,7 +33,7 @@ public class Canal {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.privacidad = privacidad;
-        this.listasDeReproducciones = new TreeMap();
+        this.misListas = new TreeMap();
         this.Videos = new TreeMap();
 
     }
@@ -98,10 +98,20 @@ public ArrayList<DtValoracion> listarValoracionesDeVideo(int id){
     return new ArrayList();
 }
 public ArrayList<DtVideo> listarVideos(){
-    return new ArrayList();
+    ArrayList<DtVideo> ret = new ArrayList();
+    
+     for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()){
+            // hace un getDT y lo agrega a la coleccion de retorno
+            for (Map.Entry<Integer, Video> m : misListas.entrySet()){
+            // hace un getDT y lo agrega a la coleccion de retorno
+            ret.add(m.getValue().getDt());
+            }
+     }
+     return ret;
 }
+            
 public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id){
-    return new ArrayList();
+    return ListaDeReproduccion.
 }
 public void modificar(DtCanal canal){
         this.nombre = canal.getNombre();
@@ -118,9 +128,9 @@ public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat){
 public DtVideo obtenerDtVideo(int id){
     return new DtVideo();
 }
-public Video obtenerVideo(int id){
-    return new Video();
-}
+//public Video obtenerVideo(int id){
+  //  return new Video();
+//}
 public ArrayList<DtVideo> obtenerVideosEnCategoria(String cat){
     return new ArrayList();
 }
@@ -130,4 +140,3 @@ public boolean validarListaParticular(String lista){
 }
 
 }
-
