@@ -12,6 +12,7 @@ public class Comentario {
     private String texto;
     private int nivelSubComentario;
     private Usuario usr;
+    private ArrayList<Comentario> misComentario;
 
     public Comentario() {
     }
@@ -22,6 +23,7 @@ public class Comentario {
         this.texto = texto;
         this.nivelSubComentario = nivelSubComentario;
         this.usr = usr;
+        this.misComentario = new ArrayList();
     }
 
     public static int getNuevoID(){
@@ -79,8 +81,12 @@ public class Comentario {
     }
     
     public ArrayList<DtComentario> listarSubComentarios(){
+        ArrayList lsc = new ArrayList();
+        for(int i = 0; i< lsc.size();i++){
+            lsc.add(this.misComentario.get(i).getDT());
+            lsc.addAll(this.misComentario.get(i).listarSubComentarios());
+        }
         return new ArrayList();
     }
-    
-    
+      
 }
