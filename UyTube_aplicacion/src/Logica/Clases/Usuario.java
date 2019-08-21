@@ -11,15 +11,7 @@ public class Usuario extends Persona{
     private int seguidores;
     private Canal MiCanal;
 
-    public Usuario() {
-        super();
-        
-        this.nickname = "";
-        this.correo = "";
-        this.fechaNacimiento = new Date(2000, 1, 1);
-        this.imagen = imagen;
-        this.seguidores = 0;
-    }
+    public Usuario() {}
     
     public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido ,DtCanal DTC) {
         super(nombre,apellido,contrasenia);
