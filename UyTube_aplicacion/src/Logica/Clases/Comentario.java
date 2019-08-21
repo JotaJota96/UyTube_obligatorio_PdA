@@ -72,7 +72,24 @@ public class Comentario {
     
     
     public boolean agregarSubComentario(int idComPadre, DtComentario dtC, Usuario usr){
-        return true;
+        if(this.id==idComPadre){
+            Comentario com = new Comentario();
+            com.setUsr(usr);
+            com.setId(Comentario.getNuevoID());
+            com.setFecha(dtC.getFecha());
+            com.setTexto(dtC.getTexto());
+            com.setNivelSubComentario(dtC.getNivelSubComentario());
+            this.misComentario.add(com);
+            return true;
+        }
+        else{
+            for(int i = 0; i< misComentario.size();i++){
+                if(this.misComentario.get(i).agregarSubComentario(idComPadre,dtC,usr)){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
     
     public DtComentario getDT(){
