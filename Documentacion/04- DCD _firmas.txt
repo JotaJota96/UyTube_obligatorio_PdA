@@ -24,19 +24,17 @@ obtenerCanal():DtCanal
 obtenerListasEnCategoria(cat:string):set<DtListaDeReproduccion>
 obtenerValoracion(id:int, nickname:string):DtValoracion
 obtenerVideo(id:int):Video
-obtenerVideoDeCanal(id:int):DtVideo
+obtenerDtVideoDeCanal(id:int):DtVideo
 obtenerVideosEnCategoria(cat:string):set<DtVideo>
 quitarVideoDeListaDeReproduccion(idLista:int, idVideo:int);void
 validarListaParticular(string):bool
-
 
 Canal
 actualizarListasPorDefecto():void
 agregarComentarioAVideo(id:int, DtComentario, Usuario):void
 agregarComentarioAVideo(id:int, idCom:int, DtComentario, Usuario):void
 agregarListaParticular(DtListaDeReproduccion):void
-agregarModificarValoracion(id:int, nickname:string):DtValoracion
-agregarValoracionAVideo(id:int, DtValoracion, Usuario):void
+agregarModificarValoracion(id:int, DtValoracion, Usuario):void
 agregarVideo(DtVideo):void
 agregarVideoALista(id:int, Video):void
 getDT():DtCanal
@@ -53,6 +51,7 @@ obtenerVideo(id:int):DtVideo
 obtenerVideo(id:int):Video
 obtenerVideosEnCategoria(cat:string):set<DtVideo>
 quitarVideoDeListaDeReproduccion(idLista:int, idVideo:int);void
+quitarValoracion(id:int, nickname:string):DtValoracion
 validarListaParticular(string):bool
 
 
