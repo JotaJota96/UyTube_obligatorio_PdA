@@ -10,6 +10,9 @@ public class Comentario {
     private int nivelSubComentario;
     private Usuario usr;
 
+    public Comentario() {
+    }
+    
     public Comentario(int id, Date fecha, String texto, int nivelSubComentario, Usuario usr) {
         this.id = id;
         this.fecha = fecha;

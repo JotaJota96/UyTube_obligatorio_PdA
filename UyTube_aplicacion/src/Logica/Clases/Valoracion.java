@@ -7,6 +7,9 @@ public class Valoracion {
     private TipoValoracion val;
     private Usuario usr;
 
+    public Valoracion() {
+    }
+    
     public Valoracion(TipoValoracion val, Usuario usr) {
         this.val = val;
         this.usr = usr;

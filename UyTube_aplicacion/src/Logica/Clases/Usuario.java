@@ -12,11 +12,6 @@ public class Usuario extends Persona{
     private Canal MiCanal;
 
     public Usuario() {
-        this.nickname = "";
-        this.correo = "";
-        this.fechaNacimiento = new Date(1-1900,0,1);
-        this.imagen = "";
-        this.seguidores = 0;
     }
     
     public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido ,DtCanal DTC) {
