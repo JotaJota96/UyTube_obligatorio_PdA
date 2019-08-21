@@ -20,23 +20,29 @@ public class DtListaDeReproduccion {
         this.categoria = categoria;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setPrivacidad(Privacidad privacidad) {
-        this.privacidad = privacidad;
+    public Privacidad getPrivacidad() {
+        return privacidad;
     }
 
-    public void setTipo(TipoListaDeReproduccion tipo) {
-        this.tipo = tipo;
+    public TipoListaDeReproduccion getTipo() {
+        return tipo;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public String getCategoria() {
+        return categoria;
     }
+
+    @Override
+    public String toString() {
+        return "DtListaDeReproduccion{" + "id=" + id + ", nombre=" + nombre + ", privacidad=" + privacidad + ", tipo=" + tipo + ", categoria=" + categoria + '}';
+    }
+    
 }
