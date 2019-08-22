@@ -21,10 +21,13 @@ public class Video {
     private String categoria;
     private int cantLikes = 0;
     private int cantDisLikes = 0;
-    private Map<Integer, Valoracion> valoraciones;
+    private ArrayList<Valoracion> valoraciones;
     private Map<Integer, Comentario> comentarios;
     private static int idActual = 1;
     
+    public Video(){
+        
+    }
     /********************** Constructor *********************/
     public Video(int _id, String _nombre, String _descripcion,Time _duracion, Date _fechaPublicacion,String _urlVideoOriginal,String _categoria ){
         this.id = _id;
@@ -34,16 +37,22 @@ public class Video {
         this.fechaPublicacion = _fechaPublicacion;
         this.urlVideoOriginal = _urlVideoOriginal;    
         this.categoria = _categoria;
-        this.valoraciones = new TreeMap<Integer, Valoracion>();
+        this.valoraciones = new ArrayList<Valoracion>();
         this.comentarios = new TreeMap<Integer, Comentario>();        
     }
     
+    /** Agregar un nuevo comentario **/
     public void agregarComentario(DtComentario dtComentario, Usuario usuario){
-        
+        int nuevoId = Comentario.getNuevoID();
+        Comentario nuevoComentario = new Comentario(nuevoId, dtComentario.getFecha(), dtComentario.getTexto(), 0, usuario);
+        comentarios.put(nuevoId, nuevoComentario);
     }
     
+    /*  Agregar un subcomentario a un comentario existente  */
     public void agregarComentario(int idCom, DtComentario dtComentario, Usuario usuario){
-        
+        for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {
+            if(coment.getValue().agregarSubComentario(idCom, dtComentario, usuario));
+        }
     }
     
     public void agregarModificarValoracion(DtValoracion dtValoracion, Usuario usuario){
