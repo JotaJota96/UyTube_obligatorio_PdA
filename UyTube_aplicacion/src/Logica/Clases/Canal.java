@@ -91,10 +91,10 @@ public class Canal {
         this.misListas.put(idLdr, ldr);
     }
 
-//Aun no está implementada en la clase Video
-//public void quitarValoracion(int id, String nickname){
-    // this.misVideos.get(id).quitarValoracion();
-//}
+    public void quitarValoracion(int idVideo, String nickname) {
+        this.misVideos.get(idVideo).quitarValoracion(nickname);
+    }
+
     public void agregarModificarValoracion(int id, DtValoracion valoracion, Usuario usuario) {
         this.misVideos.get(id).agregarModificarValoracion(valoracion, usuario);
     }
@@ -220,8 +220,14 @@ public class Canal {
         this.misListas.get(idLista).quitarVideo(idVideo);
     }
 
-    public boolean validarListaParticular(int idLista) {
-        return this.misListas.get(idLista).getTipo().toString().equals("PARTICULAR");
+    public boolean validarListaParticular(String nombreLista) {
+        
+        for (Map.Entry<Integer, ListaDeReproduccion> l : misListas.entrySet()) {
+            if (l.getValue().getNombre().equals(nombreLista)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public DtValoracion obtenerValoracion(int id, String nickname) {

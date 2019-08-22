@@ -81,11 +81,13 @@ public class Video {
     }
    
     public ArrayList<DtValoracion> listarValoraciones(){
-        ArrayList<DtValoracion> listaValoraciones = new ArrayList<DtValoracion>();
-        for(Valoracion val: valoraciones){
-            listaValoraciones.add(new DtValoracion(val.getVal(), val.getUsr().getNickname()));
+        ArrayList<DtValoracion> listaValoraciones = new ArrayList();
+        // recorre todo el array de valoraciones
+        for(int i = 0; i < this.valoraciones.size(); i++){
+            // para cada elemento le pide el DT (al llamar esa funcion es que hace el new) y lo agrega a la coleccion de retorno
+            listaValoraciones.add(this.valoraciones.get(i).getDT());
         }
-        return listaValoraciones;        
+        return listaValoraciones;
     }
     
     public void modificar(DtVideo dtVideo){
@@ -121,14 +123,22 @@ public class Video {
     
     /*   Obtiene la valoracion que hizo un usuario */
     public DtValoracion obtenerValoracion(String nickname){
-        for(Valoracion val: valoraciones){
-            if( val.getUsr().getNickname() == nickname){
-                DtValoracion dtValoracion = new DtValoracion(val.getVal(), val.getUsr().getNickname());
-                return dtValoracion;
+        for(int i = 0; i < this.valoraciones.size(); i++){
+            if( valoraciones.get(i).getNicknameDeUsuario() == nickname){
+                return valoraciones.get(i).getDT();
             }
         }
         return new DtValoracion();
     }
+    
+    public void quitarValoracion(String nickname){
+        if (nickname.equals("")){
+            throw new RuntimeException("El nickname no puede ser vacio");
+        }
+        // Recorrer todas las valoraciones hasta encontrar la valoracion cuyo usuario sea el que tiene ese nickname
+        // cuando la encuentre, la saca de la coleccion
+    }
+    
     
     public static int getNuevoId(){
         int nuevoId = idActual ++;

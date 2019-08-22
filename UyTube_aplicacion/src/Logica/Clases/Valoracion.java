@@ -26,8 +26,8 @@ public class Valoracion {
         this.val = val;
     }
 
-    public Usuario getUsr() {
-        return usr;
+    public String getNicknameDeUsuario() {
+        return this.usr.getNickname();
     }
     
     public DtValoracion getDT(){
