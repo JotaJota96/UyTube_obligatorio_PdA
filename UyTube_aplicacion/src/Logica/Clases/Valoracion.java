@@ -30,11 +30,11 @@ public class Valoracion {
         return usr;
     }
     
-    private DtValoracion getDT(){
+    public DtValoracion getDT(){
         DtValoracion dtV = new DtValoracion(this.val, this.usr.getNickname());
         return dtV;
     }
-    private DtValoracion getDT(String nickname){
+    public DtValoracion getDT(String nickname){
         if(nickname==null){
             throw new RuntimeException("Nickname No puede ser null");
         }
@@ -45,7 +45,7 @@ public class Valoracion {
             return null;
         }
     }
-    private boolean modificar(DtValoracion dtV, String nickname){
+    public boolean modificar(DtValoracion dtV, String nickname){
         if(dtV==null){
             throw new RuntimeException("DtValoracion No puede ser null");
         }
