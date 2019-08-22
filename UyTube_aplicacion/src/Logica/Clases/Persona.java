@@ -3,15 +3,18 @@ package Logica.Clases;
 public class Persona {
     String nombre;
     String apellido;
-    String contraseña;
+    String contrnia;
 
-    public Persona() {
+    public Persona(){
+        this.nombre = "";
+        this.apellido = "";
+        this.contrnia = "";
     }
 
-    public Persona(String nombre, String apellido, String contraseña) {
+    public Persona(String nombre, String apellido, String contrnia) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.contraseña = contraseña;
+        this.contrnia = contrnia;
     }
 
     public String getNombre() {
@@ -31,11 +34,11 @@ public class Persona {
     }
 
     public String getContraseña() {
-        return contraseña;
+        return contrnia;
     }
 
     public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+        this.contrnia = contraseña;
     }
     
     
