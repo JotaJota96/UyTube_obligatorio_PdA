@@ -276,6 +276,13 @@ public class Usuario extends Persona{
         
     }
     
+    public void quitarValoracion(int id, String nickname){
+        if(nickname == ""){
+            throw new RuntimeException("El nickname no puede ser vacia");
+        }
+        this.MiCanal.quitarValoracion(id, nickname);
+    }
+    
     public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){
         this.MiCanal.quitarVideoDeListaDeReproduccion(idLista, idVideo);
     }
