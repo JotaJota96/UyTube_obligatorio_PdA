@@ -92,30 +92,31 @@ public class Video {
         if(dtVideo == null){
             throw new RuntimeException("El DtVideo es vacío");
         }
-        if(dtVideo.getNombre() != null || !dtVideo.getNombre().isEmpty() ){
-            this.nombre = dtVideo.getNombre();
-        }
-        if(dtVideo.getDescripcion() != null || !dtVideo.getDescripcion().isEmpty() ){
-            this.descripcion = dtVideo.getDescripcion();
-        }
-        if(dtVideo.getDuracion()!= null ){
-            this.duracion = dtVideo.getDuracion();
-        }
-        if(dtVideo.getFechaPublicacion()!= null){
-            this.fechaPublicacion = dtVideo.getFechaPublicacion();
-        }   
-        if(dtVideo.getUrlVideoOriginal() != null || !dtVideo.getUrlVideoOriginal().isEmpty() ){
-            this.urlVideoOriginal = dtVideo.getUrlVideoOriginal();
-        }
-        if(dtVideo.getPrivacidad()!= null){
-            this.privacidad = dtVideo.getPrivacidad();
-        } 
-        if(dtVideo.getCategoria() != null ){
-            this.categoria = dtVideo.getCategoria();
-        }
-        //======= Falta Terminar ========
+        // Perdon julio pero no entendi nada xD
         
-       
+        if(dtVideo.getNombre()== ""){
+            throw new RuntimeException("El nombre no puede ser vacío");
+        } 
+        
+        if (dtVideo.getDescripcion() == "") {
+            throw new RuntimeException("La descripcion no puede ser vacía");
+        }
+        
+        if (dtVideo.getFechaPublicacion() == null) {
+            throw new RuntimeException("La fecha no puede ser vacía");
+        }
+        
+        if (dtVideo.getCategoria() == "") {
+            throw new RuntimeException("La categoria no puede ser vacía");
+        }
+        
+        this.nombre = dtVideo.getNombre();
+        this.descripcion = dtVideo.getDescripcion();
+        this.duracion = dtVideo.getDuracion();
+        this.fechaPublicacion = dtVideo.getFechaPublicacion();
+        this.privacidad = dtVideo.getPrivacidad();
+        this.categoria = dtVideo.getCategoria();
+        
     }
     
     /*   Obtiene la valoracion que hizo un usuario */
