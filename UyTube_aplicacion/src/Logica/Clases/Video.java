@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Video {
-    
+public class Video {    
     private int id;
     private String nombre;
     private String descripcion;
@@ -30,6 +29,13 @@ public class Video {
     }
     /********************** Constructor *********************/
     public Video(int _id, String _nombre, String _descripcion,Time _duracion, Date _fechaPublicacion,String _urlVideoOriginal,String _categoria ){
+        if( _id < 0){ throw new RuntimeException("Error, el id del video es un negativo o cero."); }
+        if( _nombre == ""){ throw new RuntimeException("Error, el nombre del video está vacío");}
+        if( _descripcion == "" ){ throw new RuntimeException("Error, la descripción del video está vacía.");}
+        if( _duracion == null){ throw new RuntimeException("Error, la duración del video es null.");}
+        if( _fechaPublicacion == null){ throw new RuntimeException("Error, la fecha de publicación del video es null.");}
+        if( _urlVideoOriginal == ""){ throw new RuntimeException("Error, la url del video está vacía.");}
+        if( _categoria == "" ){ throw new RuntimeException("Error, la descripción del video está vacía.");}
         this.id = _id;
         this.nombre = _nombre;
         this.descripcion = _descripcion;
@@ -137,6 +143,14 @@ public class Video {
         }
         // Recorrer todas las valoraciones hasta encontrar la valoracion cuyo usuario sea el que tiene ese nickname
         // cuando la encuentre, la saca de la coleccion
+        for(Valoracion val: valoraciones){
+            int i = 0;
+            if(val.getNicknameDeUsuario().equals(nickname) ){
+                valoraciones.remove(i);
+                break;
+            }
+            i++;
+        }
     }
     
     
