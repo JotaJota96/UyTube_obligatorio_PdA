@@ -5,8 +5,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class Comentario {
+
     private static int contadorComentarios = 1;
-    
+
     private int id;
     private Date fecha;
     private String texto;
@@ -18,7 +19,7 @@ public class Comentario {
         this.id = Comentario.getNuevoID();
         this.misComentario = new ArrayList();
     }
-    
+
     public Comentario(int id, Date fecha, String texto, int nivelSubComentario, Usuario usr) {
         this.id = id;
         this.fecha = fecha;
@@ -28,10 +29,10 @@ public class Comentario {
         this.misComentario = new ArrayList();
     }
 
-    public static int getNuevoID(){
+    public static int getNuevoID() {
         return contadorComentarios++;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -76,38 +77,36 @@ public class Comentario {
     public String toString() {
         return "Comentario{" + "id=" + id + ", fecha=" + fecha + ", texto=" + texto + ", nivelSubComentario=" + nivelSubComentario + '}';
     }
-    
-    
-    public boolean agregarSubComentario(int idComPadre, DtComentario dtC, Usuario usr){
-        if(this.id==idComPadre){
+
+    public boolean agregarSubComentario(int idComPadre, DtComentario dtC, Usuario usr) {
+        if (this.id == idComPadre) {
             Comentario com = new Comentario(Comentario.getNuevoID(),
                     dtC.getFecha(),
                     dtC.getTexto(),
-                    this.nivelSubComentario+1,
+                    this.nivelSubComentario + 1,
                     usr);
             this.misComentario.add(com);
             return true;
-        }
-        else{
-            
-            for (int i = 0; i< misComentario.size();i++){
-                if(this.misComentario.get(i).agregarSubComentario(idComPadre,dtC,usr)){
+        } else {
+
+            for (int i = 0; i < misComentario.size(); i++) {
+                if (this.misComentario.get(i).agregarSubComentario(idComPadre, dtC, usr)) {
                     return true;
                 }
             }
             return false;
         }
     }
-    
-    public DtComentario getDT(){
+
+    public DtComentario getDT() {
         DtComentario dtC = new DtComentario(this.id, this.usr.getNickname(), this.fecha, this.texto, this.nivelSubComentario);
         return dtC;
     }
-    
-    public ArrayList<DtComentario> listarSubComentarios(){
+
+    public ArrayList<DtComentario> listarSubComentarios() {
         ArrayList lsc = new ArrayList();
-        
-        for(int i = 0; i< this.misComentario.size();i++){
+
+        for (int i = 0; i < this.misComentario.size(); i++) {
             lsc.add(this.misComentario.get(i).getDT());
             lsc.addAll(this.misComentario.get(i).listarSubComentarios());
         }
