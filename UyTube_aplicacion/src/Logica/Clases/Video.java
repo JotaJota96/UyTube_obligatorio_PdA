@@ -51,12 +51,20 @@ public class Video {
     /*  Agregar un subcomentario a un comentario existente  */
     public void agregarComentario(int idCom, DtComentario dtComentario, Usuario usuario){
         for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {
-            if(coment.getValue().agregarSubComentario(idCom, dtComentario, usuario));
+            if(coment.getValue().agregarSubComentario(idCom, dtComentario, usuario)){
+                break;
+            }
         }
     }
     
+    /* Agrega o midifica una valoración */
     public void agregarModificarValoracion(DtValoracion dtValoracion, Usuario usuario){
-        
+        String nickname = usuario.getNickname();
+        for(Valoracion val: valoraciones){
+            if(val.modificar(dtValoracion, nickname)){
+                break;
+            }
+        }
     }
     
     public DtVideo getDt(){
@@ -64,8 +72,12 @@ public class Video {
     }
     
     public ArrayList<DtComentario> listarComentarios(){
-        // provisorio
-        return new ArrayList();
+        ArrayList<DtComentario> listaComent = new ArrayList<DtComentario>();        
+        for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {            
+            DtComentario dtComent = new DtComentario(coment.getValue().getId(), coment.getValue().getUsr().getNickname(), coment.getValue().getFecha(), coment.getValue().getTexto(), coment.getValue().getNivelSubComentario());
+            listaComent.add(dtComent);            
+        }
+        return listaComent;
     }
    
     public ArrayList<DtValoracion> listarValoraciones(){
@@ -78,8 +90,8 @@ public class Video {
         
     }
     
+    /*   Sin terminar */
     public DtValoracion obtenerValoracion(String nickname){
-        // provisorio
         return new DtValoracion();
     }
     
