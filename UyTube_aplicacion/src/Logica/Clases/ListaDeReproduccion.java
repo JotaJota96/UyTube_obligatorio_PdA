@@ -18,12 +18,16 @@ public class ListaDeReproduccion {
     private String categoria;
     private Map<Integer, Video> misVideos;
 
-    public ListaDeReproduccion() {
-        this.id = getNuevoId();
-        this.misVideos = new TreeMap();
-    }
-    
     public ListaDeReproduccion(int id, String nombre, Privacidad privacidad, TipoListaDeReproduccion tipo, String categoria) {
+        if (nombre.equals("")){
+            throw new RuntimeException("El nombre de la lista de reproduccion no puede ser vacio");
+        }
+        if (categoria.equals("")){
+            throw new RuntimeException("La Categoria de la lista de reproduccion no puede ser vacia");
+        }
+        if (tipo == TipoListaDeReproduccion.POR_DEFECTO && privacidad != Privacidad.PRIVADO){
+            throw new RuntimeException("No se puede crear una lista de reproduccion por defecto publica");
+        }
         this.id = id;
         this.nombre = nombre;
         this.privacidad = privacidad;
@@ -33,47 +37,27 @@ public class ListaDeReproduccion {
     }
 
     public static int getNuevoId() {
-        return contadorListasDeReproduccion;
+        return contadorListasDeReproduccion++;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public Privacidad getPrivacidad() {
         return privacidad;
     }
 
-    public void setPrivacidad(Privacidad privacidad) {
-        this.privacidad = privacidad;
-    }
-
     public TipoListaDeReproduccion getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoListaDeReproduccion tipo) {
-        this.tipo = tipo;
-    }
-
     public String getCategoria() {
         return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     @Override
@@ -84,6 +68,9 @@ public class ListaDeReproduccion {
     /////////////////////////////////////////////////////////////////////////////////////////
 
     public void agregarVideoA(Video v){
+        if (v == null){
+            throw new RuntimeException("El video recibido para agregar a la lista es NULL");
+        }
         // agrega el video y su clave a la coleccion
         this.misVideos.put(v.getId(), v);
     }
@@ -113,6 +100,15 @@ public class ListaDeReproduccion {
     }
     
     public void modificar(DtListaDeReproduccion ldr) {
+        if (this.tipo == TipoListaDeReproduccion.POR_DEFECTO){
+            throw new RuntimeException("No se puede modificar una lista por defecto");
+        }
+        if (ldr == null){
+            throw new RuntimeException("El DataTyppe recibido para modificar la lista de reproduccion es NULL");
+        }
+        if (ldr.getNombre().equals("")){
+            throw new RuntimeException("El nombre de la lista de reproduccion no puede ser vacio");
+        }
         // se sobreescriben los atributos que pueden ser modificados
         this.nombre = ldr.getNombre();
         this.privacidad = ldr.getPrivacidad();
