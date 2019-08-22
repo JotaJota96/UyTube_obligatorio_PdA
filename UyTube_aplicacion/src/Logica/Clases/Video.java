@@ -89,10 +89,36 @@ public class Video {
     }
     
     public void modificar(DtVideo dtVideo){
+        if(dtVideo == null){
+            throw new RuntimeException("El DtVideo es vacío");
+        }
+        if(dtVideo.getNombre() != null || !dtVideo.getNombre().isEmpty() ){
+            this.nombre = dtVideo.getNombre();
+        }
+        if(dtVideo.getDescripcion() != null || !dtVideo.getDescripcion().isEmpty() ){
+            this.descripcion = dtVideo.getDescripcion();
+        }
+        if(dtVideo.getDuracion()!= null ){
+            this.duracion = dtVideo.getDuracion();
+        }
+        if(dtVideo.getFechaPublicacion()!= null){
+            this.fechaPublicacion = dtVideo.getFechaPublicacion();
+        }   
+        if(dtVideo.getUrlVideoOriginal() != null || !dtVideo.getUrlVideoOriginal().isEmpty() ){
+            this.urlVideoOriginal = dtVideo.getUrlVideoOriginal();
+        }
+        if(dtVideo.getPrivacidad()!= null){
+            this.privacidad = dtVideo.getPrivacidad();
+        } 
+        if(dtVideo.getCategoria() != null ){
+            this.categoria = dtVideo.getCategoria();
+        }
+        //======= Falta Terminar ========
         
+       
     }
     
-    /*   Sin terminar */
+    /*   Obtiene la valoracion que hizo un usuario */
     public DtValoracion obtenerValoracion(String nickname){
         for(Valoracion val: valoraciones){
             if( val.getUsr().getNickname() == nickname){
