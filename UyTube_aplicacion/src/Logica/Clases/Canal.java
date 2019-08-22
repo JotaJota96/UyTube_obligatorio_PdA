@@ -184,6 +184,7 @@ public class Canal {
     public DtVideo obtenerDtVideo(int id){
         return this.misVideos.get(id).getDt();
     }
+    
     public Video obtenerVideo(int id){
         return null;
     }
