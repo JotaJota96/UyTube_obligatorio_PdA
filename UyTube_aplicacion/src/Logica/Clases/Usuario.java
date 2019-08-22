@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Usuario extends Persona{
+    
     private String nickname;
     private String correo;
     private Date fechaNacimiento;
@@ -71,7 +72,7 @@ public class Usuario extends Persona{
     }
 
     public DtUsuario getDT(){
-        return new DtUsuario(this.nickname, this.contraseña, this.nombre, this.apellido, this.correo, this.fechaNacimiento, this.imagen, this.seguidores);//Es el otro constructor
+        return new DtUsuario(this.nickname, this.contrnia, this.nombre, this.apellido, this.correo, this.fechaNacimiento, this.imagen, this.seguidores);//Es el otro constructor
     }
     
     public void actualizarListasPorDefecto(){
@@ -215,7 +216,7 @@ public class Usuario extends Persona{
         
         this.nombre = DtUsu.getNombre();
         this.apellido = DtUsu.getApellido();
-        this.contraseña = DtUsu.getContrasenia();
+        this.contrnia = DtUsu.getContrasenia();
         this.fechaNacimiento = DtUsu.getFechaNacimiento();
         this.imagen = DtUsu.getImagen();
         
@@ -226,7 +227,7 @@ public class Usuario extends Persona{
         if(DtListaDeReproduccion == null){
             throw new RuntimeException("La lista de reproduccion no puede ser null");
         }
-        
+                
         this.MiCanal.modificarListaDeReproduccion(DtListaDeReproduccion);
     }
     
@@ -253,6 +254,7 @@ public class Usuario extends Persona{
         if(nickname == ""){
             throw new RuntimeException("El nickname no puede ser vacio");
         }
+        
         //return this.MiCanal.obtenerValoracion(id, nickname);
         return null;//Esto se saca
     }
