@@ -43,11 +43,25 @@ public class main {
             for (int i = 0; i < dt.size(); i++) {
                 System.out.println(dt.get(i).toString());
             }
+            
+            System.out.println("-------------");
+            ArrayList<String> lsts = ListaDeReproduccion.listarNombresDeListasPorDefecto();
+            for (int i = 0; i < lsts.size(); i++) {
+                System.out.println(lsts.get(i));
+            }
+            System.out.println("-------------");
+            ListaDeReproduccion.agregarCategoria("MUSICA");
+            ListaDeReproduccion.agregarCategoria("GAMING");
+
+            lsts = ListaDeReproduccion.listarNombresDeListasPorDefecto();
+            for (int i = 0; i < lsts.size(); i++) {
+                System.out.println(lsts.get(i));
+            }
+
         } catch (Exception e) {
             System.out.println("-->" + e);
         }
 
-        
         
     }
 }

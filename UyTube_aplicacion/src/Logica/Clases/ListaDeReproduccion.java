@@ -5,11 +5,13 @@ import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Enumerados.TipoListaDeReproduccion;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class ListaDeReproduccion {
     private static int contadorListasDeReproduccion = 1;
+    private static ArrayList<String> nombresListasPorDefecto = new ArrayList(Arrays.asList("UNDEFINED"));
     
     private int id;
     private String nombre;
@@ -39,7 +41,18 @@ public class ListaDeReproduccion {
     public static int getNuevoId() {
         return contadorListasDeReproduccion++;
     }
-
+    public static void agregarCategoria(String cat) {
+        if (cat.equals("")){
+            throw new RuntimeException("No se puede agregar una categoria vacia");
+        }
+        nombresListasPorDefecto.add(cat);
+    }
+    
+    public static ArrayList<String> listarNombresDeListasPorDefecto() {
+        ArrayList<String> ret = new ArrayList(nombresListasPorDefecto);
+        return ret;
+    }
+    
     public int getId() {
         return id;
     }
