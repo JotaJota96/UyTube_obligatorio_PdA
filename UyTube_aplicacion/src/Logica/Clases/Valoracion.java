@@ -11,6 +11,9 @@ public class Valoracion {
     }
     
     public Valoracion(TipoValoracion val, Usuario usr) {
+        if(usr==null){
+            throw new RuntimeException("Usuario No puede ser null");
+        }
         this.val = val;
         this.usr = usr;
     }
@@ -26,16 +29,15 @@ public class Valoracion {
     public Usuario getUsr() {
         return usr;
     }
-
-    public void setUsr(Usuario usr) {
-        this.usr = usr;
-    }
     
-    private DtValoracion getDT(){
+    public DtValoracion getDT(){
         DtValoracion dtV = new DtValoracion(this.val, this.usr.getNickname());
         return dtV;
     }
-    private DtValoracion getDT(String nickname){
+    public DtValoracion getDT(String nickname){
+        if(nickname==null){
+            throw new RuntimeException("Nickname No puede ser null");
+        }
         // si esta valoracion corresponde al usuario, devuelve su DT, sino null
         if (nickname.equals(this.usr.getNickname())){
             return this.getDT();
@@ -43,7 +45,13 @@ public class Valoracion {
             return null;
         }
     }
-    private boolean modificar(DtValoracion dtV, String nickname){
+    public boolean modificar(DtValoracion dtV, String nickname){
+        if(dtV==null){
+            throw new RuntimeException("DtValoracion No puede ser null");
+        }
+        if(nickname==null){
+            throw new RuntimeException("Nickname No puede ser null");
+        }
         if (nickname.equals(this.usr.getNickname())){
             this.val = dtV.getVal();
             return true;
