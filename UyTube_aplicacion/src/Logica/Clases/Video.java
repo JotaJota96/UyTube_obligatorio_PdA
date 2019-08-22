@@ -21,10 +21,13 @@ public class Video {
     private String categoria;
     private int cantLikes = 0;
     private int cantDisLikes = 0;
-    private Map<Integer, Valoracion> valoraciones;
+    private ArrayList<Valoracion> valoraciones;
     private Map<Integer, Comentario> comentarios;
     private static int idActual = 1;
     
+    public Video(){
+        
+    }
     /********************** Constructor *********************/
     public Video(int _id, String _nombre, String _descripcion,Time _duracion, Date _fechaPublicacion,String _urlVideoOriginal,String _categoria ){
         this.id = _id;
@@ -34,20 +37,34 @@ public class Video {
         this.fechaPublicacion = _fechaPublicacion;
         this.urlVideoOriginal = _urlVideoOriginal;    
         this.categoria = _categoria;
-        this.valoraciones = new TreeMap<Integer, Valoracion>();
+        this.valoraciones = new ArrayList<Valoracion>();
         this.comentarios = new TreeMap<Integer, Comentario>();        
     }
     
+    /** Agregar un nuevo comentario **/
     public void agregarComentario(DtComentario dtComentario, Usuario usuario){
-        
+        int nuevoId = Comentario.getNuevoID();
+        Comentario nuevoComentario = new Comentario(nuevoId, dtComentario.getFecha(), dtComentario.getTexto(), 0, usuario);
+        comentarios.put(nuevoId, nuevoComentario);
     }
     
+    /*  Agregar un subcomentario a un comentario existente  */
     public void agregarComentario(int idCom, DtComentario dtComentario, Usuario usuario){
-        
+        for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {
+            if(coment.getValue().agregarSubComentario(idCom, dtComentario, usuario)){
+                break;
+            }
+        }
     }
     
+    /* Agrega o midifica una valoración */
     public void agregarModificarValoracion(DtValoracion dtValoracion, Usuario usuario){
-        
+        String nickname = usuario.getNickname();
+        for(Valoracion val: valoraciones){
+            if(val.modificar(dtValoracion, nickname)){
+                break;
+            }
+        }
     }
     
     public DtVideo getDt(){
@@ -55,22 +72,61 @@ public class Video {
     }
     
     public ArrayList<DtComentario> listarComentarios(){
-        // provisorio
-        return new ArrayList();
+        ArrayList<DtComentario> listaComent = new ArrayList<DtComentario>();        
+        for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {            
+            DtComentario dtComent = new DtComentario(coment.getValue().getId(), coment.getValue().getUsr().getNickname(), coment.getValue().getFecha(), coment.getValue().getTexto(), coment.getValue().getNivelSubComentario());
+            listaComent.add(dtComent);            
+        }
+        return listaComent;
     }
    
     public ArrayList<DtValoracion> listarValoraciones(){
-        // provisorio
-        return new ArrayList();
-        
+        ArrayList<DtValoracion> listaValoraciones = new ArrayList<DtValoracion>();
+        for(Valoracion val: valoraciones){
+            listaValoraciones.add(new DtValoracion(val.getVal(), val.getUsr().getNickname()));
+        }
+        return listaValoraciones;        
     }
     
     public void modificar(DtVideo dtVideo){
+        if(dtVideo == null){
+            throw new RuntimeException("El DtVideo es vacío");
+        }
+        // Perdon julio pero no entendi nada xD
+        
+        if(dtVideo.getNombre()== ""){
+            throw new RuntimeException("El nombre no puede ser vacío");
+        } 
+        
+        if (dtVideo.getDescripcion() == "") {
+            throw new RuntimeException("La descripcion no puede ser vacía");
+        }
+        
+        if (dtVideo.getFechaPublicacion() == null) {
+            throw new RuntimeException("La fecha no puede ser vacía");
+        }
+        
+        if (dtVideo.getCategoria() == "") {
+            throw new RuntimeException("La categoria no puede ser vacía");
+        }
+        
+        this.nombre = dtVideo.getNombre();
+        this.descripcion = dtVideo.getDescripcion();
+        this.duracion = dtVideo.getDuracion();
+        this.fechaPublicacion = dtVideo.getFechaPublicacion();
+        this.privacidad = dtVideo.getPrivacidad();
+        this.categoria = dtVideo.getCategoria();
         
     }
     
+    /*   Obtiene la valoracion que hizo un usuario */
     public DtValoracion obtenerValoracion(String nickname){
-        // provisorio
+        for(Valoracion val: valoraciones){
+            if( val.getUsr().getNickname() == nickname){
+                DtValoracion dtValoracion = new DtValoracion(val.getVal(), val.getUsr().getNickname());
+                return dtValoracion;
+            }
+        }
         return new DtValoracion();
     }
     
