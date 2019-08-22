@@ -5,7 +5,6 @@ import Logica.DataType.DtVideo;
 import java.sql.Time;
 import java.sql.Date;
 import Logica.Enumerados.Privacidad;
-import Logica.Enumerados.TipoValoracion;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -82,9 +81,11 @@ public class Video {
     }
    
     public ArrayList<DtValoracion> listarValoraciones(){
-        // provisorio
-        return new ArrayList();
-        
+        ArrayList<DtValoracion> listaValoraciones = new ArrayList<DtValoracion>();
+        for(Valoracion val: valoraciones){
+            listaValoraciones.add(new DtValoracion(val.getVal(), val.getUsr().getNickname()));
+        }
+        return listaValoraciones;        
     }
     
     public void modificar(DtVideo dtVideo){
