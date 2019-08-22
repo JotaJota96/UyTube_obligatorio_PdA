@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 public class ListaDeReproduccion {
     private static int contadorListasDeReproduccion = 1;
-    private static ArrayList<String> nombresListasPorDefecto = new ArrayList(Arrays.asList("UNDEFINED"));
+    private static ArrayList<String> nombresListasPorDefecto = new ArrayList(Arrays.asList("Ver mas tarde"));
     
     private int id;
     private String nombre;
