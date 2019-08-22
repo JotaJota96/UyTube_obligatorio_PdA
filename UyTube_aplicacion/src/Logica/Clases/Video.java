@@ -5,6 +5,7 @@ import Logica.DataType.DtVideo;
 import java.sql.Time;
 import java.sql.Date;
 import Logica.Enumerados.Privacidad;
+import Logica.Enumerados.TipoValoracion;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -92,6 +93,12 @@ public class Video {
     
     /*   Sin terminar */
     public DtValoracion obtenerValoracion(String nickname){
+        for(Valoracion val: valoraciones){
+            if( val.getUsr().getNickname() == nickname){
+                DtValoracion dtValoracion = new DtValoracion(val.getVal(), val.getUsr().getNickname());
+                return dtValoracion;
+            }
+        }
         return new DtValoracion();
     }
     
