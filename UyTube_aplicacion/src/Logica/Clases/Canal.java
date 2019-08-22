@@ -75,6 +75,7 @@ public class Canal {
      return contadorCanal++;
  }
 public void actualizarListasPorDefecto(){}
+
 public void agregarComentarioAVideo(int id, DtComentario comentario, Usuario usuario){
     this.misVideos.get(id).agregarComentario(comentario, usuario);
 }
@@ -82,20 +83,23 @@ public void agregarComentarioAVideo(int id, int idComentario, DtComentario comen
     this.misVideos.get(id).agregarComentario(idComentario, comentario, usuario);
 }
 public void agregarListaParticular(DtListaDeReproduccion listaReproduccion){
-    int id = ListaDeReproduccion.getNuevoId();
-    ListaDeReproduccion ldr = new ListaDeReproduccion(id, listaReproduccion.getNombre(), listaReproduccion.getPrivacidad(),listaReproduccion.getTipo(), listaReproduccion.getCategoria());
-    this.misListas.put(id, ldr);
+    int idLdr = ListaDeReproduccion.getNuevoId();
+    ListaDeReproduccion ldr = new ListaDeReproduccion(idLdr, listaReproduccion.getNombre(), listaReproduccion.getPrivacidad(),listaReproduccion.getTipo(), listaReproduccion.getCategoria());
+    this.misListas.put(idLdr, ldr);
 }
-public void quitarValoracion(int id, String nickname){
-    
-}
+
+
+//Aun no está implementada en la clase Video
+//public void quitarValoracion(int id, String nickname){
+   // this.misVideos.get(id).quitarValoracion();
+//}
 public void agregarModificarValoracion(int id, DtValoracion valoracion, Usuario usuario){
     this.misVideos.get(id).agregarModificarValoracion(valoracion, usuario);
 }
 public void agregarVideo(DtVideo video){
-    int id = Video.getNuevoId();
-    Video vd = new Video(id, video.getNombre(), video.getDescripcion(), video.getDuracion(), video.getFechaPublicacion(), video.getUrlVideoOriginal(), video.getCategoria());
-    this.misVideos.put(id, vd);
+    int idVideo = Video.getNuevoId();
+    Video vd = new Video(idVideo, video.getNombre(), video.getDescripcion(), video.getDuracion(), video.getFechaPublicacion(), video.getUrlVideoOriginal(), video.getCategoria());
+    this.misVideos.put(idVideo, vd);
 }
 public void agregarVideoALista(int id, Video video){
     this.misListas.get(video.getId()).agregarVideoA(video);
@@ -113,15 +117,7 @@ public ArrayList<DtComentario> listarComentariosDeVideo(int id){
 public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(boolean x){
      ArrayList<DtListaDeReproduccion> ret = new ArrayList();
         
-        // para cada elemento en misVideos
-        /**
-         * este for no es normal, se declara la variable m que es de tipo
-         * Entrada de Map (como un nodo arbol), y autmaticamente la hace avanzar
-         * por todas las entradas de la coleccion.
-         * De la entrada actual se puede obtener la Key y el Valor almacenado
-         */
         for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()){
-            // hace un getDT y lo agrega a la coleccion de retorno
             ret.add(m.getValue().getDt());
         }
         
@@ -160,23 +156,62 @@ public void modificar(DtCanal canal){
 public void modificarListaDeReproduccion(DtListaDeReproduccion ldr){
         this.misListas.get(ldr.getId()).modificar(ldr);
 }
-public void modificarVideo(DtVideo video){} 
+public void modificarVideo(DtVideo video){
+    this.misVideos.get(video.getId()).modificar(video);
+} 
 public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat){
-    return new ArrayList();
+ArrayList<DtListaDeReproduccion> ret = new ArrayList();
+        
+        // para cada elemento en misVideos
+        /**
+         * este for no es normal, se declara la variable m que es de tipo
+         * Entrada de Map (como un nodo arbol), y autmaticamente la hace avanzar
+         * por todas las entradas de la coleccion.
+         * De la entrada actual se puede obtener la Key y el Valor almacenado
+         */
+        for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()){
+            // hace un getDT y lo agrega a la coleccion de retorno
+            if(misListas.get(m.getValue()).getCategoria().equals(cat)){
+            ret.add(m.getValue().getDt());
+            }
+        }
+        
+        return ret;
 }
 public DtVideo obtenerDtVideo(int id){
     return this.misVideos.get(id).getDt();
 }
 public Video obtenerVideo(int id){
+   return this.misVideos.get(id);
 }
-  //  return new Video();
-//}
 public ArrayList<DtVideo> obtenerVideosEnCategoria(String cat){
-    return new ArrayList();
+  ArrayList<DtVideo> ret = new ArrayList();
+        
+        // para cada elemento en misVideos
+        /**
+         * este for no es normal, se declara la variable m que es de tipo
+         * Entrada de Map (como un nodo arbol), y autmaticamente la hace avanzar
+         * por todas las entradas de la coleccion.
+         * De la entrada actual se puede obtener la Key y el Valor almacenado
+         */
+        for (Map.Entry<Integer, Video> m : misVideos.entrySet()){
+            // hace un getDT y lo agrega a la coleccion de retorno
+            if(misVideos.get(m.getValue()).getCategoria().equals(cat)){
+            ret.add(m.getValue().getDt());
+            }
+        }
+        
+        return ret;
 }
-public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){}
-public boolean validarListaParticular(String lista){
-    return false;
+public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){
+    this.misListas.get(idLista).quitarVideo(idVideo);
+}
+public boolean validarListaParticular(int idLista){
+    return this.misListas.get(idLista).getTipo().toString().equals("PARTICULAR");
+}
+
+public DtValoracion obtenerValoracion(int id, String nickname){
+    return this.misVideos.get(id).obtenerValoracion(nickname);
 }
 
 }
