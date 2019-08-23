@@ -132,6 +132,13 @@ public class Canal {
             throw new RuntimeException("La categoria no puede ser vacia");
         }
         
+         // un canal no puede tener dos videos con el mismo nomre
+         for (Map.Entry<Integer, ListaDeReproduccion> v : misListas.entrySet()){
+             if (v.getValue().getNombre().equals(listaReproduccion.getNombre())){
+                 throw new RuntimeException("El canal ya posee una lista de reproduccion con ese nombre");
+             }
+         }
+         
         ListaDeReproduccion ldr = new ListaDeReproduccion(
                 idLdr, 
                 listaReproduccion.getNombre(), 
@@ -283,6 +290,9 @@ public class Canal {
             for (Map.Entry<Integer, Video> m : misVideos.entrySet()) {
                 m.getValue().setPrivacidad(Privacidad.PRIVADO);
             }
+            for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
+                m.getValue().setPrivacidad(Privacidad.PRIVADO);
+            }
         }
         
         this.nombre = canal.getNombre();
@@ -291,6 +301,9 @@ public class Canal {
     }
 
     public void modificarListaDeReproduccion(DtListaDeReproduccion ldr) {
+        if (ldr == null) {
+            throw new RuntimeException("El Datatype de la lista de reprodccion es null");
+        }
         if (this.misListas.containsKey(ldr.getId())) {
             
             if (this.privacidad == Privacidad.PRIVADO && ldr.getPrivacidad() == Privacidad.PUBLICO){
@@ -304,6 +317,10 @@ public class Canal {
     }
 
     public void modificarVideo(DtVideo video) {
+        if(video== null){
+            throw new RuntimeException("El Datatype del video es null");
+        }
+        
         if (this.misVideos.containsKey(video.getId())) {
             
             if (this.privacidad == Privacidad.PRIVADO && video.getPrivacidad() == Privacidad.PUBLICO){
