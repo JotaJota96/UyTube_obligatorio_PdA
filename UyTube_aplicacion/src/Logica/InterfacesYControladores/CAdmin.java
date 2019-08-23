@@ -3,6 +3,7 @@
  */
 package Logica.InterfacesYControladores;
 
+import Logica.Clases.Administrador;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtListaDeReproduccion;
@@ -10,6 +11,8 @@ import Logica.DataType.DtUsuario;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import java.util.ArrayList;
+import Logica.Clases.Usuario;
+import java.util.Map;
 
 /**
  *
@@ -17,6 +20,8 @@ import java.util.ArrayList;
  */
 public class CAdmin implements IAdmin{
     private static CAdmin instancia;
+    private Map<String, Usuario> usuarios;
+    private Map<String, Administrador> administradores ;
     
     private CAdmin(){
         
