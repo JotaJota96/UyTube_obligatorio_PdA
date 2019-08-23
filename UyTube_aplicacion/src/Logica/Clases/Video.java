@@ -26,7 +26,7 @@ public class Video {
     private static int idActual = 1;
     
     public Video(){
-        
+
     }
     /********************** Constructor *********************/
     public Video(int _id, String _nombre, String _descripcion,Time _duracion, Date _fechaPublicacion,String _urlVideoOriginal,String _categoria ){
@@ -141,7 +141,7 @@ public class Video {
     
     
     public static int getNuevoId(){
-        int nuevoId = idActual ++;
+        int nuevoId = idActual++;
         return nuevoId;        
     }
     

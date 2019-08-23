@@ -41,7 +41,7 @@ public class ListaDeReproduccion {
     public static int getNuevoId() {
         return contadorListasDeReproduccion++;
     }
-    public static void agregarCategoria(String cat) {
+    public static void agregarListaPorDefecto(String cat) {
         if (cat.equals("")){
             throw new RuntimeException("No se puede agregar una categoria vacia");
         }
