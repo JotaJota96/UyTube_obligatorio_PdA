@@ -161,7 +161,7 @@ public class Usuario extends Persona{
             throw new RuntimeException("El usuario no puede ser null");
         }
         
-        this.agregarVideoALista(idLista, idVideo, Usu);
+        this.MiCanal.agregarVideoALista(idLista, Usu.obtenerVideo(idVideo));
     }
     
     public ArrayList<DtComentario> listarComentariosDeVideo(int idVideo){
