@@ -65,6 +65,10 @@ public class ListaDeReproduccion {
         return privacidad;
     }
 
+    public void setPrivacidad(Privacidad privacidad) {
+        this.privacidad = privacidad;
+    }
+
     public TipoListaDeReproduccion getTipo() {
         return tipo;
     }
