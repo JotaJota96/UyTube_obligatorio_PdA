@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 public class ListaDeReproduccion {
     private static int contadorListasDeReproduccion = 1;
-    private static ArrayList<String> nombresListasPorDefecto = new ArrayList(Arrays.asList("UNDEFINED"));
+    private static ArrayList<String> nombresListasPorDefecto = new ArrayList(Arrays.asList("Ver mas tarde"));
     
     private int id;
     private String nombre;
@@ -41,7 +41,7 @@ public class ListaDeReproduccion {
     public static int getNuevoId() {
         return contadorListasDeReproduccion++;
     }
-    public static void agregarCategoria(String cat) {
+    public static void agregarListaPorDefecto(String cat) {
         if (cat.equals("")){
             throw new RuntimeException("No se puede agregar una categoria vacia");
         }
@@ -63,6 +63,10 @@ public class ListaDeReproduccion {
 
     public Privacidad getPrivacidad() {
         return privacidad;
+    }
+
+    public void setPrivacidad(Privacidad privacidad) {
+        this.privacidad = privacidad;
     }
 
     public TipoListaDeReproduccion getTipo() {

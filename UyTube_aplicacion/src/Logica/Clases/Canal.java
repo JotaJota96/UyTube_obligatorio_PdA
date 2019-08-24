@@ -21,20 +21,23 @@ public class Canal {
     private Map<Integer, ListaDeReproduccion> misListas;
     private Map<Integer, Video> misVideos;
 
-    public Canal() {
-        this.id = getNuevoId();
-        this.misListas = new TreeMap();
-        this.misVideos = new TreeMap();
-    }
-
     public Canal(int id, String nombre, String descripcion, Privacidad privacidad) {
+        if (nombre.equals("")){
+            throw new RuntimeException("El nombre del canal no puede ser vacio");
+        }
+        
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.privacidad = privacidad;
         this.misListas = new TreeMap();
         this.misVideos = new TreeMap();
-
+        
+        ArrayList<String> listas = ListaDeReproduccion.listarNombresDeListasPorDefecto();
+        for (String lista : listas) {
+            int nuevoID = ListaDeReproduccion.getNuevoId();
+            this.misListas.put(nuevoID, new ListaDeReproduccion(nuevoID, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));
+        }
     }
 
     public int getId() {
@@ -58,6 +61,9 @@ public class Canal {
     }
 
     public void setNombre(String nombre) {
+         if (nombre.equals("")) {
+            throw new RuntimeException("El nombre del canal no puede ser vacio");
+        }
         this.nombre = nombre;
     }
 
@@ -66,6 +72,12 @@ public class Canal {
     }
 
     public void setPrivacidad(Privacidad privacidad) {
+        // Si el canal es publico y se va a cambiar a privado, se deben cambiar a privado todos los videos del canal
+        if (privacidad == Privacidad.PRIVADO){
+            for (Map.Entry<Integer, Video> m : misVideos.entrySet()) {
+                m.getValue().setPrivacidad(Privacidad.PRIVADO);
+            }
+        }
         this.privacidad = privacidad;
     }
 
@@ -73,54 +85,162 @@ public class Canal {
         return contadorCanal++;
     }
 
+    //-----------------------------------------------------------------------------
     public void actualizarListasPorDefecto() {
+        ArrayList<String> listas = ListaDeReproduccion.listarNombresDeListasPorDefecto();
+        
+        for (Map.Entry<Integer, ListaDeReproduccion> l : misListas.entrySet()) {
+            if (l.getValue().getTipo() == TipoListaDeReproduccion.POR_DEFECTO) {
+                listas.remove(l.getValue().getNombre());
+            }
+        }
 
+        for (String lista : listas) {
+            int nuevoID = ListaDeReproduccion.getNuevoId();
+            this.misListas.put(nuevoID, new ListaDeReproduccion(nuevoID, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));
+        }
     }
 
     public void agregarComentarioAVideo(int id, DtComentario comentario, Usuario usuario) {
-        this.misVideos.get(id).agregarComentario(comentario, usuario);
+        if (this.misVideos.containsKey(id)) {
+            this.misVideos.get(id).agregarComentario(comentario, usuario);
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
     }
 
     public void agregarComentarioAVideo(int id, int idComentario, DtComentario comentario, Usuario usuario) {
-        this.misVideos.get(id).agregarComentario(idComentario, comentario, usuario);
+        if (this.misVideos.containsKey(id)) {
+            this.misVideos.get(id).agregarComentario(idComentario, comentario, usuario);
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
     }
 
     public void agregarListaParticular(DtListaDeReproduccion listaReproduccion) {
         int idLdr = ListaDeReproduccion.getNuevoId();
-        ListaDeReproduccion ldr = new ListaDeReproduccion(idLdr, listaReproduccion.getNombre(), listaReproduccion.getPrivacidad(), listaReproduccion.getTipo(), listaReproduccion.getCategoria());
+        if (listaReproduccion == null){
+            throw new RuntimeException("La lista de reprodccion es null");
+        }
+        if (listaReproduccion.getNombre().equals("")){
+            throw new RuntimeException("El nombre no puede ser vacio");
+        }
+        if (this.privacidad == Privacidad.PRIVADO && listaReproduccion.getPrivacidad() == Privacidad.PUBLICO){
+            throw new RuntimeException("No se puede agregar una lista de reproduccion publica a un canal privado");
+        }
+        if (listaReproduccion.getCategoria().equals("")){
+            throw new RuntimeException("La categoria no puede ser vacia");
+        }
+        
+         // un canal no puede tener dos videos con el mismo nomre
+         for (Map.Entry<Integer, ListaDeReproduccion> v : misListas.entrySet()){
+             if (v.getValue().getNombre().equals(listaReproduccion.getNombre())){
+                 throw new RuntimeException("El canal ya posee una lista de reproduccion con ese nombre");
+             }
+         }
+         
+        ListaDeReproduccion ldr = new ListaDeReproduccion(
+                idLdr, 
+                listaReproduccion.getNombre(), 
+                listaReproduccion.getPrivacidad(), 
+                listaReproduccion.getTipo(), 
+                listaReproduccion.getCategoria());
         this.misListas.put(idLdr, ldr);
     }
 
     public void quitarValoracion(int idVideo, String nickname) {
-        this.misVideos.get(idVideo).quitarValoracion(nickname);
+        if (this.misVideos.containsKey(idVideo)) {
+            this.misVideos.get(idVideo).quitarValoracion(nickname);
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
+        
     }
 
     public void agregarModificarValoracion(int id, DtValoracion valoracion, Usuario usuario) {
-        this.misVideos.get(id).agregarModificarValoracion(valoracion, usuario);
+        if (this.misVideos.containsKey(id)) {
+            this.misVideos.get(id).agregarModificarValoracion(valoracion, usuario);
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
+        
     }
 
     public void agregarVideo(DtVideo video) {
+        if(video== null){
+            throw new RuntimeException("El Datatype del video es null");
+        }
+        if (video.getNombre().equals("")){
+            throw new RuntimeException("El nombre no puede ser vacio");
+        }
+        if(video.getDuracion() == null){
+            throw new RuntimeException("La duracion no puede ser null");
+        }
+        if(video.getFechaPublicacion() == null){
+            throw new RuntimeException("La fecha de publicion no puede ser null");
+        }
+         if (video.getUrlVideoOriginal().equals("")){
+            throw new RuntimeException("La direccion URL no puede ser vacia");
+        }
+         if (video.getCategoria().equals("")){
+            throw new RuntimeException("La categoría no puede ser vacía");
+        }
+        
+         // un canal no puede tener dos videos con el mismo nomre
+         for (Map.Entry<Integer, Video> v : misVideos.entrySet()){
+             if (v.getValue().getNombre().equals(video.getNombre())){
+                 throw new RuntimeException("El canal ya posee un video con ese nombre");
+             }
+         }
+         
         int idVideo = Video.getNuevoId();
-        Video vd = new Video(idVideo, video.getNombre(), video.getDescripcion(), video.getDuracion(), video.getFechaPublicacion(), video.getUrlVideoOriginal(), video.getCategoria());
+        Video vd = new Video(idVideo, 
+                video.getNombre(), 
+                video.getDescripcion(), 
+                video.getDuracion(), 
+                video.getFechaPublicacion(), 
+                video.getUrlVideoOriginal(), 
+                video.getCategoria());
+        
+        // si el canal es privado, el video debera serlo tambien
+        // si el canal es publico, el video sera lo definido en el DataType
+         if (this.privacidad == Privacidad.PRIVADO){
+             vd.setPrivacidad(Privacidad.PRIVADO);
+         }
+        
         this.misVideos.put(idVideo, vd);
     }
 
     public void agregarVideoALista(int id, Video video) {
-        this.misListas.get(video.getId()).agregarVideoA(video);
+        if (this.misListas.containsKey(id)) {
+            this.misListas.get(id).agregarVideoA(video);
+        } else {
+            throw new RuntimeException("La lista no pertenece al canal");
+        }
     }
 
     public DtCanal getDT() {
-        return new DtCanal(this.id, this.nombre, this.descripcion, this.privacidad);
+        return new DtCanal(this.id, 
+                this.nombre, 
+                this.descripcion, 
+                this.privacidad);
     }
 
     public ArrayList<DtComentario> listarComentariosDeVideo(int id) {
-        return this.misVideos.get(id).listarComentarios();
+        if (this.misVideos.containsKey(id)) {
+            return this.misVideos.get(id).listarComentarios();
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
     }
 
-    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(boolean x) {
+    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(boolean porDefecto) {
         ArrayList<DtListaDeReproduccion> ret = new ArrayList();
-
+        
         for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
+            if(porDefecto && m.getValue().getTipo()==TipoListaDeReproduccion.PARTICULAR){
+                continue;
+            }
             ret.add(m.getValue().getDt());
         }
 
@@ -128,8 +248,11 @@ public class Canal {
     }
 
     public ArrayList<DtValoracion> listarValoracionesDeVideo(int id) {
-        return this.misVideos.get(id).listarValoraciones();
-
+        if (this.misVideos.containsKey(id)) {
+            return this.misVideos.get(id).listarValoraciones();
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
     }
 
     public ArrayList<DtVideo> listarVideos() {
@@ -146,26 +269,68 @@ public class Canal {
             // hace un getDT y lo agrega a la coleccion de retorno
             ret.add(m.getValue().getDt());
         }
-
         return ret;
     }
 
     public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id) {
-        return this.misListas.get(id).listarVideos();
+        if (this.misListas.containsKey(id)) {
+            return this.misListas.get(id).listarVideos();
+        } else {
+            throw new RuntimeException("La lista de reproduccion no pertenece al canal");
+        }
     }
 
     public void modificar(DtCanal canal) {
+        if (canal.getNombre().equals("")) {
+            throw new RuntimeException("El nombre no puede ser vacio");
+        }
+        
+        // Si el canal es publico y se va a cambiar a privado, se deben cambiar a privado todos los videos del canal
+        if (this.privacidad == Privacidad.PUBLICO && canal.getPrivacidad() == Privacidad.PRIVADO){
+            for (Map.Entry<Integer, Video> m : misVideos.entrySet()) {
+                m.getValue().setPrivacidad(Privacidad.PRIVADO);
+            }
+            for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
+                m.getValue().setPrivacidad(Privacidad.PRIVADO);
+            }
+        }
+        
         this.nombre = canal.getNombre();
         this.descripcion = canal.getDescripcion();
         this.privacidad = canal.getPrivacidad();
     }
 
     public void modificarListaDeReproduccion(DtListaDeReproduccion ldr) {
-        this.misListas.get(ldr.getId()).modificar(ldr);
+        if (ldr == null) {
+            throw new RuntimeException("El Datatype de la lista de reprodccion es null");
+        }
+        if (this.misListas.containsKey(ldr.getId())) {
+            
+            if (this.privacidad == Privacidad.PRIVADO && ldr.getPrivacidad() == Privacidad.PUBLICO){
+                throw new RuntimeException("No se puede hacer publica una lista de reproduccion de un canal privado");
+            }
+            
+            this.misListas.get(ldr.getId()).modificar(ldr);
+        } else {
+            throw new RuntimeException("La lista de reproduccion no pertenece al canal");
+        }
     }
 
     public void modificarVideo(DtVideo video) {
-        this.misVideos.get(video.getId()).modificar(video);
+        if(video== null){
+            throw new RuntimeException("El Datatype del video es null");
+        }
+        
+        if (this.misVideos.containsKey(video.getId())) {
+            
+            if (this.privacidad == Privacidad.PRIVADO && video.getPrivacidad() == Privacidad.PUBLICO){
+                throw new RuntimeException("No se puede hacer publico un video de un canal privado");
+            }
+            
+            this.misVideos.get(video.getId()).modificar(video);
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
     }
 
     public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat) {
@@ -180,20 +345,28 @@ public class Canal {
          */
         for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
             // hace un getDT y lo agrega a la coleccion de retorno
-            if (misListas.get(m.getValue()).getCategoria().equals(cat)) {
+            if (m.getValue().getCategoria().equals(cat)) {
                 ret.add(m.getValue().getDt());
             }
         }
-
+        
         return ret;
     }
 
     public DtVideo obtenerDtVideo(int id) {
-        return this.misVideos.get(id).getDt();
+        if (this.misVideos.containsKey(id)) {
+            return this.misVideos.get(id).getDt();
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
     }
 
     public Video obtenerVideo(int id) {
-        return this.misVideos.get(id);
+        if (this.misVideos.containsKey(id)) {
+            return this.misVideos.get(id);
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
     }
 
     public ArrayList<DtVideo> obtenerVideosEnCategoria(String cat) {
@@ -208,22 +381,25 @@ public class Canal {
          */
         for (Map.Entry<Integer, Video> m : misVideos.entrySet()) {
             // hace un getDT y lo agrega a la coleccion de retorno
-            if (misVideos.get(m.getValue()).getCategoria().equals(cat)) {
+            if (m.getValue().getCategoria().equals(cat)) {
                 ret.add(m.getValue().getDt());
             }
         }
-
+        
         return ret;
     }
 
     public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo) {
-        this.misListas.get(idLista).quitarVideo(idVideo);
+        if (this.misListas.containsKey(idLista)) {
+            this.misListas.get(idLista).quitarVideo(idVideo);
+        } else {
+            throw new RuntimeException("La lista de reproduccion no pertenece al canal");
+        }
     }
 
     public boolean validarListaParticular(String nombreLista) {
-        
         for (Map.Entry<Integer, ListaDeReproduccion> l : misListas.entrySet()) {
-            if (l.getValue().getNombre().equals(nombreLista)){
+            if (l.getValue().getTipo() == TipoListaDeReproduccion.PARTICULAR && l.getValue().getNombre().equals(nombreLista)){
                 return true;
             }
         }
@@ -231,7 +407,11 @@ public class Canal {
     }
 
     public DtValoracion obtenerValoracion(int id, String nickname) {
-        return this.misVideos.get(id).obtenerValoracion(nickname);
+        if (this.misVideos.containsKey(id)) {
+            return this.misVideos.get(id).obtenerValoracion(nickname);
+        } else {
+            throw new RuntimeException("El video no pertenece al canal");
+        }
     }
 
 }
