@@ -269,6 +269,10 @@ existeEmail(mail:string):boolean
 	// Verifica si existe un usuario con el mail recibido
 existeNickname(nickname:string):boolean
 	// Verifica si existe un usuario con el nickname recibido
+iniciarSesionAdministrador(idAdmin:int, pass:string):bool
+	// Verifica los datos del administrador y devuelve true si son correctos
+iniciarSesionUsuario(nickname:string, pass:string):bool
+	// Verifica los datos del usuario y devuelve true si son correctos
 liberarMemoriaListaDeReproduccion():void
 	// El sistema libera la memoria de idListaSeleccionada
 liberarMemoriaUsuario():void
@@ -332,20 +336,3 @@ validarNuevaListaParticular(nombre:string):bool
 	// Devuelve true si usuarioSeleccionado posee una lista de reproducion con ese nombre
 validarNuevaListaPorDefecto(nombre:string):bool
 	// Devuelve true si existe algun usuario en el sistema que posea una lista de reproduccion con ese nombre
-
-
-
-
-
-
-//
-Agregar funciones para liberar memoria
-Agregar ID a todas las clases
-Agregar nivel de Sub-Comentario
-Agregar Administrador al modelo de dominio
-El sistema tendra dos usuarios actuales
-El sistema tendra una coleccion de administradores
-se requerira login de administrador
-En DTCComentario va el nick del usuario que lo hizo
-idem para valoracion
-
