@@ -1,20 +1,17 @@
 package Logica.Clases;
 
 public class Persona {
-    String nombre;
-    String apellido;
-    String contrnia;
+    private String nombre;
+    private String apellido;
+    private String contrasenia;
 
-    public Persona(){
-        this.nombre = "";
-        this.apellido = "";
-        this.contrnia = "";
-    }
-
-    public Persona(String nombre, String apellido, String contrnia) {
+    public Persona(String nombre, String apellido, String contrasenia) {
+        if(contrasenia == ""){
+                throw new RuntimeException("La contraseña no puede ser Vacio");
+        }
         this.nombre = nombre;
         this.apellido = apellido;
-        this.contrnia = contrnia;
+        this.contrasenia = contrasenia;
     }
 
     public String getNombre() {
@@ -33,13 +30,16 @@ public class Persona {
         this.apellido = apellido;
     }
 
-    public String getContraseña() {
-        return contrnia;
+    public String getContrasena() {
+        return contrasenia;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contrnia = contraseña;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
     
+    public boolean validarContrasenia(String pass){
+        return this.contrasenia.equals(pass);
+    }
     
 }

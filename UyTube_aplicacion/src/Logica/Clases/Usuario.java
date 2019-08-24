@@ -17,8 +17,6 @@ public class Usuario extends Persona{
     private Map<String, Usuario> seguidos;
     
 
-    public Usuario() {}
-    
     public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido ,DtCanal DTC) {
         super(nombre,apellido,contrasenia);
         
@@ -35,11 +33,6 @@ public class Usuario extends Persona{
         if(correo == ""){
             throw new RuntimeException("El correo no puede ser Vacio");
         }
-        
-        if(contrasenia == ""){
-                throw new RuntimeException("La contraseña no puede ser Vacio");
-        }
-        
         
         this.nickname = nickname;
         this.correo = correo;
@@ -72,7 +65,7 @@ public class Usuario extends Persona{
     }
 
     public DtUsuario getDT(){
-        return new DtUsuario(this.nickname, this.contrnia, this.nombre, this.apellido, this.correo, this.fechaNacimiento, this.imagen, this.seguidores);//Es el otro constructor
+        return new DtUsuario(this.nickname, super.getContrasena(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
     }
     
     public void actualizarListasPorDefecto(){
@@ -124,6 +117,9 @@ public class Usuario extends Persona{
         if(Usu == null){
             throw new RuntimeException("El usuario no puede ser null");
         }
+        if(Usu == this){
+            throw new RuntimeException("Un usuario no se puede seguir a si mismo");
+        }
         
         if (this.seguidos.containsKey(Usu.getNickname())){
             this.seguidos.remove(Usu.getNickname());
@@ -134,7 +130,8 @@ public class Usuario extends Persona{
         Usu.agregarOQuitarSeguidor(this);
     }
     
-    public void agregarOQuitarSeguidor(Usuario Usu){
+    // si, esta si es private, no es un error
+    private void agregarOQuitarSeguidor(Usuario Usu){
         if(Usu == null){
             throw new RuntimeException("El usuario no puede ser null");
         }
@@ -161,7 +158,11 @@ public class Usuario extends Persona{
             throw new RuntimeException("El usuario no puede ser null");
         }
         
-        this.MiCanal.agregarVideoALista(idLista, Usu.obtenerVideo(idVideo));
+        Video v = Usu.obtenerVideo(idVideo);
+        if (v == null){
+            throw new RuntimeException("El video no pertenece al usuario: " + Usu.getNickname());
+        }
+        this.MiCanal.agregarVideoALista(idLista, v);
     }
     
     public ArrayList<DtComentario> listarComentariosDeVideo(int idVideo){
@@ -210,13 +211,16 @@ public class Usuario extends Persona{
         if(DtUsu == null){
             throw new RuntimeException("El usuario no puede ser null");
         }
+        if(DtUsu.getFechaNacimiento() == null){
+            throw new RuntimeException("La fecha no puede ser null");
+        }
         if(DtCanal == null){
             throw new RuntimeException("El canal no puede ser null");
         }
         
-        this.nombre = DtUsu.getNombre();
-        this.apellido = DtUsu.getApellido();
-        this.contrnia = DtUsu.getContrasenia();
+        super.setNombre(DtUsu.getNombre());
+        super.setApellido(DtUsu.getApellido());
+        super.setContrasenia(DtUsu.getContrasenia());
         this.fechaNacimiento = DtUsu.getFechaNacimiento();
         this.imagen = DtUsu.getImagen();
         
@@ -227,7 +231,7 @@ public class Usuario extends Persona{
         if(DtListaDeReproduccion == null){
             throw new RuntimeException("La lista de reproduccion no puede ser null");
         }
-                
+        
         this.MiCanal.modificarListaDeReproduccion(DtListaDeReproduccion);
     }
     
@@ -255,8 +259,7 @@ public class Usuario extends Persona{
             throw new RuntimeException("El nickname no puede ser vacio");
         }
         
-        //return this.MiCanal.obtenerValoracion(id, nickname);
-        return null;//Esto se saca
+        return this.MiCanal.obtenerValoracion(id, nickname);
     }
     
     public Video obtenerVideo(int id){
@@ -293,6 +296,5 @@ public class Usuario extends Persona{
         }
         return this.MiCanal.validarListaParticular(nombre);
     }
-    
 }
 

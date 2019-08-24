@@ -5,12 +5,12 @@ import Logica.DataType.DtVideo;
 import java.sql.Time;
 import java.sql.Date;
 import Logica.Enumerados.Privacidad;
+import Logica.Enumerados.TipoValoracion;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Video {
-    
+public class Video {    
     private int id;
     private String nombre;
     private String descripcion;
@@ -30,6 +30,12 @@ public class Video {
     }
     /********************** Constructor *********************/
     public Video(int _id, String _nombre, String _descripcion,Time _duracion, Date _fechaPublicacion,String _urlVideoOriginal,String _categoria ){
+        if( _id < 0){ throw new RuntimeException("Error, el id del video es un negativo o cero."); }
+        if( _nombre == ""){ throw new RuntimeException("Error, el nombre del video está vacío");}
+        if( _duracion == null){ throw new RuntimeException("Error, la duración del video es null.");}
+        if( _fechaPublicacion == null){ throw new RuntimeException("Error, la fecha de publicación del video es null.");}
+        if( _urlVideoOriginal == ""){ throw new RuntimeException("Error, la url del video está vacía.");}
+        if( _categoria == "" ){ throw new RuntimeException("Error, la descripción del video está vacía.");}
         this.id = _id;
         this.nombre = _nombre;
         this.descripcion = _descripcion;
@@ -43,6 +49,13 @@ public class Video {
     
     /** Agregar un nuevo comentario **/
     public void agregarComentario(DtComentario dtComentario, Usuario usuario){
+        if (dtComentario == null){
+            throw new RuntimeException("El DataType es null");
+        }
+        if (usuario == null){
+            throw new RuntimeException("El usuario es null");
+        }
+        
         int nuevoId = Comentario.getNuevoID();
         Comentario nuevoComentario = new Comentario(nuevoId, dtComentario.getFecha(), dtComentario.getTexto(), 0, usuario);
         comentarios.put(nuevoId, nuevoComentario);
@@ -50,6 +63,13 @@ public class Video {
     
     /*  Agregar un subcomentario a un comentario existente  */
     public void agregarComentario(int idCom, DtComentario dtComentario, Usuario usuario){
+        if (dtComentario == null){
+            throw new RuntimeException("El DataType es null");
+        }
+        if (usuario == null){
+            throw new RuntimeException("El usuario es null");
+        }
+        
         for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {
             if(coment.getValue().agregarSubComentario(idCom, dtComentario, usuario)){
                 break;
@@ -58,24 +78,58 @@ public class Video {
     }
     
     /* Agrega o midifica una valoración */
-    public void agregarModificarValoracion(DtValoracion dtValoracion, Usuario usuario){
-        String nickname = usuario.getNickname();
-        for(Valoracion val: valoraciones){
-            if(val.modificar(dtValoracion, nickname)){
-                break;
-            }
+    public void agregarModificarValoracion(DtValoracion dtValoracion, Usuario usuario) {
+        if (dtValoracion == null) {
+            throw new RuntimeException("El DataType es null");
         }
+        if (usuario == null){
+            throw new RuntimeException("El usuario es null");
+        }
+        
+        String nickname = usuario.getNickname();
+        // por las dudas, para que los contadores de likes no queden inconsistentes:
+        // obtengo la valoracion que le habia dado antes el usuario (si es que lo habia alorado)
+        DtValoracion dtv = this.obtenerValoracion(nickname);
+        // si el usuario ya lo valoro
+        if (dtv != null) {
+            // segun cual fuera la valoracion anterior, resta 1 al contador
+            if (dtv.getVal() == TipoValoracion.LIKE) {
+                cantLikes--;
+            } else {
+                cantDisLikes--;
+            }
+
+            for (Valoracion val : valoraciones) {
+                if (val.modificar(dtValoracion, nickname)) {
+                    break;
+                }
+            }
+        } else {
+            Valoracion nuevaValoracion = new Valoracion(dtValoracion.getVal(), usuario);
+            valoraciones.add(nuevaValoracion);
+        }
+
+        // segun cual sea la nueva valoracion, suma 1 al contador
+        if (dtValoracion.getVal() == TipoValoracion.LIKE) {
+            cantLikes++;
+        } else {
+            cantDisLikes++;
+        }
+
     }
-    
+
     public DtVideo getDt(){
         return new DtVideo(this.id, this.nombre, this.descripcion, this.duracion, this.fechaPublicacion, this.urlVideoOriginal, this.privacidad, this.categoria, this.cantLikes, this.cantDisLikes);
     }
     
     public ArrayList<DtComentario> listarComentarios(){
-        ArrayList<DtComentario> listaComent = new ArrayList<DtComentario>();        
-        for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {            
-            DtComentario dtComent = new DtComentario(coment.getValue().getId(), coment.getValue().getUsr().getNickname(), coment.getValue().getFecha(), coment.getValue().getTexto(), coment.getValue().getNivelSubComentario());
-            listaComent.add(dtComent);            
+        ArrayList<DtComentario> listaComent = new ArrayList<DtComentario>();
+        // recorro los comentarios sobre el video
+        for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {
+            // le obtengo el DT y lo agrego a la lista resultado
+            listaComent.add(coment.getValue().getDT());
+            // agrego a la lista resultado, la lista de sub comentarios
+            listaComent.addAll(coment.getValue().listarSubComentarios());
         }
         return listaComent;
     }
@@ -100,8 +154,8 @@ public class Video {
             throw new RuntimeException("El nombre no puede ser vacío");
         } 
         
-        if (dtVideo.getDescripcion() == "") {
-            throw new RuntimeException("La descripcion no puede ser vacía");
+        if (dtVideo.getDuracion()== null) {
+            throw new RuntimeException("La duracion no puede ser vacía");
         }
         
         if (dtVideo.getFechaPublicacion() == null) {
@@ -122,13 +176,16 @@ public class Video {
     }
     
     /*   Obtiene la valoracion que hizo un usuario */
-    public DtValoracion obtenerValoracion(String nickname){
+    public DtValoracion obtenerValoracion(String nickname) {
+        if (nickname.equals("")) {
+            throw new RuntimeException("El nickname no puede ser vacio");
+        }
         for(int i = 0; i < this.valoraciones.size(); i++){
             if( valoraciones.get(i).getNicknameDeUsuario() == nickname){
                 return valoraciones.get(i).getDT();
             }
         }
-        return new DtValoracion();
+        return null;
     }
     
     public void quitarValoracion(String nickname){
@@ -137,6 +194,21 @@ public class Video {
         }
         // Recorrer todas las valoraciones hasta encontrar la valoracion cuyo usuario sea el que tiene ese nickname
         // cuando la encuentre, la saca de la coleccion
+        for(int i = 0; i < this.valoraciones.size(); i++){
+            if(valoraciones.get(i).getNicknameDeUsuario().equals(nickname) ){
+
+                // segun cual fuera la valoracion anterior, resta 1 al contador
+                if (valoraciones.get(i).getVal() == TipoValoracion.LIKE) {
+                    cantLikes--;
+                } else {
+                    cantDisLikes--;
+                }
+                
+                // remueve de la coleccion
+                valoraciones.remove(i);
+                break;
+            }
+        }
     }
     
     
