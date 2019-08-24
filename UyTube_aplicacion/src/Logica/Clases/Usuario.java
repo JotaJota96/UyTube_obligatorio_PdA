@@ -246,6 +246,12 @@ public class Usuario extends Persona{
         return this.MiCanal.getDT();
     }
     
+    
+    public DtListaDeReproduccion obtenerListaDeReproduccion(int id){
+        return MiCanal.obtenerListaDeReproduccion(id);
+    }
+    
+    
     public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat){
         if(cat == ""){
             throw new RuntimeException("La categoria no puede ser vacia");

@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Logica.InterfacesYControladores;
 import Logica.DataType.*;
 import java.util.ArrayList;
 
 
-/**
- *
- * @author administrador
- */
 public interface IAdmin {
     public void agregarVideoAListaDeReproduccion();
     public void altaCategoria(String categoria);
@@ -25,9 +17,15 @@ public interface IAdmin {
     public boolean existeCategoria(String cat);
     public boolean existeEmail(String email);
     public boolean existeNickname(String nickname);
+    public boolean iniciarSesionAdministrador(int id, String pass);
+    //public boolean iniciarSesionUsuario(String nickname, String pass); // el admin no necesita esta funcion, pero la pongo comentada porque puedo
+    public void liberarMemoriaListaDeReproduccion();
+    public void liberarMemoriaUsuario();
+    public void liberarMemoriaUsuarioActual();
+    public void liberarMemoriaVideo();
     public ArrayList<String> listarCategorias();
     public ArrayList<DtComentario> listarComentariosDeVideo();
-    public ArrayList<DtVideo> listarListasDeReproduccionEnCategoria(String cat);
+    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionEnCategoria(String cat);
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeUsuario(String nickname);
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionParticularesDeUsuario();
     public ArrayList<DtUsuario> listarUsuarioSeguidores();

@@ -1,9 +1,9 @@
-/*
- Controlador para la interfaz de administrador Idmin
- */
+
 package Logica.InterfacesYControladores;
 
 import Logica.Clases.Administrador;
+import Logica.Clases.Categoria;
+import Logica.Clases.ListaDeReproduccion;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtListaDeReproduccion;
@@ -12,20 +12,31 @@ import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import java.util.ArrayList;
 import Logica.Clases.Usuario;
+import Logica.Enumerados.Privacidad;
+import Logica.Enumerados.TipoListaDeReproduccion;
 import java.util.Map;
+import java.util.TreeMap;
 
-/**
- *
- * @author administrador
- */
+
 public class CAdmin implements IAdmin{
-    private static CAdmin instancia;
+    private static CAdmin instancia = null;
     private Map<String, Usuario> usuarios;
     private Map<String, Administrador> administradores;
-   
+    private Map<String, Categoria> categorias;
+    private Usuario usuarioActual;
+    private Usuario usuarioSeleccionado;
+    private int idListaSeleccionada;
+    private int idVideoSeleccionado;
+
     
     private CAdmin(){
-        
+        this.usuarios = new TreeMap();
+        this.administradores = new TreeMap();
+        this.categorias = new TreeMap();
+        this.usuarioActual = null;
+        this.usuarioSeleccionado = null;
+        this.idListaSeleccionada = 0;
+        this.idVideoSeleccionado = 0;
     }
     
     public static CAdmin getInstancia(){
@@ -36,154 +47,581 @@ public class CAdmin implements IAdmin{
     }
     
     public void agregarVideoAListaDeReproduccion(){
-        
+        /**
+         * Agrega el video idVideoSeleccionado a la lista idListaSeleccionada
+         */
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (usuarioActual == null){
+            throw new RuntimeException("El sistema no tiene un usuario actual seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        if (idListaSeleccionada == 0){
+            throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
+        }
+        usuarioActual.agregarVideoALista(idListaSeleccionada, idVideoSeleccionado, usuarioSeleccionado);
     }
     
     public void altaCategoria(String categoria){
-        
+        /**
+         * Crea la categoria con el nombre indicado
+         */
+        if (categoria.equals("")){
+            throw new RuntimeException("El nombre de la categoria no puede ser vacio");
+        }
+        if (existeCategoria(categoria)){
+            throw new RuntimeException("El sistema ya posee una categoria con ese nombre");
+        }
+        categorias.put(categoria, new Categoria(categoria));
     }
     
     public void altaComentario(DtComentario dtCom){
+        /**
+         * Comenta el video idVideoSeleccionado a nombre de usuarioActual
+         */
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (usuarioActual == null){
+            throw new RuntimeException("El sistema no tiene un usuario actual seleccionado");
+        }
+        if (dtCom == null){
+            throw new RuntimeException("El DataType comentario no puede ser null");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        usuarioSeleccionado.agregarComentarioAVideo(idVideoSeleccionado, dtCom, usuarioActual);
         
     }
     
     public void altaComentario(DtComentario dtCom, int idComPadre){
-        
+        /**
+         * Comenta el comentario con dicho ID a nombre de usuarioActual
+         */
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (usuarioActual == null){
+            throw new RuntimeException("El sistema no tiene un usuario actual seleccionado");
+        }
+        if (dtCom == null){
+            throw new RuntimeException("El DataType comentario no puede ser null");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        usuarioSeleccionado.agregarComentarioAVideo(idVideoSeleccionado, idComPadre, dtCom, usuarioActual);
     }
     
     public void altaListaDeReproduccionParticular(DtListaDeReproduccion lista){
-        
+        /**
+         * Crea la lista de reproduccion para usuarioSeleccionado
+         */
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (lista == null){
+            throw new RuntimeException("El DataType lista de reproduccion no puede ser null");
+        }
+        usuarioSeleccionado.agregarListaParticular(lista);
+      
     }
     
     public void altaListaDeReproduccionPorDefecto(DtListaDeReproduccion lista){
+        /**
+         * Crea la lista de reproduccion para todos los usuarios del sistema y 
+         * la agrega listas por defecto (para que se creen al crear un usuario nuevo)
+         */
+        if (lista == null){
+            throw new RuntimeException("El DataType lista de reproduccion no puede ser null");
+        }
+        if (lista.getNombre().equals("")){
+            throw new RuntimeException("El nombre de la nueva lista de reproduccion por defecto no puede ser vacio");
+        }
+        if (ListaDeReproduccion.listarNombresDeListasPorDefecto().contains(lista.getNombre())){
+            throw new RuntimeException("El sistema ya posee una lista de reproduccion por defecto con ese nombre");
+        }
+        ListaDeReproduccion.agregarListaPorDefecto(lista.getNombre());
         
+        for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
+            u.getValue().actualizarListasPorDefecto();
+        }
     }
     
     public void altaUsuarioCanal(DtUsuario usr, DtCanal canal){
+        /**
+         * Crea un usuario y su canal a partir de los datos recibidos
+         */
+        if (usr == null){
+            throw new RuntimeException("El DataType usuario no puede ser null");
+        }
+        if (canal == null){
+            throw new RuntimeException("El DataType canal no puede ser null");
+        }
+        if (existeNickname(usr.getNickname())){
+            throw new RuntimeException("El sistema ya tiene un usuario con ese nickname");
+        }
+        if (existeEmail(usr.getCorreo())){
+            throw new RuntimeException("El sistema ya tiene un usuario con ese correo");
+        }
         
+        Usuario nuevoUsuario = new Usuario(
+                usr.getNickname(), 
+                usr.getCorreo(), 
+                usr.getFechaNacimiento(), 
+                usr.getImagen(), 
+                usr.getContrasenia(), 
+                usr.getNombre(), 
+                usr.getApellido(), 
+                canal);
+        usuarios.put(nuevoUsuario.getNickname(), nuevoUsuario);
     }
     
     public void altaValoracion(DtValoracion val){
-        
+        /**
+	Se ingresa la nueva valoracion dada por usuarioActual al video idVideoSeleccionado
+	Si el usuario ya habia valorado, se actualiza la valoracion dada
+        */
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (usuarioActual == null){
+            throw new RuntimeException("El sistema no tiene un usuario actual seleccionado");
+        }
+        if (val == null){
+            throw new RuntimeException("El DataType Valoracion no puede ser null");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        usuarioSeleccionado.agregarModificarValoracionDeVideo(idVideoSeleccionado, val, usuarioActual);
     }
     
     public void altaVideo(DtVideo video){
-        
+        /**
+         * Se crea un video nuevo en el canal de usuarioSeleccionado
+         */
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (video == null){
+            throw new RuntimeException("El DataType video no puede ser null");
+        }
+        usuarioSeleccionado.agregarVideoACanal(video);
     }
     
     public boolean existeCategoria(String cat){
-        
-        return true;
+        /**
+         * Verifica si existe una categoria con el nombre recibido
+         */
+        return categorias.containsKey(cat);
     }
     
     public boolean existeEmail(String email){
-        return true;
+        /**
+         * Verifica si existe un usuario con el mail recibido
+         */
+        for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
+            if (u.getValue().getCorreo() == email){
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean existeNickname(String nickname){
-        return true;
+        /**
+         * Verifica si existe un usuario con el nickname recibido
+         */
+        return usuarios.containsKey(nickname);
+    }
+    public boolean iniciarSesionAdministrador(int id, String pass){
+        Administrador a = administradores.get(id);
+        if (a == null){
+            return false;
+        }
+        return a.validarContrasenia(pass);
+    }
+    
+    public boolean iniciarSesionUsuario(String nickname, String pass){
+        Usuario u = usuarios.get(nickname);
+        if (u == null){
+            return false;
+        }
+        boolean ok = u.validarContrasenia(pass);
+        if (ok){
+            usuarioActual = u;
+        }
+        return ok;
+    }
+    
+    public void liberarMemoriaListaDeReproduccion(){
+        idListaSeleccionada = 0;
+    }
+    
+    public void liberarMemoriaUsuario(){
+        usuarioSeleccionado = null;
+    }
+    
+    public void liberarMemoriaUsuarioActual(){
+        usuarioActual = null;
+    }
+    
+    public void liberarMemoriaVideo(){
+        idVideoSeleccionado = 0;
     }
     
     public ArrayList<String> listarCategorias(){
-        return new ArrayList<String>();
+        /**
+         * Devuelve todas las categorias existentes en el sistema
+         */
+        ArrayList<String> ret = new ArrayList();
+        for (Map.Entry<String, Categoria> c : categorias.entrySet()){
+            ret.add(c.getValue().getNombre());
+        }
+        return ret;
     }
     
     public ArrayList<DtComentario> listarComentariosDeVideo(){
-        return new ArrayList<DtComentario>();
-
+        /**
+         * Devuelve en forma ordenada (recursiva ) todos los comentarios de idVideoSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        return usuarioSeleccionado.listarComentariosDeVideo(idVideoSeleccionado);
     }
     
-    public ArrayList<DtVideo> listarListasDeReproduccionEnCategoria(String cat){
-        return new ArrayList<DtVideo>();
-
+    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionEnCategoria(String cat){
+        /**
+         * Devuelve todos las listas de reproduccion del sistema que pertenezcan a la categoria indicada
+         */
+        
+        if (cat.equals("")){
+            throw new RuntimeException("La categoria no puede ser vacia");
+        }
+        ArrayList<DtListaDeReproduccion> ret = new ArrayList();
+        for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
+            ret.addAll(u.getValue().obtenerListasEnCategoria(cat));
+        }
+        return ret;
     }
     
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeUsuario(String nickname){
-        return new ArrayList<DtListaDeReproduccion>();
+        /**
+         * Devuelve todas las listas de reproduccion de usuarioSeleccionado o de usuarioActual segun el nickname indicado
+         */
+        if (nickname.equals("")){
+            throw new RuntimeException("El nickname del usuario no puede ser vacio");
+        }
+        if (usuarioActual == null && usuarioSeleccionado == null){
+        throw new RuntimeException("No hay usuarios seleccionados");
+        }
+        
+        if (usuarioActual != null && usuarioActual.getNickname().equals(nickname)){
+            return usuarioActual.listarListasDeReproduccionDeCanal(false);
+        }
+        if (usuarioSeleccionado != null && usuarioSeleccionado.getNickname().equals(nickname)){
+            return usuarioSeleccionado.listarListasDeReproduccionDeCanal(false);
+        }
+        throw new RuntimeException("El nickname no coincide con los posibles usuarios seleccionados");
     }
     
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionParticularesDeUsuario(){
-        return new ArrayList<DtListaDeReproduccion>();
+        /**
+         * Devuelve las listas de reproduccion particulares de usuarioSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        return usuarioSeleccionado.listarListasDeReproduccionDeCanal(true);
     }
     
     public ArrayList<DtUsuario> listarUsuarioSeguidores(){
-        return new ArrayList<DtUsuario>();
+        /**
+         * Devuelve todos los usuarios que siguen a usuarioSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        return usuarioSeleccionado.listarUsuariosSeguidores();
     }
     
     public ArrayList<DtUsuario> listarUsuarioSeguidos(){
-        return new ArrayList<DtUsuario>();
+        /**
+         * Devuelve todos los usuarios a quienes sigue usuarioSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        return usuarioSeleccionado.listarUsuariosSeguidos();
     }
     
     public ArrayList<DtUsuario> listarUsuarios(){
+        /**
+         * Devuelve todos los datos de todos los usuarios
+         */
         ArrayList<DtUsuario> ret = new ArrayList<>();
         for (Map.Entry<String, Usuario> usuario : usuarios.entrySet()) {
               ret.add(usuario.getValue().getDT());
         }
         return ret;
     }
+    
     public ArrayList<DtVideo> listarVideosEnCategoria(String cat){
-        return new ArrayList<DtVideo>();
+        /**
+         * Devuelve todos los videos del sistema que pertenezcan a la categoria indicada
+         */
+        if (cat.equals("")){
+            throw new RuntimeException("La categoria no puede ser vacia");
+        }
+        ArrayList<DtVideo> ret = new ArrayList();
+        for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
+            ret.addAll(u.getValue().obtenerVideosEnCategoria(cat));
+        }
+        return ret;
     }
     
     public ArrayList<DtVideo> listarVideosDeUsuario(){
-        return new ArrayList<DtVideo>();
+        /**
+         * Devuelve todos los videos de usuarioSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        return usuarioSeleccionado.listarVideosDeCanal();
     }
     
     public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(){
-        return new ArrayList<DtVideo>();
+        /**
+         * Devuelve los videos de la lista de reproduccion idListaSeleccionada
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idListaSeleccionada == 0){
+            throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
+        }
+        return usuarioSeleccionado.listarVideosDeListaDeReproduccion(idListaSeleccionada);
     }
     
     public void modificarListaDeReproduccion(DtListaDeReproduccion lista){
+        /**
+         * Se modifican los datos de la lista idListaSeleccionada
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idListaSeleccionada == 0){
+            throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
+        }
         
+        // no confio en que el DataType recibido venga con el id del video correcto,
+        // asi que creo otro y con el idVideoSeleccionado por las dudas
+        DtListaDeReproduccion dtl = new DtListaDeReproduccion(
+                idListaSeleccionada, 
+                lista.getNombre(), 
+                lista.getPrivacidad(), 
+                lista.getTipo(), 
+                lista.getCategoria());
+        usuarioSeleccionado.modificarListaDeReproduccionDeCanal(dtl);
     }
     
     public void modificarUsuarioYCanal(DtUsuario usr,DtCanal canal){
-        
+        /**
+         * Se modifican los datos de usuarioActual y su canal
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (usr == null){
+            throw new RuntimeException("El DataType usuario no puede ser null");
+        }
+        if (canal == null){
+            throw new RuntimeException("El DataType canal no puede ser null");
+        }
+        usuarioSeleccionado.modificar(usr, canal);
     }
     
     public void modificarVideo(DtVideo video){
+        /**
+         * Se modifican los datos del video idVideoSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        if (video == null){
+            throw new RuntimeException("El DataType video no puede ser null");
+        }
         
+        // no confio en que el DataType recibido venga con el id del video correcto,
+        // asi que creo otro y con el idVideoSeleccionado por las dudas
+        DtVideo dtv = new DtVideo(
+                idVideoSeleccionado, 
+                video.getNombre(), 
+                video.getDescripcion(), 
+                video.getDuracion(), 
+                video.getFechaPublicacion(), 
+                video.getUrlVideoOriginal(), 
+                video.getPrivacidad(), 
+                video.getCategoria(), 
+                0, 0);
+        
+        usuarioSeleccionado.modificarVideoDeCanal(dtv);
     }
     
     public DtCanal obtenerCanalDeUsuario(){
-        return new DtCanal();
+        /**
+         * Devuelve los datos del canal del usuario en memoria usuarioSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        return usuarioSeleccionado.obtenerCanal();
     }
     
     public ArrayList<DtValoracion> obtenerValoracionesDeVideo(){
-        return new ArrayList<DtValoracion>();
+        /**
+         * Devuelve las valoraciones de idVideoSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        return usuarioSeleccionado.listarValoracionesDeVideo(idVideoSeleccionado);
     }
     
     public DtValoracion obtenerValoracionDada(){
-        return new DtValoracion();
+        /**
+        *  Devuelve la valoracion dada por usuarioActual al video idVideoSeleccionado
+        *
+        */
+        if (this.usuarioActual == null) {
+            throw new RuntimeException("El sistema no tiene un usuario actual seleccionado");
+        }
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        // si la funcion retorna null, significa que el usuario no lo ha valorado. Entonces no se considera error
+        return usuarioSeleccionado.obtenerValoracion(idVideoSeleccionado, usuarioActual.getNickname());
     }
     
     public void quitarVideoDeListaDeReproduccion(){
-        
+        /**
+         * Quita el video idVideoSeleccionado de la lista idListaSeleccionada
+         */
+        if (usuarioSeleccionado == null) {
+            throw new RuntimeException("El sistema no tiene un usuario actual seleccionado");
+        }
+        if (idListaSeleccionada == 0){
+            throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        usuarioSeleccionado.quitarVideoDeListaDeReproduccion(idListaSeleccionada, idVideoSeleccionado);
     }
     
     public DtUsuario seleccionarUsuario(String nickname){
-        return new DtUsuario();
+        /**
+	*  El sistema recuerda un link al usuario como usuarioSeleccionado
+	*  Devuelve los datos de usuarioSeleccionado
+        */
+        usuarioSeleccionado = usuarios.get(nickname);
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+        }
+        return usuarioSeleccionado.getDT();
     }
     
     public DtUsuario seleccionarUsuarioActual(String nickname){
-        return new DtUsuario();
+        /**
+        El sistema recuerda un link al usuario como usuarioActual
+	Devuelve los datos de usuarioActual
+        * */
+        usuarioActual = usuarios.get(nickname);
+        if (usuarioActual == null){
+            throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+        }
+        return usuarioActual.getDT();
     }
+    
     public DtVideo seleccionarVideo(int idVideo){
-        return new DtVideo();
+	/**
+        El sistema recuerda el ID del video como idVideoSeleccionado
+	Devuelve los datos del video seleccionado
+        */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        DtVideo ret = usuarioSeleccionado.obtenerVideoDeCanal(idVideo);
+        idVideoSeleccionado = idVideo;
+        return ret;
     }
     
     public DtListaDeReproduccion seleccionarListaDeReproduccion(int idLista){
-        return new DtListaDeReproduccion();
+	/**
+         * El sistema recuerda el ID de la lista como idListaSeleccionada
+         * Devuelve los datos de la lista de reproduccion seleccionada perteneciente a usuarioSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        DtListaDeReproduccion ret = usuarioSeleccionado.obtenerListaDeReproduccion(idLista);
+        idListaSeleccionada = idLista;
+        return ret;
     }
     
     public void seguirUsuario(){
-        
+        /**
+         * El usuario usuarioActual comienza a seguir a usuarioSeleccionado En
+         * caso de que este ya lo este siguiendo, lo deja de seguir
+         */
+        if (this.usuarioActual == null) {
+            throw new RuntimeException("El sistema no tiene un usuario actual seleccionado");
+        }
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        usuarioActual.agregarOQuitarSeguido(usuarioSeleccionado);
     }
     
     public boolean validarNuevaListaParticular(String nombre){
-        return true;
+        /**
+         * Devuelve true si usuarioSeleccionado posee una lista de reproducion con ese nombre
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        return usuarioSeleccionado.validarListaParticular(nombre);
     }
+    
     public boolean validarNuevaListaPorDefecto(String nombre){
+        /**
+         * Devuelve false si existe algun usuario en el sistema que posea una
+         * lista de reproduccion con ese nombre
+         */
+        for (Map.Entry<String, Usuario> u : this.usuarios.entrySet()){
+            if (u.getValue().validarListaParticular(nombre)){
+                return false;
+            }
+        }
         return true;
     }
 }
+
