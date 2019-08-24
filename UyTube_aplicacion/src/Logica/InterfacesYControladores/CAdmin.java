@@ -21,7 +21,8 @@ import java.util.Map;
 public class CAdmin implements IAdmin{
     private static CAdmin instancia;
     private Map<String, Usuario> usuarios;
-    private Map<String, Administrador> administradores ;
+    private Map<String, Administrador> administradores;
+   
     
     private CAdmin(){
         
@@ -37,6 +38,7 @@ public class CAdmin implements IAdmin{
     public void agregarVideoAListaDeReproduccion(){
         
     }
+    
     public void altaCategoria(String categoria){
         
     }
@@ -113,7 +115,11 @@ public class CAdmin implements IAdmin{
     }
     
     public ArrayList<DtUsuario> listarUsuarios(){
-        return new ArrayList<DtUsuario>();
+        ArrayList<DtUsuario> ret = new ArrayList<>();
+        for (Map.Entry<String, Usuario> usuario : usuarios.entrySet()) {
+              ret.add(usuario.getValue().getDT());
+        }
+        return ret;
     }
     public ArrayList<DtVideo> listarVideosEnCategoria(String cat){
         return new ArrayList<DtVideo>();
