@@ -332,7 +332,16 @@ public class Canal {
             throw new RuntimeException("El video no pertenece al canal");
         }
     }
-
+    
+    public DtListaDeReproduccion obtenerListaDeReproduccion(int id){
+        ListaDeReproduccion ldr = misListas.get(id);
+        if (ldr == null){
+            throw new RuntimeException("La lista de reproduccion no pertenece al canal");
+        }else{
+            return ldr.getDt();
+        }
+    }
+    
     public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat) {
         ArrayList<DtListaDeReproduccion> ret = new ArrayList();
 
