@@ -16,9 +16,6 @@ public class DtVideo {
     private int cantLikes;
     private int cantDisLikes;
 
-    public DtVideo() {
-    }
-
     public DtVideo(int id, String nombre, String descripcion, Time duracion, Date fechaPublicacion, String urlVideoOriginal, Privacidad privacidad, String categoria, int cantLikes, int cantDisLikes) {
         this.id = id;
         this.nombre = nombre;
