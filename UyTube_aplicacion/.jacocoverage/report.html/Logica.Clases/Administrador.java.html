@@ -2,19 +2,19 @@
 
 public class Administrador extends Persona{
     private int idAdmin;
-<span class="nc" id="L5">    private static int contadorAdministrador = 1;</span>
+<span class="fc" id="L5">    private static int contadorAdministrador = 1;</span>
             
     public Administrador(int id, String contrasenia, String nombre, String apellido){
-<span class="nc" id="L8">        super(nombre,apellido,contrasenia);</span>
-<span class="nc" id="L9">        idAdmin = id;</span>
-<span class="nc" id="L10">    }</span>
+<span class="fc" id="L8">        super(nombre,apellido,contrasenia);</span>
+<span class="fc" id="L9">        idAdmin = id;</span>
+<span class="fc" id="L10">    }</span>
     
     public static int getNuevoID(){
-<span class="nc" id="L13">        return contadorAdministrador++;</span>
+<span class="fc" id="L13">        return contadorAdministrador++;</span>
     }
 
     public int getIdAdmin() {
-<span class="nc" id="L17">        return idAdmin;</span>
+<span class="fc" id="L17">        return idAdmin;</span>
     }
     
     
