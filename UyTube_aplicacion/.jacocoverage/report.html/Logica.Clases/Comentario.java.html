@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Comentario.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;UyTube&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica.Clases</a> &gt; <span class="el_source">Comentario.java</span></div><h1>Comentario.java</h1><pre class="source lang-java linenums">package Logica.Clases;
+
+import Logica.DataType.DtComentario;
+import java.sql.Date;
+import java.util.ArrayList;
+
+public class Comentario {
+
+<span class="fc" id="L9">    private static int contadorComentarios = 1;</span>
+
+    private int id;
+    private Date fecha;
+    private String texto;
+    private int nivelSubComentario;
+    private Usuario usr;
+    private ArrayList&lt;Comentario&gt; misComentario;
+
+<span class="fc" id="L18">    public Comentario(int id, Date fecha, String texto, int nivelSubComentario, Usuario usr) {</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        if(usr==null){</span>
+<span class="fc" id="L20">            throw new RuntimeException(&quot;Usuario No puede ser null&quot;);</span>
+        }
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if(fecha==null){</span>
+<span class="fc" id="L23">            throw new RuntimeException(&quot;Date No puede ser null&quot;);</span>
+        }
+<span class="fc" id="L25">        this.id = id;</span>
+<span class="fc" id="L26">        this.fecha = fecha;</span>
+<span class="fc" id="L27">        this.texto = texto;</span>
+<span class="fc" id="L28">        this.nivelSubComentario = nivelSubComentario;</span>
+<span class="fc" id="L29">        this.usr = usr;</span>
+<span class="fc" id="L30">        this.misComentario = new ArrayList();</span>
+<span class="fc" id="L31">    }</span>
+
+    public static int getNuevoID() {
+<span class="fc" id="L34">        return contadorComentarios++;</span>
+    }
+
+    public int getId() {
+<span class="fc" id="L38">        return id;</span>
+    }
+
+    public Date getFecha() {
+<span class="fc" id="L42">        return fecha;</span>
+    }
+    public String getTexto() {
+<span class="fc" id="L45">        return texto;</span>
+    }
+    public int getNivelSubComentario() {
+<span class="fc" id="L48">        return nivelSubComentario;</span>
+    }
+
+    public Usuario getUsr() {
+<span class="fc" id="L52">        return usr;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L57">        return &quot;Comentario{&quot; + &quot;id=&quot; + id + &quot;, fecha=&quot; + fecha + &quot;, texto=&quot; + texto + &quot;, nivelSubComentario=&quot; + nivelSubComentario + '}';</span>
+    }
+
+    public boolean agregarSubComentario(int idComPadre, DtComentario dtC, Usuario usr) {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if(dtC==null){</span>
+<span class="fc" id="L62">            throw new RuntimeException(&quot;DtComentario No puede ser null&quot;);</span>
+        }
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if(usr==null){</span>
+<span class="fc" id="L65">            throw new RuntimeException(&quot;Usuario No puede ser null&quot;);</span>
+        }
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (this.id == idComPadre) {</span>
+<span class="fc" id="L68">            Comentario com = new Comentario(Comentario.getNuevoID(),</span>
+<span class="fc" id="L69">                    dtC.getFecha(),</span>
+<span class="fc" id="L70">                    dtC.getTexto(),</span>
+                    this.nivelSubComentario + 1,
+                    usr);
+<span class="fc" id="L73">            this.misComentario.add(com);</span>
+<span class="fc" id="L74">            return true;</span>
+        } else {
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            for (int i = 0; i &lt; misComentario.size(); i++) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                if (this.misComentario.get(i).agregarSubComentario(idComPadre, dtC, usr)) {</span>
+<span class="fc" id="L79">                    return true;</span>
+                }
+            }
+<span class="fc" id="L82">            return false;</span>
+        }
+    }
+
+    public DtComentario getDT() {
+<span class="fc" id="L87">        DtComentario dtC = new DtComentario(this.id, this.usr.getNickname(), this.fecha, this.texto, this.nivelSubComentario);</span>
+<span class="fc" id="L88">        return dtC;</span>
+    }
+
+    public ArrayList&lt;DtComentario&gt; listarSubComentarios() {
+<span class="fc" id="L92">        ArrayList lsc = new ArrayList();</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (int i = 0; i &lt; this.misComentario.size(); i++) {</span>
+<span class="fc" id="L95">            lsc.add(this.misComentario.get(i).getDT());</span>
+<span class="fc" id="L96">            lsc.addAll(this.misComentario.get(i).listarSubComentarios());</span>
+        }
+<span class="fc" id="L98">        return lsc;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
