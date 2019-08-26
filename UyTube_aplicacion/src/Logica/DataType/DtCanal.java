@@ -8,8 +8,6 @@ public class DtCanal {
     private String descripcion;
     private Privacidad privacidad;
 
-    public DtCanal() {}
-    
     public DtCanal(int id, String nombre, String descripcion,Privacidad privacidad) {
         this.id = id;
         this.nombre = nombre;

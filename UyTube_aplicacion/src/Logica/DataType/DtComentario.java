@@ -9,8 +9,6 @@ public class DtComentario {
     private String texto;
     private int nivelSubComentario;
 
-    public DtComentario() {}
-
     public DtComentario(int id, String nickname, Date fecha, String texto, int nivelSubComentario) {
         this.id = id;
         this.nickname = nickname;

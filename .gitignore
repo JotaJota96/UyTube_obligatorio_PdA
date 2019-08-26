@@ -6,3 +6,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+UyTube_aplicacion/.jacocoverage/*
+

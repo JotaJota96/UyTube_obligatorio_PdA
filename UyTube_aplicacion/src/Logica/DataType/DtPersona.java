@@ -5,8 +5,6 @@ public abstract class DtPersona {
     private String apellido;
     private String contrasenia;
 
-    public DtPersona() {}
-
     public DtPersona(String nombre, String apellido, String contrasenia) {
         // esta clase es abstracta, eso se define arriba al hacer 'public abstract class...'
         // aca se setean los valores recibidos
