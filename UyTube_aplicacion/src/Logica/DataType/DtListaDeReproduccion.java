@@ -10,8 +10,6 @@ public class DtListaDeReproduccion {
     private TipoListaDeReproduccion tipo;
     private String categoria;
 
-    public DtListaDeReproduccion() {}
-
     public DtListaDeReproduccion(int id, String nombre, Privacidad privacidad, TipoListaDeReproduccion tipo, String categoria) {
         this.id = id;
         this.nombre = nombre;

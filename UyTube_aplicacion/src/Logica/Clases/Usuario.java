@@ -2,101 +2,305 @@ package Logica.Clases;
 import java.sql.Date;
 import Logica.DataType.*;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Usuario extends Persona{
+    
     private String nickname;
     private String correo;
     private Date fechaNacimiento;
     private String imagen;
     private int seguidores;
     private Canal MiCanal;
-
-    public Usuario() {
-    }
+    private Map<String, Usuario> misSeguidores;
+    private Map<String, Usuario> seguidos;
     
+
     public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido ,DtCanal DTC) {
         super(nombre,apellido,contrasenia);
+        
+        if(fechaNacimiento == null){
+            throw new RuntimeException("la fecha no puede ser nill");
+        }
+        if(DTC == null){
+            throw new RuntimeException("El canal no puede ser null");
+        }
+        if(nickname == ""){
+            throw new RuntimeException("El nickname no puede ser Vacio");
+        }
+        
+        if(correo == ""){
+            throw new RuntimeException("El correo no puede ser Vacio");
+        }
         
         this.nickname = nickname;
         this.correo = correo;
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
         this.seguidores = 0;
-        //this.MiCanal = new Canal(DTC.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());
+        this.MiCanal = new Canal(Canal.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());
+        this.misSeguidores = new TreeMap();
+        this.seguidos = new TreeMap();
     }
 
     public String getNickname() {
         return nickname;
     }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
+    
     public String getCorreo() {
         return correo;
     }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
+    
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
+    
     public String getImagen() {
         return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
     }
 
     public int getSeguidores() {
         return seguidores;
     }
 
-    public void setSeguidores(int seguidores) {
-        this.seguidores = seguidores;
-    }
     public DtUsuario getDT(){
-        return new DtUsuario(nickname, contraseña, nombre, apellido, correo, fechaNacimiento, imagen, seguidores);//Es el otro constructor
+        return new DtUsuario(this.nickname, super.getContrasena(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
     }
-    public void actualizarListasPorDefecto(){}
-    public void agregarComentarioAVideo(int id, DtComentario DtComentario, Usuario Usu){}
-    public void agregarComentarioAVideo(int id,int idCom, DtComentario DtComentario, Usuario Usu){}
-    public void agregarListaParticular(DtListaDeReproduccion DtValoracion){}
-    public void agregarModificarValoracionDeVideo(int id, DtValoracion DtValoracion, Usuario Usu){}
-    public void agregarOQuitarSeguido(Usuario Usu){}
-    public void agregarOQuitarSeguidor(Usuario Usu){}
-    public void agregarVideoACanal(DtVideo DtVideo){}
-    public void agregarVideoALista(int idLista , int idVideo, Usuario Usu){}
     
-   // public ArrayList<DtComentario> listarComentariosDeVideo(int id){}
-   // public ArrayList<DtListasDeReproduccion> listarListasDeReproduccionDeCanal(bool porDefecto){}
-   // public ArrayList<DtUsuario> listarUsuariosSeguidores(){}
-   // public ArrayList<DtUsuario> listarUsuariosSeguidos(){}
-   // public ArrayList<DtValoracion> listarValoracionesDeVideo(int id){}
-   // public ArrayList<DtVideo> listarVideosDeCanal(){}
-   // public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id){}
-
-    public void modificar(DtUsuario Usu, DtCanal DtCanal){}
-    public void modificarListaDeReproduccionDeCanal(DtListaDeReproduccion DtListaDeReproduccion){}
-    public void modificarVideoDeCanal(DtVideo DtVideo){}
+    public void actualizarListasPorDefecto(){
+        this.MiCanal.actualizarListasPorDefecto();
+    }
     
-   // public DtCanal obtenerCanal(){}
-   // public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(cat:string){}
-   // public DtValoracion obtenerValoracion(int id, string nickname){}
-   // public Video obtenerVideo(int id){}
-   // public DtVideo obtenerVideoDeCanal(int id){}
-   // public ArrayList<DtVideo> obtenerVideosEnCategoria(cat:string){}
+    public void agregarComentarioAVideo(int idVideo, DtComentario DtComentario, Usuario Usu){
+        if(DtComentario == null){
+            throw new RuntimeException("El comentario no puede ser null");
+        }
+        if(Usu == null){
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        
+        this.MiCanal.agregarComentarioAVideo(idVideo, DtComentario, Usu);
+    }
     
-     public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){}
-   // public boolean validarListaParticular(String nombre){}
+    public void agregarComentarioAVideo(int idVideo, int idCom, DtComentario DtComentario, Usuario Usu){
+        if(DtComentario == null){
+            throw new RuntimeException("El comentario no puede ser null");
+        }
+        if(Usu == null){
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        
+        this.MiCanal.agregarComentarioAVideo(idVideo, idCom, DtComentario, Usu);
+    }
+    
+    public void agregarListaParticular(DtListaDeReproduccion DtValoracion){
+        if(DtValoracion == null){
+            throw new RuntimeException("La valoracion no puede ser null");
+        }
+        
+        this.MiCanal.agregarListaParticular(DtValoracion);
+    }
+    
+    public void agregarModificarValoracionDeVideo(int idVideo, DtValoracion DtValoracion, Usuario Usu){
+        if(DtValoracion == null){
+            throw new RuntimeException("La valoracion no puede ser null");
+        }
+        if(Usu == null){
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        
+        this.MiCanal.agregarModificarValoracion(idVideo , DtValoracion, Usu);
+    }
+    
+    public void agregarOQuitarSeguido(Usuario Usu){
+        if(Usu == null){
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        if(Usu == this){
+            throw new RuntimeException("Un usuario no se puede seguir a si mismo");
+        }
+        
+        if (this.seguidos.containsKey(Usu.getNickname())){
+            this.seguidos.remove(Usu.getNickname());
+        }else{
+            this.seguidos.put(Usu.getNickname(), Usu);
+        }
+        
+        Usu.agregarOQuitarSeguidor(this);
+    }
+    
+    // si, esta si es private, no es un error
+    private void agregarOQuitarSeguidor(Usuario Usu){
+        if(Usu == null){
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        
+        if (this.misSeguidores.containsKey(Usu.nickname)){
+            this.misSeguidores.remove(Usu.getNickname());
+            this.seguidores--;
+        }else{
+            this.misSeguidores.put(Usu.getNickname(), Usu);
+            this.seguidores++;
+        }
+    }
+    
+    public void agregarVideoACanal(DtVideo DtVideo){
+        if(DtVideo == null){
+            throw new RuntimeException("El video no puede ser null");
+        }
+        
+        this.MiCanal.agregarVideo(DtVideo);
+    }
+    
+    public void agregarVideoALista(int idLista , int idVideo, Usuario Usu){
+        if(Usu == null){
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        
+        Video v = Usu.obtenerVideo(idVideo);
+        if (v == null){
+            throw new RuntimeException("El video no pertenece al usuario: " + Usu.getNickname());
+        }
+        this.MiCanal.agregarVideoALista(idLista, v);
+    }
+    
+    public ArrayList<DtComentario> listarComentariosDeVideo(int idVideo){
+        return this.MiCanal.listarComentariosDeVideo(idVideo);
+    }
+    
+    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeCanal(boolean porDefecto){
+        return this.MiCanal.listarListasDeReproduccion(porDefecto);
+    }
+    
+    public ArrayList<DtUsuario> listarUsuariosSeguidos(){
+        // crea una lista de retorno
+        ArrayList<DtUsuario> ret = new ArrayList();
+        
+        for (Map.Entry<String,Usuario> i : this.seguidos.entrySet()){
+            // hace un getDT y lo agrega a la coleccion de retorno
+            ret.add(i.getValue().getDT());
+        }
+        return ret;
+    }//(Ctrl + C Ctrl + V) De la clase video
+    
+    public ArrayList<DtUsuario> listarUsuariosSeguidores(){
+        // crea una lista de retorno
+        ArrayList<DtUsuario> ret = new ArrayList();
+        
+        for (Map.Entry<String,Usuario> i : this.misSeguidores.entrySet()){
+            // hace un getDT y lo agrega a la coleccion de retorno
+            ret.add(i.getValue().getDT());
+        }
+        return ret;
+    }//(Ctrl + C Ctrl + V) De la clase lirRepro
+    
+    public ArrayList<DtValoracion> listarValoracionesDeVideo(int id){
+        return this.MiCanal.listarValoracionesDeVideo(id);
+    }
+    
+    public ArrayList<DtVideo> listarVideosDeCanal(){
+        return this.MiCanal.listarVideos();
+    }
+    
+    public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id){
+        return this.MiCanal.listarVideosDeListaDeReproduccion(id);
+    }
+    
+    public void modificar(DtUsuario DtUsu, DtCanal DtCanal){
+        if(DtUsu == null){
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        if(DtUsu.getFechaNacimiento() == null){
+            throw new RuntimeException("La fecha no puede ser null");
+        }
+        if(DtCanal == null){
+            throw new RuntimeException("El canal no puede ser null");
+        }
+        
+        super.setNombre(DtUsu.getNombre());
+        super.setApellido(DtUsu.getApellido());
+        super.setContrasenia(DtUsu.getContrasenia());
+        this.fechaNacimiento = DtUsu.getFechaNacimiento();
+        this.imagen = DtUsu.getImagen();
+        
+        this.MiCanal.modificar(DtCanal);
+    }
+    
+    public void modificarListaDeReproduccionDeCanal(DtListaDeReproduccion DtListaDeReproduccion){
+        if(DtListaDeReproduccion == null){
+            throw new RuntimeException("La lista de reproduccion no puede ser null");
+        }
+        
+        this.MiCanal.modificarListaDeReproduccion(DtListaDeReproduccion);
+    }
+    
+    public void modificarVideoDeCanal(DtVideo DtVideo){
+        if(DtVideo == null){
+            throw new RuntimeException("El video no puede ser null");
+        }
+        this.MiCanal.modificarVideo(DtVideo);
+    }
+    
+    public DtCanal obtenerCanal(){
+        return this.MiCanal.getDT();
+    }
+    
+    
+    public DtListaDeReproduccion obtenerListaDeReproduccion(int id){
+        return MiCanal.obtenerListaDeReproduccion(id);
+    }
+    
+    
+    public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat){
+        if(cat == ""){
+            throw new RuntimeException("La categoria no puede ser vacia");
+        }
+        
+        return this.MiCanal.obtenerListasEnCategoria(cat);
+    }
+    
+    public DtValoracion obtenerValoracion(int id, String nickname){
+        if(nickname == ""){
+            throw new RuntimeException("El nickname no puede ser vacio");
+        }
+        
+        return this.MiCanal.obtenerValoracion(id, nickname);
+    }
+    
+    public Video obtenerVideo(int id){
+        return this.MiCanal.obtenerVideo(id);
+    }
+    
+    public DtVideo obtenerVideoDeCanal(int idVideo){
+        return this.MiCanal.obtenerDtVideo(idVideo);
+    }
+    
+    public ArrayList<DtVideo> obtenerVideosEnCategoria(String cat){
+        if(cat == ""){
+            throw new RuntimeException("La categoria no puede ser vacia");
+        }
+        
+        return this.MiCanal.obtenerVideosEnCategoria(cat);
+        
+    }
+    
+    public void quitarValoracion(int id, String nickname){
+        if(nickname == ""){
+            throw new RuntimeException("El nickname no puede ser vacia");
+        }
+        this.MiCanal.quitarValoracion(id, nickname);
+    }
+    
+    public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){
+        this.MiCanal.quitarVideoDeListaDeReproduccion(idLista, idVideo);
+    }
+    
+    public boolean validarListaParticular(String nombre){
+        if(nombre == ""){
+            throw new RuntimeException("El nombre de la lista no puede ser vacia");
+        }
+        return this.MiCanal.validarListaParticular(nombre);
+    }
 }
 
