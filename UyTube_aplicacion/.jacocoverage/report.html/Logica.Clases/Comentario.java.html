@@ -6,11 +6,7 @@ import java.util.ArrayList;
 
 public class Comentario {
 
-<<<<<<< HEAD
 <span class="fc" id="L9">    private static int contadorComentarios = 1;</span>
-=======
-<span class="nc" id="L9">    private static int contadorComentarios = 1;</span>
->>>>>>> JuanRama
 
     private int id;
     private Date fecha;
@@ -19,7 +15,6 @@ public class Comentario {
     private Usuario usr;
     private ArrayList&lt;Comentario&gt; misComentario;
 
-<<<<<<< HEAD
 <span class="fc" id="L18">    public Comentario(int id, Date fecha, String texto, int nivelSubComentario, Usuario usr) {</span>
 <span class="fc bfc" id="L19" title="All 2 branches covered.">        if(usr==null){</span>
 <span class="fc" id="L20">            throw new RuntimeException(&quot;Usuario No puede ser null&quot;);</span>
@@ -55,74 +50,10 @@ public class Comentario {
 
     public Usuario getUsr() {
 <span class="fc" id="L52">        return usr;</span>
-=======
-<span class="nc" id="L18">    public Comentario() {</span>
-<span class="nc" id="L19">        this.id = Comentario.getNuevoID();</span>
-<span class="nc" id="L20">        this.misComentario = new ArrayList();</span>
-<span class="nc" id="L21">    }</span>
-
-<span class="nc" id="L23">    public Comentario(int id, Date fecha, String texto, int nivelSubComentario, Usuario usr) {</span>
-<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(usr==null){</span>
-<span class="nc" id="L25">            throw new RuntimeException(&quot;Usuario No puede ser null&quot;);</span>
-        }
-<span class="nc bnc" id="L27" title="All 2 branches missed.">        if(fecha==null){</span>
-<span class="nc" id="L28">            throw new RuntimeException(&quot;Date No puede ser null&quot;);</span>
-        }
-<span class="nc" id="L30">        this.id = id;</span>
-<span class="nc" id="L31">        this.fecha = fecha;</span>
-<span class="nc" id="L32">        this.texto = texto;</span>
-<span class="nc" id="L33">        this.nivelSubComentario = nivelSubComentario;</span>
-<span class="nc" id="L34">        this.usr = usr;</span>
-<span class="nc" id="L35">        this.misComentario = new ArrayList();</span>
-<span class="nc" id="L36">    }</span>
-
-    public static int getNuevoID() {
-<span class="nc" id="L39">        return contadorComentarios++;</span>
-    }
-
-    public int getId() {
-<span class="nc" id="L43">        return id;</span>
-    }
-
-    public void setId(int id) {
-<span class="nc" id="L47">        this.id = id;</span>
-<span class="nc" id="L48">    }</span>
-
-    public Date getFecha() {
-<span class="nc" id="L51">        return fecha;</span>
-    }
-
-    public void setFecha(Date fecha) {
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        if(fecha==null){</span>
-<span class="nc" id="L56">            throw new RuntimeException(&quot;Fecha No puede ser null&quot;);</span>
-        }
-<span class="nc" id="L58">        this.fecha = fecha;</span>
-<span class="nc" id="L59">    }</span>
-
-    public String getTexto() {
-<span class="nc" id="L62">        return texto;</span>
-    }
-
-    public void setTexto(String texto) {
-<span class="nc" id="L66">        this.texto = texto;</span>
-<span class="nc" id="L67">    }</span>
-
-    public int getNivelSubComentario() {
-<span class="nc" id="L70">        return nivelSubComentario;</span>
-    }
-
-    public void setNivelSubComentario(int nivelSubComentario) {
-<span class="nc" id="L74">        this.nivelSubComentario = nivelSubComentario;</span>
-<span class="nc" id="L75">    }</span>
-
-    public Usuario getUsr() {
-<span class="nc" id="L78">        return usr;</span>
->>>>>>> JuanRama
     }
 
     @Override
     public String toString() {
-<<<<<<< HEAD
 <span class="fc" id="L57">        return &quot;Comentario{&quot; + &quot;id=&quot; + id + &quot;, fecha=&quot; + fecha + &quot;, texto=&quot; + texto + &quot;, nivelSubComentario=&quot; + nivelSubComentario + '}';</span>
     }
 
@@ -149,39 +80,10 @@ public class Comentario {
                 }
             }
 <span class="fc" id="L82">            return false;</span>
-=======
-<span class="nc" id="L83">        return &quot;Comentario{&quot; + &quot;id=&quot; + id + &quot;, fecha=&quot; + fecha + &quot;, texto=&quot; + texto + &quot;, nivelSubComentario=&quot; + nivelSubComentario + '}';</span>
-    }
-
-    public boolean agregarSubComentario(int idComPadre, DtComentario dtC, Usuario usr) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        if(dtC==null){</span>
-<span class="nc" id="L88">            throw new RuntimeException(&quot;DtComentario No puede ser null&quot;);</span>
-        }
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(usr==null){</span>
-<span class="nc" id="L91">            throw new RuntimeException(&quot;Usuario No puede ser null&quot;);</span>
-        }
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (this.id == idComPadre) {</span>
-<span class="nc" id="L94">            Comentario com = new Comentario(Comentario.getNuevoID(),</span>
-<span class="nc" id="L95">                    dtC.getFecha(),</span>
-<span class="nc" id="L96">                    dtC.getTexto(),</span>
-                    this.nivelSubComentario + 1,
-                    usr);
-<span class="nc" id="L99">            this.misComentario.add(com);</span>
-<span class="nc" id="L100">            return true;</span>
-        } else {
-
-<span class="nc bnc" id="L103" title="All 2 branches missed.">            for (int i = 0; i &lt; misComentario.size(); i++) {</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">                if (this.misComentario.get(i).agregarSubComentario(idComPadre, dtC, usr)) {</span>
-<span class="nc" id="L105">                    return true;</span>
-                }
-            }
-<span class="nc" id="L108">            return false;</span>
->>>>>>> JuanRama
         }
     }
 
     public DtComentario getDT() {
-<<<<<<< HEAD
 <span class="fc" id="L87">        DtComentario dtC = new DtComentario(this.id, this.usr.getNickname(), this.fecha, this.texto, this.nivelSubComentario);</span>
 <span class="fc" id="L88">        return dtC;</span>
     }
@@ -194,20 +96,6 @@ public class Comentario {
 <span class="fc" id="L96">            lsc.addAll(this.misComentario.get(i).listarSubComentarios());</span>
         }
 <span class="fc" id="L98">        return lsc;</span>
-=======
-<span class="nc" id="L113">        DtComentario dtC = new DtComentario(this.id, this.usr.getNickname(), this.fecha, this.texto, this.nivelSubComentario);</span>
-<span class="nc" id="L114">        return dtC;</span>
-    }
-
-    public ArrayList&lt;DtComentario&gt; listarSubComentarios() {
-<span class="nc" id="L118">        ArrayList lsc = new ArrayList();</span>
-
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        for (int i = 0; i &lt; this.misComentario.size(); i++) {</span>
-<span class="nc" id="L121">            lsc.add(this.misComentario.get(i).getDT());</span>
-<span class="nc" id="L122">            lsc.addAll(this.misComentario.get(i).listarSubComentarios());</span>
-        }
-<span class="nc" id="L124">        return lsc;</span>
->>>>>>> JuanRama
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

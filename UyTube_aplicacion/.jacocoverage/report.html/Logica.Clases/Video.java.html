@@ -17,15 +17,6 @@ public class Video {
     private Time duracion;
     private Date fechaPublicacion;
     private String urlVideoOriginal;
-<<<<<<< HEAD
-<span class="nc" id="L20">    private Privacidad privacidad = Privacidad.PRIVADO;</span>
-    private String categoria;
-<span class="nc" id="L22">    private int cantLikes = 0;</span>
-<span class="nc" id="L23">    private int cantDisLikes = 0;</span>
-    private ArrayList&lt;Valoracion&gt; valoraciones;
-    private Map&lt;Integer, Comentario&gt; comentarios;
-<span class="nc" id="L26">    private static int idActual = 1;</span>
-=======
 <span class="pc" id="L20">    private Privacidad privacidad = Privacidad.PRIVADO;</span>
     private String categoria;
 <span class="pc" id="L22">    private int cantLikes = 0;</span>
@@ -33,31 +24,11 @@ public class Video {
     private ArrayList&lt;Valoracion&gt; valoraciones;
     private Map&lt;Integer, Comentario&gt; comentarios;
 <span class="fc" id="L26">    private static int idActual = 1;</span>
->>>>>>> JuanRama
     
 <span class="nc" id="L28">    public Video(){</span>
         
 <span class="nc" id="L30">    }</span>
     /********************** Constructor *********************/
-<<<<<<< HEAD
-<span class="nc" id="L32">    public Video(int _id, String _nombre, String _descripcion,Time _duracion, Date _fechaPublicacion,String _urlVideoOriginal,String _categoria ){</span>
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        if( _id &lt; 0){ throw new RuntimeException(&quot;Error, el id del video es un negativo o cero.&quot;); }</span>
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        if( _nombre == &quot;&quot;){ throw new RuntimeException(&quot;Error, el nombre del video está vacío&quot;);}</span>
-<span class="nc bnc" id="L35" title="All 2 branches missed.">        if( _duracion == null){ throw new RuntimeException(&quot;Error, la duración del video es null.&quot;);}</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        if( _fechaPublicacion == null){ throw new RuntimeException(&quot;Error, la fecha de publicación del video es null.&quot;);}</span>
-<span class="nc bnc" id="L37" title="All 2 branches missed.">        if( _urlVideoOriginal == &quot;&quot;){ throw new RuntimeException(&quot;Error, la url del video está vacía.&quot;);}</span>
-<span class="nc bnc" id="L38" title="All 2 branches missed.">        if( _categoria == &quot;&quot; ){ throw new RuntimeException(&quot;Error, la descripción del video está vacía.&quot;);}</span>
-<span class="nc" id="L39">        this.id = _id;</span>
-<span class="nc" id="L40">        this.nombre = _nombre;</span>
-<span class="nc" id="L41">        this.descripcion = _descripcion;</span>
-<span class="nc" id="L42">        this.duracion = _duracion;</span>
-<span class="nc" id="L43">        this.fechaPublicacion = _fechaPublicacion;</span>
-<span class="nc" id="L44">        this.urlVideoOriginal = _urlVideoOriginal;    </span>
-<span class="nc" id="L45">        this.categoria = _categoria;</span>
-<span class="nc" id="L46">        this.valoraciones = new ArrayList&lt;Valoracion&gt;();</span>
-<span class="nc" id="L47">        this.comentarios = new TreeMap&lt;Integer, Comentario&gt;();        </span>
-<span class="nc" id="L48">    }</span>
-=======
 <span class="fc" id="L32">    public Video(int _id, String _nombre, String _descripcion,Time _duracion, Date _fechaPublicacion,String _urlVideoOriginal,String _categoria ){</span>
 <span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if( _id &lt; 0){ throw new RuntimeException(&quot;Error, el id del video es un negativo o cero.&quot;); }</span>
 <span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if( _nombre == &quot;&quot;){ throw new RuntimeException(&quot;Error, el nombre del video está vacío&quot;);}</span>
@@ -75,7 +46,6 @@ public class Video {
 <span class="fc" id="L46">        this.valoraciones = new ArrayList&lt;Valoracion&gt;();</span>
 <span class="fc" id="L47">        this.comentarios = new TreeMap&lt;Integer, Comentario&gt;();        </span>
 <span class="fc" id="L48">    }</span>
->>>>>>> JuanRama
     
     /** Agregar un nuevo comentario **/
     public void agregarComentario(DtComentario dtComentario, Usuario usuario){
@@ -149,11 +119,7 @@ public class Video {
 <span class="nc" id="L119">    }</span>
 
     public DtVideo getDt(){
-<<<<<<< HEAD
-<span class="nc" id="L122">        return new DtVideo(this.id, this.nombre, this.descripcion, this.duracion, this.fechaPublicacion, this.urlVideoOriginal, this.privacidad, this.categoria, this.cantLikes, this.cantDisLikes);</span>
-=======
 <span class="fc" id="L122">        return new DtVideo(this.id, this.nombre, this.descripcion, this.duracion, this.fechaPublicacion, this.urlVideoOriginal, this.privacidad, this.categoria, this.cantLikes, this.cantDisLikes);</span>
->>>>>>> JuanRama
     }
     
     public ArrayList&lt;DtComentario&gt; listarComentarios(){
@@ -253,11 +219,7 @@ public class Video {
     
 //============================  Get and Set ================================
     public int getId() {
-<<<<<<< HEAD
-<span class="nc" id="L222">        return id;</span>
-=======
 <span class="fc" id="L222">        return id;</span>
->>>>>>> JuanRama
     }
 
     public void setId(int id) {

@@ -13,11 +13,7 @@ import java.util.TreeMap;
 
 public class Canal {
 
-<<<<<<< HEAD
 <span class="fc" id="L16">    private static int contadorCanal = 1;</span>
-=======
-<span class="nc" id="L16">    private static int contadorCanal = 1;</span>
->>>>>>> JuanRama
     private int id;
     private String nombre;
     private String descripcion;
@@ -25,7 +21,6 @@ public class Canal {
     private Map&lt;Integer, ListaDeReproduccion&gt; misListas;
     private Map&lt;Integer, Video&gt; misVideos;
 
-<<<<<<< HEAD
 <span class="fc" id="L24">    public Canal(int id, String nombre, String descripcion, Privacidad privacidad) {</span>
 <span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if (nombre.equals(&quot;&quot;)){</span>
 <span class="nc" id="L26">            throw new RuntimeException(&quot;El nombre del canal no puede ser vacio&quot;);</span>
@@ -44,26 +39,6 @@ public class Canal {
 <span class="fc" id="L39">            this.misListas.put(nuevoID, new ListaDeReproduccion(nuevoID, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, &quot;UNDEFINED&quot;));</span>
 <span class="fc" id="L40">        }</span>
 <span class="fc" id="L41">    }</span>
-=======
-<span class="nc" id="L24">    public Canal(int id, String nombre, String descripcion, Privacidad privacidad) {</span>
-<span class="nc bnc" id="L25" title="All 2 branches missed.">        if (nombre.equals(&quot;&quot;)){</span>
-<span class="nc" id="L26">            throw new RuntimeException(&quot;El nombre del canal no puede ser vacio&quot;);</span>
-        }
-        
-<span class="nc" id="L29">        this.id = id;</span>
-<span class="nc" id="L30">        this.nombre = nombre;</span>
-<span class="nc" id="L31">        this.descripcion = descripcion;</span>
-<span class="nc" id="L32">        this.privacidad = privacidad;</span>
-<span class="nc" id="L33">        this.misListas = new TreeMap();</span>
-<span class="nc" id="L34">        this.misVideos = new TreeMap();</span>
-        
-<span class="nc" id="L36">        ArrayList&lt;String&gt; listas = ListaDeReproduccion.listarNombresDeListasPorDefecto();</span>
-<span class="nc bnc" id="L37" title="All 2 branches missed.">        for (String lista : listas) {</span>
-<span class="nc" id="L38">            int nuevoID = ListaDeReproduccion.getNuevoId();</span>
-<span class="nc" id="L39">            this.misListas.put(nuevoID, new ListaDeReproduccion(nuevoID, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, &quot;UNDEFINED&quot;));</span>
-<span class="nc" id="L40">        }</span>
-<span class="nc" id="L41">    }</span>
->>>>>>> JuanRama
 
     public int getId() {
 <span class="nc" id="L44">        return id;</span>
@@ -107,11 +82,7 @@ public class Canal {
 <span class="nc" id="L82">    }</span>
 
     public static int getNuevoId() {
-<<<<<<< HEAD
 <span class="fc" id="L85">        return contadorCanal++;</span>
-=======
-<span class="nc" id="L85">        return contadorCanal++;</span>
->>>>>>> JuanRama
     }
 
     //-----------------------------------------------------------------------------

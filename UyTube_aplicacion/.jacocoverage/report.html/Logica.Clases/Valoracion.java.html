@@ -6,7 +6,6 @@ import Logica.Enumerados.TipoValoracion;
 public class Valoracion {
     private TipoValoracion val;
     private Usuario usr;
-<<<<<<< HEAD
  
 <span class="fc" id="L10">    public Valoracion(TipoValoracion val, Usuario usr) {</span>
 <span class="fc bfc" id="L11" title="All 2 branches covered.">        if(usr==null){</span>
@@ -55,59 +54,6 @@ public class Valoracion {
 <span class="fc" id="L54">            return true;</span>
         }else{
 <span class="fc" id="L56">            return false;</span>
-=======
-
-<span class="nc" id="L10">    public Valoracion() {</span>
-<span class="nc" id="L11">    }</span>
-    
-<span class="nc" id="L13">    public Valoracion(TipoValoracion val, Usuario usr) {</span>
-<span class="nc bnc" id="L14" title="All 2 branches missed.">        if(usr==null){</span>
-<span class="nc" id="L15">            throw new RuntimeException(&quot;Usuario No puede ser null&quot;);</span>
-        }
-<span class="nc" id="L17">        this.val = val;</span>
-<span class="nc" id="L18">        this.usr = usr;</span>
-<span class="nc" id="L19">    }</span>
-
-    public TipoValoracion getVal() {
-<span class="nc" id="L22">        return val;</span>
-    }
-
-    public void setVal(TipoValoracion val) {
-<span class="nc" id="L26">        this.val = val;</span>
-<span class="nc" id="L27">    }</span>
-
-    public String getNicknameDeUsuario() {
-<span class="nc" id="L30">        return this.usr.getNickname();</span>
-    }
-    
-    public DtValoracion getDT(){
-<span class="nc" id="L34">        DtValoracion dtV = new DtValoracion(this.val, this.usr.getNickname());</span>
-<span class="nc" id="L35">        return dtV;</span>
-    }
-    public DtValoracion getDT(String nickname){
-<span class="nc bnc" id="L38" title="All 2 branches missed.">        if(nickname==null){</span>
-<span class="nc" id="L39">            throw new RuntimeException(&quot;Nickname No puede ser null&quot;);</span>
-        }
-        // si esta valoracion corresponde al usuario, devuelve su DT, sino null
-<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (nickname.equals(this.usr.getNickname())){</span>
-<span class="nc" id="L43">            return this.getDT();</span>
-        }else{
-<span class="nc" id="L45">            return null;</span>
-        }
-    }
-    public boolean modificar(DtValoracion dtV, String nickname){
-<span class="nc bnc" id="L49" title="All 2 branches missed.">        if(dtV==null){</span>
-<span class="nc" id="L50">            throw new RuntimeException(&quot;DtValoracion No puede ser null&quot;);</span>
-        }
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        if(nickname==null){</span>
-<span class="nc" id="L53">            throw new RuntimeException(&quot;Nickname No puede ser null&quot;);</span>
-        }
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (nickname.equals(this.usr.getNickname())){</span>
-<span class="nc" id="L56">            this.val = dtV.getVal();</span>
-<span class="nc" id="L57">            return true;</span>
-        }else{
-<span class="nc" id="L59">            return false;</span>
->>>>>>> JuanRama
         }
     }
     
