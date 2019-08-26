@@ -18,6 +18,7 @@ public class Usuario extends Persona{
     
 
     public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido ,DtCanal DTC) {
+<<<<<<< HEAD
 <span class="fc" id="L21">        super(nombre,apellido,contrasenia);</span>
         
 <span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if(fechaNacimiento == null){</span>
@@ -46,6 +47,36 @@ public class Usuario extends Persona{
 
     public String getNickname() {
 <span class="fc" id="L48">        return nickname;</span>
+=======
+<span class="nc" id="L21">        super(nombre,apellido,contrasenia);</span>
+        
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if(fechaNacimiento == null){</span>
+<span class="nc" id="L24">            throw new RuntimeException(&quot;la fecha no puede ser nill&quot;);</span>
+        }
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if(DTC == null){</span>
+<span class="nc" id="L27">            throw new RuntimeException(&quot;El canal no puede ser null&quot;);</span>
+        }
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if(nickname == &quot;&quot;){</span>
+<span class="nc" id="L30">            throw new RuntimeException(&quot;El nickname no puede ser Vacio&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if(correo == &quot;&quot;){</span>
+<span class="nc" id="L34">            throw new RuntimeException(&quot;El correo no puede ser Vacio&quot;);</span>
+        }
+        
+<span class="nc" id="L37">        this.nickname = nickname;</span>
+<span class="nc" id="L38">        this.correo = correo;</span>
+<span class="nc" id="L39">        this.fechaNacimiento = fechaNacimiento;</span>
+<span class="nc" id="L40">        this.imagen = imagen;</span>
+<span class="nc" id="L41">        this.seguidores = 0;</span>
+<span class="nc" id="L42">        this.MiCanal = new Canal(Canal.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());</span>
+<span class="nc" id="L43">        this.misSeguidores = new TreeMap();</span>
+<span class="nc" id="L44">        this.seguidos = new TreeMap();</span>
+<span class="nc" id="L45">    }</span>
+
+    public String getNickname() {
+<span class="nc" id="L48">        return nickname;</span>
+>>>>>>> JuanRama
     }
     
     public String getCorreo() {

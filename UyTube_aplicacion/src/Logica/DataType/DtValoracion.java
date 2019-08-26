@@ -6,8 +6,6 @@ public class DtValoracion {
     private TipoValoracion val;
     private String nickname;
 
-    public DtValoracion() {}
-    
     public DtValoracion(TipoValoracion val, String nickname) {
         this.val = val;
         this.nickname = nickname;

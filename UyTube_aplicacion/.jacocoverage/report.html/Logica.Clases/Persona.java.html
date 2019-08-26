@@ -5,6 +5,7 @@ public class Persona {
     private String apellido;
     private String contrasenia;
 
+<<<<<<< HEAD
 <span class="fc" id="L8">    public Persona(String nombre, String apellido, String contrasenia) {</span>
 <span class="pc bpc" id="L9" title="1 of 2 branches missed.">        if(contrasenia == &quot;&quot;){</span>
 <span class="nc" id="L10">                throw new RuntimeException(&quot;La contraseña no puede ser Vacio&quot;);</span>
@@ -13,6 +14,16 @@ public class Persona {
 <span class="fc" id="L13">        this.apellido = apellido;</span>
 <span class="fc" id="L14">        this.contrasenia = contrasenia;</span>
 <span class="fc" id="L15">    }</span>
+=======
+<span class="nc" id="L8">    public Persona(String nombre, String apellido, String contrasenia) {</span>
+<span class="nc bnc" id="L9" title="All 2 branches missed.">        if(contrasenia == &quot;&quot;){</span>
+<span class="nc" id="L10">                throw new RuntimeException(&quot;La contraseña no puede ser Vacio&quot;);</span>
+        }
+<span class="nc" id="L12">        this.nombre = nombre;</span>
+<span class="nc" id="L13">        this.apellido = apellido;</span>
+<span class="nc" id="L14">        this.contrasenia = contrasenia;</span>
+<span class="nc" id="L15">    }</span>
+>>>>>>> JuanRama
 
     public String getNombre() {
 <span class="nc" id="L18">        return nombre;</span>
