@@ -3,12 +3,15 @@
 public class Categoria {
     private String nombre;
 
-<span class="nc" id="L6">    public Categoria(String nombre) {</span>
-<span class="nc" id="L7">        this.nombre = nombre;</span>
-<span class="nc" id="L8">    }</span>
+<span class="fc" id="L6">    public Categoria(String nombre) {</span>
+<span class="fc bfc" id="L7" title="All 2 branches covered.">        if (nombre.equals(&quot;&quot;)){</span>
+<span class="fc" id="L8">            throw new RuntimeException(&quot;El nombre de la categoria no puede ser vacio&quot;);</span>
+        }
+<span class="fc" id="L10">        this.nombre = nombre;</span>
+<span class="fc" id="L11">    }</span>
 
     public String getNombre() {
-<span class="nc" id="L11">        return nombre;</span>
+<span class="fc" id="L14">        return nombre;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
