@@ -26,4 +26,20 @@ public class Persona {
         return this.contrasenia.equals(pass);
     }
     
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
 }
