@@ -30,6 +30,9 @@ public class ListaDeReproduccion {
         if (tipo == TipoListaDeReproduccion.POR_DEFECTO && privacidad != Privacidad.PRIVADO){
             throw new RuntimeException("No se puede crear una lista de reproduccion por defecto publica");
         }
+        if (tipo == TipoListaDeReproduccion.POR_DEFECTO && !categoria.equals("UNDEFINED")){
+            throw new RuntimeException("No se puede crear una lista de reproduccion por defecto en una categoria");
+        }
         this.id = id;
         this.nombre = nombre;
         this.privacidad = privacidad;

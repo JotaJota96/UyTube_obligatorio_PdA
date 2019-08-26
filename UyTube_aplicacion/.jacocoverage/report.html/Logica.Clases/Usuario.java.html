@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Usuario.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;UyTube&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica.Clases</a> &gt; <span class="el_source">Usuario.java</span></div><h1>Usuario.java</h1><pre class="source lang-java linenums">package Logica.Clases;
+import java.sql.Date;
+import Logica.DataType.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class Usuario extends Persona{
+    
+    private String nickname;
+    private String correo;
+    private Date fechaNacimiento;
+    private String imagen;
+    private int seguidores;
+    private Canal MiCanal;
+    private Map&lt;String, Usuario&gt; misSeguidores;
+    private Map&lt;String, Usuario&gt; seguidos;
+    
+
+    public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido ,DtCanal DTC) {
+<span class="nc" id="L21">        super(nombre,apellido,contrasenia);</span>
+        
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if(fechaNacimiento == null){</span>
+<span class="nc" id="L24">            throw new RuntimeException(&quot;la fecha no puede ser nill&quot;);</span>
+        }
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if(DTC == null){</span>
+<span class="nc" id="L27">            throw new RuntimeException(&quot;El canal no puede ser null&quot;);</span>
+        }
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if(nickname == &quot;&quot;){</span>
+<span class="nc" id="L30">            throw new RuntimeException(&quot;El nickname no puede ser Vacio&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if(correo == &quot;&quot;){</span>
+<span class="nc" id="L34">            throw new RuntimeException(&quot;El correo no puede ser Vacio&quot;);</span>
+        }
+        
+<span class="nc" id="L37">        this.nickname = nickname;</span>
+<span class="nc" id="L38">        this.correo = correo;</span>
+<span class="nc" id="L39">        this.fechaNacimiento = fechaNacimiento;</span>
+<span class="nc" id="L40">        this.imagen = imagen;</span>
+<span class="nc" id="L41">        this.seguidores = 0;</span>
+<span class="nc" id="L42">        this.MiCanal = new Canal(Canal.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());</span>
+<span class="nc" id="L43">        this.misSeguidores = new TreeMap();</span>
+<span class="nc" id="L44">        this.seguidos = new TreeMap();</span>
+<span class="nc" id="L45">    }</span>
+
+    public String getNickname() {
+<span class="nc" id="L48">        return nickname;</span>
+    }
+    
+    public String getCorreo() {
+<span class="nc" id="L52">        return correo;</span>
+    }
+    
+    public Date getFechaNacimiento() {
+<span class="nc" id="L56">        return fechaNacimiento;</span>
+    }
+    
+    public String getImagen() {
+<span class="nc" id="L60">        return imagen;</span>
+    }
+
+    public int getSeguidores() {
+<span class="nc" id="L64">        return seguidores;</span>
+    }
+
+    public DtUsuario getDT(){
+<span class="nc" id="L68">        return new DtUsuario(this.nickname, super.getContrasena(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);</span>
+    }
+    
+    public void actualizarListasPorDefecto(){
+<span class="nc" id="L72">        this.MiCanal.actualizarListasPorDefecto();</span>
+<span class="nc" id="L73">    }</span>
+    
+    public void agregarComentarioAVideo(int idVideo, DtComentario DtComentario, Usuario Usu){
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if(DtComentario == null){</span>
+<span class="nc" id="L77">            throw new RuntimeException(&quot;El comentario no puede ser null&quot;);</span>
+        }
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if(Usu == null){</span>
+<span class="nc" id="L80">            throw new RuntimeException(&quot;El usuario no puede ser null&quot;);</span>
+        }
+        
+<span class="nc" id="L83">        this.MiCanal.agregarComentarioAVideo(idVideo, DtComentario, Usu);</span>
+<span class="nc" id="L84">    }</span>
+    
+    public void agregarComentarioAVideo(int idVideo, int idCom, DtComentario DtComentario, Usuario Usu){
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if(DtComentario == null){</span>
+<span class="nc" id="L88">            throw new RuntimeException(&quot;El comentario no puede ser null&quot;);</span>
+        }
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(Usu == null){</span>
+<span class="nc" id="L91">            throw new RuntimeException(&quot;El usuario no puede ser null&quot;);</span>
+        }
+        
+<span class="nc" id="L94">        this.MiCanal.agregarComentarioAVideo(idVideo, idCom, DtComentario, Usu);</span>
+<span class="nc" id="L95">    }</span>
+    
+    public void agregarListaParticular(DtListaDeReproduccion DtValoracion){
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if(DtValoracion == null){</span>
+<span class="nc" id="L99">            throw new RuntimeException(&quot;La valoracion no puede ser null&quot;);</span>
+        }
+        
+<span class="nc" id="L102">        this.MiCanal.agregarListaParticular(DtValoracion);</span>
+<span class="nc" id="L103">    }</span>
+    
+    public void agregarModificarValoracionDeVideo(int idVideo, DtValoracion DtValoracion, Usuario Usu){
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if(DtValoracion == null){</span>
+<span class="nc" id="L107">            throw new RuntimeException(&quot;La valoracion no puede ser null&quot;);</span>
+        }
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if(Usu == null){</span>
+<span class="nc" id="L110">            throw new RuntimeException(&quot;El usuario no puede ser null&quot;);</span>
+        }
+        
+<span class="nc" id="L113">        this.MiCanal.agregarModificarValoracion(idVideo , DtValoracion, Usu);</span>
+<span class="nc" id="L114">    }</span>
+    
+    public void agregarOQuitarSeguido(Usuario Usu){
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if(Usu == null){</span>
+<span class="nc" id="L118">            throw new RuntimeException(&quot;El usuario no puede ser null&quot;);</span>
+        }
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        if(Usu == this){</span>
+<span class="nc" id="L121">            throw new RuntimeException(&quot;Un usuario no se puede seguir a si mismo&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (this.seguidos.containsKey(Usu.getNickname())){</span>
+<span class="nc" id="L125">            this.seguidos.remove(Usu.getNickname());</span>
+        }else{
+<span class="nc" id="L127">            this.seguidos.put(Usu.getNickname(), Usu);</span>
+        }
+        
+<span class="nc" id="L130">        Usu.agregarOQuitarSeguidor(this);</span>
+<span class="nc" id="L131">    }</span>
+    
+    // si, esta si es private, no es un error
+    private void agregarOQuitarSeguidor(Usuario Usu){
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if(Usu == null){</span>
+<span class="nc" id="L136">            throw new RuntimeException(&quot;El usuario no puede ser null&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (this.misSeguidores.containsKey(Usu.nickname)){</span>
+<span class="nc" id="L140">            this.misSeguidores.remove(Usu.getNickname());</span>
+<span class="nc" id="L141">            this.seguidores--;</span>
+        }else{
+<span class="nc" id="L143">            this.misSeguidores.put(Usu.getNickname(), Usu);</span>
+<span class="nc" id="L144">            this.seguidores++;</span>
+        }
+<span class="nc" id="L146">    }</span>
+    
+    public void agregarVideoACanal(DtVideo DtVideo){
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        if(DtVideo == null){</span>
+<span class="nc" id="L150">            throw new RuntimeException(&quot;El video no puede ser null&quot;);</span>
+        }
+        
+<span class="nc" id="L153">        this.MiCanal.agregarVideo(DtVideo);</span>
+<span class="nc" id="L154">    }</span>
+    
+    public void agregarVideoALista(int idLista , int idVideo, Usuario Usu){
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        if(Usu == null){</span>
+<span class="nc" id="L158">            throw new RuntimeException(&quot;El usuario no puede ser null&quot;);</span>
+        }
+        
+<span class="nc" id="L161">        Video v = Usu.obtenerVideo(idVideo);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        if (v == null){</span>
+<span class="nc" id="L163">            throw new RuntimeException(&quot;El video no pertenece al usuario: &quot; + Usu.getNickname());</span>
+        }
+<span class="nc" id="L165">        this.MiCanal.agregarVideoALista(idLista, v);</span>
+<span class="nc" id="L166">    }</span>
+    
+    public ArrayList&lt;DtComentario&gt; listarComentariosDeVideo(int idVideo){
+<span class="nc" id="L169">        return this.MiCanal.listarComentariosDeVideo(idVideo);</span>
+    }
+    
+    public ArrayList&lt;DtListaDeReproduccion&gt; listarListasDeReproduccionDeCanal(boolean porDefecto){
+<span class="nc" id="L173">        return this.MiCanal.listarListasDeReproduccion(porDefecto);</span>
+    }
+    
+    public ArrayList&lt;DtUsuario&gt; listarUsuariosSeguidos(){
+        // crea una lista de retorno
+<span class="nc" id="L178">        ArrayList&lt;DtUsuario&gt; ret = new ArrayList();</span>
+        
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        for (Map.Entry&lt;String,Usuario&gt; i : this.seguidos.entrySet()){</span>
+            // hace un getDT y lo agrega a la coleccion de retorno
+<span class="nc" id="L182">            ret.add(i.getValue().getDT());</span>
+<span class="nc" id="L183">        }</span>
+<span class="nc" id="L184">        return ret;</span>
+    }//(Ctrl + C Ctrl + V) De la clase video
+    
+    public ArrayList&lt;DtUsuario&gt; listarUsuariosSeguidores(){
+        // crea una lista de retorno
+<span class="nc" id="L189">        ArrayList&lt;DtUsuario&gt; ret = new ArrayList();</span>
+        
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        for (Map.Entry&lt;String,Usuario&gt; i : this.misSeguidores.entrySet()){</span>
+            // hace un getDT y lo agrega a la coleccion de retorno
+<span class="nc" id="L193">            ret.add(i.getValue().getDT());</span>
+<span class="nc" id="L194">        }</span>
+<span class="nc" id="L195">        return ret;</span>
+    }//(Ctrl + C Ctrl + V) De la clase lirRepro
+    
+    public ArrayList&lt;DtValoracion&gt; listarValoracionesDeVideo(int id){
+<span class="nc" id="L199">        return this.MiCanal.listarValoracionesDeVideo(id);</span>
+    }
+    
+    public ArrayList&lt;DtVideo&gt; listarVideosDeCanal(){
+<span class="nc" id="L203">        return this.MiCanal.listarVideos();</span>
+    }
+    
+    public ArrayList&lt;DtVideo&gt; listarVideosDeListaDeReproduccion(int id){
+<span class="nc" id="L207">        return this.MiCanal.listarVideosDeListaDeReproduccion(id);</span>
+    }
+    
+    public void modificar(DtUsuario DtUsu, DtCanal DtCanal){
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        if(DtUsu == null){</span>
+<span class="nc" id="L212">            throw new RuntimeException(&quot;El usuario no puede ser null&quot;);</span>
+        }
+<span class="nc bnc" id="L214" title="All 2 branches missed.">        if(DtUsu.getFechaNacimiento() == null){</span>
+<span class="nc" id="L215">            throw new RuntimeException(&quot;La fecha no puede ser null&quot;);</span>
+        }
+<span class="nc bnc" id="L217" title="All 2 branches missed.">        if(DtCanal == null){</span>
+<span class="nc" id="L218">            throw new RuntimeException(&quot;El canal no puede ser null&quot;);</span>
+        }
+        
+<span class="nc" id="L221">        super.setNombre(DtUsu.getNombre());</span>
+<span class="nc" id="L222">        super.setApellido(DtUsu.getApellido());</span>
+<span class="nc" id="L223">        super.setContrasenia(DtUsu.getContrasenia());</span>
+<span class="nc" id="L224">        this.fechaNacimiento = DtUsu.getFechaNacimiento();</span>
+<span class="nc" id="L225">        this.imagen = DtUsu.getImagen();</span>
+        
+<span class="nc" id="L227">        this.MiCanal.modificar(DtCanal);</span>
+<span class="nc" id="L228">    }</span>
+    
+    public void modificarListaDeReproduccionDeCanal(DtListaDeReproduccion DtListaDeReproduccion){
+<span class="nc bnc" id="L231" title="All 2 branches missed.">        if(DtListaDeReproduccion == null){</span>
+<span class="nc" id="L232">            throw new RuntimeException(&quot;La lista de reproduccion no puede ser null&quot;);</span>
+        }
+        
+<span class="nc" id="L235">        this.MiCanal.modificarListaDeReproduccion(DtListaDeReproduccion);</span>
+<span class="nc" id="L236">    }</span>
+    
+    public void modificarVideoDeCanal(DtVideo DtVideo){
+<span class="nc bnc" id="L239" title="All 2 branches missed.">        if(DtVideo == null){</span>
+<span class="nc" id="L240">            throw new RuntimeException(&quot;El video no puede ser null&quot;);</span>
+        }
+<span class="nc" id="L242">        this.MiCanal.modificarVideo(DtVideo);</span>
+<span class="nc" id="L243">    }</span>
+    
+    public DtCanal obtenerCanal(){
+<span class="nc" id="L246">        return this.MiCanal.getDT();</span>
+    }
+    
+    
+    public DtListaDeReproduccion obtenerListaDeReproduccion(int id){
+<span class="nc" id="L251">        return MiCanal.obtenerListaDeReproduccion(id);</span>
+    }
+    
+    
+    public ArrayList&lt;DtListaDeReproduccion&gt; obtenerListasEnCategoria(String cat){
+<span class="nc bnc" id="L256" title="All 2 branches missed.">        if(cat == &quot;&quot;){</span>
+<span class="nc" id="L257">            throw new RuntimeException(&quot;La categoria no puede ser vacia&quot;);</span>
+        }
+        
+<span class="nc" id="L260">        return this.MiCanal.obtenerListasEnCategoria(cat);</span>
+    }
+    
+    public DtValoracion obtenerValoracion(int id, String nickname){
+<span class="nc bnc" id="L264" title="All 2 branches missed.">        if(nickname == &quot;&quot;){</span>
+<span class="nc" id="L265">            throw new RuntimeException(&quot;El nickname no puede ser vacio&quot;);</span>
+        }
+        
+<span class="nc" id="L268">        return this.MiCanal.obtenerValoracion(id, nickname);</span>
+    }
+    
+    public Video obtenerVideo(int id){
+<span class="nc" id="L272">        return this.MiCanal.obtenerVideo(id);</span>
+    }
+    
+    public DtVideo obtenerVideoDeCanal(int idVideo){
+<span class="nc" id="L276">        return this.MiCanal.obtenerDtVideo(idVideo);</span>
+    }
+    
+    public ArrayList&lt;DtVideo&gt; obtenerVideosEnCategoria(String cat){
+<span class="nc bnc" id="L280" title="All 2 branches missed.">        if(cat == &quot;&quot;){</span>
+<span class="nc" id="L281">            throw new RuntimeException(&quot;La categoria no puede ser vacia&quot;);</span>
+        }
+        
+<span class="nc" id="L284">        return this.MiCanal.obtenerVideosEnCategoria(cat);</span>
+        
+    }
+    
+    public void quitarValoracion(int id, String nickname){
+<span class="nc bnc" id="L289" title="All 2 branches missed.">        if(nickname == &quot;&quot;){</span>
+<span class="nc" id="L290">            throw new RuntimeException(&quot;El nickname no puede ser vacia&quot;);</span>
+        }
+<span class="nc" id="L292">        this.MiCanal.quitarValoracion(id, nickname);</span>
+<span class="nc" id="L293">    }</span>
+    
+    public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo){
+<span class="nc" id="L296">        this.MiCanal.quitarVideoDeListaDeReproduccion(idLista, idVideo);</span>
+<span class="nc" id="L297">    }</span>
+    
+    public boolean validarListaParticular(String nombre){
+<span class="nc bnc" id="L300" title="All 2 branches missed.">        if(nombre == &quot;&quot;){</span>
+<span class="nc" id="L301">            throw new RuntimeException(&quot;El nombre de la lista no puede ser vacia&quot;);</span>
+        }
+<span class="nc" id="L303">        return this.MiCanal.validarListaParticular(nombre);</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
