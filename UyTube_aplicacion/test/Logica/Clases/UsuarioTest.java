@@ -258,9 +258,9 @@ public class UsuarioTest {
         int idCom = instance.listarComentariosDeVideo(idVideo).get(0).getId();
         try {
             instance.agregarComentarioAVideo(idVideo, idCom, DtComentario, null);
-            assertNull(null);
-        } catch (Exception e) {
             assertNull(instance); // por poner algo que no sea null...
+        } catch (Exception e) {
+            assertNull(null);
         }
     }
     @Test
@@ -273,9 +273,9 @@ public class UsuarioTest {
         int idCom = instance.listarComentariosDeVideo(idVideo).get(0).getId();
         try {
             instance.agregarComentarioAVideo(idVideo, idCom, null, Usu);
-            assertNull(null);
-        } catch (Exception e) {
             assertNull(instance); // por poner algo que no sea null...
+        } catch (Exception e) {
+            assertNull(null);
         }
     }
 
@@ -319,9 +319,9 @@ public class UsuarioTest {
         
         try {
             instance.agregarModificarValoracionDeVideo(idVideo, DtValoracion, Usu);
-            assertNotNull(null);
-        } catch (Exception e) {
             assertNull(null);
+        } catch (Exception e) {
+            assertNotNull(null);
         }
     }
     @Test
@@ -411,7 +411,6 @@ public class UsuarioTest {
         }
     }
 
-
     /**
      * Test of agregarVideoACanal method, of class Usuario.
      */
@@ -419,12 +418,16 @@ public class UsuarioTest {
     public void testAgregarVideoACanal_1() {
         System.out.println("agregarVideoACanal_1");
         int antes, despues;
-        antes = instance.listarVideosDeCanal().size() + 1;
+        antes = instance.listarVideosDeCanal().size();
+        Video v2 = new Video(0, "nombre de otro video", "descripcion", new Time(1, 2, 3), new Date(2019 - 1900, 1, 2), "urlVideo", "UNDEFINED");
+        
         try {
-            instance.agregarVideoACanal(v.getDt());
+            instance.agregarVideoACanal(v2.getDt());
+            despues = instance.listarVideosDeCanal().size();
+            assertNotEquals(despues, antes);
         } catch (Exception e) {
             despues = instance.listarVideosDeCanal().size();
-            assertEquals(despues, antes);
+            assertNotEquals(despues, antes);
         }
     }
     @Test
@@ -488,59 +491,22 @@ public class UsuarioTest {
         }
     }
 
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
-     * Test of listarComentariosDeVideo method, of class Usuario.
-     */
-    @Test
-    public void testListarComentariosDeVideo() {
-        System.out.println("listarComentariosDeVideo");
-        int idVideo = 0;
-        Usuario instance = null;
-        ArrayList<DtComentario> expResult = null;
-        ArrayList<DtComentario> result = instance.listarComentariosDeVideo(idVideo);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of listarListasDeReproduccionDeCanal method, of class Usuario.
-     */
-    @Test
-    public void testListarListasDeReproduccionDeCanal() {
-        System.out.println("listarListasDeReproduccionDeCanal");
-        boolean porDefecto = false;
-        Usuario instance = null;
-        ArrayList<DtListaDeReproduccion> expResult = null;
-        ArrayList<DtListaDeReproduccion> result = instance.listarListasDeReproduccionDeCanal(porDefecto);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
     /**
      * Test of listarUsuariosSeguidos method, of class Usuario.
      */
     @Test
     public void testListarUsuariosSeguidos() {
         System.out.println("listarUsuariosSeguidos");
-        Usuario instance = null;
-        ArrayList<DtUsuario> expResult = null;
+        Usuario Usu = new Usuario("nickname", "correo", new Date(2019 - 1900, 1, 1),
+                "imagen", "contrasenia", "nombre", "apellido",
+                new DtCanal(0, "canal", "descripcion", Privacidad.PUBLICO));
+        instance.agregarOQuitarSeguido(Usu);
+
+        ArrayList<DtUsuario> expResult = new ArrayList();
+        
         ArrayList<DtUsuario> result = instance.listarUsuariosSeguidos();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.agregarOQuitarSeguido(Usu);
+        assertNotEquals(expResult.size(), result.size());
     }
 
     /**
@@ -549,12 +515,16 @@ public class UsuarioTest {
     @Test
     public void testListarUsuariosSeguidores() {
         System.out.println("listarUsuariosSeguidores");
-        Usuario instance = null;
-        ArrayList<DtUsuario> expResult = null;
-        ArrayList<DtUsuario> result = instance.listarUsuariosSeguidores();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario Usu = new Usuario("nickname", "correo", new Date(2019 - 1900, 1, 1),
+                "imagen", "contrasenia", "nombre", "apellido",
+                new DtCanal(0, "canal", "descripcion", Privacidad.PUBLICO));
+        instance.agregarOQuitarSeguido(Usu);
+
+        ArrayList<DtUsuario> expResult = new ArrayList();
+        
+        ArrayList<DtUsuario> result = Usu.listarUsuariosSeguidores();
+        instance.agregarOQuitarSeguido(Usu);
+        assertNotEquals(expResult.size(), result.size());
     }
 
     /**
@@ -563,27 +533,32 @@ public class UsuarioTest {
     @Test
     public void testListarValoracionesDeVideo() {
         System.out.println("listarValoracionesDeVideo");
-        int id = 0;
-        Usuario instance = null;
-        ArrayList<DtValoracion> expResult = null;
-        ArrayList<DtValoracion> result = instance.listarValoracionesDeVideo(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int id = instance.listarVideosDeCanal().get(0).getId();
+        ArrayList<DtValoracion> expResult = new ArrayList();
+        ArrayList<DtValoracion> result = null;
+        try {
+            result = instance.listarValoracionesDeVideo(id);
+            assertNull(null);
+        } catch (Exception e) {
+            assertNotNull(null);
+        }
     }
-
+    
     /**
      * Test of listarVideosDeCanal method, of class Usuario.
      */
     @Test
     public void testListarVideosDeCanal() {
         System.out.println("listarVideosDeCanal");
-        Usuario instance = null;
-        ArrayList<DtVideo> expResult = null;
-        ArrayList<DtVideo> result = instance.listarVideosDeCanal();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int id = instance.listarVideosDeCanal().get(0).getId();
+        ArrayList<DtVideo> expResult = new ArrayList();
+        ArrayList<DtVideo> result = null;
+        try {
+            result = instance.listarVideosDeCanal();
+            assertNull(null);
+        } catch (Exception e) {
+            assertNotNull(null);
+        }
     }
 
     /**
@@ -592,13 +567,15 @@ public class UsuarioTest {
     @Test
     public void testListarVideosDeListaDeReproduccion() {
         System.out.println("listarVideosDeListaDeReproduccion");
-        int id = 0;
-        Usuario instance = null;
-        ArrayList<DtVideo> expResult = null;
-        ArrayList<DtVideo> result = instance.listarVideosDeListaDeReproduccion(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int id = instance.listarListasDeReproduccionDeCanal(false).get(0).getId();
+        ArrayList<DtVideo> expResult = new ArrayList();
+        ArrayList<DtVideo> result = null;
+        try {
+            result = instance.listarVideosDeListaDeReproduccion(id);
+            assertNull(null);
+        } catch (Exception e) {
+            assertNotNull(null);
+        }
     }
 
     /**
@@ -607,186 +584,453 @@ public class UsuarioTest {
     @Test
     public void testModificar() {
         System.out.println("modificar");
-        DtUsuario DtUsu = null;
-        DtCanal DtCanal = null;
-        Usuario instance = null;
-        instance.modificar(DtUsu, DtCanal);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario Usu = new Usuario("nickn", "cor", new Date(2000 - 1900, 1, 1),
+                "img", "contra", "nom", "ape",
+                new DtCanal(0, "canal", "descripcion", Privacidad.PUBLICO));
+        DtUsuario DtUsu = Usu.getDT();
+        DtCanal dtc = instance.obtenerCanal();
+        instance.modificar(DtUsu, dtc);
+        assertNotEquals(DtUsu.toString(), instance.getDT().toString());
     }
-
+    @Test
+    public void testModificar_1() {
+        System.out.println("testModificar_1");
+        Usuario Usu = new Usuario("nickn", "cor", new Date(2000 - 1900, 1, 1),
+                "img", "contra", "nom", "ape",
+                new DtCanal(0, "canal", "descripcion", Privacidad.PUBLICO));
+        DtUsuario DtUsu = Usu.getDT();
+        DtCanal dtc = instance.obtenerCanal();
+        
+        String antes = instance.getDT().toString();
+        try {
+            instance.modificar(null, dtc);
+        } catch (Exception e) {
+            String despues = instance.getDT().toString();
+            assertEquals(antes, despues);
+        }
+    }
+    @Test
+    public void testModificar_2() {
+        System.out.println("testModificar_2");
+        Usuario Usu = new Usuario("nickn", "cor", new Date(2000 - 1900, 1, 1),
+                "img", "contra", "nom", "ape",
+                new DtCanal(0, "canal", "descripcion", Privacidad.PUBLICO));
+        DtUsuario DtUsu = Usu.getDT();
+        DtCanal dtc = instance.obtenerCanal();
+        
+        String antes = instance.getDT().toString();
+        try {
+            instance.modificar(DtUsu, null);
+        } catch (Exception e) {
+            String despues = instance.getDT().toString();
+            assertEquals(antes, despues);
+        }
+    }
+    @Test
+    public void testModificar_3() {
+        System.out.println("testModificar_3");
+        Usuario Usu = new Usuario("nickn", "cor", new Date(2000 - 1900, 1, 1),
+                "img", "contra", "nom", "ape",
+                new DtCanal(0, "canal", "descripcion", Privacidad.PUBLICO));
+        
+        DtUsuario DtUsu = new DtUsuario("nickname", "contrasenia", "nombre", "apellido", "correo", null, "imagen", 0);
+        DtCanal dtc = instance.obtenerCanal();
+        
+        String antes = instance.getDT().toString();
+        try {
+            instance.modificar(DtUsu, dtc);
+        } catch (Exception e) {
+            String despues = instance.getDT().toString();
+            assertEquals(antes, despues);
+        }
+    }
+    
     /**
      * Test of modificarListaDeReproduccionDeCanal method, of class Usuario.
      */
     @Test
-    public void testModificarListaDeReproduccionDeCanal() {
-        System.out.println("modificarListaDeReproduccionDeCanal");
+    public void testModificarListaDeReproduccionDeCanal_1() {
+        System.out.println("testModificarListaDeReproduccionDeCanal_1");
+        DtListaDeReproduccion DtListaDeReproduccion = ldr.getDt();
+        int id = ListaDeReproduccion.getNuevoId() +1;
+        instance.agregarListaParticular(ldr.getDt());
+        DtListaDeReproduccion dt = new DtListaDeReproduccion(id, "nombre", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "MUSICA");
+        try {
+            instance.modificarListaDeReproduccionDeCanal(dt);
+            assertNull(null);
+        } catch (Exception e) {
+            assertNotNull(null);
+        }
+    }
+    @Test
+    public void testModificarListaDeReproduccionDeCanal_2() {
+        System.out.println("testModificarListaDeReproduccionDeCanal_2");
         DtListaDeReproduccion DtListaDeReproduccion = null;
-        Usuario instance = null;
-        instance.modificarListaDeReproduccionDeCanal(DtListaDeReproduccion);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        try {
+            instance.modificarListaDeReproduccionDeCanal(DtListaDeReproduccion);
+            assertNotNull(null);
+        } catch (Exception e) {
+            assertNull(null);
+        }
     }
 
     /**
      * Test of modificarVideoDeCanal method, of class Usuario.
      */
     @Test
-    public void testModificarVideoDeCanal() {
-        System.out.println("modificarVideoDeCanal");
-        DtVideo DtVideo = null;
-        Usuario instance = null;
-        instance.modificarVideoDeCanal(DtVideo);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testModificarVideoDeCanal_1() {
+        System.out.println("testModificarVideoDeCanal_1");
+        
+        int id = Video.getNuevoId() + 1;
+        DtVideo dt1 = new DtVideo(id, "videito", "descripcioncita", new Time(1, 2, 3), new Date(2010-1900, 5, 25), "urlcita", Privacidad.PRIVADO, "MUSICA", 0, 0);
+        instance.agregarVideoACanal(dt1);
+        DtVideo dt2 = new DtVideo(id, "vid", "desc", new Time(1, 2, 3), new Date(2010-1900, 5, 25), "url_vid", Privacidad.PRIVADO, "MUSICA", 0, 0);
+        
+        try {
+        instance.modificarVideoDeCanal(dt2);
+            assertNull(null);
+        } catch (Exception e) {
+            assertNotNull(null);
+        }
     }
-
+    @Test
+    public void testModificarVideoDeCanal_2() {
+        System.out.println("testModificarVideoDeCanal_2");
+        
+        try {
+            instance.modificarVideoDeCanal(null);
+            assertNotNull(null);
+        } catch (Exception e) {
+            assertNull(null);
+        }
+    }
+    
     /**
      * Test of obtenerCanal method, of class Usuario.
      */
     @Test
     public void testObtenerCanal() {
         System.out.println("obtenerCanal");
-        Usuario instance = null;
-        DtCanal expResult = null;
         DtCanal result = instance.obtenerCanal();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
-
+    
     /**
      * Test of obtenerListaDeReproduccion method, of class Usuario.
      */
     @Test
-    public void testObtenerListaDeReproduccion() {
-        System.out.println("obtenerListaDeReproduccion");
-        int id = 0;
-        Usuario instance = null;
-        DtListaDeReproduccion expResult = null;
-        DtListaDeReproduccion result = instance.obtenerListaDeReproduccion(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testObtenerListaDeReproduccion_1() {
+        System.out.println("obtenerListaDeReproduccion_1");
+        int id = instance.listarListasDeReproduccionDeCanal(false).get(0).getId();
+        DtListaDeReproduccion result = null;
+        try {
+            result = instance.obtenerListaDeReproduccion(id);
+            assertNotNull(result);
+        } catch (Exception e) {
+            assertNull(result);
+        }
+    }
+    @Test
+    public void testObtenerListaDeReproduccion_2() {
+        System.out.println("obtenerListaDeReproduccion_2");
+        int id = 5000;
+        DtListaDeReproduccion result = null;
+        try {
+            result = instance.obtenerListaDeReproduccion(id);
+            assertNotNull(result);
+        } catch (Exception e) {
+            assertNull(result);
+        }
     }
 
     /**
      * Test of obtenerListasEnCategoria method, of class Usuario.
      */
     @Test
-    public void testObtenerListasEnCategoria() {
-        System.out.println("obtenerListasEnCategoria");
+    public void testObtenerListasEnCategoria_1() {
+        System.out.println("obtenerListasEnCategoria_1");
+        String cat = "DEPORTE";
+        DtListaDeReproduccion dt = new DtListaDeReproduccion(0, "prueba", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "DEPORTE");
+        instance.agregarListaParticular(dt);
+        
+        ArrayList<DtListaDeReproduccion> expResult = new ArrayList();
+        ArrayList<DtListaDeReproduccion> result = new ArrayList();
+        
+        try {
+            result = instance.obtenerListasEnCategoria(cat);
+            assertNotEquals(expResult.size(), result.size());
+        } catch (Exception e) {
+            assertEquals(expResult.size(), result.size());
+        }
+    }
+    @Test
+    public void testObtenerListasEnCategoria_2() {
+        System.out.println("testObtenerListasEnCategoria_2");
         String cat = "";
-        Usuario instance = null;
-        ArrayList<DtListaDeReproduccion> expResult = null;
-        ArrayList<DtListaDeReproduccion> result = instance.obtenerListasEnCategoria(cat);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        try {
+            ArrayList<DtListaDeReproduccion> result = instance.obtenerListasEnCategoria(cat);
+            assertNotNull(null);
+        } catch (Exception e) {
+            assertNull(null);
+        }
     }
 
     /**
      * Test of obtenerValoracion method, of class Usuario.
      */
     @Test
-    public void testObtenerValoracion() {
-        System.out.println("obtenerValoracion");
-        int id = 0;
+    public void testObtenerValoracion_1() {
+        System.out.println("obtenerValoracion_1");
+        int id = instance.listarVideosDeCanal().get(0).getId();
+        String nickname = instance.getNickname();
+        instance.agregarModificarValoracionDeVideo(id, new DtValoracion(TipoValoracion.LIKE, instance.getNickname()), instance);
+        DtValoracion result = null;
+        try {
+            result = instance.obtenerValoracion(id, nickname);
+            assertNotNull(result);
+        } catch (Exception e) {
+            assertNotNull(result);
+        }
+    }
+    @Test
+    public void testObtenerValoracion_2() {
+        System.out.println("testObtenerValoracion_2");
         String nickname = "";
-        Usuario instance = null;
-        DtValoracion expResult = null;
-        DtValoracion result = instance.obtenerValoracion(id, nickname);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        DtValoracion result = null;
+        try {
+            result = instance.obtenerValoracion(0, nickname);
+            assertNull(result);
+        } catch (Exception e) {
+            assertNull(result);
+        }
     }
 
     /**
      * Test of obtenerVideo method, of class Usuario.
      */
     @Test
-    public void testObtenerVideo() {
-        System.out.println("obtenerVideo");
-        int id = 0;
-        Usuario instance = null;
-        Video expResult = null;
-        Video result = instance.obtenerVideo(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testObtenerVideo_1() {
+        System.out.println("testObtenerVideo_1");
+        int id = instance.listarVideosDeCanal().get(0).getId();
+        Video result = null;
+        try {
+            result = instance.obtenerVideo(id);
+            assertNotNull(result);
+        } catch (Exception e) {
+            assertNotNull(result);
+        }
+    }
+    @Test
+    public void testObtenerVideo_2() {
+        System.out.println("testObtenerVideo_2");
+        int id = 548;
+        Video result = null;
+        try {
+            result = instance.obtenerVideo(id);
+            assertNull(result);
+        } catch (Exception e) {
+            assertNull(result);
+        }
     }
 
     /**
      * Test of obtenerVideoDeCanal method, of class Usuario.
      */
     @Test
-    public void testObtenerVideoDeCanal() {
-        System.out.println("obtenerVideoDeCanal");
-        int idVideo = 0;
-        Usuario instance = null;
-        DtVideo expResult = null;
-        DtVideo result = instance.obtenerVideoDeCanal(idVideo);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testObtenerVideoDeCanal_1() {
+        System.out.println("testObtenerVideoDeCanal_1");
+        int idVideo = instance.listarVideosDeCanal().get(0).getId();
+        String expResult = instance.listarVideosDeCanal().get(0).getNombre();
+        String result = "";
+        try {
+            result = instance.obtenerVideoDeCanal(idVideo).getNombre();
+            assertEquals(expResult, result);
+        } catch (Exception e) {
+            assertNotEquals(expResult, result);
+        }
+    }
+    @Test
+    public void testObtenerVideoDeCanal_2() {
+        System.out.println("testObtenerVideoDeCanal_2");
+        int idVideo = 65487;
+        String expResult = "";
+        String result = "";
+        try {
+            result = instance.obtenerVideoDeCanal(idVideo).getNombre();
+            assertEquals(expResult, result);
+        } catch (Exception e) {
+            assertEquals(expResult, result);
+        }
     }
 
     /**
      * Test of obtenerVideosEnCategoria method, of class Usuario.
      */
     @Test
-    public void testObtenerVideosEnCategoria() {
-        System.out.println("obtenerVideosEnCategoria");
+    public void testObtenerVideosEnCategoria_1() {
+        System.out.println("testObtenerVideosEnCategoria_1");
+        String cat = v.getCategoria();
+        ArrayList<DtVideo> expResult = new ArrayList();
+        ArrayList<DtVideo> result = null;
+        try {
+            result = instance.obtenerVideosEnCategoria(cat);
+            assertNotEquals(expResult.size(), result.size());
+        } catch (Exception e) {
+            assertNotNull(null);
+        }
+    }
+    @Test
+    public void testObtenerVideosEnCategoria_2() {
+        System.out.println("testObtenerVideosEnCategoria_2");
+        String cat = "CATEGORIA INEXISTENTE";
+        ArrayList<DtVideo> expResult = new ArrayList();
+        ArrayList<DtVideo> result = null;
+        try {
+            result = instance.obtenerVideosEnCategoria(cat);
+            assertEquals(expResult.size(), result.size());
+        } catch (Exception e) {
+            assertNotNull(null);
+        }
+    }
+    @Test
+    public void testObtenerVideosEnCategoria_3() {
+        System.out.println("testObtenerVideosEnCategoria_3");
         String cat = "";
-        Usuario instance = null;
-        ArrayList<DtVideo> expResult = null;
-        ArrayList<DtVideo> result = instance.obtenerVideosEnCategoria(cat);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<DtVideo> expResult = new ArrayList();
+        ArrayList<DtVideo> result = null;
+        try {
+            result = instance.obtenerVideosEnCategoria(cat);
+            assertNotNull(null);
+        } catch (Exception e) {
+            assertNull(null);
+        }
     }
 
     /**
      * Test of quitarValoracion method, of class Usuario.
      */
     @Test
-    public void testQuitarValoracion() {
-        System.out.println("quitarValoracion");
-        int id = 0;
-        String nickname = "";
-        Usuario instance = null;
-        instance.quitarValoracion(id, nickname);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testQuitarValoracion_1() {
+        System.out.println("testQuitarValoracion_1");
+        DtValoracion DtValoracion = new DtValoracion(TipoValoracion.LIKE, "instance");
+        Usuario Usu = instance;
+        int idVideo = instance.listarVideosDeCanal().get(0).getId();
+        instance.agregarModificarValoracionDeVideo(idVideo, DtValoracion, Usu);
+        String nickname = Usu.getNickname();
+        
+        int antes, despues;
+        antes = instance.listarValoracionesDeVideo(idVideo).size();
+        
+        try {
+            instance.quitarValoracion(idVideo, nickname);
+            despues = instance.listarValoracionesDeVideo(idVideo).size();
+            assertNotEquals(antes, despues);
+        } catch (Exception e) {
+            assertNotNull(null);
+        }
     }
-
+    @Test
+    public void testQuitarValoracion_2() {
+        System.out.println("testQuitarValoracion_2");
+        DtValoracion DtValoracion = new DtValoracion(TipoValoracion.LIKE, "instance");
+        Usuario Usu = instance;
+        int idVideo = instance.listarVideosDeCanal().get(0).getId();
+        instance.agregarModificarValoracionDeVideo(idVideo, DtValoracion, Usu);
+        String nickname = "";
+        
+        int antes, despues;
+        antes = instance.listarValoracionesDeVideo(idVideo).size();
+        
+        try {
+            instance.quitarValoracion(idVideo, nickname);
+            despues = instance.listarValoracionesDeVideo(idVideo).size();
+            assertNotNull(null);
+        } catch (Exception e) {
+            assertNull(null);
+        }
+    }
+    
     /**
      * Test of quitarVideoDeListaDeReproduccion method, of class Usuario.
      */
     @Test
-    public void testQuitarVideoDeListaDeReproduccion() {
-        System.out.println("quitarVideoDeListaDeReproduccion");
-        int idLista = 0;
-        int idVideo = 0;
-        Usuario instance = null;
+    public void testQuitarVideoDeListaDeReproduccion_1() {
+        System.out.println("testQuitarVideoDeListaDeReproduccion_1");
+        int idLista = instance.listarListasDeReproduccionDeCanal(false).get(0).getId();
+        int idVideo = instance.listarVideosDeCanal().get(0).getId();
+        Usuario Usu = instance;
+        Usu.agregarVideoALista(idLista, idVideo, instance);
+        int antes, despues;
+        antes = instance.listarVideosDeListaDeReproduccion(idLista).size();
         instance.quitarVideoDeListaDeReproduccion(idLista, idVideo);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        despues = instance.listarVideosDeListaDeReproduccion(idLista).size();
+        assertNotEquals(despues, antes);
+    }
+    @Test
+    public void testQuitarVideoDeListaDeReproduccion_2() {
+        System.out.println("testQuitarVideoDeListaDeReproduccion_2");
+        int idLista = instance.listarListasDeReproduccionDeCanal(false).get(0).getId();
+        int idVideo = instance.listarVideosDeCanal().get(0).getId();
+        Usuario Usu = instance;
+        Usu.agregarVideoALista(idLista, idVideo, instance);
+        idVideo = 548876;
+        int antes, despues;
+        antes = instance.listarVideosDeListaDeReproduccion(idLista).size();
+        instance.quitarVideoDeListaDeReproduccion(idLista, idVideo);
+        despues = instance.listarVideosDeListaDeReproduccion(idLista).size();
+        assertEquals(despues, antes);
     }
 
     /**
      * Test of validarListaParticular method, of class Usuario.
      */
     @Test
-    public void testValidarListaParticular() {
-        System.out.println("validarListaParticular");
-        String nombre = "";
-        Usuario instance = null;
+    public void testValidarListaParticular_1() {
+        System.out.println("testValidarListaParticular_1");
+        
+        DtListaDeReproduccion dt = new DtListaDeReproduccion(0, "nombre particular 1", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "MUSICA");
+        instance.agregarListaParticular(dt);
+        String nombre = "nombre particular 1";
+        boolean expResult = true;
+        boolean result = false;
+        try {
+            result = instance.validarListaParticular(nombre);
+            assertEquals(expResult, result);
+        } catch (Exception e) {
+            assertEquals(expResult, result);
+        }
+    }
+    @Test
+    public void testValidarListaParticular_2() {
+        System.out.println("testValidarListaParticular_2");
+        
+        DtListaDeReproduccion dt = new DtListaDeReproduccion(0, "nombre particular 2", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "MUSICA");
+        
+        String nombre = "lista inexistente";
         boolean expResult = false;
-        boolean result = instance.validarListaParticular(nombre);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean result = true;
+        try {
+            result = instance.validarListaParticular(nombre);
+            assertEquals(expResult, result);
+        } catch (Exception e) {
+            assertEquals(expResult, result);
+        }
+    }
+    @Test
+    public void testValidarListaParticular_3() {
+        System.out.println("testValidarListaParticular_3");
+        
+        String nombre = "";
+        boolean expResult = false;
+        boolean result = true;
+        try {
+            result = instance.validarListaParticular(nombre);
+            assertNotNull(null);
+        } catch (Exception e) {
+            assertNull(null);
+        }
     }
     
 }
