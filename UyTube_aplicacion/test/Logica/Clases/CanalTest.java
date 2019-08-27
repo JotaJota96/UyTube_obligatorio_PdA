@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica.Clases;
 
 import Logica.DataType.DtCanal;
@@ -24,7 +19,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author pc01
+ * @Carlos_Facundo
  */
 public class CanalTest {
     
@@ -64,9 +59,18 @@ public class CanalTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of getId method, of class Canal.
-     */
+    @Test
+    public void testCanal_nombreMal() {          //-------------------------anda
+        System.out.println("setNombre");
+        Canal instance = null;
+        try{
+            instance = new Canal(0, "", "descripcion", Privacidad.PRIVADO);
+        }catch(Exception e){
+            assertNull(null);
+        }
+        
+    }
+    
    @Test
     public void testGetNombre() {
         System.out.println("getNombre");
@@ -74,8 +78,6 @@ public class CanalTest {
         String expResult = "nombre";
         String result = instance.getNombre();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
     
     @Test
@@ -85,8 +87,6 @@ public class CanalTest {
         String expResult = "descripcion";
         String result = instance.getDescripcion();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
     
     @Test
@@ -96,8 +96,6 @@ public class CanalTest {
         Privacidad expResult = Privacidad.PRIVADO;
         Privacidad result = instance.getPrivacidad();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
     
     @Test
@@ -107,21 +105,14 @@ public class CanalTest {
         int expResult = 0;
         int result = instance.getId();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
-    
 
-  
    @Test
     public void testSetPrivacidad() {
         System.out.println("setPrivacidad");
         Canal instance = c;
         instance.setPrivacidad(Privacidad.PUBLICO);
         assertEquals(Privacidad.PUBLICO, c.getPrivacidad());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-        instance.setPrivacidad(Privacidad.PRIVADO);
     }
     
     @Test
@@ -133,7 +124,19 @@ public class CanalTest {
         assertEquals(expResult, instance.getNombre());
     }
     
-      @Test
+    @Test
+    public void testSetNombre_basura() {          //------------------------anda
+        System.out.println("setNombre");
+        Canal instance = c;
+        try{
+            instance.setNombre("");
+        }catch(Exception e){
+            assertNull(null);
+        }
+        
+    }
+    
+    @Test
     public void testSetDescripcion() {
         System.out.println("setDescripcion");
         Canal instance = c;
@@ -143,7 +146,7 @@ public class CanalTest {
     }
     
     @Test
-  public void testGetDT() {
+    public void testGetDT() {
         System.out.println("getDT");
         Canal instance = c;
         DtCanal expResult = new DtCanal(0, "nombre", "descripcion", Privacidad.PRIVADO);
@@ -157,33 +160,17 @@ public class CanalTest {
         int expResult = Canal.getNuevoId() + 1;
         int result = Canal.getNuevoId();
         assertEquals(expResult, result);
-        
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
-//    
-//    @Test
-//    public void testGetNuevoId2() {
-//        System.out.println("getNuevoId2");
-//        int expResult = 2;
-//        int result = Canal.getNuevoId();
-//        assertEquals(expResult, result);
-//
-//    }
 
-  
     @Test
     public void testActualizarListasPorDefecto() {
         System.out.println("actualizarListasPorDefecto");
         Canal instance = null;
         instance.actualizarListasPorDefecto();
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //***************************fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of agregarComentarioAVideo method, of class Canal.
-     */
     @Test
     public void testAgregarComentarioAVideo_3args() {
         System.out.println("agregarComentarioAVideo");
@@ -192,12 +179,8 @@ public class CanalTest {
         Canal instance = c1;
         instance.agregarComentarioAVideo(v1.getId(), comentario, usuario);
         assertNull(null);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
-    /**
-     * Test of agregarComentarioAVideo method, of class Canal.
-     */
     @Test
     public void testAgregarComentarioAVideo_4args() {
         System.out.println("agregarComentarioAVideo");
@@ -211,22 +194,108 @@ public class CanalTest {
        //**************************************** fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of agregarListaParticular method, of class Canal.
-     */
     @Test
-    public void testAgregarListaParticular() {
+    public void testAgregarListaParticular() {    //------------------------anda
         System.out.println("agregarListaParticular");
-        DtListaDeReproduccion listaReproduccion = null;
-        Canal instance = null;
+        DtListaDeReproduccion listaReproduccion = ldr.getDt();
+        Canal instance = c1;
         instance.agregarListaParticular(listaReproduccion);
-        // TODO review the generated test code and remove the default call to fail.
-       //**************************************** fail("The test case is a prototype.");
+    }
+    
+    @Test
+    public void testAgregarListaParticular_DtLdrNull() {    //--------------anda
+        System.out.println("agregarListaParticular");
+        DtListaDeReproduccion listaReproduccion = ldr.getDt();
+        Canal instance = c1;
+        try{
+            instance.agregarListaParticular(null);
+        }catch(Exception e){
+            assertNull(null);
+        } 
+    }
+    
+    @Test
+    public void testAgregarListaParticular_NombreLdrVacio() {    //---------anda
+        System.out.println("agregarListaParticular");
+        
+        DtListaDeReproduccion listaReproduccion = new DtListaDeReproduccion(78, "", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "musical");
+        Canal instance = c1;
+        try{
+            instance.agregarListaParticular(listaReproduccion);
+        }catch(Exception e){
+            assertNull(null);
+        } 
+    }
+    
+    @Test
+    public void testAgregarListaParticular_PublicaBien() {    //----------------anda
+        System.out.println("agregarListaParticular");
+        
+        DtListaDeReproduccion listaReproduccion = new DtListaDeReproduccion(78, "gfd", Privacidad.PUBLICO, TipoListaDeReproduccion.PARTICULAR, "musical");
+        Canal instance = c1;
+        try{
+            instance.agregarListaParticular(listaReproduccion);
+        }catch(Exception e){
+            assertNull(null);
+        } 
+    }
+    @Test
+    public void testAgregarListaParticular_PublicaMal() {    //----------------anda
+        System.out.println("agregarListaParticular");
+        
+        DtListaDeReproduccion listaReproduccion = new DtListaDeReproduccion(78, "gfd", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "musical");
+        Canal instance = c1;
+        c1.setPrivacidad(Privacidad.PUBLICO);
+        try{
+            instance.agregarListaParticular(listaReproduccion);
+        }catch(Exception e){
+            assertNull(null);
+        } 
+    }
+    
+    @Test
+    public void testAgregarListaParticular_CategoriaVacia() { //------------anda
+        System.out.println("agregarListaParticular");
+        
+        DtListaDeReproduccion listaReproduccion = new DtListaDeReproduccion(78, "gfd", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "");
+        Canal instance = c1;
+        try{
+            instance.agregarListaParticular(listaReproduccion);
+        }catch(Exception e){
+            assertNull(null);
+        } 
+    }
+    
+    @Test
+    public void testAgregarListaParticular_Repetida() { //------------anda
+        System.out.println("agregarListaParticular");
+        
+        DtListaDeReproduccion listaReproduccion = new DtListaDeReproduccion(78, "gfd", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "fghgh");
+        Canal instance = c1;
+        DtListaDeReproduccion listaReproduccion2 = new DtListaDeReproduccion(78, "gfd", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "fghgh");
+        c1.agregarListaParticular(listaReproduccion);
+        try{
+            c1.agregarListaParticular(listaReproduccion2);
+        }catch(Exception e){
+            assertNull(null);
+        } 
+    }
+    
+    @Test
+    public void testAgregarListaParticular_Otra() { //----------------------anda
+        System.out.println("agregarListaParticular");
+        
+        DtListaDeReproduccion listaReproduccion = new DtListaDeReproduccion(78, "gfd", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "fghgh");
+        Canal instance = c1;
+        DtListaDeReproduccion listaReproduccion2 = new DtListaDeReproduccion(78, "fdgfd", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "fghgh");
+        c1.agregarListaParticular(listaReproduccion);
+        try{
+            c1.agregarListaParticular(listaReproduccion2);
+        }catch(Exception e){
+            assertNull(null);
+        } 
     }
 
-    /**
-     * Test of quitarValoracion method, of class Canal.
-     */
     @Test
     public void testQuitarValoracion() {
         System.out.println("quitarValoracion");
@@ -238,9 +307,6 @@ public class CanalTest {
        //**************************************** fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of agregarModificarValoracion method, of class Canal.
-     */
     @Test
     public void testAgregarModificarValoracion() {
         System.out.println("agregarModificarValoracion");
@@ -253,34 +319,204 @@ public class CanalTest {
       //****************************************  fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of agregarVideo method, of class Canal.
-     */
     @Test
-    public void testAgregarVideo() {
+    public void testAgregarVideo() {        //------------------------------anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+
+        Video v2 = new Video(2, "nombre2", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        DtVideo dtv = v2.getDt();
+        try{
+            c.agregarVideo(dtv);
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            
+        }catch(Exception e){
+            assertEquals(esperado+1, resultado);
+        }
+    }
+  
+    @Test
+    public void testAgregarVideo_DtNULL() {        //------------------------------anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+
+        Video v2 = new Video(3, "nombre3", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        DtVideo dtv = v2.getDt();
+        try{
+            c.agregarVideo(null);
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            
+        }catch(Exception e){
+            assertEquals(esperado+1, resultado);
+        }
+    }
+    
+    @Test
+    public void testAgregarVideo_nombreVacio() { //------------------------------anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+
+        Video v2 = new Video(4, "", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        try{
+            c.agregarVideo(v2.getDt());
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            
+        }catch(Exception e){
+            assertEquals(esperado+1, resultado);
+        }
+    }
+    
+    @Test
+    public void testAgregarVideo_DuracionNull() { //------------------------------anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+
+        Video v2 = new Video(5, "nombre5", "_descripcion", null, new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        try{
+            c.agregarVideo(v2.getDt());
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            
+        }catch(Exception e){
+            assertEquals(esperado+1, resultado);
+        }
+    }
+    
+    @Test
+    public void testAgregarVideo_FechaPNull() { //------------------------------anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+
+        Video v2 = new Video(6, "nombre6", "_descripcion", new Time(0, 0, 0), null, "_urlVideoOriginal", "_categoria");
+        try{
+            c.agregarVideo(v2.getDt());
+            
+        }catch(Exception e){
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            assertEquals(esperado+1, resultado);
+        }
+    }
+    
+    @Test
+    public void testAgregarVideo_UrlVacia() { //------------------------------anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+
+        Video v2 = new Video(7, "nombre7", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "", "_categoria");
+        try{
+            c.agregarVideo(v2.getDt());
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            
+        }catch(Exception e){
+            assertEquals(esperado+1, resultado);
+        }
+    }
+    
+    @Test
+    public void testAgregarVideo_CatVacia() { //------------------------------anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+
+        Video v2 = new Video(8, "nombre8", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "");
+        try{
+            c.agregarVideo(v2.getDt());
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            
+        }catch(Exception e){
+            assertEquals(esperado+1, resultado);
+        }
+    }
+    
+    @Test
+    public void testAgregarVideo_malPrivacidad() {  //------------------- anda
         System.out.println("agregarVideo");
-        DtVideo video = null;
-        Canal instance = null;
-        instance.agregarVideo(video);
-        // TODO review the generated test code and remove the default call to fail.
-       //**************************************** fail("The test case is a prototype.");
+        Canal instance = c1;
+        c1.setPrivacidad(Privacidad.PUBLICO);
+        instance.agregarVideo(v1.getDt());
+        assertEquals(c1.getPrivacidad(), Privacidad.PUBLICO);
     }
-
-    /**
-     * Test of agregarVideoALista method, of class Canal.
-     */
+    
     @Test
-    public void testAgregarVideoALista() {
-        System.out.println("agregarVideoALista");
-        int id = 0;
-        Video video = null;
-        Canal instance = null;
-        instance.agregarVideoALista(id, video);
-        // TODO review the generated test code and remove the default call to fail.
-     //****************************************   fail("The test case is a prototype.");
+    public void testAgregarVideo_elMismoVideo() {  //------------------- anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+        
+        Video v3 = new Video(10, "nombre9", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        DtVideo dtv2 = v3.getDt();
+        c.agregarVideo(dtv2);
+        
+        Video v2 = new Video(9, "nombre9", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        try{
+            c.agregarVideo(v2.getDt());
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            
+        }catch(Exception e){
+            assertEquals(esperado+2, resultado);
+        }
+    }
+    
+    @Test
+    public void testAgregarVideo_otroVideo() {  //------------------- anda
+        ArrayList<DtVideo> l = c.listarVideos();
+        
+        int esperado = l.size();
+        c.agregarVideo(v1.getDt());
+        int resultado=28;
+        
+        Video v3 = new Video(10, "nombre10", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        DtVideo dtv2 = v3.getDt();
+        c.agregarVideo(dtv2);
+        
+        Video v2 = new Video(9, "nombre9", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        try{
+            c.agregarVideo(v2.getDt());
+            ArrayList<DtVideo> l2 = c.listarVideos();
+            resultado = l2.size();
+            
+        }catch(Exception e){
+            assertEquals(esperado+2, resultado);
+        }
     }
 
- 
+    @Test
+    public void testAgregarVideoALista() { 
+        System.out.println("agregarVideoALista");
+
+        ArrayList<DtVideo> l = c.listarVideos();
+        int esperado = l.size();
+
+        c.agregarVideoALista(1, v1);
+        c.agregarVideo(v1.getDt());
+        ArrayList<DtVideo> l2 = c.listarVideos();
+        int resultado = l2.size();
+        
+        assertEquals(esperado+1, resultado);
+    }
+    
     @Test
     public void testListarComentariosDeVideo() {
         System.out.println("listarComentariosDeVideo");
@@ -293,9 +529,6 @@ public class CanalTest {
         //****************************************fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of listarListasDeReproduccion method, of class Canal.
-     */
     @Test
     public void testListarListasDeReproduccion() {
         System.out.println("listarListasDeReproduccion");
@@ -308,9 +541,6 @@ public class CanalTest {
        //**************************************** fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of listarValoracionesDeVideo method, of class Canal.
-     */
     @Test
     public void testListarValoracionesDeVideo() {
         System.out.println("listarValoracionesDeVideo");
@@ -323,10 +553,7 @@ public class CanalTest {
        //**************************************** fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of listarVideos method, of class Canal.
-     */
-     @Test
+    @Test
     public void testListarVideos() {
         System.out.println("listarVideos");
         Canal instance = c;
@@ -341,10 +568,6 @@ public class CanalTest {
         //fail("The test case is a prototype.");
         
     }
- 
-    /**
-     * Test of listarVideosDeListaDeReproduccion method, of class Canal.
-     */
   
     @Test
     public void testListarVideosDeListaDeReproduccion() {
@@ -354,58 +577,68 @@ public class CanalTest {
         ldr.agregarVideoA(v1);
         ArrayList<DtVideo> expResult = new ArrayList();
         expResult.add(v1.getDt());
-
-
-        
         ArrayList<DtVideo> result = instance.listarVideosDeListaDeReproduccion(1);
-        assertEquals(expResult.size(), result.size());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-        
+        assertEquals(expResult.size(), result.size()); 
     }
     
-    /**
-     * Test of modificar method, of class Canal.
-     */
     @Test
-    public void testModificar() {
+    public void testModificar() {         //--------------------------------anda
         System.out.println("modificar");
-        DtCanal canal = null;
-        Canal instance = null;
-        instance.modificar(canal);
-        // TODO review the generated test code and remove the default call to fail.
-       //**************************************** fail("The test case is a prototype.");
+        Canal can1 = new Canal(Canal.getNuevoId(), "nombre", "descripcion", Privacidad.PRIVADO);
+        DtCanal dtc = can1.getDT();
+        String antes = dtc.toString();
+        
+        DtCanal dtc2 = new DtCanal(Canal.getNuevoId(), "otronombre", "otradescripcion", Privacidad.PRIVADO);
+        String despues = dtc2.toString();
+        assertNotEquals(despues, antes);
+    }
+    
+    @Test
+    public void testModificar_privacidad() {//----------------------------- anda
+        System.out.println("modificar");
+        Canal instance = new Canal(0, "dsd", "dfs", Privacidad.PUBLICO);
+        instance.agregarVideo(v1.getDt());
+        instance.modificar(new DtCanal(0, "nombre", "descripcion", Privacidad.PRIVADO));
+        assertNull(null);
+    }
+    @Test
+    public void testModificar_privacidad_otra() {//--------------------------------------- anda
+        System.out.println("modificar");
+        Canal instance = new Canal(0, "dsd", "dfs", Privacidad.PRIVADO);
+        instance.agregarVideo(v1.getDt());
+        instance.modificar(new DtCanal(0, "nombre", "descripcion", Privacidad.PUBLICO));
+        assertNull(null);
+    }
+    
+    @Test
+    public void testModificar_basura() {  //--------------------------------anda
+        System.out.println("modificar");
+        Canal instance = c;
+        try{
+            instance.modificar(new DtCanal(0, "", "descripcion", Privacidad.PRIVADO));
+        }catch(Exception e){
+            assertEquals(true,true);
+        } 
     }
 
-    /**
-     * Test of modificarListaDeReproduccion method, of class Canal.
-     */
     @Test
-    public void testModificarListaDeReproduccion() {
+    public void testModificarListaDeReproduccion() {//-------------------No anda
         System.out.println("modificarListaDeReproduccion");
-        DtListaDeReproduccion ldr = null;
-        Canal instance = null;
-        instance.modificarListaDeReproduccion(ldr);
-        // TODO review the generated test code and remove the default call to fail.
-       //**************************************** fail("The test case is a prototype.");
+        DtListaDeReproduccion Dldr = ldr.getDt();
+        Canal instance = c;
+        instance.modificarListaDeReproduccion(Dldr);
+        assertNull(null);
     }
 
-    /**
-     * Test of modificarVideo method, of class Canal.
-     */
     @Test
-    public void testModificarVideo() {
+    public void testModificarVideo() {      //---------------------------No anda
         System.out.println("modificarVideo");
-        DtVideo video = null;
-        Canal instance = null;
-        instance.modificarVideo(video);
-        // TODO review the generated test code and remove the default call to fail.
-       //**************************************** fail("The test case is a prototype.");
+        DtVideo Dvideo = v1.getDt();
+        Canal instance = c1;
+        instance.modificarVideo(Dvideo);
+        assertNull(null);
     }
 
-    /**
-     * Test of obtenerListaDeReproduccion method, of class Canal.
-     */
     @Test
     public void testObtenerListaDeReproduccion() {
         System.out.println("obtenerListaDeReproduccion");
@@ -418,9 +651,6 @@ public class CanalTest {
       //****************************************  fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of obtenerListasEnCategoria method, of class Canal.
-     */
     @Test
     public void testObtenerListasEnCategoria() {
         System.out.println("obtenerListasEnCategoria");
@@ -433,37 +663,54 @@ public class CanalTest {
       //****************************************  fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of obtenerDtVideo method, of class Canal.
-     */
     @Test
-    public void testObtenerDtVideo() {
+    public void testObtenerDtVideo() {        
         System.out.println("obtenerDtVideo");
-        Canal instance = c;
-        DtVideo expResult = new DtVideo(0, "nombre", "descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "urlVideoOriginal", Privacidad.PRIVADO, "categoria", 0, 0);
-        DtVideo result = instance.obtenerDtVideo(v1.getId());
-        assertEquals(expResult.toString(), result.toString());
-     
+        DtVideo dtv = v1.getDt();
+        String esperado = dtv.toString();
+        c1.agregarVideo(dtv);
+
+        String resultado = c1.obtenerDtVideo(1).toString();
+        assertEquals(esperado, resultado);
     }
 
-    /**
-     * Test of obtenerVideo method, of class Canal.
-     */
     @Test
-    public void testObtenerVideo() {
-        System.out.println("obtenerVideo");
-        int id = 0;
-        Canal instance = null;
-        Video expResult = null;
-        Video result = instance.obtenerVideo(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-       //**************************************** fail("The test case is a prototype.");
+    public void testObtenerDtVideo_noPertenese() {        
+        System.out.println("obtenerDtVideo");
+        Canal instance = c;    
+        DtVideo result = null;
+        try{
+            result = instance.obtenerDtVideo(54654);
+        }catch(Exception e){
+            assertNull(null);
+        }
     }
 
-    /**
-     * Test of obtenerVideosEnCategoria method, of class Canal.
-     */
+    @Test
+    public void testObtenerVideo() {        
+        System.out.println("obtenerVideo");
+        
+        Canal instance = c;
+        c.agregarVideo(v1.getDt());
+        int idVideo = c.listarVideos().get(0).getId();
+
+        Video result = null;
+        result = instance.obtenerVideo(idVideo);
+        assertNotNull(result);
+    }
+    
+    @Test
+    public void testObtenerVideo_noPertenese() {
+        System.out.println("obtenerVideo");
+        Canal instance = c;
+        Video result = null;
+        try{
+            result = instance.obtenerVideo(6546);
+        }catch(Exception e){
+            assertNull(null);
+        }
+    }
+
     @Test
     public void testObtenerVideosEnCategoria() {
         System.out.println("obtenerVideosEnCategoria");
@@ -476,9 +723,6 @@ public class CanalTest {
      //****************************************   fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of quitarVideoDeListaDeReproduccion method, of class Canal.
-     */
     @Test
     public void testQuitarVideoDeListaDeReproduccion() {
         System.out.println("quitarVideoDeListaDeReproduccion");
@@ -490,35 +734,38 @@ public class CanalTest {
      //****************************************   fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of validarListaParticular method, of class Canal.
-     */
     @Test
-    public void testValidarListaParticular() {
+    public void testValidarListaParticular() {  //--------------mas o menos anda
         System.out.println("validarListaParticular");
-        String nombreLista = "";
-        Canal instance = null;
-        boolean expResult = false;
+        String nombreLista = "nombre";
+        Canal instance = c1;
+        boolean expResult = true;
         boolean result = instance.validarListaParticular(nombreLista);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //****************************************fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of obtenerValoracion method, of class Canal.
-     */
     @Test
-    public void testObtenerValoracion() {
+    public void testObtenerValoracion() {//-------------------------------- anda
         System.out.println("obtenerValoracion");
-        int id = 0;
-        String nickname = "";
-        Canal instance = null;
-        DtValoracion expResult = null;
-        DtValoracion result = instance.obtenerValoracion(id, nickname);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-       //**************************************** fail("The test case is a prototype.");
+        Canal instance = c;
+        
+        c.agregarVideo(v1.getDt());
+        int idVideo = c.listarVideos().get(0).getId();
+        
+        DtValoracion result = null;
+        result = instance.obtenerValoracion(idVideo, u1.getNickname());
+        assertNull(null);
+    }
+    @Test
+    public void testObtenerValoracion_basura() {//--------------------------anda
+        System.out.println("obtenerVideo");
+        Canal instance = c;
+        DtValoracion result = null;
+        try{
+            result = instance.obtenerValoracion(4654, u1.getNickname());
+        }catch(Exception e){
+            assertNull(null);
+        }
     }
     
 }
