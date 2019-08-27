@@ -14,6 +14,7 @@ import Logica.Enumerados.TipoValoracion;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,6 +29,7 @@ import static org.junit.Assert.*;
 public class VideoTest {
     Usuario usrActual;
     Usuario usrSeleccionado;
+    Usuario usrSeleccionado2;
     Video videoPrueba;
     
     Categoria miCategoria = new Categoria("Prueba");
@@ -54,6 +56,8 @@ public class VideoTest {
         Date fecha2 = new Date(1998,5,12);
         DtCanal canalusrseleccionado = new DtCanal(Canal.getNuevoId(), "usrseleccionado", "Canal de usuario seleccionado", Privacidad.PUBLICO);
         usrSeleccionado = new Usuario("usrseleccionado", "usrseleccionado@gmail.com", fecha2, "url:imagen","password","usrseleccionado","seleccionado",canalusrseleccionado);
+        DtCanal canalusrseleccionado2 = new DtCanal(Canal.getNuevoId(), "usrseleccionado2", "Canal de usuario seleccionado2", Privacidad.PUBLICO);
+        usrSeleccionado2 = new Usuario("usrseleccionado2", "usrseleccionado2@gmail.com", fecha2, "url:imagen","password","usrseleccionado2","seleccionado2",canalusrseleccionado2);
     }
     
     @After
@@ -110,8 +114,6 @@ public class VideoTest {
         System.out.println("agregarModificarValoracion");
         DtValoracion val = new DtValoracion(TipoValoracion.LIKE, "usrac");
         videoPrueba.agregarModificarValoracion(val, usrSeleccionado);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -122,9 +124,9 @@ public class VideoTest {
         System.out.println("getDt");
         Date fecha1 = new Date(1976,1,31);
         Time duracion1 = new Time(0, 2, 40);
-        DtVideo expResult = new DtVideo(1, "MiVideo", "Video para comentar",duracion1, fecha1,"url",Privacidad.PUBLICO,"categoria",1,0);
+        DtVideo expResult = new DtVideo(1, "MiVideo", "Video para comentar",duracion1, fecha1,"url",Privacidad.PRIVADO,"categoria",0,0);
         DtVideo result = videoPrueba.getDt();
-        assertEquals(expResult, result);
+        assertEquals(expResult.toString(), result.toString());
     }
 
     /**
@@ -143,14 +145,29 @@ public class VideoTest {
     }
 
     /**
-     * Test of listarValoraciones method, of class Video.
+     * Test OK
      */
     @Test
     public void testListarValoraciones() {
         System.out.println("listarValoraciones");
-        ArrayList<DtValoracion> expResult = null;
+        DtValoracion dtValoracion1 = new DtValoracion(TipoValoracion.LIKE, "usrseleccionado");
+        videoPrueba.agregarModificarValoracion(dtValoracion1, usrSeleccionado);
+        DtValoracion dtValoracion2 = new DtValoracion(TipoValoracion.LIKE, "usrseleccionado2");
+        videoPrueba.agregarModificarValoracion(dtValoracion2, usrSeleccionado2);
+        ArrayList<DtValoracion> listaVal = new ArrayList<>();
+        listaVal.add(dtValoracion1);
+        listaVal.add(dtValoracion2);
         ArrayList<DtValoracion> result = videoPrueba.listarValoraciones();
-        assertEquals(expResult, result);
+        boolean esperado=true, resultado=false;
+        for (int i = 0; i < result.size(); i++) {
+            if(listaVal.get(i).getVal()==result.get(i).getVal()){
+                resultado = true;
+            }else{
+                resultado = false;
+                break;
+            }
+        }
+        assertEquals(esperado, resultado);
     }
 
     /**
@@ -167,6 +184,22 @@ public class VideoTest {
         String esperado = video2.toString();
         String resultado = videoPrueba.toString();
         assertEquals(esperado, resultado);
+    }
+    
+    /**
+     * Test OK
+     */
+    @Test(expected = RuntimeException.class)
+    public void testModificar2() {
+        System.out.println("modificar con excepciones");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = new Time(0, 2, 40);
+        DtVideo dtVideo = new DtVideo(1, "", "Video modificado",duracion1, fecha1,"url",Privacidad.PRIVADO,"categoria",0,0);
+        videoPrueba.modificar(dtVideo);
+        Video video2 = new Video(1, "MiVideo", "Video modificado",duracion1, fecha1,"url","categoria");
+        String esperado = video2.toString();
+        String resultado = videoPrueba.toString();
+        //assertEquals(esperado, resultado);
     }
 
     /**
@@ -191,8 +224,6 @@ public class VideoTest {
         System.out.println("quitarValoracion");
         String nickname = "usrseleccionado";
         videoPrueba.quitarValoracion(nickname);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -279,8 +310,6 @@ public class VideoTest {
         String descripcion = "Nueva Descripcion";
         videoPrueba.setDescripcion(descripcion);
         assertEquals(descripcion, videoPrueba.getDescripcion());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -290,6 +319,7 @@ public class VideoTest {
     public void testGetDuracion() {
         System.out.println("getDuracion"); 
         Time expResult = new Time(0, 2, 40);
+        videoPrueba.setDuracion(expResult);
         Time result = videoPrueba.getDuracion();
         assertEquals(expResult, result);
     }
@@ -306,84 +336,79 @@ public class VideoTest {
     }
 
     /**
-     * Test of getFechaPublicacion method, of class Video.
+     * Test OK
      */
     @Test
     public void testGetFechaPublicacion() {
         System.out.println("getFechaPublicacion");
         Video instance = new Video();
-        Date expResult = null;
-        Date result = instance.getFechaPublicacion();
+        Date expResult = new Date(1978,1,31);
+        videoPrueba.setFechaPublicacion(expResult);
+        Date result = videoPrueba.getFechaPublicacion();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setFechaPublicacion method, of class Video.
+     * Test OK
      */
     @Test
     public void testSetFechaPublicacion() {
         System.out.println("setFechaPublicacion");
-        Date fechaPublicacion = null;
-        Video instance = new Video();
-        instance.setFechaPublicacion(fechaPublicacion);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        Date fechaPublicacion = new Date(1999,6,4);
+        videoPrueba.setFechaPublicacion(fechaPublicacion);
+        assertEquals(fechaPublicacion, videoPrueba.getFechaPublicacion());
     }
 
     /**
-     * Test of getUrlVideoOriginal method, of class Video.
+     * Test OK
      */
     @Test
     public void testGetUrlVideoOriginal() {
         System.out.println("getUrlVideoOriginal");
-        Video instance = new Video();
-        String expResult = "";
-        String result = instance.getUrlVideoOriginal();
+        String expResult = "url test";
+        videoPrueba.setUrlVideoOriginal(expResult);
+        String result = videoPrueba.getUrlVideoOriginal();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setUrlVideoOriginal method, of class Video.
+     * Test OK
      */
     @Test
     public void testSetUrlVideoOriginal() {
         System.out.println("setUrlVideoOriginal");
-        String urlVideoOriginal = "";
-        Video instance = new Video();
-        instance.setUrlVideoOriginal(urlVideoOriginal);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        String urlVideoOriginal = "url test2";
+        videoPrueba.setUrlVideoOriginal(urlVideoOriginal);
+        assertEquals(urlVideoOriginal, videoPrueba.getUrlVideoOriginal());
     }
 
     /**
-     * Test of getPrivacidad method, of class Video.
+     * Test OK
      */
     @Test
     public void testGetPrivacidad() {
         System.out.println("getPrivacidad");
-        Video instance = new Video();
-        Privacidad expResult = null;
-        Privacidad result = instance.getPrivacidad();
+        Privacidad expResult = Privacidad.PRIVADO;
+        videoPrueba.setPrivacidad(expResult);
+        Privacidad result = videoPrueba.getPrivacidad();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setPrivacidad method, of class Video.
+     * Test OK
      */
     @Test
     public void testSetPrivacidad() {
         System.out.println("setPrivacidad");
-        Privacidad privacidad = null;
-        Video instance = new Video();
-        instance.setPrivacidad(privacidad);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Privacidad expPrivacidad;
+        if(videoPrueba.getPrivacidad() == Privacidad.PRIVADO){
+            expPrivacidad = Privacidad.PUBLICO;
+            videoPrueba.setPrivacidad(expPrivacidad);
+        }else{
+            expPrivacidad = Privacidad.PRIVADO;
+            videoPrueba.setPrivacidad(expPrivacidad);
+        }
+        assertEquals(expPrivacidad, videoPrueba.getPrivacidad());
     }
 
     /**
@@ -392,7 +417,6 @@ public class VideoTest {
     @Test
     public void testGetCategoria() {
         System.out.println("getCategoria");
-        Video instance = new Video();
         String expResult = "categoria";
         String result = videoPrueba.getCategoria();
         assertEquals(expResult, result);
@@ -429,11 +453,10 @@ public class VideoTest {
     @Test
     public void testSetCantLikes() {
         System.out.println("setCantLikes");
-        int cantLikes = 0;
-        Video instance = new Video();
-        instance.setCantLikes(cantLikes);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        int cantLikes = videoPrueba.getCantLikes();
+        cantLikes++;
+        videoPrueba.setCantLikes(cantLikes);
+        assertEquals(cantLikes, videoPrueba.getCantLikes());
     }
 
     /**
@@ -442,35 +465,33 @@ public class VideoTest {
     @Test
     public void testGetCantDisLikes() {
         System.out.println("getCantDisLikes");
-        Video instance = new Video();
         int expResult = 0;
-        int result = instance.getCantDisLikes();
+        int result = videoPrueba.getCantDisLikes();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setCantDisLikes method, of class Video.
+     * Test OK
      */
     @Test
     public void testSetCantDisLikes() {
         System.out.println("setCantDisLikes");
-        
+        int expResult = videoPrueba.getCantDisLikes();
+        expResult++;
+        videoPrueba.setCantDisLikes(expResult);
+        assertEquals(expResult, videoPrueba.getCantDisLikes());
     }
     
     /**
-     * Test of toString method, of class Video.
+     * Test OK
      */
     @Test
     public void testToString() {
         System.out.println("toString");
-        Video instance = new Video();
-        String expResult = "";
-        String result = instance.toString();
+        String expResult = "Video{id=1, nombre=MiVideo, descripcion=Video para comentar, duracion=00:02:40, fechaPublicacion=3876-03-02, urlVideoOriginal=url, privacidad=PRIVADO, categoria=categoria, cantLikes=0, cantDisLikes=0}";
+        String result = videoPrueba.toString();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-     
+        
     }
     
 }
