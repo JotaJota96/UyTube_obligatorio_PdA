@@ -1,26 +1,24 @@
-package Logica.InterfacesYControladores;
+package Logica.Controladores;
 
+// Interfaz que se realizara
+import Logica.Interfaces.IAdmin;
+// DataTypes
+import Logica.DataType.*;
+// Clases necesarias
 import Logica.Clases.Administrador;
+import Logica.Clases.Usuario;
 import Logica.Clases.Categoria;
 import Logica.Clases.ListaDeReproduccion;
-import Logica.DataType.DtCanal;
-import Logica.DataType.DtComentario;
-import Logica.DataType.DtListaDeReproduccion;
-import Logica.DataType.DtUsuario;
-import Logica.DataType.DtValoracion;
-import Logica.DataType.DtVideo;
-import java.util.ArrayList;
-import Logica.Clases.Usuario;
-import Logica.Enumerados.Privacidad;
-import Logica.Enumerados.TipoListaDeReproduccion;
+// Colecciones
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.ArrayList;
 
 
 public class CAdmin implements IAdmin{
     private static CAdmin instancia = null;
     private Map<String, Usuario> usuarios;
-    private Map<String, Administrador> administradores;
+    private Map<Integer, Administrador> administradores;
     private Map<String, Categoria> categorias;
     private Usuario usuarioActual;
     private Usuario usuarioSeleccionado;
@@ -36,6 +34,11 @@ public class CAdmin implements IAdmin{
         this.usuarioSeleccionado = null;
         this.idListaSeleccionada = 0;
         this.idVideoSeleccionado = 0;
+        
+        // Administrador por defecto (temporal)
+        int id = 0;
+        Administrador root = new Administrador(id, "admin", "administrador", "root");
+        this.administradores.put(id, root);
     }
     
     public static CAdmin getInstancia(){

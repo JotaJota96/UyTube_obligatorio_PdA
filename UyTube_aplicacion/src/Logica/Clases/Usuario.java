@@ -157,11 +157,13 @@ public class Usuario extends Persona{
         if(Usu == null){
             throw new RuntimeException("El usuario no puede ser null");
         }
-        
-        Video v = Usu.obtenerVideo(idVideo);
-        if (v == null){
+        Video v = null;
+        try {
+            v = Usu.obtenerVideo(idVideo);
+        } catch (Exception e) {
             throw new RuntimeException("El video no pertenece al usuario: " + Usu.getNickname());
         }
+         
         this.MiCanal.agregarVideoALista(idLista, v);
     }
     
