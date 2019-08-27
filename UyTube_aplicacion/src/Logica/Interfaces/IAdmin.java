@@ -1,4 +1,4 @@
-package Logica.InterfacesYControladores;
+package Logica.Interfaces;
 import Logica.DataType.*;
 import java.util.ArrayList;
 
