@@ -65,7 +65,7 @@ public class Usuario extends Persona{
     }
 
     public DtUsuario getDT(){
-        return new DtUsuario(this.nickname, super.getContrasena(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
+        return new DtUsuario(this.nickname, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
     }
     
     public void actualizarListasPorDefecto(){
