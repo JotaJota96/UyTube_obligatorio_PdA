@@ -65,7 +65,7 @@ public class Usuario extends Persona{
     }
 
     public DtUsuario getDT(){
-        return new DtUsuario(this.nickname, super.getContrasena(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
+        return new DtUsuario(this.nickname, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
     }
     
     public void actualizarListasPorDefecto(){
@@ -157,11 +157,13 @@ public class Usuario extends Persona{
         if(Usu == null){
             throw new RuntimeException("El usuario no puede ser null");
         }
-        
-        Video v = Usu.obtenerVideo(idVideo);
-        if (v == null){
+        Video v = null;
+        try {
+            v = Usu.obtenerVideo(idVideo);
+        } catch (Exception e) {
             throw new RuntimeException("El video no pertenece al usuario: " + Usu.getNickname());
         }
+         
         this.MiCanal.agregarVideoALista(idLista, v);
     }
     
