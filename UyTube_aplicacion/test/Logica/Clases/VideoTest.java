@@ -21,6 +21,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  *
@@ -63,7 +65,7 @@ public class VideoTest {
     @After
     public void tearDown() {
     }
-
+    
     /**
      * Test ok
      */
@@ -107,13 +109,65 @@ public class VideoTest {
     }
 
     /**
-     * Test of agregarModificarValoracion method, of class Video.
+     * Test OK
      */
     @Test
     public void testAgregarModificarValoracion() {
         System.out.println("agregarModificarValoracion");
-        DtValoracion val = new DtValoracion(TipoValoracion.LIKE, "usrac");
-        videoPrueba.agregarModificarValoracion(val, usrSeleccionado);
+        DtValoracion val1 = new DtValoracion(TipoValoracion.DISLIKE, "usrseleccionado");
+        videoPrueba.agregarModificarValoracion(val1, usrSeleccionado);
+        TipoValoracion resultado = videoPrueba.obtenerValoracion("usrseleccionado").getVal();
+        assertEquals(resultado, TipoValoracion.DISLIKE);
+        //System.out.println("++++++++++++++ "+videoPrueba.listarValoraciones().size());
+    }
+    
+    /**
+     * Test OK DtValoracion = null
+     */
+    @Test(expected = RuntimeException.class)
+    public void testAgregarModificarValoracion2() {
+        System.out.println("agregarModificarValoracion2");
+        DtValoracion val1 = null;
+        videoPrueba.agregarModificarValoracion(val1, usrSeleccionado);
+    }
+    
+    /**
+     * Test OK Usuario = null
+     */
+    @Test(expected = RuntimeException.class)
+    public void testAgregarModificarValoracion3() {
+        System.out.println("agregarModificarValoracion3");
+        DtValoracion val1 = new DtValoracion(TipoValoracion.DISLIKE, "usrseleccionado");
+        Usuario usuario = null;
+        videoPrueba.agregarModificarValoracion(val1, usuario);
+    }
+    
+    /**
+     * Test OK modificando la valoracion de dislike a like
+     */
+    @Test
+    public void testAgregarModificarValoracion4() {
+        System.out.println("agregarModificarValoracion4");
+        DtValoracion val1 = new DtValoracion(TipoValoracion.DISLIKE, "usrseleccionado");
+        videoPrueba.agregarModificarValoracion(val1, usrSeleccionado);//Agrega una valoración
+        DtValoracion val2 = new DtValoracion(TipoValoracion.LIKE, "usrseleccionado");
+        videoPrueba.agregarModificarValoracion(val2, usrSeleccionado);//modifica la valoración
+        TipoValoracion resultado = videoPrueba.obtenerValoracion("usrseleccionado").getVal();
+        assertEquals(resultado, TipoValoracion.LIKE);        
+    }
+    
+     /**
+     * Test OK modificando la valoracion de like a dislike
+     */
+    @Test
+    public void testAgregarModificarValoracion5() {
+        System.out.println("agregarModificarValoracion5");
+        DtValoracion val1 = new DtValoracion(TipoValoracion.LIKE, "usrseleccionado");
+        videoPrueba.agregarModificarValoracion(val1, usrSeleccionado);//Agrega una valoración
+        DtValoracion val2 = new DtValoracion(TipoValoracion.DISLIKE, "usrseleccionado");
+        videoPrueba.agregarModificarValoracion(val2, usrSeleccionado);//modifica la valoración
+        TipoValoracion resultado = videoPrueba.obtenerValoracion("usrseleccionado").getVal();
+        assertEquals(resultado, TipoValoracion.DISLIKE);        
     }
 
     /**
@@ -217,13 +271,17 @@ public class VideoTest {
     }
 
     /**
-     * Test of quitarValoracion method, of class Video.
+     * Test OK
      */
     @Test
     public void testQuitarValoracion() {
         System.out.println("quitarValoracion");
         String nickname = "usrseleccionado";
+        DtValoracion dtValoracion = new DtValoracion(TipoValoracion.LIKE, nickname);
+        videoPrueba.agregarModificarValoracion(dtValoracion, usrSeleccionado);       
         videoPrueba.quitarValoracion(nickname);
+        int esperado = 0, resultado = videoPrueba.listarValoraciones().size();
+        assertEquals(esperado, resultado);
     }
 
     /**
@@ -235,12 +293,10 @@ public class VideoTest {
         int expResult = 7;
         int result = Video.getNuevoId();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getId method, of class Video.
+     * Test OK
      */
     @Test
     public void testGetId() {
@@ -248,25 +304,22 @@ public class VideoTest {
         int expResult = 1;
         int result = videoPrueba.getId();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setId method, of class Video.
+     * Test OK
      */
     @Test
     public void testSetId() {
         System.out.println("setId");
-        int id = 0;
+        int id = 100;
         Video instance = new Video();
         instance.setId(id);
-        // TODO review the generated test code and remove the default call to fail.
-        
+        assertEquals(id, instance.getId());
     }
 
     /**
-     * Test of getNombre method, of class Video.
+     * Test OK
      */
     @Test
     public void testGetNombre() {
@@ -274,8 +327,6 @@ public class VideoTest {
         String expResult = "MiVideo";
         String result = videoPrueba.getNombre();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -290,12 +341,11 @@ public class VideoTest {
     }
 
     /**
-     * Test of getDescripcion method, of class Video.
+     * Test OK
      */
     @Test
     public void testGetDescripcion() {
         System.out.println("getDescripcion");
-        Video instance = new Video();
         String expResult = "Video para comentar";
         String result = videoPrueba.getDescripcion();
         assertEquals(expResult, result);
@@ -443,8 +493,6 @@ public class VideoTest {
         int expResult = 0;
         int result = instance.getCantLikes();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -466,6 +514,7 @@ public class VideoTest {
     public void testGetCantDisLikes() {
         System.out.println("getCantDisLikes");
         int expResult = 0;
+        
         int result = videoPrueba.getCantDisLikes();
         assertEquals(expResult, result);
     }
@@ -490,8 +539,14 @@ public class VideoTest {
         System.out.println("toString");
         String expResult = "Video{id=1, nombre=MiVideo, descripcion=Video para comentar, duracion=00:02:40, fechaPublicacion=3876-03-02, urlVideoOriginal=url, privacidad=PRIVADO, categoria=categoria, cantLikes=0, cantDisLikes=0}";
         String result = videoPrueba.toString();
-        assertEquals(expResult, result);
-        
+        assertEquals(expResult, result);        
+    }
+    
+    @RunWith(Parameterized.class)
+    public class VideoTestParemetrizado{
+
     }
     
 }
+
+
