@@ -81,17 +81,25 @@ public class VideoTest {
     }
 
     /**
-     * Test of agregarComentario method, of class Video.
+     * Test OK
      */
     @Test
     public void testAgregarComentario_3args() {
-        System.out.println("agregarComentario");
+        System.out.println("agregarComentario");        
         Date fecha = new Date(2019,07,10);
-        DtComentario dtComentario = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "un desastre el video", 1);
-        Video instance = usrActual.obtenerVideo(1);
-    //    instance.agregarComentario(1, dtComentario, usrSeleccionado,1);
-        // TODO review the generated test code and remove the default call to fail.
-        //("The test case is a prototype.");
+        DtComentario dtComentario = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "un desastre el 1", 1);
+        DtComentario dtComentario2 = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "un desastre el 2", 2);
+        videoPrueba.agregarComentario(dtComentario, usrSeleccionado);      
+        videoPrueba.agregarComentario(5, dtComentario2, usrSeleccionado);       
+        ArrayList<DtComentario> listaCom = videoPrueba.listarComentarios();        
+        String esperado = dtComentario2.getTexto();
+        String resultado = new String();        
+        for (DtComentario item : listaCom) {
+           if(item.getTexto() == dtComentario2.getTexto()){
+                resultado = item.getTexto();
+            }
+        }
+        assertEquals(esperado, resultado);
     }
 
     /**
