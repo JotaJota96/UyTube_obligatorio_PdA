@@ -56,6 +56,7 @@ public class CAdminTest {
 
         System.out.println("Agregando categoria y lista por defecto");
         instance.altaCategoria("UNDEFINED");
+        instance.altaCategoria("ARTE");
         instance.altaListaDeReproduccionPorDefecto(
                 new DtListaDeReproduccion(0, "Favoritos", Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED")
         );
@@ -66,7 +67,7 @@ public class CAdminTest {
                 new DtVideo(0, "video1", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
         );
         instance.altaVideo(
-                new DtVideo(0, "video2", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "video2", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "ARTE", 0, 0)
         );
         instance.altaVideo(
                 new DtVideo(0, "video3", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
@@ -81,7 +82,7 @@ public class CAdminTest {
                 new DtVideo(0, "video1", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
         );
         instance.altaVideo(
-                new DtVideo(0, "video2", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "video2", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "ARTE", 0, 0)
         );
         instance.altaVideo(
                 new DtVideo(0, "video3", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
@@ -93,13 +94,13 @@ public class CAdminTest {
         System.out.println("Agregando a usu3 3 videos y una lista");
         instance.seleccionarUsuario("usu3");
         instance.altaVideo(
-                new DtVideo(0, "video1", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "video1", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "ARTE", 0, 0)
         );
         instance.altaVideo(
                 new DtVideo(0, "video2", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
         );
         instance.altaVideo(
-                new DtVideo(0, "video3", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "video3", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "ARTE", 0, 0)
         );
         instance.altaListaDeReproduccionParticular(
                 new DtListaDeReproduccion(0, "mi lista", Privacidad.PUBLICO, TipoListaDeReproduccion.PARTICULAR, "UNDEFINED")
@@ -169,20 +170,20 @@ public class CAdminTest {
         // el sistema no tiene ningun usuario seleccionado, 
         // osea, apunta a null
         // entonces debe saltar una excepcion
-        instance.agregarVideoAListaDeReproduccion();
+        instance.agregarVideoAListaDeReproduccion(0);
     }
     @Test(expected = RuntimeException.class)
     public void testThrow_2_AgregarVideoAListaDeReproduccion() {
         System.out.println("agregarVideoAListaDeReproduccion");
         instance.seleccionarUsuario("usu1");
-        instance.agregarVideoAListaDeReproduccion();
+        instance.agregarVideoAListaDeReproduccion(0);
     }
     @Test(expected = RuntimeException.class)
     public void testThrow_3_AgregarVideoAListaDeReproduccion() {
         System.out.println("agregarVideoAListaDeReproduccion");
         instance.seleccionarUsuario("usu1");
         instance.seleccionarUsuarioActual("usu2");
-        instance.agregarVideoAListaDeReproduccion();
+        instance.agregarVideoAListaDeReproduccion(0);
     }
     @Test(expected = RuntimeException.class)
     public void testThrow_4_AgregarVideoAListaDeReproduccion() {
@@ -190,7 +191,7 @@ public class CAdminTest {
         instance.seleccionarUsuario("usu1");
         instance.seleccionarUsuarioActual("usu2");
         instance.seleccionarVideo(1);
-        instance.agregarVideoAListaDeReproduccion();
+        instance.agregarVideoAListaDeReproduccion(0);
     }
     @Test
     public void test_AgregarVideoAListaDeReproduccion() {
@@ -204,7 +205,7 @@ public class CAdminTest {
         instance.seleccionarUsuarioActual("usu2");
         instance.seleccionarVideo(1);
         
-        instance.agregarVideoAListaDeReproduccion();
+        instance.agregarVideoAListaDeReproduccion(5);
         
         instance.seleccionarUsuario("usu2");
         int despues = instance.listarVideosDeListaDeReproduccion().size();
@@ -350,6 +351,13 @@ public class CAdminTest {
     public void testThrow_2_AltaListaDeReproduccionParticular() {
         System.out.println("altaListaDeReproduccionParticular");
         DtListaDeReproduccion lista = null;
+        instance.seleccionarUsuario("usu1");
+        instance.altaListaDeReproduccionParticular(lista);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_AltaListaDeReproduccionParticular() {
+        System.out.println("altaListaDeReproduccionParticular");
+        DtListaDeReproduccion lista = new DtListaDeReproduccion(0, "Videos de maincraf", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "deporte");
         instance.seleccionarUsuario("usu1");
         instance.altaListaDeReproduccionParticular(lista);
     }
@@ -501,6 +509,16 @@ public class CAdminTest {
         DtVideo video = null;
         instance.seleccionarUsuario("usu1");
         instance.altaVideo(video);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_AltaVideo() {
+        System.out.println("altaVideo");
+        DtVideo video = new DtVideo(0, "video4", "descripcio4", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "DEPORTE", 0, 0);
+        instance.seleccionarUsuario("usu1");
+        int antes = instance.listarVideosDeUsuario().size();
+        instance.altaVideo(video);
+        int despues = instance.listarVideosDeUsuario().size();
+        assertNotEquals(antes, despues);
     }
     @Test
     public void test_AltaVideo() {
@@ -808,21 +826,722 @@ public class CAdminTest {
         String nickname = "usu2";
         instance.seleccionarUsuarioActual("usu2");
         ArrayList<DtListaDeReproduccion> result = instance.listarListasDeReproduccionDeUsuario(nickname);
-        assertTrue(result.get(0).getId() == 2);
+        assertTrue(result.size() == 3);
+    }
+    
+    
+    /**
+     * Test of listarListasDeReproduccionParticularesDeUsuario method, of class
+     * CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ListarListasDeReproduccionParticularesDeUsuario() {
+        System.out.println("listarListasDeReproduccionParticularesDeUsuario");
+        ArrayList<DtListaDeReproduccion> result = instance.listarListasDeReproduccionParticularesDeUsuario();
+    }
+    @Test
+    public void test_ListarListasDeReproduccionParticularesDeUsuario() {
+        System.out.println("listarListasDeReproduccionParticularesDeUsuario");
+        instance.seleccionarUsuario("usu3");
+        ArrayList<DtListaDeReproduccion> result = instance.listarListasDeReproduccionParticularesDeUsuario();
+        for (int i = 0; i < result.size(); i++) {
+            if (result.get(i).getTipo() == TipoListaDeReproduccion.PARTICULAR) {
+                assertTrue(false);
+                return;
+            }
+        }
+        assertTrue(true);
+    }
+
+    /**
+     * Test of listarUsuarioSeguidores method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ListarUsuarioSeguidores() {
+        System.out.println("listarUsuarioSeguidores");
+        ArrayList<DtUsuario> result = instance.listarUsuarioSeguidores();
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_ListarUsuarioSeguidores() {
+        System.out.println("listarUsuarioSeguidores");
+        instance.seleccionarUsuarioActual("usu1");
+        ArrayList<DtUsuario> result = instance.listarUsuarioSeguidores();
+    }
+    @Test
+    public void test_ListarUsuarioSeguidores() {
+        System.out.println("listarUsuarioSeguidores");
+        // usuarios 1 y 2 siguen al 3
+        instance.seleccionarUsuario("usu3");
+        instance.seleccionarUsuarioActual("usu1");
+        instance.seguirUsuario();
+        instance.seleccionarUsuarioActual("usu2");
+        instance.seguirUsuario();
+        
+        instance.seleccionarUsuario("usu3");
+        ArrayList<DtUsuario> result = instance.listarUsuarioSeguidores();
+        
+        // deshago que usuarios 1 y 2 siguen al 3
+        instance.seleccionarUsuario("usu3");
+        instance.seleccionarUsuarioActual("usu1");
+        instance.seguirUsuario();
+        instance.seleccionarUsuarioActual("usu2");
+        instance.seguirUsuario();
+        
+        for (int i = 0; i < result.size(); i++){
+            if (result.get(i).getNickname() != "usu1" && result.get(i).getNickname() != "usu2") {
+                assertTrue(false);
+                return;
+            }
+        }
+        assertTrue(true);
     }
     
     
     
+    /**
+     * Test of listarUsuarioSeguidos method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ListarUsuarioSeguidos() {
+        System.out.println("listarUsuarioSeguidos");
+        ArrayList<DtUsuario> result = instance.listarUsuarioSeguidos();
+    }
+    @Test
+    public void test_ListarUsuarioSeguidos() {
+        System.out.println("listarUsuarioSeguidos");
+        
+        // usuarios 3 sige a 1 y 2
+        instance.seleccionarUsuarioActual("usu3");
+        instance.seleccionarUsuario("usu1");
+        instance.seguirUsuario();
+        instance.seleccionarUsuario("usu2");
+        instance.seguirUsuario();
+        
+        ArrayList<DtUsuario> result = instance.listarUsuarioSeguidos();
+        
+        // deshago que usuarios 3 sige a 1 y 2
+        instance.seleccionarUsuario("usu1");
+        instance.seguirUsuario();
+        instance.seleccionarUsuario("usu2");
+        instance.seguirUsuario();
+        
+        for (int i = 0; i < result.size(); i++){
+            if (result.get(i).getNickname() != "usu1" || result.get(i).getNickname() != "usu2") {
+                assertTrue(false);
+                return;
+            }
+        }
+        assertTrue(true);
+        
+    }
     
     
+    /**
+     * Test of listarUsuarios method, of class CAdmin.
+     */
+    @Test
+    public void testThrow_1_ListarUsuarios() {
+        System.out.println("listarUsuarios");
+        ArrayList<DtUsuario> result = instance.listarUsuarios();
+        assertTrue(result.size() == 3);
+    }
     
     
+    /**
+     * Test of listarVideosEnCategoria method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ListarVideosEnCategoria() {
+        System.out.println("listarVideosEnCategoria");
+        String cat = "";
+        ArrayList<DtVideo> result = instance.listarVideosEnCategoria(cat);
+    }
+    @Test
+    public void testThrow_2_ListarVideosEnCategoria() {
+        System.out.println("listarVideosEnCategoria");
+        String cat = "DEPORTE";
+        ArrayList<DtVideo> result = instance.listarVideosEnCategoria(cat);
+        assertTrue(result.size() == 0);
+    }
+    @Test
+    public void test_ListarVideosEnCategoria() {
+        System.out.println("listarVideosEnCategoria");
+        String cat = "ARTE";
+        ArrayList<DtVideo> result = instance.listarVideosEnCategoria(cat);
+        
+        for (int i = 0; i < result.size(); i++){
+            if (result.get(i).getCategoria() != "ARTE") {
+                assertTrue(false);
+                return;
+            }
+        }
+        assertTrue(true);
+    }
+
+    
+    /**
+     * Test of listarVideosDeUsuario method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ListarVideosDeUsuario() {
+        System.out.println("listarVideosDeUsuario");
+        ArrayList<DtVideo> result = instance.listarVideosDeUsuario();
+    }
+    @Test
+    public void test_ListarVideosDeUsuario() {
+        System.out.println("listarVideosDeUsuario");
+        instance.seleccionarUsuario("usu1");
+        ArrayList<DtVideo> result = instance.listarVideosDeUsuario();
+        assertTrue(result.size() == 3);
+    }
     
     
+    /**
+     * Test of listarVideosDeListaDeReproduccion method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ListarVideosDeListaDeReproduccion() {
+        System.out.println("listarVideosDeListaDeReproduccion");
+        ArrayList<DtVideo> result = instance.listarVideosDeListaDeReproduccion();
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_ListarVideosDeListaDeReproduccion() {
+        System.out.println("listarVideosDeListaDeReproduccion");
+        instance.seleccionarUsuario("usu3");
+        ArrayList<DtVideo> result = instance.listarVideosDeListaDeReproduccion();
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_ListarVideosDeListaDeReproduccion() {
+        System.out.println("listarVideosDeListaDeReproduccion");
+        instance.seleccionarUsuario("usu3");
+        instance.seleccionarVideo(555);
+        ArrayList<DtVideo> result = instance.listarVideosDeListaDeReproduccion();
+    }
+    @Test
+    public void test_ListarVideosDeListaDeReproduccion() {
+        System.out.println("listarVideosDeListaDeReproduccion");
+        instance.seleccionarUsuario("usu3");
+        instance.seleccionarListaDeReproduccion(9);
+        ArrayList<DtVideo> result = instance.listarVideosDeListaDeReproduccion();
+        assertTrue(result.size() == 0);
+    }
+
+    /**
+     * Test of modificarListaDeReproduccion method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ModificarListaDeReproduccion() {
+        System.out.println("modificarListaDeReproduccion");
+        instance.modificarListaDeReproduccion(null);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_ModificarListaDeReproduccion() {
+        System.out.println("modificarListaDeReproduccion");
+        instance.seleccionarUsuario("usu1");
+        instance.modificarListaDeReproduccion(null);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_ModificarListaDeReproduccion() {
+        System.out.println("modificarListaDeReproduccion");
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarListaDeReproduccion(7);
+        instance.modificarListaDeReproduccion(null);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_4_ModificarListaDeReproduccion() {
+        System.out.println("modificarListaDeReproduccion");
+        DtListaDeReproduccion dt = new DtListaDeReproduccion(0, "Favoritos", Privacidad.PUBLICO, TipoListaDeReproduccion.POR_DEFECTO, "DEPORTE");
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarListaDeReproduccion(7);
+        instance.modificarListaDeReproduccion(dt);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_5_ModificarListaDeReproduccion() {
+        System.out.println("modificarListaDeReproduccion");
+        DtListaDeReproduccion dt = new DtListaDeReproduccion(0, "Favoritos", Privacidad.PUBLICO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED");
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarListaDeReproduccion(7);
+        instance.modificarListaDeReproduccion(dt);
+    }
+    @Test
+    public void test_ModificarListaDeReproduccion() {
+        System.out.println("modificarListaDeReproduccion");
+        DtListaDeReproduccion dt = new DtListaDeReproduccion(0, "Alfa-jores", Privacidad.PUBLICO, TipoListaDeReproduccion.POR_DEFECTO, "ARTE");
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarListaDeReproduccion(7);
+        instance.modificarListaDeReproduccion(dt);
+        assertTrue(instance.seleccionarListaDeReproduccion(7).getNombre() == "Alfa-jores");
+        
+    }
+
+    /**
+     * Test of modificarUsuarioYCanal method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ModificarUsuarioYCanal() {
+        System.out.println("modificarUsuarioYCanal");
+        DtUsuario usr = null;
+        DtCanal canal = null;
+        instance.modificarUsuarioYCanal(usr, canal);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_ModificarUsuarioYCanal() {
+        System.out.println("modificarUsuarioYCanal");
+        instance.seleccionarUsuario("usu1");
+        DtUsuario usr = null;
+        DtCanal canal = null;
+        instance.modificarUsuarioYCanal(usr, canal);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_ModificarUsuarioYCanal() {
+        System.out.println("modificarUsuarioYCanal");
+        instance.seleccionarUsuario("usu1");
+        DtUsuario usr = new DtUsuario("usuario1", "pass1", "nombre mod", "apellido mod", "correo mod", new Date(55, 11, 21), "imagen mod", 123456);
+        DtCanal canal = null;
+        instance.modificarUsuarioYCanal(usr, canal);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_4_ModificarUsuarioYCanal() {
+        System.out.println("modificarUsuarioYCanal");
+        instance.seleccionarUsuario("usu1");
+        DtUsuario usr = new DtUsuario("usuario1", "pass1", "nombre mod", "apellido mod", "correo mod", new Date(55, 11, 21), "imagen mod", 123456);
+        DtCanal canal = new DtCanal(0, "canal mod", "descripcion3 mod", Privacidad.PRIVADO);
+        instance.modificarUsuarioYCanal(usr, canal);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_5_ModificarUsuarioYCanal() {
+        System.out.println("modificarUsuarioYCanal");
+        instance.seleccionarUsuario("usu1");
+        DtUsuario usr = new DtUsuario("usu1", "pass1", "nombre mod", "apellido mod", "correo mod", new Date(55, 11, 21), "imagen mod", 123456);
+        DtCanal canal = new DtCanal(0, "canal mod", "descripcion3 mod", Privacidad.PRIVADO);
+        instance.modificarUsuarioYCanal(usr, canal);
+    }
+    @Test
+    public void test_ModificarUsuarioYCanal() {
+        System.out.println("modificarUsuarioYCanal");
+        DtUsuario usuRef = instance.seleccionarUsuario("usu1");
+        DtCanal canRef = instance.obtenerCanalDeUsuario();
+        DtUsuario usr = new DtUsuario("usu1", "pass1", "nombre mod", "apellido mod", "correo1", new Date(55, 11, 21), "imagen mod", 123456);
+        DtCanal canal = new DtCanal(0, "canal mod", "descripcion3 mod", Privacidad.PRIVADO);
+        instance.modificarUsuarioYCanal(usr, canal);
+        DtUsuario usuPost = instance.seleccionarUsuario("usu1");
+        DtCanal canPost = instance.obtenerCanalDeUsuario();
+        
+        assertTrue(
+                usuRef.toString() != usuPost.toString() &&
+                canRef.toString() != canPost.toString()
+        );
+    }
     
     
+    /**
+     * Test of modificarVideo method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ModificarVideo() {
+        System.out.println("modificarVideo");
+        DtVideo video = null;
+        instance.modificarVideo(video);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_ModificarVideo() {
+        System.out.println("modificarVideo");
+        DtVideo video = null;
+        instance.seleccionarUsuario("usu1");
+        instance.modificarVideo(video);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_ModificarVideo() {
+        System.out.println("modificarVideo");
+        DtVideo video = null;
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarVideo(1);
+        instance.modificarVideo(video);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_4_ModificarVideo() {
+        System.out.println("modificarVideo");
+        DtVideo video = new DtVideo(0, "video2", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "DEPORTE", 0, 0);
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarVideo(1);
+        instance.modificarVideo(video);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_5_ModificarVideo() {
+        System.out.println("modificarVideo");
+        DtVideo video = new DtVideo(0, "video2", "descripcion", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "ARTE", 1000, 5);
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarVideo(1);
+        instance.modificarVideo(video);
+    }
+    @Test
+    public void test_ModificarVideo() {
+        System.out.println("modificarVideo");
+        DtVideo video = new DtVideo(0, "video2", "descripcion modificada", new Time(1, 2, 3), new Date(11, 1, 1), "url", Privacidad.PRIVADO, "ARTE", 1000, 5);
+        instance.seleccionarUsuario("usu1");
+        DtVideo antes = instance.seleccionarVideo(2);
+        instance.modificarVideo(video);
+        DtVideo despues = instance.seleccionarVideo(2);
+        assertNotEquals(antes.toString(), despues.toString());
+    }
+
+    
+    /**
+     * Test of obtenerCanalDeUsuario method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ObtenerCanalDeUsuario() {
+        System.out.println("obtenerCanalDeUsuario");
+        DtCanal expResult = null;
+        DtCanal result = instance.obtenerCanalDeUsuario();
+    }
     
     
+    /**
+     * Test of obtenerValoracionesDeVideo method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ObtenerValoracionesDeVideo() {
+        System.out.println("obtenerValoracionesDeVideo");
+        ArrayList<DtValoracion> expResult = null;
+        ArrayList<DtValoracion> result = instance.obtenerValoracionesDeVideo();
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_ObtenerValoracionesDeVideo() {
+        System.out.println("obtenerValoracionesDeVideo");
+        ArrayList<DtValoracion> expResult = null;
+        instance.seleccionarUsuario("usu1");
+        ArrayList<DtValoracion> result = instance.obtenerValoracionesDeVideo();
+    }
+    @Test
+    public void test_ObtenerValoracionesDeVideo() {
+        System.out.println("obtenerValoracionesDeVideo");
+        
+        instance.seleccionarUsuario("usu3");
+        instance.seleccionarUsuarioActual("usu2");
+        instance.seleccionarVideo(8);
+        instance.altaValoracion(new DtValoracion(TipoValoracion.LIKE, "nickname"));
+        
+        instance.seleccionarUsuario("usu3");
+        instance.seleccionarVideo(8);
+        ArrayList<DtValoracion> result = instance.obtenerValoracionesDeVideo();
+        
+        for (int i = 0; i < result.size(); i++){
+            if (result.get(i).getNickname().equals("usu2")){
+                assertTrue(true);
+                return;
+            }
+        }
+        assertTrue(false);
+    }
+
+    /**
+     * Test of obtenerValoracionDada method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ObtenerValoracionDada() {
+        System.out.println("obtenerValoracionDada");
+        DtValoracion expResult = null;
+        DtValoracion result = instance.obtenerValoracionDada();
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_ObtenerValoracionDada() {
+        System.out.println("obtenerValoracionDada");
+        instance.seleccionarUsuarioActual("usu2");
+        DtValoracion expResult = null;
+        DtValoracion result = instance.obtenerValoracionDada();
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_ObtenerValoracionDada() {
+        System.out.println("obtenerValoracionDada");
+        instance.seleccionarUsuarioActual("usu2");
+        instance.seleccionarUsuario("usu2");
+        DtValoracion expResult = null;
+        DtValoracion result = instance.obtenerValoracionDada();
+    }
+    @Test
+    public void test_1_ObtenerValoracionDada() {
+        System.out.println("obtenerValoracionDada");
+        instance.seleccionarUsuarioActual("usu2");
+        instance.seleccionarUsuario("usu2");
+        instance.seleccionarVideo(5);
+        
+        DtValoracion expResult = null;
+        DtValoracion result = instance.obtenerValoracionDada();
+        assertEquals(expResult, result);
+    }
+    @Test
+    public void test_2_ObtenerValoracionDada() {
+        System.out.println("obtenerValoracionDada");
+        
+        instance.seleccionarUsuario("usu2");
+        instance.seleccionarUsuarioActual("usu2");
+        instance.seleccionarVideo(5);
+        instance.altaValoracion(new DtValoracion(TipoValoracion.DISLIKE, "nickname"));
+        
+        instance.seleccionarUsuarioActual("usu2");
+        instance.seleccionarUsuario("usu2");
+        instance.seleccionarVideo(5);
+        
+        DtValoracion expResult = new DtValoracion(TipoValoracion.DISLIKE, "usu2");
+        DtValoracion result = instance.obtenerValoracionDada();
+        assertEquals(expResult.toString(), result.toString());
+    }
+    
+    /**
+     * Test of quitarVideoDeListaDeReproduccion method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_QuitarVideoDeListaDeReproduccion() {
+        System.out.println("quitarVideoDeListaDeReproduccion");
+        instance.quitarVideoDeListaDeReproduccion(5);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_QuitarVideoDeListaDeReproduccion() {
+        System.out.println("quitarVideoDeListaDeReproduccion");
+        instance.seleccionarUsuario("usu1");
+        instance.quitarVideoDeListaDeReproduccion(5);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_QuitarVideoDeListaDeReproduccion() {
+        System.out.println("quitarVideoDeListaDeReproduccion");
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarListaDeReproduccion(1);
+        instance.quitarVideoDeListaDeReproduccion(0);
+    }
+    @Test
+    public void test_1_QuitarVideoDeListaDeReproduccion() {
+        System.out.println("quitarVideoDeListaDeReproduccion");
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarListaDeReproduccion(1);
+        instance.quitarVideoDeListaDeReproduccion(5);
+        assertEquals(0, instance.listarVideosDeListaDeReproduccion().size());
+    }
+    @Test
+    public void test_2_QuitarVideoDeListaDeReproduccion() {
+        System.out.println("quitarVideoDeListaDeReproduccion");
+        
+        instance.seleccionarUsuario("usu2");
+        instance.seleccionarUsuarioActual("usu1");
+        instance.seleccionarVideo(5);
+        instance.agregarVideoAListaDeReproduccion(1);
+        
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarListaDeReproduccion(1);
+        int antes = instance.listarVideosDeListaDeReproduccion().size();
+        
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarListaDeReproduccion(1);
+        instance.quitarVideoDeListaDeReproduccion(5);
+        int despues = instance.listarVideosDeListaDeReproduccion().size();
+        
+        assertNotEquals(antes, despues);
+    }
+    
+    
+    /**
+     * Test of seleccionarUsuario method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_SeleccionarUsuario() {
+        System.out.println("seleccionarUsuario");
+        String nickname = "";
+        DtUsuario result = instance.seleccionarUsuario(nickname);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_SeleccionarUsuario() {
+        System.out.println("seleccionarUsuario");
+        String nickname = "nickname inexistente";
+        DtUsuario result = instance.seleccionarUsuario(nickname);
+    }
+    @Test
+    public void test_SeleccionarUsuario() {
+        System.out.println("seleccionarUsuario");
+        String nickname = "usu3";
+        DtUsuario result = instance.seleccionarUsuario(nickname);
+        assertNotNull(result);
+    }
+
+    /**
+     * Test of seleccionarUsuarioActual method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_SeleccionarUsuarioActual() {
+        System.out.println("seleccionarUsuario");
+        String nickname = "";
+        DtUsuario result = instance.seleccionarUsuarioActual(nickname);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_SeleccionarUsuarioActual() {
+        System.out.println("seleccionarUsuario");
+        String nickname = "nickname inexistente";
+        DtUsuario result = instance.seleccionarUsuarioActual(nickname);
+    }
+    @Test
+    public void test_SeleccionarUsuarioActual() {
+        System.out.println("seleccionarUsuario");
+        String nickname = "usu3";
+        DtUsuario result = instance.seleccionarUsuarioActual(nickname);
+        assertNotNull(result);
+    }
+    
+    
+    /**
+     * Test of seleccionarVideo method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_SeleccionarVideo() {
+        System.out.println("seleccionarVideo");
+        int idVideo = 0;
+        DtVideo expResult = null;
+        DtVideo result = instance.seleccionarVideo(idVideo);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_SeleccionarVideo() {
+        System.out.println("seleccionarVideo");
+        int idVideo = 9;
+        instance.seleccionarUsuario("usu1");
+        DtVideo expResult = null;
+        DtVideo result = instance.seleccionarVideo(idVideo);
+    }
+    @Test
+    public void test_SeleccionarVideo() {
+        System.out.println("seleccionarVideo");
+        int idVideo = 9;
+        instance.seleccionarUsuario("usu3");
+        DtVideo expResult = null;
+        DtVideo result = instance.seleccionarVideo(idVideo);
+        assertTrue(result.getId() == 9);
+    }
+
+    
+    /**
+     * Test of seleccionarListaDeReproduccion method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_SeleccionarListaDeReproduccion() {
+        System.out.println("seleccionarListaDeReproduccion");
+        int idLista = 0;
+        DtListaDeReproduccion result = instance.seleccionarListaDeReproduccion(idLista);
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_SeleccionarListaDeReproduccion() {
+        System.out.println("seleccionarListaDeReproduccion");
+        int idLista = 3;
+        instance.seleccionarUsuario("usu1");
+        DtListaDeReproduccion result = instance.seleccionarListaDeReproduccion(idLista);
+    }
+    @Test
+    public void test_SeleccionarListaDeReproduccion() {
+        System.out.println("seleccionarListaDeReproduccion");
+        int idLista = 4;
+        instance.seleccionarUsuario("usu1");
+        DtListaDeReproduccion result = instance.seleccionarListaDeReproduccion(idLista);
+        assertTrue(result.getId() == 4);
+    }
+
+
+    /**
+     * Test of seguirUsuario method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_SeguirUsuario() {
+        System.out.println("seguirUsuario");
+        instance.seguirUsuario();
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_2_SeguirUsuario() {
+        System.out.println("seguirUsuario");
+        instance.seleccionarUsuarioActual("usu1");
+        instance.seguirUsuario();
+    }
+    @Test(expected = RuntimeException.class)
+    public void testThrow_3_SeguirUsuario() {
+        System.out.println("seguirUsuario");
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarUsuarioActual("usu1");
+        instance.seguirUsuario();
+    }
+    @Test
+    public void test_SeguirUsuario() {
+        System.out.println("seguirUsuario");
+        instance.seleccionarUsuario("usu1");
+        instance.seleccionarUsuarioActual("usu3");
+        
+        int antes = instance.listarUsuarioSeguidores().size();
+        instance.seguirUsuario();
+        int despues = instance.listarUsuarioSeguidores().size();
+        
+        assertEquals(antes+1, despues);
+    }
+
+    
+    
+    /**
+     * Test of validarNuevaListaParticular method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ValidarNuevaListaParticular() {
+        System.out.println("validarNuevaListaParticular");
+        String nombre = "";
+        boolean expResult = false;
+        boolean result = instance.validarNuevaListaParticular(nombre);
+    }
+    @Test
+    public void test_1_ValidarNuevaListaParticular() {
+        System.out.println("validarNuevaListaParticular");
+        String nombre = "Favoritos";
+        instance.seleccionarUsuario("usu1");
+        boolean expResult = false;
+        boolean result = instance.validarNuevaListaParticular(nombre);
+        assertEquals(expResult, result);
+    }
+    @Test
+    public void test_2_ValidarNuevaListaParticular() {
+        System.out.println("validarNuevaListaParticular");
+        String nombre = "terraplanismo";
+        instance.seleccionarUsuario("usu1");
+        boolean expResult = true;
+        boolean result = instance.validarNuevaListaParticular(nombre);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of validarNuevaListaPorDefecto method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void test_1_ValidarNuevaListaPorDefecto() {
+        System.out.println("validarNuevaListaPorDefecto");
+        String nombre = "";
+        boolean expResult = false;
+        boolean result = instance.validarNuevaListaPorDefecto(nombre);
+        assertEquals(expResult, result);
+    }
+    @Test
+    public void test_2_ValidarNuevaListaPorDefecto() {
+        System.out.println("validarNuevaListaPorDefecto");
+        String nombre = "Ver mas tarde";
+        boolean expResult = false;
+        boolean result = instance.validarNuevaListaPorDefecto(nombre);
+        assertEquals(expResult, result);
+    }
+    @Test
+    public void test_3_ValidarNuevaListaPorDefecto() {
+        System.out.println("validarNuevaListaPorDefecto");
+        String nombre = "mi lista";
+        boolean expResult = false;
+        boolean result = instance.validarNuevaListaPorDefecto(nombre);
+        assertEquals(expResult, result);
+    }
+    @Test
+    public void test_4_ValidarNuevaListaPorDefecto() {
+        System.out.println("validarNuevaListaPorDefecto");
+        String nombre = "Reviews de Yerba";
+        boolean expResult = true;
+        boolean result = instance.validarNuevaListaPorDefecto(nombre);
+        assertEquals(expResult, result);
+    }
+
     
     
     
