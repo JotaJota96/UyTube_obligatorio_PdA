@@ -14,7 +14,6 @@ import Logica.Enumerados.TipoValoracion;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,12 +31,12 @@ public class VideoTest {
     Usuario usrActual;
     Usuario usrSeleccionado;
     Usuario usrSeleccionado2;
-    Video videoPrueba;
-    
+    Video videoPrueba;    
     Categoria miCategoria = new Categoria("Prueba");
+        
     public VideoTest() {
     }
-    
+            
     @BeforeClass
     public static void setUpClass() {
     }
@@ -67,19 +66,96 @@ public class VideoTest {
     }
     
     /**
+     * Test constructor id negativo
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCostructorVideo(){
+        System.out.println("testCostructorVideo");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = new Time(0, 2, 40);
+        Video video = new Video(-1, "MiVideo", "Video para comentar",duracion1, fecha1,"url","categoria");
+    }
+    
+    /**
+     * Test constructor nombre vacio
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCostructorVideo2(){
+        System.out.println("testCostructorVideo2");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = new Time(0, 2, 40);
+        Video video = new Video(3, "", "Video para comentar",duracion1, fecha1,"url","categoria");
+    }
+    
+    /**
+     * Test constructor con descripcion vacia
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCostructorVideo3(){
+        System.out.println("testCostructorVideo3");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = new Time(0, 2, 40);
+        Video video = new Video(3, "MiVideo", "",duracion1, fecha1,"url","categoria");
+    }
+    
+    /**
+     * Test constructor con duracion null
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCostructorVideo4(){
+        System.out.println("testCostructorVideo4");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = null;
+        Video video = new Video(3, "MiVideo", "Video para comentar",duracion1, fecha1,"url","categoria");
+    }
+    
+    /**
+     * Test constructor con fecha null
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCostructorVideo5(){
+        System.out.println("testCostructorVideo5");
+        Date fecha1 = null;
+        Time duracion1 = new Time(0, 2, 40);
+        Video video = new Video(3, "MiVideo", "Video para comentar",duracion1, fecha1,"url","categoria");
+    }
+    
+    /**
+     * Test constructor con url vacia
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCostructorVideo6(){
+        System.out.println("testCostructorVideo6");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = new Time(0, 2, 40);
+        Video video = new Video(3, "MiVideo", "Video para comentar",duracion1, fecha1,"","categoria");
+    }
+    
+    /**
+     * Test constructor con categoria vacia
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCostructorVideo7(){
+        System.out.println("testCostructorVideo7");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = new Time(0, 2, 40);
+        Video video = new Video(3, "MiVideo", "Video para comentar",duracion1, fecha1,"url","");
+    }
+    
+    /**
      * Test ok
      */
     @Test
     public void testAgregarComentario_DtComentario_Usuario() {
         System.out.println("agregarComentario");
         Date fecha = new Date(2019, 8, 25);
-        DtComentario dtComentario = new DtComentario(1, "usrseleccionado", fecha, "comentario del video", 0);        
+        DtComentario dtComentario = new DtComentario(2, "usrseleccionado", fecha, "comentario de prueba", 0);        
         videoPrueba.agregarComentario(dtComentario, usrSeleccionado);
         ArrayList<DtComentario> listaComentarios = videoPrueba.listarComentarios();
         String esperado = dtComentario.toString();
         String resultado = new String();
-        for (DtComentario item : listaComentarios) {              
-            if(item.getId() == dtComentario.getId()){//Obtengo el comentario recien ingresado 
+        for (DtComentario item : listaComentarios) { //Obtengo el comentario recien ingresado, lo busca por texto             
+            if(item.getTexto() == dtComentario.getTexto()){
                 resultado = item.toString();              
             }
         }
@@ -93,19 +169,89 @@ public class VideoTest {
     public void testAgregarComentario_3args() {
         System.out.println("agregarComentario");        
         Date fecha = new Date(2019,07,10);
-        DtComentario dtComentario = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "un desastre el 1", 1);
-        DtComentario dtComentario2 = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "un desastre el 2", 2);
-        videoPrueba.agregarComentario(dtComentario, usrSeleccionado);      
-        videoPrueba.agregarComentario(5, dtComentario2, usrSeleccionado);       
+        DtComentario dtComentario = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "texto1", 1);
+        DtComentario dtComentario2 = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "texto2", 2);
+        videoPrueba.agregarComentario(dtComentario, usrSeleccionado);
+        ArrayList<DtComentario> listaCom1 = videoPrueba.listarComentarios();
+        int id = 0;
+        for (DtComentario item : listaCom1) {//Obtiene el id del comentario1 que se agrego (lo busca por el texto)
+            if(item.getTexto() == dtComentario.getTexto()){
+                id = item.getId();
+            }
+        }
+        videoPrueba.agregarComentario(id, dtComentario2, usrSeleccionado);       
         ArrayList<DtComentario> listaCom = videoPrueba.listarComentarios();        
         String esperado = dtComentario2.getTexto();
         String resultado = new String();        
         for (DtComentario item : listaCom) {
-           if(item.getTexto() == dtComentario2.getTexto()){
-                resultado = item.getTexto();
+            if(item.getTexto() == dtComentario2.getTexto()){
+                resultado = item.getTexto();                
             }
         }
         assertEquals(esperado, resultado);
+    }
+    
+     /**
+     * Test OK dtComentario null 
+     */
+    @Test(expected = RuntimeException.class)
+    public void testAgregarComentario_3args2() {
+        System.out.println("agregarComentario_3args2");        
+        Date fecha = new Date(2019,07,10);
+        DtComentario dtComentario = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "texto1", 1);
+        DtComentario dtComentario2 = null;
+        videoPrueba.agregarComentario(dtComentario, usrSeleccionado);
+        ArrayList<DtComentario> listaCom1 = videoPrueba.listarComentarios();
+        int id = 0;
+        for (DtComentario item : listaCom1) {//Obtiene el id del comentario1 que se agrego (lo busca por el texto)
+            if(item.getTexto() == dtComentario.getTexto()){
+                id = item.getId();
+            }
+        }
+        videoPrueba.agregarComentario(id, dtComentario2, usrSeleccionado);
+    }
+    
+     /**
+     * Test OK dtComentario null 
+     */
+    @Test(expected = RuntimeException.class)
+    public void testAgregarComentario_3args4() {
+        System.out.println("agregarComentario_3args4");        
+        Date fecha = new Date(2019,07,10);
+        DtComentario dtComentario = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "texto1", 1);
+        DtComentario dtComentario2 = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "texto2", 2);
+        Usuario usuario = null;
+        videoPrueba.agregarComentario(dtComentario, usrSeleccionado);
+        ArrayList<DtComentario> listaCom1 = videoPrueba.listarComentarios();
+        int id = 0;
+        for (DtComentario item : listaCom1) {//Obtiene el id del comentario1 que se agrego (lo busca por el texto)
+            if(item.getTexto() == dtComentario.getTexto()){
+                id = item.getId();
+            }
+        }
+        videoPrueba.agregarComentario(id, dtComentario2, usuario);
+    }
+    
+     /**
+     * Test OK dtComentario null
+     */
+    @Test(expected = RuntimeException.class)
+    public void testAgregarComentario4() {
+        System.out.println("agregarComentario4");        
+        DtComentario dtComentario = null;
+        videoPrueba.agregarComentario(dtComentario, usrSeleccionado);
+    }
+    
+     /**
+     * Test OK usuario null
+     */
+    @Test(expected = RuntimeException.class)
+    public void testAgregarComentario5() {
+        System.out.println("agregarComentario5");        
+        Date fecha = new Date(2019,07,10);
+        DtComentario dtComentario = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "un desastre el 1", 1);
+        Usuario usuario = null;
+        videoPrueba.agregarComentario(dtComentario, usuario);
     }
 
     /**
@@ -118,7 +264,6 @@ public class VideoTest {
         videoPrueba.agregarModificarValoracion(val1, usrSeleccionado);
         TipoValoracion resultado = videoPrueba.obtenerValoracion("usrseleccionado").getVal();
         assertEquals(resultado, TipoValoracion.DISLIKE);
-        //System.out.println("++++++++++++++ "+videoPrueba.listarValoraciones().size());
     }
     
     /**
@@ -190,7 +335,7 @@ public class VideoTest {
     public void testListarComentarios() {
         System.out.println("listarComentarios");
         Date fecha1 = new Date(1976,1,31);
-        DtComentario dtComentario = new DtComentario(2, "usrseleccionado", fecha1, "comentario del video", 0); 
+        DtComentario dtComentario = new DtComentario(3, "usrseleccionado", fecha1, "comentario del video", 0); 
         ArrayList<DtComentario> expResult = new ArrayList<>();
         expResult.add(dtComentario);
         videoPrueba.agregarComentario(dtComentario, usrSeleccionado);
@@ -241,19 +386,61 @@ public class VideoTest {
     }
     
     /**
-     * Test OK
+     * Test OK con dtVideo null
      */
     @Test(expected = RuntimeException.class)
     public void testModificar2() {
-        System.out.println("modificar con excepciones");
+        System.out.println("modificar2");
+        DtVideo dtVideo = null;
+        videoPrueba.modificar(dtVideo);
+    }
+    
+    /**
+     * Test OK nombre vacio
+     */
+    @Test(expected = RuntimeException.class)
+    public void testModificar3() {
+        System.out.println("modificar3");
         Date fecha1 = new Date(1976,1,31);
         Time duracion1 = new Time(0, 2, 40);
         DtVideo dtVideo = new DtVideo(1, "", "Video modificado",duracion1, fecha1,"url",Privacidad.PRIVADO,"categoria",0,0);
         videoPrueba.modificar(dtVideo);
-        Video video2 = new Video(1, "MiVideo", "Video modificado",duracion1, fecha1,"url","categoria");
-        String esperado = video2.toString();
-        String resultado = videoPrueba.toString();
-        //assertEquals(esperado, resultado);
+    }
+    
+    /**
+     * Test OK duracion es null
+     */
+    @Test(expected = RuntimeException.class)
+    public void testModificar4() {
+        System.out.println("modificar4");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = null;
+        DtVideo dtVideo = new DtVideo(1, "MiVideo", "Video modificado",duracion1, fecha1,"url",Privacidad.PRIVADO,"categoria",0,0);
+        videoPrueba.modificar(dtVideo);
+    }
+        
+    /**
+     * Test OK categoria es vacía
+     */
+    @Test(expected = RuntimeException.class)
+    public void testModificar5() {
+        System.out.println("modificar5");
+        Date fecha1 = new Date(1976,1,31);
+        Time duracion1 = new Time(00,29,00);
+        DtVideo dtVideo = new DtVideo(1, "MiVideo", "Video modificado",duracion1, fecha1,"url",Privacidad.PRIVADO,"",0,0);
+        videoPrueba.modificar(dtVideo);
+    }
+    
+     /**
+     * Test OK fecha null
+     */
+    @Test(expected = RuntimeException.class)
+    public void testModificar6() {
+        System.out.println("modificar6");
+        Date fecha1 = null;
+        Time duracion1 = new Time(00,29,00);
+        DtVideo dtVideo = new DtVideo(1, "MiVideo", "Video modificado",duracion1, fecha1,"url",Privacidad.PRIVADO,"categoria",0,0);
+        videoPrueba.modificar(dtVideo);
     }
 
     /**
@@ -269,6 +456,18 @@ public class VideoTest {
         String result = videoPrueba.obtenerValoracion(nickname).toString();
         assertEquals(expResult, result);
     }
+    
+    /**
+     * Test ok nickname vacio
+     */
+    @Test(expected = RuntimeException.class)
+    public void testObtenerValoracion2() {
+        System.out.println("obtenerValoracion2");
+        String nickname = "usrseleccionado";
+        DtValoracion val = new DtValoracion(TipoValoracion.LIKE, nickname);
+        videoPrueba.agregarModificarValoracion(val, usrSeleccionado);
+        videoPrueba.obtenerValoracion("");        
+    }
 
     /**
      * Test OK
@@ -283,6 +482,31 @@ public class VideoTest {
         int esperado = 0, resultado = videoPrueba.listarValoraciones().size();
         assertEquals(esperado, resultado);
     }
+    
+        /**
+     * Test OK
+     */
+    @Test
+    public void testQuitarValoracion2() {
+        System.out.println("quitarValoracion2");
+        String nickname = "usrseleccionado";
+        DtValoracion dtValoracion = new DtValoracion(TipoValoracion.DISLIKE, nickname);
+        videoPrueba.agregarModificarValoracion(dtValoracion, usrSeleccionado);       
+        videoPrueba.quitarValoracion(nickname);
+        int esperado = 0, resultado = videoPrueba.listarValoraciones().size();
+        assertEquals(esperado, resultado);
+    }
+    
+    /**
+     * Test OK nickname vacio
+     */
+    @Test(expected = RuntimeException.class)
+    public void testQuitarValoracion3() {
+        System.out.println("quitarValoracion3");
+        DtValoracion dtValoracion = new DtValoracion(TipoValoracion.LIKE, "usrseleccionado");
+        videoPrueba.agregarModificarValoracion(dtValoracion, usrSeleccionado);       
+        videoPrueba.quitarValoracion("");
+    }
 
     /**
      * Test of getNuevoId method, of class Video.
@@ -290,7 +514,7 @@ public class VideoTest {
     @Test
     public void testGetNuevoId() {
         System.out.println("getNuevoId");
-        int expResult = 7;
+        int expResult = 11;
         int result = Video.getNuevoId();
         assertEquals(expResult, result);
     }
