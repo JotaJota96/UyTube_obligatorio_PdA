@@ -309,6 +309,13 @@ public class Canal {
             if (this.privacidad == Privacidad.PRIVADO && ldr.getPrivacidad() == Privacidad.PUBLICO){
                 throw new RuntimeException("No se puede hacer publica una lista de reproduccion de un canal privado");
             }
+            for (Map.Entry<Integer, ListaDeReproduccion> m : this.misListas.entrySet()){
+                if (m.getKey() != ldr.getId()){
+                    if (m.getValue().getNombre().equals(ldr.getNombre())) {
+                        throw new RuntimeException("El canal ya posee una lista con ese nombre");
+                    }
+                }
+            }
             
             this.misListas.get(ldr.getId()).modificar(ldr);
         } else {
@@ -325,6 +332,14 @@ public class Canal {
             
             if (this.privacidad == Privacidad.PRIVADO && video.getPrivacidad() == Privacidad.PUBLICO){
                 throw new RuntimeException("No se puede hacer publico un video de un canal privado");
+            }
+            
+            for (Map.Entry<Integer, Video> m : this.misVideos.entrySet()){
+                if (m.getKey() != video.getId()){
+                    if (m.getValue().getNombre().equals(video.getNombre())) {
+                        throw new RuntimeException("El canal ya posee una lista con ese nombre");
+                    }
+                }
             }
             
             this.misVideos.get(video.getId()).modificar(video);
@@ -408,11 +423,11 @@ public class Canal {
 
     public boolean validarListaParticular(String nombreLista) {
         for (Map.Entry<Integer, ListaDeReproduccion> l : misListas.entrySet()) {
-            if (l.getValue().getTipo() == TipoListaDeReproduccion.PARTICULAR && l.getValue().getNombre().equals(nombreLista)){
-                return true;
+            if (l.getValue().getTipo() == TipoListaDeReproduccion.PARTICULAR && l.getValue().getNombre().equals(nombreLista)) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public DtValoracion obtenerValoracion(int id, String nickname) {

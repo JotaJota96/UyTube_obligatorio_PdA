@@ -584,13 +584,13 @@ public class UsuarioTest {
     @Test
     public void testModificar() {
         System.out.println("modificar");
-        Usuario Usu = new Usuario("nickn", "cor", new Date(2000 - 1900, 1, 1),
+        Usuario Usu = new Usuario("nickname", "correo", new Date(2000 - 1900, 1, 1),
                 "img", "contra", "nom", "ape",
                 new DtCanal(0, "canal", "descripcion", Privacidad.PUBLICO));
         DtUsuario DtUsu = Usu.getDT();
         DtCanal dtc = instance.obtenerCanal();
         instance.modificar(DtUsu, dtc);
-        assertNotEquals(DtUsu.toString(), instance.getDT().toString());
+        assertEquals(DtUsu.toString(), instance.getDT().toString());
     }
     @Test
     public void testModificar_1() {
@@ -993,7 +993,7 @@ public class UsuarioTest {
         DtListaDeReproduccion dt = new DtListaDeReproduccion(0, "nombre particular 1", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "MUSICA");
         instance.agregarListaParticular(dt);
         String nombre = "nombre particular 1";
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = false;
         try {
             result = instance.validarListaParticular(nombre);
@@ -1009,7 +1009,7 @@ public class UsuarioTest {
         DtListaDeReproduccion dt = new DtListaDeReproduccion(0, "nombre particular 2", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "MUSICA");
         
         String nombre = "lista inexistente";
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = true;
         try {
             result = instance.validarListaParticular(nombre);
