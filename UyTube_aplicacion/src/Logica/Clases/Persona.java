@@ -37,7 +37,7 @@ public class Persona {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-
+    
     public boolean validarContrasenia(String pass){
         return this.contrasenia.equals(pass);
     }
