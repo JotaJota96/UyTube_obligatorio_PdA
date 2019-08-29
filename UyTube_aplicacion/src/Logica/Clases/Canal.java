@@ -73,6 +73,9 @@ public class Canal {
             for (Map.Entry<Integer, Video> m : misVideos.entrySet()) {
                 m.getValue().setPrivacidad(Privacidad.PRIVADO);
             }
+            for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
+                m.getValue().setPrivacidad(Privacidad.PRIVADO);
+            }
         }
         this.privacidad = privacidad;
     }
@@ -283,12 +286,7 @@ public class Canal {
         
         // Si el canal es publico y se va a cambiar a privado, se deben cambiar a privado todos los videos del canal
         if (this.privacidad == Privacidad.PUBLICO && canal.getPrivacidad() == Privacidad.PRIVADO){
-            for (Map.Entry<Integer, Video> m : misVideos.entrySet()) {
-                m.getValue().setPrivacidad(Privacidad.PRIVADO);
-            }
-            for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
-                m.getValue().setPrivacidad(Privacidad.PRIVADO);
-            }
+            this.setPrivacidad(canal.getPrivacidad());
         }
         
         this.nombre = canal.getNombre();

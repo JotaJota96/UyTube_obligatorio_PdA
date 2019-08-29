@@ -117,7 +117,45 @@ public class CanalTest {
         instance.setPrivacidad(Privacidad.PUBLICO);
         assertEquals(Privacidad.PUBLICO, c.getPrivacidad());
     }
-    
+   @Test
+    public void testSetPrivacidad2() {
+        System.out.println("setPrivacidad");
+        Canal instance = new Canal(0, "nombre", "descripcion", Privacidad.PRIVADO);
+        instance.setPrivacidad(Privacidad.PUBLICO);
+        int id = Video.getNuevoId();
+        DtVideo dt1 = new DtVideo(id+1, "vid1", "desc", new Time(1, 2, 3), new Date(2010-1900, 5, 25), "url_vid", Privacidad.PUBLICO, "MUSICA", 0, 0);
+        DtVideo dt2 = new DtVideo(id+2, "vid2", "desc", new Time(1, 2, 3), new Date(2010-1900, 5, 25), "url_vid", Privacidad.PRIVADO, "MUSICA", 0, 0);
+        DtVideo dt3 = new DtVideo(id+3, "vid3", "desc", new Time(1, 2, 3), new Date(2010-1900, 5, 25), "url_vid", Privacidad.PUBLICO, "MUSICA", 0, 0);
+        instance.agregarVideo(dt1);
+        instance.agregarVideo(dt2);
+        instance.agregarVideo(dt3);
+        instance.modificarVideo(dt1);
+        instance.modificarVideo(dt2);
+        instance.modificarVideo(dt3);
+        
+        instance.agregarListaParticular(new DtListaDeReproduccion(id, "nombre_l1", Privacidad.PUBLICO, TipoListaDeReproduccion.PARTICULAR, "categoria"));
+        instance.agregarListaParticular(new DtListaDeReproduccion(id, "nombre_l2", Privacidad.PUBLICO, TipoListaDeReproduccion.PARTICULAR, "categoria"));
+        instance.agregarListaParticular(new DtListaDeReproduccion(id, "nombre_l3", Privacidad.PUBLICO, TipoListaDeReproduccion.PARTICULAR, "categoria"));
+        
+        instance.setPrivacidad(Privacidad.PRIVADO);
+        
+        ArrayList<DtVideo> lv = instance.listarVideos();
+        ArrayList<DtListaDeReproduccion> lldr = instance.listarListasDeReproduccion(false);
+        
+        for (int i = 0; i < lv.size(); i++){
+            if (lv.get(i).getPrivacidad() != Privacidad.PRIVADO){
+                assertTrue(false);
+                return;
+            }
+        }
+        for (int i = 0; i < lldr.size(); i++){
+            if (lldr.get(i).getPrivacidad() != Privacidad.PRIVADO){
+                assertTrue(false);
+                return;
+            }
+        }
+        assertTrue(true);
+    }
    
     
     
@@ -191,10 +229,19 @@ public class CanalTest {
         instance.agregarComentarioAVideo(v.getId(), comentario.getDT(), u1);
         int result = instance.listarComentariosDeVideo(v.getId()).size();
         assertEquals(expResult, result);
-        
-        
     }
-
+    
+    
+    @Test(expected = RuntimeException.class)
+    public void testAgregarComentarioAVideo_3args2() {
+        System.out.println("agregarComentarioAVideo");
+        Canal instance = c;
+        
+        Comentario comentario = new Comentario(0, new Date(0, 0, 0), "texto", 0, u1);
+        instance.agregarComentarioAVideo(5879, 1, comentario.getDT(), u1);
+    }
+    
+/*
     @Test
     public void testAgregarComentarioAVideo_4args() {
         System.out.println("agregarComentarioAVideo");
@@ -202,14 +249,18 @@ public class CanalTest {
         int id = Video.getNuevoId()+1;
         Video v = new Video(id, "_nombre", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
         instance.agregarVideo(v.getDt());
+        
         int idC = Comentario.getNuevoID()+1;
         Comentario comentario1 = new Comentario(idC, new Date(0, 0, 0), "texto", 0, u1);
+        
         int expResult = instance.listarComentariosDeVideo(v.getId()).size() + 1;
+        
         Comentario comentario = new Comentario(0, new Date(0, 0, 0), "texto", 0, u1);
         instance.agregarComentarioAVideo(v.getId(),comentario1.getId(), comentario.getDT(), u1);
         int result = instance.listarComentariosDeVideo(v.getId()).size();
         assertEquals(expResult, result);
     }
+    */
 //    @Test
 //    public void testAgregarComentarioAVideo2_4args() {
 //        System.out.println("agregarComentarioAVideo");
@@ -352,6 +403,18 @@ public class CanalTest {
       //****************************************  fail("The test case is a prototype.");
     }
 
+    @Test(expected = RuntimeException.class)
+    public void testAgregarModificarValoracion2() {
+        System.out.println("agregarModificarValoracion");
+        int id = 0;
+        DtValoracion valoracion = null;
+        Usuario usuario = null;
+        Canal instance = c;
+        instance.agregarModificarValoracion(5792, valoracion, usuario);
+        // TODO review the generated test code and remove the default call to fail.
+      //****************************************  fail("The test case is a prototype.");
+    }
+    
     @Test
     public void testAgregarVideo() {        //------------------------------anda
         ArrayList<DtVideo> l = c.listarVideos();
@@ -410,10 +473,9 @@ public class CanalTest {
 
          try{
             c.agregarVideo(new DtVideo(6, "nombre6", "_descripcion", null, new Date(119, 5, 8), "_urlVideoOriginal", Privacidad.PUBLICO, "_categoria", 0, 0));
+        }catch(Exception e){
             ArrayList<DtVideo> l2 = c.listarVideos();
             resultado = l2.size();
-            
-        }catch(Exception e){
             assertEquals(esperado+1, resultado);
         }
     }
@@ -442,7 +504,7 @@ public class CanalTest {
         int resultado=28;
 
        try{
-            c.agregarVideo(new DtVideo(6, "nombre6", "_descripcion", new Time(0, 0, 0), null, "", Privacidad.PUBLICO, "_categoria", 0, 0));
+            c.agregarVideo(new DtVideo(6, "nombre6", "_descripcion", new Time(0, 0, 0), new Date(119, 5, 8), "", Privacidad.PUBLICO, "_categoria", 0, 0));
         }catch(Exception e){
             ArrayList<DtVideo> l2 = c.listarVideos();
             resultado = l2.size();
@@ -458,7 +520,7 @@ public class CanalTest {
         int resultado=28;
 
        try{
-            c.agregarVideo(new DtVideo(6, "nombre6", "_descripcion", new Time(0, 0, 0), null, "_urlVideoOriginal", Privacidad.PUBLICO, "", 0, 0));
+            c.agregarVideo(new DtVideo(6, "nombre6", "_descripcion", new Time(0, 0, 0), new Date(119, 5, 8), "_urlVideoOriginal", Privacidad.PUBLICO, "", 0, 0));
         }catch(Exception e){
             ArrayList<DtVideo> l2 = c.listarVideos();
             resultado = l2.size();
@@ -478,8 +540,8 @@ public class CanalTest {
     @Test
     public void testAgregarVideo_elMismoVideo() {  //------------------- anda
         ArrayList<DtVideo> l = c.listarVideos();
-        
         int esperado = l.size();
+        
         c.agregarVideo(v1.getDt());
         int resultado=28;
         
@@ -487,15 +549,16 @@ public class CanalTest {
         DtVideo dtv2 = v3.getDt();
         c.agregarVideo(dtv2);
         
-        Video v2 = new Video(9, "nombre9", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
-        try{
+        try {
+            Video v2 = new Video(9, "nombre9", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
             c.agregarVideo(v2.getDt());
-            ArrayList<DtVideo> l2 = c.listarVideos();
-            resultado = l2.size();
-            
-        }catch(Exception e){
-            assertEquals(esperado+2, resultado);
+        } catch (Exception e) {
         }
+
+        ArrayList<DtVideo> l2 = c.listarVideos();
+        resultado = l2.size();
+
+        assertEquals(esperado + 2, resultado);
     }
     
     @Test
@@ -566,6 +629,15 @@ public class CanalTest {
         //****************************************fail("The test case is a prototype.");
     }
 
+    @Test(expected = RuntimeException.class)
+    public void testListarComentariosDeVideo2() {
+        System.out.println("listarComentariosDeVideo");
+        Canal instance = c;
+        ArrayList<DtComentario> result = instance.listarComentariosDeVideo(9005);
+        // TODO review the generated test code and remove the default call to fail.
+        //****************************************fail("The test case is a prototype.");
+    }
+
     @Test
     public void testListarListasDeReproduccion() {
         System.out.println("listarListasDeReproduccionPORDEFECTO");
@@ -581,12 +653,12 @@ public class CanalTest {
         System.out.println("listarValoracionesDeVideo");
         Canal instance = c;
         int id = Video.getNuevoId()+1;
-        Video v2 = new Video(id, "_nombre", "_descripcion", new Time(1, 1, 1), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
+        Video v2 = new Video(id, "_nombre_", "_descripcion", new Time(1, 1, 1), new Date(0, 0, 0), "_urlVideoOriginal", "_categoria");
         instance.agregarVideo(v2.getDt());
 
-
         Valoracion val = new Valoracion(TipoValoracion.LIKE, u1);
-        v2.agregarModificarValoracion(val.getDT(), u1);
+        instance.agregarModificarValoracion(id, val.getDT(), u1);
+      
         ArrayList<DtValoracion> expResult = new ArrayList();
         expResult.add(val.getDT());
         ArrayList<DtValoracion> result = instance.listarValoracionesDeVideo(id);
@@ -616,18 +688,13 @@ public class CanalTest {
         
     }
   
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testListarVideosDeListaDeReproduccion() {
         System.out.println("listarVideosDeListaDeReproduccion");
         Canal instance = c;
-        int idLista = ListaDeReproduccion.getNuevoId() +1;
-        instance.agregarListaParticular(ldr.getDt());
-        ldr.agregarVideoA(v1);
-        ArrayList<DtVideo> expResult = new ArrayList();
-        expResult.add(v1.getDt());
-        ArrayList<DtVideo> result = instance.listarVideosDeListaDeReproduccion(idLista);
-        assertEquals(expResult.size(), result.size()); 
+        ArrayList<DtVideo> result = instance.listarVideosDeListaDeReproduccion(456789);
     }
+    
     
     @Test
     public void testModificar() {         //--------------------------------anda
@@ -705,22 +772,17 @@ public class CanalTest {
         }
     }
     
-//    @Test
-//    public void testModificarListaDeReproduccion3() {      
-//        System.out.println("modificarListaDeReproduccion");
-//        Canal instance = c1;
-//        int x = ListaDeReproduccion.getNuevoId();
-//        ListaDeReproduccion l = new ListaDeReproduccion(x+1, "nombre", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "categoria");
-//        c1.agregarListaParticular(l.getDt());
-//        
-//        
-//        try{
-//            instance.modificarListaDeReproduccion(l.getDt());
-//        }catch(Exception e){
-//            assertNull(null);
-//        }
-//    }
-    
+    @Test(expected = RuntimeException.class)
+    public void testModificarListaDeReproduccion3() {
+        System.out.println("modificarListaDeReproduccion");
+        Canal instance = new Canal(0, "dsd", "dfs", Privacidad.PRIVADO);;
+        
+        int id = ListaDeReproduccion.getNuevoId() +1;
+        instance.agregarListaParticular(new DtListaDeReproduccion(id, "nombre", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "categoria"));
+        
+        instance.modificarListaDeReproduccion(new DtListaDeReproduccion(id, "nombre", Privacidad.PUBLICO, TipoListaDeReproduccion.PARTICULAR, "categoria"));
+    }
+
     
 
     @Test
@@ -797,7 +859,7 @@ public class CanalTest {
         DtListaDeReproduccion expResult = l.getDt();
         instance.agregarListaParticular(l.getDt());
         DtListaDeReproduccion result = instance.obtenerListaDeReproduccion(id);
-        assertEquals(expResult, result);
+        assertEquals(expResult.toString(), result.toString());
         // TODO review the generated test code and remove the default call to fail.
       //****************************************  fail("The test case is a prototype.");
     }
@@ -819,7 +881,15 @@ public class CanalTest {
         ListaDeReproduccion l = new ListaDeReproduccion(0, "nombre", Privacidad.PRIVADO, TipoListaDeReproduccion.PARTICULAR, "Arctic Monkeys");
         c.agregarListaParticular(l.getDt());
         ArrayList<DtListaDeReproduccion> ArrayResult = instance.obtenerListasEnCategoria("Arctic Monkeys");
-        assertEquals(ArrayResult.toString().contains("Arctic Monkeys"), false);
+        
+        
+        for (int i = 0; i < ArrayResult.size(); i++){
+            if (ArrayResult.get(i).getCategoria() != "Arctic Monkeys") {
+                assertTrue(false);
+                return;
+            }
+        }
+        assertTrue(true);
         
     }
     
@@ -827,9 +897,9 @@ public class CanalTest {
     public void testObtenerListasEnCategoria1() {
         System.out.println("obtenerVideosEnCategoria");
         Canal instance = c;
-        ArrayList<DtListaDeReproduccion> ArrayResult = instance.obtenerListasEnCategoria("Arctic Monkeys");
+        ArrayList<DtListaDeReproduccion> ArrayResult = instance.obtenerListasEnCategoria("Monos Articos");
         
-        assertNotEquals(ArrayResult.toString().contains("Arctic Monkeys"), false);
+        assertEquals(0, ArrayResult.size());
     }
 
     @Test
@@ -898,18 +968,29 @@ public class CanalTest {
         Video v = new Video(0, "_nombre", "_descripcion", new Time(0, 0, 0), new Date(0, 0, 0), "_urlVideoOriginal", "Deporte");
         c.agregarVideo(v.getDt());
         ArrayList<DtVideo> ArrayResult = instance.obtenerVideosEnCategoria("Deporte");
-        assertEquals(ArrayResult.toString().contains("Deporte"), false);
-        
+
+        for (int i = 0; i < ArrayResult.size(); i++){
+            if (ArrayResult.get(i).getCategoria() != "Deporte") {
+                assertTrue(false);
+                return;
+            }
+        }
+        assertTrue(true);
     }
     
        @Test
     public void testObtenerVideosEnCategoria1() {
         System.out.println("obtenerVideosEnCategoria");
         Canal instance = c;
-        ArrayList<DtVideo> ArrayResult = instance.obtenerVideosEnCategoria("Deporte");
+        ArrayList<DtVideo> ArrayResult = instance.obtenerVideosEnCategoria("_categoria");
         
-        assertNotEquals(ArrayResult.toString().contains("Deporte"), false);
-        
+        for (int i = 0; i < ArrayResult.size(); i++){
+            if (ArrayResult.get(i).getCategoria().equals("Deporte")) {
+                assertTrue(false);
+                return;
+            }
+        }
+        assertTrue(true);
     }
 
     @Test
