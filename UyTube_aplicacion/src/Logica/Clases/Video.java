@@ -111,7 +111,13 @@ public class Video {
             } else {
                 cantDisLikes--;
             }
-
+            
+            // Si te estas preguntando por que esta parte de la cobertura esta en amarillo
+            // te comento que es porque al for siempre se entra al menos una vez, dado que
+            // si se esta en este bloque del if, significa que el usuario ya ha valorado el 
+            // video, pero para no entrar al for, ningun usuario debe haberlo hecho.
+            // Con el if dentro del for sucede lo mismo, tarde o temprano encuentra al 
+            // usuario que quiere modificar su valoracion
             for (Valoracion val : valoraciones) {
                 if (val.modificar(dtValoracion, nickname)) {
                     break;

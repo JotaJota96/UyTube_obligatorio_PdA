@@ -56,10 +56,6 @@ public class Canal {
         return privacidad;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setNombre(String nombre) {
          if (nombre.equals("")) {
             throw new RuntimeException("El nombre del canal no puede ser vacio");
