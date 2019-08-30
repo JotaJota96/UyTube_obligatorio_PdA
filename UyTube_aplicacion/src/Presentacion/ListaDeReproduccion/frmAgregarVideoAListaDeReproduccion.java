@@ -1,19 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion.ListaDeReproduccion;
 
-/**
- *
- * @author Juan
- */
+
 public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
 
-    /**
-     * Creates new form frmAgregarVideoAListaDeReproduccion
-     */
     public frmAgregarVideoAListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -28,22 +17,110 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel21 = new javax.swing.JPanel();
+        jScrollPane40 = new javax.swing.JScrollPane();
+        lstUsuarios = new javax.swing.JList<>();
+        jScrollPane41 = new javax.swing.JScrollPane();
+        lstVideos = new javax.swing.JList<>();
+        jScrollPane42 = new javax.swing.JScrollPane();
+        lstListasRep = new javax.swing.JList<>();
+        jLabel115 = new javax.swing.JLabel();
+        jLabel116 = new javax.swing.JLabel();
+        jLabel117 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane40.setViewportView(lstUsuarios);
+
+        jPanel21.add(jScrollPane40, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 220, 290));
+
+        jScrollPane41.setViewportView(lstVideos);
+
+        jPanel21.add(jScrollPane41, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 210, 290));
+
+        jScrollPane42.setViewportView(lstListasRep);
+
+        jPanel21.add(jScrollPane42, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 240, 290));
+
+        jLabel115.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel115.setText("Usuarios:");
+        jPanel21.add(jLabel115, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+
+        jLabel116.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel116.setText("List. Reproduccion del segundo usuario:");
+        jPanel21.add(jLabel116, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, -1, -1));
+
+        jLabel117.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel117.setText("Videos del primer Usuario:");
+        jLabel117.setToolTipText("");
+        jPanel21.add(jLabel117, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, -1));
+
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel21.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 220, 40));
+
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAceptar.setText("Agregar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        jPanel21.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 350, 240, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 790, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 410, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //listaRep->agregarVideo->cancelar
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        //listaRep->agregarVideo->aceptar
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JLabel jLabel115;
+    private javax.swing.JLabel jLabel116;
+    private javax.swing.JLabel jLabel117;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JScrollPane jScrollPane40;
+    private javax.swing.JScrollPane jScrollPane41;
+    private javax.swing.JScrollPane jScrollPane42;
+    private javax.swing.JList<String> lstListasRep;
+    private javax.swing.JList<String> lstUsuarios;
+    private javax.swing.JList<String> lstVideos;
     // End of variables declaration//GEN-END:variables
 }

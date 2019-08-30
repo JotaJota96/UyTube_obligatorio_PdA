@@ -431,7 +431,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void mitNuevaListaDeReproduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitNuevaListaDeReproduccionActionPerformed
         //lista_rep->nueva_list_rep
-        new frmAltaCategoria(this, true).setVisible(true);
+        new frmAltaListaDeReproduccion(this, true).setVisible(true);
     }//GEN-LAST:event_mitNuevaListaDeReproduccionActionPerformed
 
     private void mitModificarListaDeReproduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitModificarListaDeReproduccionActionPerformed

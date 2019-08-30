@@ -1,19 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion.ListaDeReproduccion;
 
-/**
- *
- * @author Juan
- */
 public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
 
-    /**
-     * Creates new form frmQuitarVideoDeListaDeReproduccion
-     */
     public frmQuitarVideoDeListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -28,22 +16,113 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel22 = new javax.swing.JPanel();
+        jLabel118 = new javax.swing.JLabel();
+        jScrollPane43 = new javax.swing.JScrollPane();
+        lstUsuarios = new javax.swing.JList<>();
+        btnCancelar = new javax.swing.JButton();
+        jLabel119 = new javax.swing.JLabel();
+        jScrollPane44 = new javax.swing.JScrollPane();
+        lstListasRep = new javax.swing.JList<>();
+        jLabel120 = new javax.swing.JLabel();
+        jScrollPane45 = new javax.swing.JScrollPane();
+        lstVideos = new javax.swing.JList<>();
+        btnQuitar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel118.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel118.setText("Usuarios:");
+        jPanel22.add(jLabel118, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        lstUsuarios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jScrollPane43.setViewportView(lstUsuarios);
+
+        jPanel22.add(jScrollPane43, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 210, 300));
+
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel22.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 210, 40));
+
+        jLabel119.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel119.setText("Videos:");
+        jLabel119.setToolTipText("");
+        jPanel22.add(jLabel119, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
+
+        lstListasRep.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jScrollPane44.setViewportView(lstListasRep);
+
+        jPanel22.add(jScrollPane44, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 240, 300));
+
+        jLabel120.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel120.setText("Listas de Reproduccion:");
+        jPanel22.add(jLabel120, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, -1));
+
+        lstVideos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jScrollPane45.setViewportView(lstVideos);
+
+        jPanel22.add(jScrollPane45, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 230, 300));
+
+        btnQuitar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnQuitar.setText("Quitar");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
+        jPanel22.add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, 230, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 790, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 410, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //listaRep->quitarVideo->cancelar
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        //listaRep->quitarVideo->quitar
+    }//GEN-LAST:event_btnQuitarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnQuitar;
+    private javax.swing.JLabel jLabel118;
+    private javax.swing.JLabel jLabel119;
+    private javax.swing.JLabel jLabel120;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JScrollPane jScrollPane43;
+    private javax.swing.JScrollPane jScrollPane44;
+    private javax.swing.JScrollPane jScrollPane45;
+    private javax.swing.JList<String> lstListasRep;
+    private javax.swing.JList<String> lstUsuarios;
+    private javax.swing.JList<String> lstVideos;
     // End of variables declaration//GEN-END:variables
 }

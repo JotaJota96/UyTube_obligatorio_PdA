@@ -1,19 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion.ListaDeReproduccion;
 
-/**
- *
- * @author Juan
- */
 public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
 
-    /**
-     * Creates new form frmConsultaListaDeReproduccion
-     */
     public frmConsultaListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -28,22 +16,139 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel20 = new javax.swing.JPanel();
+        btnAceptar = new javax.swing.JButton();
+        jLabel106 = new javax.swing.JLabel();
+        jLabel107 = new javax.swing.JLabel();
+        jScrollPane37 = new javax.swing.JScrollPane();
+        lstUsuarios = new javax.swing.JList<>();
+        jScrollPane38 = new javax.swing.JScrollPane();
+        lstVideos = new javax.swing.JList<>();
+        jLabel108 = new javax.swing.JLabel();
+        jLabel109 = new javax.swing.JLabel();
+        jLabel110 = new javax.swing.JLabel();
+        jLabel111 = new javax.swing.JLabel();
+        jScrollPane39 = new javax.swing.JScrollPane();
+        lstListasRep = new javax.swing.JList<>();
+        btnConsultarVideo = new javax.swing.JButton();
+        lbTipo = new javax.swing.JLabel();
+        lbNombre = new javax.swing.JLabel();
+        lbPrivacidad = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        jPanel20.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 390, 240, 40));
+
+        jLabel106.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel106.setText("Usuario");
+        jPanel20.add(jLabel106, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jLabel107.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel107.setText("Listas de Reproduccion:");
+        jPanel20.add(jLabel107, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
+
+        jScrollPane37.setViewportView(lstUsuarios);
+
+        jPanel20.add(jScrollPane37, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 240, 320));
+
+        jScrollPane38.setViewportView(lstVideos);
+
+        jPanel20.add(jScrollPane38, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 240, 320));
+
+        jLabel108.setText("Nombre:");
+        jPanel20.add(jLabel108, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
+
+        jLabel109.setText("Privacidad:");
+        jPanel20.add(jLabel109, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
+
+        jLabel110.setText("Tipo:");
+        jPanel20.add(jLabel110, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, -1, -1));
+
+        jLabel111.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel111.setText("Videos:");
+        jPanel20.add(jLabel111, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, -1, -1));
+
+        jScrollPane39.setViewportView(lstListasRep);
+
+        jPanel20.add(jScrollPane39, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 260, 320));
+
+        btnConsultarVideo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnConsultarVideo.setText("Consultar video");
+        btnConsultarVideo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarVideoActionPerformed(evt);
+            }
+        });
+        jPanel20.add(btnConsultarVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 390, 200, 40));
+
+        lbTipo.setText(" ");
+        jPanel20.add(lbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, 150, -1));
+
+        lbNombre.setText(" ");
+        jPanel20.add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 380, 200, -1));
+
+        lbPrivacidad.setText(" ");
+        jPanel20.add(lbPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 150, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 850, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        //listaRep->consultarlitRep->aceptar
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnConsultarVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarVideoActionPerformed
+        //listaRep->consultarlitRep->consultar video
+    }//GEN-LAST:event_btnConsultarVideoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnConsultarVideo;
+    private javax.swing.JLabel jLabel106;
+    private javax.swing.JLabel jLabel107;
+    private javax.swing.JLabel jLabel108;
+    private javax.swing.JLabel jLabel109;
+    private javax.swing.JLabel jLabel110;
+    private javax.swing.JLabel jLabel111;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JScrollPane jScrollPane37;
+    private javax.swing.JScrollPane jScrollPane38;
+    private javax.swing.JScrollPane jScrollPane39;
+    private javax.swing.JLabel lbNombre;
+    private javax.swing.JLabel lbPrivacidad;
+    private javax.swing.JLabel lbTipo;
+    private javax.swing.JList<String> lstListasRep;
+    private javax.swing.JList<String> lstUsuarios;
+    private javax.swing.JList<String> lstVideos;
     // End of variables declaration//GEN-END:variables
 }

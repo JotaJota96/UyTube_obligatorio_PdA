@@ -28,22 +28,121 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel19 = new javax.swing.JPanel();
+        jScrollPane33 = new javax.swing.JScrollPane();
+        lstUsuarios = new javax.swing.JList<>();
+        jLabel103 = new javax.swing.JLabel();
+        jScrollPane34 = new javax.swing.JScrollPane();
+        lstCategorias = new javax.swing.JList<>();
+        jLabel104 = new javax.swing.JLabel();
+        rbPrivada = new javax.swing.JRadioButton();
+        rbPublica = new javax.swing.JRadioButton();
+        btnCancelar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        jLabel105 = new javax.swing.JLabel();
+        jScrollPane35 = new javax.swing.JScrollPane();
+        lstListasRep = new javax.swing.JList<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane33.setViewportView(lstUsuarios);
+
+        jPanel19.add(jScrollPane33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 240, 270));
+
+        jLabel103.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel103.setText("Usuarios:");
+        jPanel19.add(jLabel103, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jScrollPane34.setViewportView(lstCategorias);
+
+        jPanel19.add(jScrollPane34, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 240, 270));
+
+        jLabel104.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel104.setText("Categoria:");
+        jPanel19.add(jLabel104, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, -1));
+
+        rbPrivada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbPrivada.setText("Privada");
+        jPanel19.add(rbPrivada, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, -1, -1));
+
+        rbPublica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbPublica.setText("Publica");
+        jPanel19.add(rbPublica, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, -1, -1));
+
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel19.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 240, 50));
+
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        jPanel19.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, 240, 50));
+
+        jLabel105.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel105.setText("List. Reproduccion:");
+        jPanel19.add(jLabel105, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
+
+        jScrollPane35.setViewportView(lstListasRep);
+
+        jPanel19.add(jScrollPane35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 250, 270));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 810, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 430, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //lista_rep->modificar->cancelar
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        //lista_rep->modificar->acptar
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JLabel jLabel103;
+    private javax.swing.JLabel jLabel104;
+    private javax.swing.JLabel jLabel105;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JScrollPane jScrollPane33;
+    private javax.swing.JScrollPane jScrollPane34;
+    private javax.swing.JScrollPane jScrollPane35;
+    private javax.swing.JList<String> lstCategorias;
+    private javax.swing.JList<String> lstListasRep;
+    private javax.swing.JList<String> lstUsuarios;
+    private javax.swing.JRadioButton rbPrivada;
+    private javax.swing.JRadioButton rbPublica;
     // End of variables declaration//GEN-END:variables
 }
