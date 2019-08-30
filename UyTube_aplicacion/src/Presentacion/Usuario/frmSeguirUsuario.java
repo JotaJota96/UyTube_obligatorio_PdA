@@ -25,6 +25,7 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
         btnDejarDeSeguir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Seguir usuario");
 
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

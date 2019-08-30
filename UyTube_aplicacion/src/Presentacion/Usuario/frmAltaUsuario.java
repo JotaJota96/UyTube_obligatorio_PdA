@@ -57,6 +57,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jLabel50 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alta usuario");
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

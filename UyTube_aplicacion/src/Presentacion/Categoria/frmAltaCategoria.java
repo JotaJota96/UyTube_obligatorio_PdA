@@ -20,6 +20,7 @@ public class frmAltaCategoria extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alta categoria");
 
         jPanel23.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

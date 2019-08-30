@@ -43,6 +43,7 @@ public class frmListarUsuarios extends javax.swing.JDialog {
         btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listar usuarios");
 
         lbListarUasario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

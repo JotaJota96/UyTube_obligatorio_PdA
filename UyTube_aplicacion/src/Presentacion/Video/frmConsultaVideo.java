@@ -45,6 +45,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel99 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consultar video");
 
         jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

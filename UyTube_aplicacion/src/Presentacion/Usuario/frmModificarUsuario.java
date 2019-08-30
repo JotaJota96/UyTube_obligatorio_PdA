@@ -51,6 +51,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         jLabel33 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar usuario");
 
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

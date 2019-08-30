@@ -53,6 +53,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel51 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consulta usuario");
 
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

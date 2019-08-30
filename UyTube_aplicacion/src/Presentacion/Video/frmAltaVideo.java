@@ -47,6 +47,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel140 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alta video");
 
         jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

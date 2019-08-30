@@ -37,6 +37,7 @@ public class frmComentarVideo extends javax.swing.JDialog {
         jLabel49 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Comentar video");
 
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

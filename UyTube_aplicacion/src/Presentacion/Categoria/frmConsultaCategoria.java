@@ -26,6 +26,7 @@ public class frmConsultaCategoria extends javax.swing.JDialog {
         lstVideos = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consultar categoria");
 
         jPanel25.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

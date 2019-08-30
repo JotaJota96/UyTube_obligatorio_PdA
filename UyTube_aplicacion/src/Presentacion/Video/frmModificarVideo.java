@@ -50,6 +50,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
         jLabel149 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar video");
 
         jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

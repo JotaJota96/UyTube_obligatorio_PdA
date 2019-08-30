@@ -20,6 +20,7 @@ public class frmListarCategorias extends javax.swing.JDialog {
         jLabel122 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listar categoria");
 
         jPanel26.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
