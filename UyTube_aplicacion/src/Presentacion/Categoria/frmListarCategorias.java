@@ -6,6 +6,7 @@ public class frmListarCategorias extends javax.swing.JDialog {
     public frmListarCategorias(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

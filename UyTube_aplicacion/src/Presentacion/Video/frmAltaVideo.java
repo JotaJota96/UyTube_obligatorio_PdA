@@ -6,6 +6,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
     public frmAltaVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     

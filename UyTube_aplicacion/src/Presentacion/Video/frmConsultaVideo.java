@@ -6,6 +6,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
     public frmConsultaVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

@@ -6,6 +6,7 @@ public class frmComentarVideo extends javax.swing.JDialog {
     public frmComentarVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

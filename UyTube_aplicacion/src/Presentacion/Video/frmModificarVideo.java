@@ -6,6 +6,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
     public frmModificarVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

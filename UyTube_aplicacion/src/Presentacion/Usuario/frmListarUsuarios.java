@@ -14,6 +14,7 @@ public class frmListarUsuarios extends javax.swing.JDialog {
     public frmListarUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         
         Fabrica f = Fabrica.getInstancia();
         IAdmin Sys = f.getIAdmin();

@@ -6,6 +6,7 @@ public class frmAltaCategoria extends javax.swing.JDialog {
     public frmAltaCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

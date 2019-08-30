@@ -13,6 +13,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     public frmAltaUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
