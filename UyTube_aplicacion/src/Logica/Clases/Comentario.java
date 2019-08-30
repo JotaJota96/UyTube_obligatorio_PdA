@@ -15,11 +15,6 @@ public class Comentario {
     private Usuario usr;
     private ArrayList<Comentario> misComentario;
 
-    public Comentario() {
-        this.id = Comentario.getNuevoID();
-        this.misComentario = new ArrayList();
-    }
-
     public Comentario(int id, Date fecha, String texto, int nivelSubComentario, Usuario usr) {
         if(usr==null){
             throw new RuntimeException("Usuario No puede ser null");
@@ -43,35 +38,14 @@ public class Comentario {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Date getFecha() {
         return fecha;
     }
-
-    public void setFecha(Date fecha) {
-        if(fecha==null){
-            throw new RuntimeException("Fecha No puede ser null");
-        }
-        this.fecha = fecha;
-    }
-
     public String getTexto() {
         return texto;
     }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
-
     public int getNivelSubComentario() {
         return nivelSubComentario;
-    }
-
-    public void setNivelSubComentario(int nivelSubComentario) {
-        this.nivelSubComentario = nivelSubComentario;
     }
 
     public Usuario getUsr() {

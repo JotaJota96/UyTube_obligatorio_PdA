@@ -12,7 +12,7 @@ import java.util.TreeMap;
 public class ListaDeReproduccion {
     private static int contadorListasDeReproduccion = 1;
     private static ArrayList<String> nombresListasPorDefecto = new ArrayList(Arrays.asList("Ver mas tarde"));
-
+    
     private int id;
     private String nombre;
     private Privacidad privacidad;
@@ -29,6 +29,9 @@ public class ListaDeReproduccion {
         }
         if (tipo == TipoListaDeReproduccion.POR_DEFECTO && privacidad != Privacidad.PRIVADO){
             throw new RuntimeException("No se puede crear una lista de reproduccion por defecto publica");
+        }
+        if (tipo == TipoListaDeReproduccion.POR_DEFECTO && !categoria.equals("UNDEFINED")){
+            throw new RuntimeException("No se puede crear una lista de reproduccion por defecto en una categoria");
         }
         this.id = id;
         this.nombre = nombre;
@@ -47,12 +50,12 @@ public class ListaDeReproduccion {
         }
         nombresListasPorDefecto.add(cat);
     }
-
+    
     public static ArrayList<String> listarNombresDeListasPorDefecto() {
         ArrayList<String> ret = new ArrayList(nombresListasPorDefecto);
         return ret;
     }
-
+    
     public int getId() {
         return id;
     }
@@ -81,7 +84,7 @@ public class ListaDeReproduccion {
     public String toString() {
         return "ListaDeReproduccion{" + "id=" + id + ", nombre=" + nombre + ", privacidad=" + privacidad + ", tipo=" + tipo + ", categoria=" + categoria + ", misVideos.size=" + misVideos.size() + '}';
     }
-
+    
     /////////////////////////////////////////////////////////////////////////////////////////
 
     public void agregarVideoA(Video v){
@@ -91,7 +94,7 @@ public class ListaDeReproduccion {
         // agrega el video y su clave a la coleccion
         this.misVideos.put(v.getId(), v);
     }
-
+    
     public DtListaDeReproduccion getDt(){
         // devuelve un DT con los datos de la lista
         return new DtListaDeReproduccion(this.id, this.nombre, this.privacidad, this.tipo, this.categoria);
@@ -100,7 +103,7 @@ public class ListaDeReproduccion {
     public ArrayList<DtVideo> listarVideos(){
         // crea una lista de retorno
         ArrayList<DtVideo> ret = new ArrayList();
-
+        
         // para cada elemento en misVideos
         /**
          * este for no es normal, se declara la variable m que es de tipo
@@ -112,10 +115,10 @@ public class ListaDeReproduccion {
             // hace un getDT y lo agrega a la coleccion de retorno
             ret.add(m.getValue().getDt());
         }
-
+        
         return ret;
     }
-
+    
     public void modificar(DtListaDeReproduccion ldr) {
         if (this.tipo == TipoListaDeReproduccion.POR_DEFECTO){
             throw new RuntimeException("No se puede modificar una lista por defecto");
@@ -132,10 +135,10 @@ public class ListaDeReproduccion {
         this.categoria = ldr.getCategoria();
         // el ID y el tipo de lista no se puede modificar
     }
-
+    
     public void quitarVideo(int idVideo) {
         // remueve de la coleccion el video con la clave idVideo
         this.misVideos.remove(idVideo);
     }
-
+    
 }

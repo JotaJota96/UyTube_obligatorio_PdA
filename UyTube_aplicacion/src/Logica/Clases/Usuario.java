@@ -65,7 +65,7 @@ public class Usuario extends Persona{
     }
 
     public DtUsuario getDT(){
-        return new DtUsuario(this.nickname, super.getContrasena(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
+        return new DtUsuario(this.nickname, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
     }
     
     public void actualizarListasPorDefecto(){
@@ -157,11 +157,13 @@ public class Usuario extends Persona{
         if(Usu == null){
             throw new RuntimeException("El usuario no puede ser null");
         }
-        
-        Video v = Usu.obtenerVideo(idVideo);
-        if (v == null){
+        Video v = null;
+        try {
+            v = Usu.obtenerVideo(idVideo);
+        } catch (Exception e) {
             throw new RuntimeException("El video no pertenece al usuario: " + Usu.getNickname());
         }
+         
         this.MiCanal.agregarVideoALista(idLista, v);
     }
     
@@ -217,7 +219,12 @@ public class Usuario extends Persona{
         if(DtCanal == null){
             throw new RuntimeException("El canal no puede ser null");
         }
-        
+        if (this.nickname != DtUsu.getNickname()){
+            throw new RuntimeException("El nickname no puede ser modificado");
+        }
+        if (this.correo != DtUsu.getCorreo()){
+            throw new RuntimeException("El correo no puede ser modificado");
+        }
         super.setNombre(DtUsu.getNombre());
         super.setApellido(DtUsu.getApellido());
         super.setContrasenia(DtUsu.getContrasenia());
@@ -245,6 +252,12 @@ public class Usuario extends Persona{
     public DtCanal obtenerCanal(){
         return this.MiCanal.getDT();
     }
+    
+    
+    public DtListaDeReproduccion obtenerListaDeReproduccion(int id){
+        return MiCanal.obtenerListaDeReproduccion(id);
+    }
+    
     
     public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat){
         if(cat == ""){

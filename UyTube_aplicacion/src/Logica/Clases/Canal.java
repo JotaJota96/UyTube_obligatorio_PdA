@@ -56,10 +56,6 @@ public class Canal {
         return privacidad;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setNombre(String nombre) {
          if (nombre.equals("")) {
             throw new RuntimeException("El nombre del canal no puede ser vacio");
@@ -75,6 +71,9 @@ public class Canal {
         // Si el canal es publico y se va a cambiar a privado, se deben cambiar a privado todos los videos del canal
         if (privacidad == Privacidad.PRIVADO){
             for (Map.Entry<Integer, Video> m : misVideos.entrySet()) {
+                m.getValue().setPrivacidad(Privacidad.PRIVADO);
+            }
+            for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
                 m.getValue().setPrivacidad(Privacidad.PRIVADO);
             }
         }
@@ -287,12 +286,7 @@ public class Canal {
         
         // Si el canal es publico y se va a cambiar a privado, se deben cambiar a privado todos los videos del canal
         if (this.privacidad == Privacidad.PUBLICO && canal.getPrivacidad() == Privacidad.PRIVADO){
-            for (Map.Entry<Integer, Video> m : misVideos.entrySet()) {
-                m.getValue().setPrivacidad(Privacidad.PRIVADO);
-            }
-            for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
-                m.getValue().setPrivacidad(Privacidad.PRIVADO);
-            }
+            this.setPrivacidad(canal.getPrivacidad());
         }
         
         this.nombre = canal.getNombre();
@@ -308,6 +302,13 @@ public class Canal {
             
             if (this.privacidad == Privacidad.PRIVADO && ldr.getPrivacidad() == Privacidad.PUBLICO){
                 throw new RuntimeException("No se puede hacer publica una lista de reproduccion de un canal privado");
+            }
+            for (Map.Entry<Integer, ListaDeReproduccion> m : this.misListas.entrySet()){
+                if (m.getKey() != ldr.getId()){
+                    if (m.getValue().getNombre().equals(ldr.getNombre())) {
+                        throw new RuntimeException("El canal ya posee una lista con ese nombre");
+                    }
+                }
             }
             
             this.misListas.get(ldr.getId()).modificar(ldr);
@@ -327,12 +328,29 @@ public class Canal {
                 throw new RuntimeException("No se puede hacer publico un video de un canal privado");
             }
             
+            for (Map.Entry<Integer, Video> m : this.misVideos.entrySet()){
+                if (m.getKey() != video.getId()){
+                    if (m.getValue().getNombre().equals(video.getNombre())) {
+                        throw new RuntimeException("El canal ya posee una lista con ese nombre");
+                    }
+                }
+            }
+            
             this.misVideos.get(video.getId()).modificar(video);
         } else {
             throw new RuntimeException("El video no pertenece al canal");
         }
     }
-
+    
+    public DtListaDeReproduccion obtenerListaDeReproduccion(int id){
+        ListaDeReproduccion ldr = misListas.get(id);
+        if (ldr == null){
+            throw new RuntimeException("La lista de reproduccion no pertenece al canal");
+        }else{
+            return ldr.getDt();
+        }
+    }
+    
     public ArrayList<DtListaDeReproduccion> obtenerListasEnCategoria(String cat) {
         ArrayList<DtListaDeReproduccion> ret = new ArrayList();
 
@@ -399,11 +417,11 @@ public class Canal {
 
     public boolean validarListaParticular(String nombreLista) {
         for (Map.Entry<Integer, ListaDeReproduccion> l : misListas.entrySet()) {
-            if (l.getValue().getTipo() == TipoListaDeReproduccion.PARTICULAR && l.getValue().getNombre().equals(nombreLista)){
-                return true;
+            if (l.getValue().getTipo() == TipoListaDeReproduccion.PARTICULAR && l.getValue().getNombre().equals(nombreLista)) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public DtValoracion obtenerValoracion(int id, String nickname) {

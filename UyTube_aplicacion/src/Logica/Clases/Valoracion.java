@@ -6,10 +6,7 @@ import Logica.Enumerados.TipoValoracion;
 public class Valoracion {
     private TipoValoracion val;
     private Usuario usr;
-
-    public Valoracion() {
-    }
-    
+ 
     public Valoracion(TipoValoracion val, Usuario usr) {
         if(usr==null){
             throw new RuntimeException("Usuario No puede ser null");

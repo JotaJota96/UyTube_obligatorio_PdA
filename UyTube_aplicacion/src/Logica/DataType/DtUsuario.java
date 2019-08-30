@@ -9,8 +9,6 @@ public class DtUsuario extends DtPersona{
     private String imagen;
     private int cantSeguidores;
 
-    public DtUsuario() {}
-
     public DtUsuario(String nickname, String contrasenia, String nombre, String apellido, String correo, Date fechaNacimiento, String imagen, int cantSeguidores) {
         // Antes de leer esto, lee el constructor de DtPersona...
         // para setear los atributos de la clase padre, se utiliza super(..) y 
