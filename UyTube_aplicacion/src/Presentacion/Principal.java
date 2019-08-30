@@ -19,6 +19,8 @@ import javax.swing.UIManager;
 public class Principal extends javax.swing.JFrame {
 
     public Principal() {
+        DatosDePrueba.cargarDatos();
+        
         initComponents();
         Inicio_Sesion.setVisible(false);
         Nuevo_Usuario.setVisible(false);

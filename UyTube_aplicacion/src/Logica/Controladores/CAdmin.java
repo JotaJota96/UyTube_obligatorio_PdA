@@ -35,6 +35,8 @@ public class CAdmin implements IAdmin{
         this.idListaSeleccionada = 0;
         this.idVideoSeleccionado = 0;
         
+        this.altaCategoria("UNDEFINED");
+        
         // Administrador por defecto (temporal)
         int id = 0;
         Administrador root = new Administrador(id, "admin", "administrador", "root");
