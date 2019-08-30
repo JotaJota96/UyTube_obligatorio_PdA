@@ -5,6 +5,7 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
     public frmConsultaListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -36,6 +37,7 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
         lbPrivacidad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consultar lista de reproduccion");
 
         jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

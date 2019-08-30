@@ -5,6 +5,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
     public frmAltaListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -35,6 +36,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         rbParticular = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nueva lista de reproduccion");
 
         jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

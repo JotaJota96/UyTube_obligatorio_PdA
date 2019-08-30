@@ -6,6 +6,8 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
     public frmAgregarVideoAListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -31,6 +33,7 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
         btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Agregar video a lista de reproduccion");
 
         jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

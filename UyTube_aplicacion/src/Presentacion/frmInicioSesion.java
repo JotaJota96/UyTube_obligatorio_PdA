@@ -1,21 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Presentacion;
 
-/**
- *
- * @author Juan
- */
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
+
 public class frmInicioSesion extends javax.swing.JDialog {
 
     /** Creates new form frmInicioSesion */
     public frmInicioSesion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        
+        lbImagen.setText(null);
+        Image img = new ImageIcon("Imagenes/ukp.png").getImage();
+        ImageIcon img2 = new ImageIcon(img.getScaledInstance(lbImagen.getWidth(), lbImagen.getHeight(), Image.SCALE_SMOOTH));
+        lbImagen.setIcon(img2);
+        
     }
 
     /** This method is called from within the constructor to
@@ -27,23 +28,88 @@ public class frmInicioSesion extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel4 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        txtNroEmpleado = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
+        btnIniciar = new javax.swing.JButton();
+        lbImagen = new javax.swing.JLabel();
+        txtContrasenia = new javax.swing.JPasswordField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Nro de Empleado");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+
+        txtNroEmpleado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel4.add(txtNroEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 160, 30));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Contraseña");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, -1));
+
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 150, 40));
+
+        btnIniciar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnIniciar.setText("Iniciar");
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 150, 40));
+
+        lbImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbImagen.setText("imagen");
+        jPanel4.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 110, 100));
+
+        txtContrasenia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel4.add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 160, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // insicar secion->cancelar
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        //Sesion->iniciarSecion->iniciar
+    }//GEN-LAST:event_btnIniciarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnIniciar;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lbImagen;
+    private javax.swing.JPasswordField txtContrasenia;
+    private javax.swing.JTextField txtNroEmpleado;
     // End of variables declaration//GEN-END:variables
 
 }

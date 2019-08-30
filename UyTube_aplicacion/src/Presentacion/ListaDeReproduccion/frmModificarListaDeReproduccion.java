@@ -1,22 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion.ListaDeReproduccion;
 
-/**
- *
- * @author Juan
- */
 public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
 
-    /**
-     * Creates new form frmModificarListaDeReproduccion
-     */
     public frmModificarListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -44,6 +33,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         lstListasRep = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar lista de reproduccion");
 
         jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
