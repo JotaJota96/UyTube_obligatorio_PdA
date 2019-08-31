@@ -28,62 +28,40 @@ public class frmAltaUsuario extends javax.swing.JDialog {
 
         GrupoPrivacidad = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
-        btSeleccionar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         txtNikname = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        btSeleccionar = new javax.swing.JButton();
+        txtNombreCanal = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescripcion = new javax.swing.JTextArea();
+        rdPrivado = new javax.swing.JRadioButton();
+        btCargar = new javax.swing.JButton();
+        btCancelar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtDescripcion = new javax.swing.JTextArea();
-        txtNombreCanal = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
-        btCargar = new javax.swing.JButton();
         rdPublico = new javax.swing.JRadioButton();
         jSeparator2 = new javax.swing.JSeparator();
         pnlImagen = new javax.swing.JPanel();
         lbImagen = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        rdPrivado = new javax.swing.JRadioButton();
-        btCancelar = new javax.swing.JButton();
         jLabel42 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta usuario");
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btSeleccionar.setText("Selecionar");
-        btSeleccionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSeleccionarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 130, 70));
-
-        jLabel1.setText("Nickname");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
-
-        jLabel3.setText("Nombre");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
-
-        jLabel6.setText("Apellido");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel8.setText("Usuario");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
         jPanel2.add(txtNikname, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 270, -1));
 
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -100,6 +78,60 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         });
         jPanel2.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 270, -1));
         jPanel2.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 270, -1));
+        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 100, -1));
+
+        btSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btSeleccionar.setText("Selecionar");
+        btSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSeleccionarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 130, 70));
+        jPanel2.add(txtNombreCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 280, -1));
+
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jScrollPane1.setViewportView(txtDescripcion);
+
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, 400, 200));
+
+        GrupoPrivacidad.add(rdPrivado);
+        rdPrivado.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        rdPrivado.setSelected(true);
+        rdPrivado.setText("Privado");
+        jPanel2.add(rdPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 350, -1, -1));
+
+        btCargar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btCargar.setText(" Cargar ");
+        btCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCargarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 460, 360, 60));
+
+        btCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 463, 340, 60));
+
+        jLabel1.setText("Nickname");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+
+        jLabel3.setText("Nombre");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+
+        jLabel6.setText("Apellido");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Usuario");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel9.setText("Seleccione la fecha de nacimiento");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
@@ -114,13 +146,6 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jLabel13.setText("Descripción");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, -1, -1));
 
-        txtDescripcion.setColumns(20);
-        txtDescripcion.setRows(5);
-        jScrollPane1.setViewportView(txtDescripcion);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 410, 200));
-        jPanel2.add(txtNombreCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 290, -1));
-
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, 10, 560));
 
@@ -128,15 +153,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jLabel14.setText("opcional *");
         jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 60, -1, -1));
 
-        btCargar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btCargar.setText(" Cargar ");
-        btCargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCargarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 460, 360, 60));
-
+        GrupoPrivacidad.add(rdPublico);
         rdPublico.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         rdPublico.setText("Publico");
         jPanel2.add(rdPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 350, -1, -1));
@@ -156,26 +173,12 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jLabel10.setText("Imagen");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, 20));
 
-        rdPrivado.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        rdPrivado.setText("Privado");
-        jPanel2.add(rdPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 350, -1, -1));
-
-        btCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btCancelar.setText("Cancelar");
-        btCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCancelarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 463, 340, 60));
-
         jLabel42.setText("Email");
         jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         jLabel50.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel50.setText("opcional *");
         jPanel2.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 70, -1));
-        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
