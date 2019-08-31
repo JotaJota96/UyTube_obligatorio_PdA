@@ -29,9 +29,6 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel78 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtUrl = new javax.swing.JTextField();
-        spAnio = new javax.swing.JSpinner();
-        spMes = new javax.swing.JSpinner();
-        spDia = new javax.swing.JSpinner();
         jScrollPane18 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
         btnAceptar = new javax.swing.JButton();
@@ -42,9 +39,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel135 = new javax.swing.JLabel();
         jLabel136 = new javax.swing.JLabel();
         jLabel137 = new javax.swing.JLabel();
-        jLabel138 = new javax.swing.JLabel();
-        jLabel139 = new javax.swing.JLabel();
-        jLabel140 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta video");
@@ -69,7 +64,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jPanel14.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
 
         jLabel75.setText("Descripción:");
-        jPanel14.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, -1, -1));
+        jPanel14.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, -1, -1));
 
         jLabel76.setText("Fecha publicación:");
         jPanel14.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, -1, -1));
@@ -85,16 +80,13 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel78.setText("Opcional *");
         jPanel14.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, -1, -1));
         jPanel14.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 240, -1));
-        jPanel14.add(txtUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 240, -1));
-        jPanel14.add(spAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, 70, -1));
-        jPanel14.add(spMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 60, -1));
-        jPanel14.add(spDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 390, 60, -1));
+        jPanel14.add(txtUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 320, -1));
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
         jScrollPane18.setViewportView(txtDescripcion);
 
-        jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 240, 160));
+        jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 320, 140));
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -125,15 +117,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
 
         jLabel137.setText("Minutos");
         jPanel14.add(jLabel137, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, -1, -1));
-
-        jLabel138.setText("Año");
-        jPanel14.add(jLabel138, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, -1, -1));
-
-        jLabel139.setText("Mes");
-        jPanel14.add(jLabel139, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, -1, -1));
-
-        jLabel140.setText("Dia");
-        jPanel14.add(jLabel140, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, -1, -1));
+        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,12 +155,10 @@ public class frmAltaVideo extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel135;
     private javax.swing.JLabel jLabel136;
     private javax.swing.JLabel jLabel137;
-    private javax.swing.JLabel jLabel138;
-    private javax.swing.JLabel jLabel139;
-    private javax.swing.JLabel jLabel140;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel73;
@@ -191,10 +173,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane18;
     private javax.swing.JList<String> lstAsignarCategoria;
     private javax.swing.JList<String> lstDueñoVideo;
-    private javax.swing.JSpinner spAnio;
-    private javax.swing.JSpinner spDia;
     private javax.swing.JSpinner spHora;
-    private javax.swing.JSpinner spMes;
     private javax.swing.JSpinner spMinuto;
     private javax.swing.JSpinner spSegundos;
     private javax.swing.JTextArea txtDescripcion;
