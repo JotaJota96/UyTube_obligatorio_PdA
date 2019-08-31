@@ -51,18 +51,23 @@ public class frmAltaVideo extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta video");
-
-        jPanel14.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jPanel14FocusGained(evt);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
             }
         });
+
         jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel71.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel71.setText("Dueño del video:");
         jPanel14.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
+        lstDuenioVideo.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                lstDuenioVideoComponentShown(evt);
+            }
+        });
         jScrollPane16.setViewportView(lstDuenioVideo);
 
         jPanel14.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 290, 390));
@@ -162,15 +167,22 @@ public class frmAltaVideo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        listModelUsuario.clear();//Limpia la listaModeloUsuario
+        lstDuenioVideo.setModel(listModelUsuario); //Borra todos los datos del JList DuenioVideo
+        this.setVisible(false);//Oculata el formulario AltaVideo
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void lstDuenioVideoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_lstDuenioVideoComponentShown
+        //Carga todos los nicknames cuando se mustra el formulario()
         Fabrica fabrica = Fabrica.getInstancia();
         IAdmin sys = fabrica.getIAdmin();
         for (int i = 0; i < sys.listarUsuarios().size(); i++) {
             listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
         }
         lstDuenioVideo.setModel(listModelUsuario);
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_lstDuenioVideoComponentShown
 
-    private void jPanel14FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel14FocusGained
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
         Fabrica fabrica = Fabrica.getInstancia();
         IAdmin sys = fabrica.getIAdmin();
@@ -178,7 +190,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
             listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
         }
         lstDuenioVideo.setModel(listModelUsuario);
-    }//GEN-LAST:event_jPanel14FocusGained
+    }//GEN-LAST:event_formWindowActivated
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

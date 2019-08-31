@@ -9,6 +9,7 @@ import Logica.Interfaces.IAdmin;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.sql.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -20,6 +21,16 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+    private void limpiarCampos(){
+        txtNikname.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtEmail.setText("");
+        txtDescripcion.setText("");
+        txtNombreCanal.setText("");
+        jDateChooser1.setDate(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -60,6 +71,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta usuario");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel2.add(txtNikname, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 270, -1));
@@ -260,7 +276,8 @@ public class frmAltaUsuario extends javax.swing.JDialog {
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
         //usuario->nuevo usuario->cancelar
-      
+        limpiarCampos();
+        this.setVisible(false);
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
@@ -278,6 +295,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtApellidoKeyTyped
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_formWindowClosed
 
     private void cargarImagen(javax.swing.JLabel jLabelx) {
         JFileChooser jf = new JFileChooser();
