@@ -1,11 +1,10 @@
-
-package Logica.InterfacesYControladores;
+package Logica.Interfaces;
 import Logica.DataType.*;
 import java.util.ArrayList;
 
 
 public interface IAdmin {
-    public void agregarVideoAListaDeReproduccion();
+    public void agregarVideoAListaDeReproduccion(int idLista);
     public void altaCategoria(String categoria);
     public void altaComentario(DtComentario dtCom);
     public void altaComentario(DtComentario dtCom, int idComPadre);
@@ -40,7 +39,7 @@ public interface IAdmin {
     public DtCanal obtenerCanalDeUsuario();
     public ArrayList<DtValoracion> obtenerValoracionesDeVideo();
     public DtValoracion obtenerValoracionDada();
-    public void quitarVideoDeListaDeReproduccion();
+    public void quitarVideoDeListaDeReproduccion(int idVideo);
     public DtUsuario seleccionarUsuario(String nickname);
     public DtUsuario seleccionarUsuarioActual(String nickname);
     public DtVideo seleccionarVideo(int idVideo);

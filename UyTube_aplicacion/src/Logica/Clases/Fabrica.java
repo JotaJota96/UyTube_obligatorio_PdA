@@ -1,7 +1,7 @@
 
 package Logica.Clases;
-import Logica.InterfacesYControladores.CAdmin;
-import Logica.InterfacesYControladores.IAdmin;
+import Logica.Controladores.CAdmin;
+import Logica.Interfaces.IAdmin;
 
 /* Clase Singleton */
 public class Fabrica {

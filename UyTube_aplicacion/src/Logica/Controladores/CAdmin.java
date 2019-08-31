@@ -1,27 +1,24 @@
+package Logica.Controladores;
 
-package Logica.InterfacesYControladores;
-
+// Interfaz que se realizara
+import Logica.Interfaces.IAdmin;
+// DataTypes
+import Logica.DataType.*;
+// Clases necesarias
 import Logica.Clases.Administrador;
+import Logica.Clases.Usuario;
 import Logica.Clases.Categoria;
 import Logica.Clases.ListaDeReproduccion;
-import Logica.DataType.DtCanal;
-import Logica.DataType.DtComentario;
-import Logica.DataType.DtListaDeReproduccion;
-import Logica.DataType.DtUsuario;
-import Logica.DataType.DtValoracion;
-import Logica.DataType.DtVideo;
-import java.util.ArrayList;
-import Logica.Clases.Usuario;
-import Logica.Enumerados.Privacidad;
-import Logica.Enumerados.TipoListaDeReproduccion;
+// Colecciones
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.ArrayList;
 
 
 public class CAdmin implements IAdmin{
     private static CAdmin instancia = null;
     private Map<String, Usuario> usuarios;
-    private Map<String, Administrador> administradores;
+    private Map<Integer, Administrador> administradores;
     private Map<String, Categoria> categorias;
     private Usuario usuarioActual;
     private Usuario usuarioSeleccionado;
@@ -37,6 +34,13 @@ public class CAdmin implements IAdmin{
         this.usuarioSeleccionado = null;
         this.idListaSeleccionada = 0;
         this.idVideoSeleccionado = 0;
+        
+        this.altaCategoria("UNDEFINED");
+        
+        // Administrador por defecto (temporal)
+        int id = 0;
+        Administrador root = new Administrador(id, "admin", "administrador", "root");
+        this.administradores.put(id, root);
     }
     
     public static CAdmin getInstancia(){
@@ -46,7 +50,7 @@ public class CAdmin implements IAdmin{
         return instancia;        
     }
     
-    public void agregarVideoAListaDeReproduccion(){
+    public void agregarVideoAListaDeReproduccion(int idLista){
         /**
          * Agrega el video idVideoSeleccionado a la lista idListaSeleccionada
          */
@@ -59,10 +63,10 @@ public class CAdmin implements IAdmin{
         if (idVideoSeleccionado == 0){
             throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
-        if (idListaSeleccionada == 0){
-            throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
+        if (idLista == 0){
+            throw new RuntimeException("El ID de la lista de reproduccion no es valido");
         }
-        usuarioActual.agregarVideoALista(idListaSeleccionada, idVideoSeleccionado, usuarioSeleccionado);
+        usuarioActual.agregarVideoALista(idLista, idVideoSeleccionado, usuarioSeleccionado);
     }
     
     public void altaCategoria(String categoria){
@@ -125,7 +129,10 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
         if (lista == null){
-            throw new RuntimeException("El DataType lista de reproduccion no puede ser null");
+            throw new RuntimeException("El DataType recibido es null");
+        }
+        if ( ! existeCategoria(lista.getCategoria())){
+            throw new RuntimeException("La categoria no existe");
         }
         usuarioSeleccionado.agregarListaParticular(lista);
       
@@ -210,6 +217,9 @@ public class CAdmin implements IAdmin{
         }
         if (video == null){
             throw new RuntimeException("El DataType video no puede ser null");
+        }
+        if ( ! existeCategoria(video.getCategoria())){
+            throw new RuntimeException("La categoria no existe");
         }
         usuarioSeleccionado.agregarVideoACanal(video);
     }
@@ -422,7 +432,12 @@ public class CAdmin implements IAdmin{
         if (idListaSeleccionada == 0){
             throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
         }
-        
+        if (lista == null){
+            throw new RuntimeException("El DataType recibido es null");
+        }
+        if ( ! existeCategoria(lista.getCategoria())){
+            throw new RuntimeException("La categoria no existe");
+        }
         // no confio en que el DataType recibido venga con el id del video correcto,
         // asi que creo otro y con el idVideoSeleccionado por las dudas
         DtListaDeReproduccion dtl = new DtListaDeReproduccion(
@@ -463,7 +478,9 @@ public class CAdmin implements IAdmin{
         if (video == null){
             throw new RuntimeException("El DataType video no puede ser null");
         }
-        
+        if ( ! existeCategoria(video.getCategoria())){
+            throw new RuntimeException("La categoria no existe");
+        }
         // no confio en que el DataType recibido venga con el id del video correcto,
         // asi que creo otro y con el idVideoSeleccionado por las dudas
         DtVideo dtv = new DtVideo(
@@ -521,7 +538,7 @@ public class CAdmin implements IAdmin{
         return usuarioSeleccionado.obtenerValoracion(idVideoSeleccionado, usuarioActual.getNickname());
     }
     
-    public void quitarVideoDeListaDeReproduccion(){
+    public void quitarVideoDeListaDeReproduccion(int idVideo){
         /**
          * Quita el video idVideoSeleccionado de la lista idListaSeleccionada
          */
@@ -531,8 +548,8 @@ public class CAdmin implements IAdmin{
         if (idListaSeleccionada == 0){
             throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
         }
-        if (idVideoSeleccionado == 0){
-            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        if (idVideo == 0){
+            throw new RuntimeException("El ID de video no es valido");
         }
         usuarioSeleccionado.quitarVideoDeListaDeReproduccion(idListaSeleccionada, idVideoSeleccionado);
     }
@@ -608,6 +625,12 @@ public class CAdmin implements IAdmin{
         if (this.usuarioSeleccionado == null){
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
+        ArrayList<String> l = ListaDeReproduccion.listarNombresDeListasPorDefecto();
+        for (int i = 0; i < l.size(); i++){
+            if (l.get(i).equals(nombre)){
+                return false;
+            }
+        }
         return usuarioSeleccionado.validarListaParticular(nombre);
     }
     
@@ -616,8 +639,15 @@ public class CAdmin implements IAdmin{
          * Devuelve false si existe algun usuario en el sistema que posea una
          * lista de reproduccion con ese nombre
          */
+        
+        ArrayList<String> l = ListaDeReproduccion.listarNombresDeListasPorDefecto();
+        for (int i = 0; i < l.size(); i++){
+            if (l.get(i).equals(nombre)){
+                return false;
+            }
+        }
         for (Map.Entry<String, Usuario> u : this.usuarios.entrySet()){
-            if (u.getValue().validarListaParticular(nombre)){
+            if ( ! u.getValue().validarListaParticular(nombre)){
                 return false;
             }
         }

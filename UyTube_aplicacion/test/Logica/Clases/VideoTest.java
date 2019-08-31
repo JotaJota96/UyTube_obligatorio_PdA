@@ -90,7 +90,7 @@ public class VideoTest {
     /**
      * Test constructor con descripcion vacia
      */
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testCostructorVideo3(){
         System.out.println("testCostructorVideo3");
         Date fecha1 = new Date(1976,1,31);
@@ -230,6 +230,24 @@ public class VideoTest {
             }
         }
         videoPrueba.agregarComentario(id, dtComentario2, usuario);
+    }
+    
+    /**
+     * Test OK
+     */
+    @Test
+    public void testAgregarComentario_3args5() {
+        System.out.println("agregarComentario");        
+        Date fecha = new Date(2019,07,10);
+        DtComentario dtComentario = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "texto1", 1);
+        DtComentario dtComentario2 = new DtComentario(Comentario.getNuevoID(), "usrseleccionado", fecha, "texto2", 2);
+        videoPrueba.agregarComentario(dtComentario, usrSeleccionado);
+
+        ArrayList<DtComentario> listaCom1 = videoPrueba.listarComentarios();
+        videoPrueba.agregarComentario(5000, dtComentario2, usrSeleccionado);
+        ArrayList<DtComentario> listaCom2 = videoPrueba.listarComentarios();
+        
+        assertEquals(listaCom1.size(), listaCom2.size());
     }
     
      /**
@@ -483,12 +501,12 @@ public class VideoTest {
         assertEquals(esperado, resultado);
     }
     
-        /**
+    /**
      * Test OK
      */
     @Test
-    public void testQuitarValoracion2() {
-        System.out.println("quitarValoracion2");
+    public void testQuitarValoracion1() {
+        System.out.println("quitarValoracion");
         String nickname = "usrseleccionado";
         DtValoracion dtValoracion = new DtValoracion(TipoValoracion.DISLIKE, nickname);
         videoPrueba.agregarModificarValoracion(dtValoracion, usrSeleccionado);       
@@ -496,7 +514,19 @@ public class VideoTest {
         int esperado = 0, resultado = videoPrueba.listarValoraciones().size();
         assertEquals(esperado, resultado);
     }
-    
+    /**
+     * Test OK
+     */
+    @Test
+    public void testQuitarValoracion2() {
+        System.out.println("quitarValoracion2");
+
+        Video video = new Video(50, "MiVideo", "Video para comentar", new Time(0, 1, 2), new Date(19, 5, 2), "url", "categoria");
+        videoPrueba.quitarValoracion("nickname");
+        int esperado = 0, resultado = videoPrueba.listarValoraciones().size();
+        assertEquals(esperado, resultado);
+    }
+
     /**
      * Test OK nickname vacio
      */
@@ -508,15 +538,26 @@ public class VideoTest {
         videoPrueba.quitarValoracion("");
     }
 
+    @Test
+    public void testQuitarValoracion4() {
+        System.out.println("quitarValoracion");
+        String nickname = "mc_bolso";
+        DtValoracion dtValoracion = new DtValoracion(TipoValoracion.DISLIKE, nickname);
+        videoPrueba.agregarModificarValoracion(dtValoracion, usrSeleccionado);       
+        videoPrueba.quitarValoracion(nickname);
+        int esperado = 1, resultado = videoPrueba.listarValoraciones().size();
+        assertEquals(esperado, resultado);
+    }
+    
     /**
      * Test of getNuevoId method, of class Video.
      */
     @Test
     public void testGetNuevoId() {
         System.out.println("getNuevoId");
-        int expResult = 11;
+        int expResult = Video.getNuevoId();
         int result = Video.getNuevoId();
-        assertEquals(expResult, result);
+        assertEquals(expResult +1, result);
     }
 
     /**

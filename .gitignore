@@ -8,4 +8,4 @@ nbdist/
 .nb-gradle/
 
 UyTube_aplicacion/.jacocoverage/*
-
+UyTube_aplicacion/jacoco.exec*
