@@ -1,22 +1,42 @@
 package Presentacion;
 
+import Logica.Fabrica;
+import Logica.Interfaces.IAdmin;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-
+import javax.swing.JOptionPane;
 
 public class frmInicioSesion extends javax.swing.JDialog {
-
-    /** Creates new form frmInicioSesion */
+    
+    // almacena el resultado el inicio de sesion
+    boolean resultado;
+    IAdmin sys;
+        
     public frmInicioSesion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         
+        txtNroEmpleado.setText("");
+        txtContrasenia.setText("");
+        
+        // Coloca la imagen del login
         lbImagen.setText(null);
         Image img = new ImageIcon("Imagenes/ukp.png").getImage();
         ImageIcon img2 = new ImageIcon(img.getScaledInstance(lbImagen.getWidth(), lbImagen.getHeight(), Image.SCALE_SMOOTH));
         lbImagen.setIcon(img2);
         
+        // pide la instancia de Fabrica
+        
+        Fabrica f = Fabrica.getInstancia();
+        // pide la instancia del sistema
+        sys = f.getIAdmin();
+        
+        // desactiva el boton de Iniciar
+        btnIniciar.setEnabled(false);
+        
+        // inicializa la variable en falso
+        resultado = false;
     }
 
     /** This method is called from within the constructor to
@@ -46,6 +66,14 @@ public class frmInicioSesion extends javax.swing.JDialog {
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
 
         txtNroEmpleado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNroEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNroEmpleadoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNroEmpleadoKeyTyped(evt);
+            }
+        });
         jPanel4.add(txtNroEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 160, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -75,6 +103,11 @@ public class frmInicioSesion extends javax.swing.JDialog {
         jPanel4.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 110, 100));
 
         txtContrasenia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtContrasenia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtContraseniaKeyReleased(evt);
+            }
+        });
         jPanel4.add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 160, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -95,12 +128,54 @@ public class frmInicioSesion extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // insicar secion->cancelar
+        this.resultado = false;
+        dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         //Sesion->iniciarSecion->iniciar
+        int nro = Integer.parseInt(txtNroEmpleado.getText());
+        String contrasenia = txtContrasenia.getText();
+        this.resultado = sys.iniciarSesionAdministrador(nro, contrasenia);
+        
+        if (resultado){
+            dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "El número de empleado o la contraseña son incorrectos", "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
+            txtNroEmpleado.setText("");
+            txtContrasenia.setText("");
+        }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
+    private void txtNroEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroEmpleadoKeyTyped
+         if (!Character.isDigit(evt.getKeyChar())) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNroEmpleadoKeyTyped
+
+    private void txtNroEmpleadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroEmpleadoKeyReleased
+        habilitarBotonIniciar();
+    }//GEN-LAST:event_txtNroEmpleadoKeyReleased
+
+    private void txtContraseniaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseniaKeyReleased
+        habilitarBotonIniciar();
+    }//GEN-LAST:event_txtContraseniaKeyReleased
+
+    private void habilitarBotonIniciar(){
+        // Hacer OR sin short circuit
+        if (txtNroEmpleado.getText().isEmpty() || txtContrasenia.getText().isEmpty()) {
+            btnIniciar.setEnabled(false);
+        } else {
+            btnIniciar.setEnabled(true);
+        }
+    }
+    
+    
+    public boolean seInicioLaSesion(){
+        return resultado;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnIniciar;
