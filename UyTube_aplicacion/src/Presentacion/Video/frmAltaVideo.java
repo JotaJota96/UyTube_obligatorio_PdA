@@ -1,8 +1,16 @@
 
 package Presentacion.Video;
 
-public class frmAltaVideo extends javax.swing.JDialog {
+import Logica.Clases.Fabrica;
+import Logica.DataType.DtUsuario;
+import Logica.Interfaces.IAdmin;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
+public class frmAltaVideo extends javax.swing.JDialog {
+    
+    public DefaultListModel listModelUsuario = new DefaultListModel();
+    
     public frmAltaVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -17,7 +25,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jPanel14 = new javax.swing.JPanel();
         jLabel71 = new javax.swing.JLabel();
         jScrollPane16 = new javax.swing.JScrollPane();
-        lstDueñoVideo = new javax.swing.JList<>();
+        lstDuenioVideo = new javax.swing.JList<>();
         jLabel72 = new javax.swing.JLabel();
         jLabel73 = new javax.swing.JLabel();
         jLabel74 = new javax.swing.JLabel();
@@ -44,13 +52,18 @@ public class frmAltaVideo extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta video");
 
+        jPanel14.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPanel14FocusGained(evt);
+            }
+        });
         jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel71.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel71.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel71.setText("Dueño del video:");
         jPanel14.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
-        jScrollPane16.setViewportView(lstDueñoVideo);
+        jScrollPane16.setViewportView(lstDuenioVideo);
 
         jPanel14.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 290, 390));
 
@@ -69,7 +82,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel76.setText("Fecha publicación:");
         jPanel14.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, -1, -1));
 
-        jLabel77.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel77.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel77.setText("Asignar categoría:");
         jPanel14.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, -1, -1));
 
@@ -77,16 +90,17 @@ public class frmAltaVideo extends javax.swing.JDialog {
 
         jPanel14.add(jScrollPane17, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 50, 260, 390));
 
-        jLabel78.setText("Opcional *");
-        jPanel14.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, -1, -1));
-        jPanel14.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 240, -1));
-        jPanel14.add(txtUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 320, -1));
+        jLabel78.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel78.setText("(Opcional)");
+        jPanel14.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, -1, -1));
+        jPanel14.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 260, -1));
+        jPanel14.add(txtUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 330, -1));
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
         jScrollPane18.setViewportView(txtDescripcion);
 
-        jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 320, 140));
+        jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 330, 140));
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -117,7 +131,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
 
         jLabel137.setText("Minutos");
         jPanel14.add(jLabel137, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, -1, -1));
-        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, -1, -1));
+        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,9 +162,24 @@ public class frmAltaVideo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       
+        Fabrica fabrica = Fabrica.getInstancia();
+        IAdmin sys = fabrica.getIAdmin();
+        for (int i = 0; i < sys.listarUsuarios().size(); i++) {
+            listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
+        }
+        lstDuenioVideo.setModel(listModelUsuario);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void jPanel14FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel14FocusGained
+        // TODO add your handling code here:
+        Fabrica fabrica = Fabrica.getInstancia();
+        IAdmin sys = fabrica.getIAdmin();
+        for (int i = 0; i < sys.listarUsuarios().size(); i++) {
+            listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
+        }
+        lstDuenioVideo.setModel(listModelUsuario);
+    }//GEN-LAST:event_jPanel14FocusGained
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -172,7 +201,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane17;
     private javax.swing.JScrollPane jScrollPane18;
     private javax.swing.JList<String> lstAsignarCategoria;
-    private javax.swing.JList<String> lstDueñoVideo;
+    private javax.swing.JList<String> lstDuenioVideo;
     private javax.swing.JSpinner spHora;
     private javax.swing.JSpinner spMinuto;
     private javax.swing.JSpinner spSegundos;
