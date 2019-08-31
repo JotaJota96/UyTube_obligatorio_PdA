@@ -1,5 +1,12 @@
 package Presentacion.Usuario;
 
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 public class frmModificarUsuario extends javax.swing.JDialog {
 
    
@@ -217,7 +224,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
-      
+        cargarImagen(lbImagen);
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnListaReprodiccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaReprodiccionActionPerformed
@@ -236,6 +243,37 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbPrivadoActionPerformed
 
+    
+    private void cargarImagen(javax.swing.JLabel jLabelx) {
+        JFileChooser jf = new JFileChooser();
+        jf.showOpenDialog(this);
+        File archivo = jf.getSelectedFile();
+
+        if (archivo != null) {
+            FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
+            jf.setFileFilter(filtroImagen);
+            //jLabel4.setText(archivo.getAbsolutePath());
+            Image img = new ImageIcon(archivo.getAbsolutePath()).getImage();
+            float i = 0f;
+            if (img.getHeight(null) > img.getWidth(null)) {
+                i = img.getHeight(null) / img.getWidth(null);
+            } else {
+                i = img.getWidth(null) / img.getHeight(null);
+            }
+            if (i < 1.4 && i >= 1) {
+                ImageIcon img2 = new ImageIcon(img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH));
+                jLabelx.setIcon(img2);
+                /*
+                ImageIcon img3 = new ImageIcon(img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH));
+                jLabelx.setIcon(img3);//cuidado!!
+                jLabelx.setVisible(false);//cuidado!!*/
+            } else {
+                JOptionPane.showMessageDialog(null, "Imagen fuera de dimenciones " + img.getWidth(null) + " x " + img.getHeight(null));
+            }
+        }
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnListaReprodiccion;

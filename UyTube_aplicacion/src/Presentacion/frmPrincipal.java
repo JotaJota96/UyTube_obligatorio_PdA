@@ -1,10 +1,11 @@
 package Presentacion;
 
+import Logica.Fabrica;
+import Logica.Interfaces.IAdmin;
 import Presentacion.Categoria.*;
 import Presentacion.ListaDeReproduccion.*;
 import Presentacion.Usuario.*;
 import Presentacion.Video.*;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
@@ -14,41 +15,17 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     public frmPrincipal() {
         initComponents();
+        
+        pnlFondo.setSize(this.getSize());
+        
         this.setLocationRelativeTo(null);
-        
-         this.setSize(new Dimension(100, 100));
-        
-        //Línea 2
-        this.setMinimumSize(new Dimension(50, 50));
-        
-        DatosDePrueba.cargarDatos();
-        /*
-        menuUsuario.setEnabled(false);
-        menuVideo.setEnabled(false);
-        menuListaDeReproduccion.setEnabled(false);
-        menuCategoria.setEnabled(false);
-        */
-        
-        /*
-        // Este codigo no lo borro porque es algo de las imagenes y se puede reciclar
-        
-        jLabel38.setText(null);
-        Image img7 = new ImageIcon("Imagenes/about.png").getImage();
-        ImageIcon img8 = new ImageIcon(img7.getScaledInstance(jLabel38.getWidth(), jLabel38.getHeight(), Image.SCALE_SMOOTH));
-        jLabel38.setIcon(img8);
-
-        jLabel2.setText(null);
-        Image img = new ImageIcon("Imagenes/ukp.png").getImage();
-        ImageIcon img2 = new ImageIcon(img.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH));
-        jLabel2.setIcon(img2);
-
-        */
         
         this.lbFondo.setText(null);
         Image img3 = new ImageIcon("Imagenes/des.jpeg").getImage();
         ImageIcon img4 = new ImageIcon(img3.getScaledInstance(lbFondo.getWidth(), lbFondo.getHeight(), Image.SCALE_SMOOTH));
         lbFondo.setIcon(img4);
-
+        
+        DatosDePrueba.cargarDatos();
     }
 
     public Image getTconImage() {
@@ -71,7 +48,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         privacidad_NuevaLR = new javax.swing.ButtonGroup();
         privacidad_modListaR = new javax.swing.ButtonGroup();
         tipo_nLR = new javax.swing.ButtonGroup();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        pnlFondo = new javax.swing.JDesktopPane();
         lbFondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuSesion = new javax.swing.JMenu();
@@ -117,18 +94,20 @@ public class frmPrincipal extends javax.swing.JFrame {
         setTitle("UyTube");
         setIconImage(getTconImage());
         setLocationByPlatform(true);
-        setResizable(false);
+        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                formPropertyChange(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jDesktopPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbFondo.setText("Aqui va la imagen de fondo");
-        lbFondo.setMaximumSize(new java.awt.Dimension(1080, 720));
-        lbFondo.setMinimumSize(new java.awt.Dimension(600, 800));
-        jDesktopPane1.add(lbFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 580));
+        pnlFondo.add(lbFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1240, 710));
 
-        getContentPane().add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 580));
+        getContentPane().add(pnlFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1240, 720));
 
         jMenuBar1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
@@ -440,7 +419,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void mitNuevaListaDeReproduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitNuevaListaDeReproduccionActionPerformed
         //lista_rep->nueva_list_rep
-        new frmAltaCategoria(this, true).setVisible(true);
+        new frmAltaListaDeReproduccion(this, true).setVisible(true);
     }//GEN-LAST:event_mitNuevaListaDeReproduccionActionPerformed
 
     private void mitModificarListaDeReproduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitModificarListaDeReproduccionActionPerformed
@@ -478,6 +457,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         new frmConsultaCategoria(this, true).setVisible(true);
     }//GEN-LAST:event_mitConsultarCategoriaActionPerformed
 
+    private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formPropertyChange
+
     /**
      * @param args the command line arguments
      */
@@ -487,7 +470,6 @@ public class frmPrincipal extends javax.swing.JFrame {
                 if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
                 }
             }
         } catch (ClassNotFoundException ex) {
@@ -525,7 +507,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JList<String> jList27;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem14;
@@ -559,6 +540,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mitQuitarVideoDeListaDeReproduccion;
     private javax.swing.JMenuItem mitSeguirUsuario;
     private javax.swing.JMenuItem mitValorarVideo;
+    private javax.swing.JDesktopPane pnlFondo;
     public static javax.swing.ButtonGroup privacidad_NuevaLR;
     public static javax.swing.ButtonGroup privacidad_modListaR;
     public static javax.swing.ButtonGroup privacidad_modUsuario;
