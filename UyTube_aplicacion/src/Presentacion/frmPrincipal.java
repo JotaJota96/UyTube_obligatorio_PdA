@@ -1,5 +1,7 @@
 package Presentacion;
 
+import Logica.Fabrica;
+import Logica.Interfaces.IAdmin;
 import Presentacion.Categoria.*;
 import Presentacion.ListaDeReproduccion.*;
 import Presentacion.Usuario.*;
@@ -16,14 +18,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         
         pnlFondo.setSize(this.getSize());
         
-        
         this.setLocationRelativeTo(null);
         
         this.lbFondo.setText(null);
         Image img3 = new ImageIcon("Imagenes/des.jpeg").getImage();
         ImageIcon img4 = new ImageIcon(img3.getScaledInstance(lbFondo.getWidth(), lbFondo.getHeight(), Image.SCALE_SMOOTH));
         lbFondo.setIcon(img4);
-
+        
+        DatosDePrueba.cargarDatos();
     }
 
     public Image getTconImage() {
