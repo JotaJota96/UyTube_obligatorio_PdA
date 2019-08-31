@@ -18,12 +18,12 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        GrupoPrivacidad = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         btSeleccionar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtNikname = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
@@ -44,15 +44,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         pnlImagen = new javax.swing.JPanel();
         lbImagen = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        spAnio = new javax.swing.JSpinner();
-        spMes = new javax.swing.JSpinner();
-        spDia = new javax.swing.JSpinner();
         rdPrivado = new javax.swing.JRadioButton();
         btCancelar = new javax.swing.JButton();
         jLabel42 = new javax.swing.JLabel();
-        jLabel43 = new javax.swing.JLabel();
-        jLabel44 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta usuario");
@@ -77,18 +73,27 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jLabel6.setText("Apellido");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
-        jLabel7.setText("Dia");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, -1, -1));
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Usuario");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
         jPanel2.add(txtNikname, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 270, -1));
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 270, -1));
+
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 270, -1));
         jPanel2.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 270, -1));
 
-        jLabel9.setText("Fecha de nacimiento");
+        jLabel9.setText("Seleccione su fecha de nacimiento");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -126,7 +131,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
 
         rdPublico.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         rdPublico.setText("Publico");
-        jPanel2.add(rdPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, -1, -1));
+        jPanel2.add(rdPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 350, -1, -1));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 980, 10));
 
         pnlImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -142,13 +147,10 @@ public class frmAltaUsuario extends javax.swing.JDialog {
 
         jLabel10.setText("Imagen");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, 20));
-        jPanel2.add(spAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 70, -1));
-        jPanel2.add(spMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 50, -1));
-        jPanel2.add(spDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 50, -1));
 
         rdPrivado.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         rdPrivado.setText("Privado");
-        jPanel2.add(rdPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 350, -1, -1));
+        jPanel2.add(rdPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 350, -1, -1));
 
         btCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btCancelar.setText("Cancelar");
@@ -162,15 +164,10 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jLabel42.setText("Email");
         jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
-        jLabel43.setText("Año");
-        jPanel2.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, -1, -1));
-
-        jLabel44.setText("Mes");
-        jPanel2.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, -1, -1));
-
         jLabel50.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel50.setText("opcional *");
         jPanel2.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 70, -1));
+        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,6 +212,22 @@ public class frmAltaUsuario extends javax.swing.JDialog {
       
     }//GEN-LAST:event_btCancelarActionPerformed
 
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        //Chequea que solo se puedan escribir Letras
+        if ( ! Character.isLetter(evt.getKeyChar())) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+        //Chequea que solo se puedan escribir Letras
+        if ( ! Character.isLetter(evt.getKeyChar())) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtApellidoKeyTyped
+
     private void cargarImagen(javax.swing.JLabel jLabelx) {
         JFileChooser jf = new JFileChooser();
         jf.showOpenDialog(this);
@@ -248,9 +261,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup GrupoPrivacidad;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btCargar;
     private javax.swing.JButton btSeleccionar;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -259,11 +274,8 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
@@ -274,9 +286,6 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     private javax.swing.JPanel pnlImagen;
     private javax.swing.JRadioButton rdPrivado;
     private javax.swing.JRadioButton rdPublico;
-    private javax.swing.JSpinner spAnio;
-    private javax.swing.JSpinner spDia;
-    private javax.swing.JSpinner spMes;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtEmail;
