@@ -23,12 +23,20 @@ public class DatosDePrueba {
         sys = f.getIAdmin();
         // ahora se puede interactuar con el sistema invocando sus funciones mediante sys
         
+        cargarCategorias();
         cargarUsuariosYCanales();
+        cargarSeguidores();
         cargarVideosAUsuarios();
         cargarListasDeReproduccionAUsuarios();
         agregarVideosAListasDeReproduccion();
         agregarComentarios();
         mostrarDatos();
+    }
+    
+    private static void cargarCategorias(){
+        sys.altaCategoria("MUSICA");
+        sys.altaCategoria("DEPORTE");
+        sys.altaCategoria("GAMING");
     }
     
     private static void cargarUsuariosYCanales(){
@@ -64,6 +72,36 @@ public class DatosDePrueba {
         );
     }
     
+    private static void cargarSeguidores(){
+        sys.seleccionarUsuario("JotaJota96");
+        sys.seleccionarUsuarioActual("LuC31G");
+        sys.seguirUsuario();
+        sys.seleccionarUsuarioActual("camilillo15");
+        sys.seguirUsuario();
+        sys.seleccionarUsuarioActual("MCBolso");
+        sys.seguirUsuario();
+        
+        sys.seleccionarUsuario("LuC31G");
+        sys.seleccionarUsuarioActual("JotaJota96");
+        sys.seguirUsuario();
+        sys.seleccionarUsuarioActual("jarrieta31");
+        sys.seguirUsuario();
+        
+        
+        sys.seleccionarUsuario("jarrieta31");
+        sys.seleccionarUsuarioActual("LuC31G");
+        sys.seguirUsuario();
+        sys.seleccionarUsuarioActual("JotaJota96");
+        sys.seguirUsuario();
+        sys.seleccionarUsuarioActual("MCBolso");
+        sys.seguirUsuario();
+        sys.seleccionarUsuarioActual("camilillo15");
+        sys.seguirUsuario();
+        
+        sys.liberarMemoriaUsuario();
+        sys.liberarMemoriaUsuarioActual();
+    }
+    
     private static void cargarVideosAUsuarios(){
         /* Plantilla de creacion de Alta Video:
         sys.seleccionarUsuario("tu nickname");
@@ -75,16 +113,16 @@ public class DatosDePrueba {
         
         sys.seleccionarUsuario("JotaJota96");
         sys.altaVideo(
-                new DtVideo(0, "Naufrago - 4 Pesos de Propina (Cover en guitarra)", "Cover de Naufrago - 4 Pesos de Propina ", new Time(18, 30, 3), new Date(119, 1, 2), "https://www.youtube.com/watch?v=ksuDZQuJLSY", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "Naufrago - 4 Pesos de Propina (Cover en guitarra)", "Cover de Naufrago - 4 Pesos de Propina ", new Time(18, 30, 3), new Date(119, 1, 2), "https://www.youtube.com/watch?v=ksuDZQuJLSY", Privacidad.PRIVADO, "MUSICA", 0, 0)
         );
         sys.altaVideo(
-                new DtVideo(0, "Como pasa el tiempo - Cuarteto de nos (Cover en guitarra)", "Cover de Como pasa el tiempo - Cuarteto de nos ", new Time(15, 0, 0), new Date(119, 4, 15), "https://www.youtube.com/watch?v=n1AR_VSHPek", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "Como pasa el tiempo - Cuarteto de nos (Cover en guitarra)", "Cover de Como pasa el tiempo - Cuarteto de nos ", new Time(15, 0, 0), new Date(119, 4, 15), "https://www.youtube.com/watch?v=n1AR_VSHPek", Privacidad.PRIVADO, "MUSICA", 0, 0)
         );
         sys.altaVideo(
-                new DtVideo(0, "La casa de al lado Christian Cary (Cover en guitarra)", "Cover de La casa de al lado Christian Cary", new Time(21, 15, 0), new Date(119, 6, 21), "https://www.youtube.com/watch?v=An0uvGCUB9k", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "La casa de al lado Christian Cary (Cover en guitarra)", "Cover de La casa de al lado Christian Cary", new Time(21, 15, 0), new Date(119, 6, 21), "https://www.youtube.com/watch?v=An0uvGCUB9k", Privacidad.PRIVADO, "MUSICA", 0, 0)
         );
         sys.altaVideo(
-                new DtVideo(0, "Verde - La Triple Nelson (Cover en guitarra)", "Cover de Verde - La Triple Nelson", new Time(11, 38, 0), new Date(119, 8, 29), "https://www.youtube.com/watch?v=ojYnrNRXOjk", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "Verde - La Triple Nelson (Cover en guitarra)", "Cover de Verde - La Triple Nelson", new Time(11, 38, 0), new Date(119, 8, 29), "https://www.youtube.com/watch?v=ojYnrNRXOjk", Privacidad.PRIVADO, "MUSICA", 0, 0)
         );
         sys.liberarMemoriaUsuario();
         
@@ -101,23 +139,23 @@ public class DatosDePrueba {
                 new DtVideo(0, "NO CREERÁS LO QUE LLEVO EN MI BOLSO", "Camila Guiribitey", new Time(18, 30, 3), new Date(119, 1, 2), "https://www.youtube.com/watch?v=7wCUuplgmQM", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
         );
         sys.altaVideo(
-                new DtVideo(0, "C.N. de F. Tema Nuevo 2019", "Por la del Bolso hay que matar o morir - La Banda Del Parque", new Time(15, 0, 0), new Date(119, 4, 15), "https://www.youtube.com/watch?v=9L5qQ9iyhJk", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "C.N. de F. Tema Nuevo 2019", "Por la del Bolso hay que matar o morir - La Banda Del Parque", new Time(15, 0, 0), new Date(119, 4, 15), "https://www.youtube.com/watch?v=9L5qQ9iyhJk", Privacidad.PRIVADO, "DEPORTE", 0, 0)
         );
         sys.altaVideo(
-                new DtVideo(0, "No se como voy, no se como vengo", "Canta el bolso en la previa vs San Lorenzo", new Time(21, 15, 0), new Date(119, 6, 21), "https://www.youtube.com/watch?v=S0_FBF8XaO0", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "No se como voy, no se como vengo", "Canta el bolso en la previa vs San Lorenzo", new Time(21, 15, 0), new Date(119, 6, 21), "https://www.youtube.com/watch?v=S0_FBF8XaO0", Privacidad.PRIVADO, "DEPORTE", 0, 0)
         );
         sys.altaVideo(
-                new DtVideo(0, "Las mejores canciones de La Banda", "de La Banda del Parque (CON LETRA) | Hinchada de Nacional 2019", new Time(11, 38, 0), new Date(119, 8, 29), "https://www.youtube.com/watch?v=ob0TPs5-Y5Y", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "Las mejores canciones de La Banda", "de La Banda del Parque (CON LETRA) | Hinchada de Nacional 2019", new Time(11, 38, 0), new Date(119, 8, 29), "https://www.youtube.com/watch?v=ob0TPs5-Y5Y", Privacidad.PRIVADO, "MUSICA", 0, 0)
         );
         sys.liberarMemoriaUsuario();
         
         
         sys.seleccionarUsuario("camilillo15");
         sys.altaVideo(
-                new DtVideo(1, "505 - Arctic Monkeys", "Album Favourite Worst Nightmare", new Time(18, 30, 3), new Date(119, 1, 2), "https://www.youtube.com/watch?v=iV5VKdcQOJE", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(1, "505 - Arctic Monkeys", "Album Favourite Worst Nightmare", new Time(18, 30, 3), new Date(119, 1, 2), "https://www.youtube.com/watch?v=iV5VKdcQOJE", Privacidad.PRIVADO, "MUSICA", 0, 0)
         );
         sys.altaVideo(
-                new DtVideo(0, "Wonderwall - Oasis", "Ni idea como se llama el album", new Time(15, 0, 0), new Date(119, 4, 15), "https://www.youtube.com/watch?v=bx1Bh8ZvH84", Privacidad.PRIVADO, "UNDEFINED", 0, 0)
+                new DtVideo(0, "Wonderwall - Oasis", "Ni idea como se llama el album", new Time(15, 0, 0), new Date(119, 4, 15), "https://www.youtube.com/watch?v=bx1Bh8ZvH84", Privacidad.PRIVADO, "MUSICA", 0, 0)
         );
         sys.liberarMemoriaUsuario();
         
@@ -126,7 +164,6 @@ public class DatosDePrueba {
         sys.altaVideo(
                 new DtVideo(1, "Tutorial android 1", "Curso de android, tarea 4", new Time(00, 04, 2), new Date(119, 9, 30), "https://www.youtube.com/watch?v=xCq7YXGXaLc&list=PL-6ex1wzFuEh9RUN-5nCOU13eYknEXl09", Privacidad.PUBLICO, "UNDEFINED", 0, 0)
         );
-        sys.seleccionarUsuario("jarrieta31");
         sys.altaVideo(
                 new DtVideo(1, "Tutorial android 2", "Curso de android, tarea 5", new Time(00, 1, 17), new Date(119, 9, 30), "https://www.youtube.com/watch?v=i4W5LFeIdNU", Privacidad.PUBLICO, "UNDEFINED", 0, 0)
         );
