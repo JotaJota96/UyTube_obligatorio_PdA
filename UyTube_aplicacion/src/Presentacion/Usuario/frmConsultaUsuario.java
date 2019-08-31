@@ -21,11 +21,15 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         
-        // obtiene la instancia de sistema
-        sys = Fabrica.getInstancia().getIAdmin();
-        
-        // lista usuarios en el JList
-        listarUsuarios();
+        try {
+            // obtiene la instancia de sistema
+            sys = Fabrica.getInstancia().getIAdmin();
+
+            // lista usuarios en el JList
+            listarUsuarios(sys.listarUsuarios());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -261,8 +265,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
     
     ///////////////////////////////////////////////////////////////////////////////////////////
-    private void listarUsuarios(){
-        ArrayList<DtUsuario> ListaUsuarios = sys.listarUsuarios();
+    private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
         DefaultListModel modelo = new DefaultListModel();
         for (DtUsuario it : ListaUsuarios) {
             modelo.addElement(it.getNickname());
