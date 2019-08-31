@@ -1,7 +1,15 @@
 package Presentacion.Usuario;
 
+import Logica.Clases.Canal;
+import Logica.DataType.DtCanal;
+import Logica.DataType.DtUsuario;
+import Logica.Enumerados.Privacidad;
+import Logica.Fabrica;
+import Logica.Interfaces.IAdmin;
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -93,7 +101,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jPanel2.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 270, -1));
         jPanel2.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 270, -1));
 
-        jLabel9.setText("Seleccione su fecha de nacimiento");
+        jLabel9.setText("Seleccione la fecha de nacimiento");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -199,7 +207,47 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btSeleccionarActionPerformed
 
     private void btCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCargarActionPerformed
+        String nombre = txtNombre.getText();
+        String nickname = txtNikname.getText();
+        String apellido = txtApellido.getText();
+        String email = txtEmail.getText();
+        String descripcion = txtDescripcion.getText();
+        String nombreCanal = txtNombreCanal.getText();
+        Privacidad privacidad = Privacidad.PRIVADO; //Privacidad Privado por default 
+        String imagen= "";
+        //Verifica la opcion seleccionada por los radioButton (Privado o Publico)
+        if(rdPublico.isSelected()){
+            privacidad = Privacidad.PUBLICO;
+        }
+        java.sql.Date fecha = null;
+        //Verifica que la fecha no sea nula
+        if( jDateChooser1.getDate() != null){
+            java.util.Date utilDate = jDateChooser1.getDate();//Obtiene la fecha del JDateChooser en formato Date        
+            fecha = new java.sql.Date(utilDate.getTime());//Lo combierte al tipo Date sql
+        }        
+                
+        if( nombre.isEmpty() || nombre.equals("")){
+            txtNombre.setText("");
+            //lblErrorNickname.setVisible(true);
+        }
+        //Icon icono = new ImageIcon(getClass().getResource("/Imagenes/icono.jpg"));
        
+        
+        Fabrica fabrica = Fabrica.getInstancia();//crea la fibrica si no esta creada
+        IAdmin sys = fabrica.getIAdmin(); //Soliciata un controlador a la fabrica
+        try {
+            if(!sys.existeNickname(nickname) && !sys.existeEmail(email)){
+                DtUsuario dtUsuario = new DtUsuario(nickname, nickname, nombre, apellido, email, fecha, imagen, 0);
+                DtCanal dtCanal = new DtCanal(Canal.getNuevoId(), nombre, descripcion, privacidad);
+                sys.altaUsuarioCanal(dtUsuario, dtCanal);
+            }else{
+                txtNikname.setText(nickname + " ya existe!");
+                txtNikname.setForeground(Color.red);  
+                txtNikname.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se produjo un error al intentar ingresar los datos.", "Alta de Usuario", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btCargarActionPerformed
 
     private void pnlImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlImagenMouseClicked
