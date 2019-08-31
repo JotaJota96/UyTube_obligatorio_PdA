@@ -4,6 +4,7 @@ import Presentacion.Categoria.*;
 import Presentacion.ListaDeReproduccion.*;
 import Presentacion.Usuario.*;
 import Presentacion.Video.*;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
@@ -14,6 +15,11 @@ public class frmPrincipal extends javax.swing.JFrame {
     public frmPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+         this.setSize(new Dimension(100, 100));
+        
+        //Línea 2
+        this.setMinimumSize(new Dimension(50, 50));
         
         DatosDePrueba.cargarDatos();
         /*
@@ -118,6 +124,8 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         lbFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbFondo.setText("Aqui va la imagen de fondo");
+        lbFondo.setMaximumSize(new java.awt.Dimension(1080, 720));
+        lbFondo.setMinimumSize(new java.awt.Dimension(600, 800));
         jDesktopPane1.add(lbFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 580));
 
         getContentPane().add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 580));
