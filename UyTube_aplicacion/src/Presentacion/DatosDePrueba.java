@@ -27,6 +27,7 @@ public class DatosDePrueba {
         cargarVideosAUsuarios();
         cargarListasDeReproduccionAUsuarios();
         agregarVideosAListasDeReproduccion();
+        agregarComentarios();
         mostrarDatos();
         
     }
@@ -62,8 +63,6 @@ public class DatosDePrueba {
                 new DtUsuario("jarrieta31", "jarrieta31", "Julio", "Arrieta", "julioarrieta23@gmail.com", new Date(76, 1, 31), "https://images.app.goo.gl/MX2hauy99QVndWdv6", 0),
                 new DtCanal(0, "jarrieta31", "El mejor canal para pasar el rato", Privacidad.PUBLICO)
         );
-
-
     }
     
     private static void cargarVideosAUsuarios(){
@@ -227,6 +226,51 @@ public class DatosDePrueba {
         
     }
     
+    private static void agregarComentarios(){
+        sys.seleccionarUsuario("JotaJota96");
+        sys.seleccionarVideo(1);
+        
+        // 1
+        sys.seleccionarUsuarioActual("LuC31G");
+        sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Buenisimo!!", 0));
+            // 2
+            sys.seleccionarUsuarioActual("JotaJota96");
+            sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Gracias!!!", 0), 1);
+        // 3
+        sys.seleccionarUsuarioActual("camilillo15");
+        sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Cuando sale algo de los Artic Monkeys?",0));
+            // 4
+            sys.seleccionarUsuarioActual("LuC31G");
+            sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Solo sube covers de rock nacional", 0), 3);
+                // 5
+                sys.seleccionarUsuarioActual("MCBolso");
+                sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "siempre hay un boludo", 0), 4);
+            // 6
+            sys.seleccionarUsuarioActual("jarrieta31");
+            sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "O de los Guns and Roses", 0), 3);
+                // 7
+                sys.seleccionarUsuarioActual("MCBolso");
+                sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "otro mas...", 0), 6);
+                    // 8
+                    sys.seleccionarUsuarioActual("jarrieta31");
+                    sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "otro mas que?", 7), 7);
+        // 9
+        sys.seleccionarUsuarioActual("MCBolso");
+        sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "¿Que usas para editar el video?", 0));
+            // 10
+            sys.seleccionarUsuarioActual("JotaJota96");
+            sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Sony Vegas Pro en Windows 10", 0), 9);
+                // 11
+                sys.seleccionarUsuarioActual("MCBolso");
+                sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Tipico, nadie usa Linux.", 0), 10);
+                    // 12
+                    sys.seleccionarUsuarioActual("jarrieta31");
+                    sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Boo, que paso con Linux? hee??", 0), 11);
+
+    }
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////
     // Esta tampoco la toquen
     private static void mostrarDatos(){
         ArrayList<DtUsuario> users = sys.listarUsuarios();
@@ -237,10 +281,23 @@ public class DatosDePrueba {
             System.out.println(u.toString());
             sys.seleccionarUsuario(u.getNickname());
             
-            tab(tab+1);   System.out.println("-- Videos --");
+            tab(tab+1);   System.out.println("Videos:");
             for (DtVideo v : sys.listarVideosDeUsuario()) {
                tab(tab+1);   System.out.println(v.toString());
+                
+               tab(tab+2);   System.out.println("Comentarios :");
+               sys.seleccionarVideo(v.getId());
+               boolean vacio = true;
+               for (DtComentario c : sys.listarComentariosDeVideo()){
+                   vacio = false;
+                   tab(tab+2); tab(c.getNivelSubComentario()); System.out.println(c.toString());
+                }
+               if (vacio){
+                   tab(tab+2);  System.out.println("No hay comentarios");
+               }
+                System.out.println("");
             }
+            System.out.println("");
             
             tab(tab+1);   System.out.println("-- Listas --");
             for (DtListaDeReproduccion l : sys.listarListasDeReproduccionDeUsuario(u.getNickname())) {
