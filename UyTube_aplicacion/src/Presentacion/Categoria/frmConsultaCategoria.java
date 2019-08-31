@@ -1,12 +1,30 @@
 
 package Presentacion.Categoria;
 
-public class frmConsultaCategoria extends javax.swing.JDialog {
+import Logica.DataType.*;
+import Logica.Fabrica;
+import Logica.Interfaces.IAdmin;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
+public class frmConsultaCategoria extends javax.swing.JDialog {
+    Fabrica f = Fabrica.getInstancia();
+    IAdmin Sys = f.getIAdmin();
+    String CategoriaActual;
     public frmConsultaCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        
+        ArrayList<String> ListaCategorias = Sys.listarCategorias();
+        DefaultListModel modelo = new DefaultListModel();
+        
+        for (String it : ListaCategorias) {
+            modelo.addElement(it);
+        }
+        lstCategorias.setModel(modelo);
     }
 
     @SuppressWarnings("unchecked")
@@ -32,17 +50,27 @@ public class frmConsultaCategoria extends javax.swing.JDialog {
 
         cmdAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         cmdAceptar.setText("Aceptar");
+        cmdAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmdAceptarMouseClicked(evt);
+            }
+        });
         cmdAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdAceptarActionPerformed(evt);
             }
         });
-        jPanel25.add(cmdAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(553, 343, 210, 50));
+        jPanel25.add(cmdAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(543, 323, 220, 70));
 
         jLabel123.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel123.setText("Categorias:");
         jPanel25.add(jLabel123, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
+        lstCategorias.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstCategoriasValueChanged(evt);
+            }
+        });
         jScrollPane47.setViewportView(lstCategorias);
 
         jPanel25.add(jScrollPane47, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 220, 350));
@@ -80,6 +108,38 @@ public class frmConsultaCategoria extends javax.swing.JDialog {
     private void cmdAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAceptarActionPerformed
        
     }//GEN-LAST:event_cmdAceptarActionPerformed
+
+    private void cmdAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdAceptarMouseClicked
+        dispose();
+    }//GEN-LAST:event_cmdAceptarMouseClicked
+
+    private void lstCategoriasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCategoriasValueChanged
+       try {
+            CategoriaActual = lstCategorias.getSelectedValue();
+            
+            //Lista la listas de reproduccion de la categoria seleccionada 
+            ArrayList<DtListaDeReproduccion> ListaRDeCategoria = Sys.listarListasDeReproduccionEnCategoria(CategoriaActual);
+            DefaultListModel modeloLR = new DefaultListModel();
+        
+            for (DtListaDeReproduccion it : ListaRDeCategoria) {
+                modeloLR.addElement(it.getNombre());
+            }
+            lstListaReproducion.setModel(modeloLR);
+            
+            //Lista los Videos de la categoria
+            ArrayList<DtVideo> VideosCategoria = Sys.listarVideosEnCategoria(CategoriaActual);
+            DefaultListModel modeloV = new DefaultListModel();
+        
+            for (DtVideo it : VideosCategoria) {
+                modeloV.addElement(it.getNombre());
+            }
+        lstVideos.setModel(modeloV);
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_lstCategoriasValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

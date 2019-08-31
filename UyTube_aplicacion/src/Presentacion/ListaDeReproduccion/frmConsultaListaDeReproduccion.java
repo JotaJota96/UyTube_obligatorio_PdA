@@ -147,8 +147,29 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+       Sys.liberarMemoriaListaDeReproduccion();
+       Sys.liberarMemoriaUsuario();
+       Sys.liberarMemoriaVideo();
+       
+       lstListasRep.clearSelection();
+       lstUsuarios.clearSelection();
+       lstVideos.clearSelection();
+       lbNombre.setText("");
+       lbPrivacidad.setText("");
+       lbTipo.setText("");
+       
+       dispose();
+               
+    }//GEN-LAST:event_btnAceptarMouseClicked
+
+    private void btnConsultarVideoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultarVideoMouseClicked
+        
+        dispose();
+    }//GEN-LAST:event_btnConsultarVideoMouseClicked
+
     private void lstUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstUsuariosMouseClicked
-        try {
+         try {
             DtUsuario dtUsu = Sys.seleccionarUsuario(lstUsuarios.getSelectedValue());
             
             ListasDeReproducion = Sys.listarListasDeReproduccionDeUsuario(dtUsu.getNickname());
@@ -166,8 +187,7 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
     }//GEN-LAST:event_lstUsuariosMouseClicked
 
     private void lstListasRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListasRepMouseClicked
-       
-        try {
+         try {
             
             DtListaDeReproduccion dtLista = ListasDeReproducion.get(lstListasRep.getSelectedIndex());
             int IDLista = dtLista.getId();
@@ -186,28 +206,7 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-        
     }//GEN-LAST:event_lstListasRepMouseClicked
-
-    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-       Sys.liberarMemoriaListaDeReproduccion();
-       Sys.liberarMemoriaUsuario();
-       Sys.liberarMemoriaVideo();
-       
-       lstListasRep.clearSelection();
-       lstUsuarios.clearSelection();
-       lstVideos.clearSelection();
-       lbNombre.setText("");
-       lbPrivacidad.setText("");
-       lbTipo.setText("");
-       
-       dispose();
-               
-    }//GEN-LAST:event_btnAceptarMouseClicked
-
-    private void btnConsultarVideoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultarVideoMouseClicked
-        dispose();
-    }//GEN-LAST:event_btnConsultarVideoMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
