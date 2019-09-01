@@ -1,14 +1,63 @@
 
 package Presentacion.Video;
 
+import Logica.DataType.DtUsuario;
+import Logica.DataType.DtVideo;
+import Logica.Fabrica;
+import Logica.Interfaces.IAdmin;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 public class frmConsultaVideo extends javax.swing.JDialog {
 
+    IAdmin sys;
+    
     public frmConsultaVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        try {
+            // obtiene la instancia de sistema
+            sys = Fabrica.getInstancia().getIAdmin();
+
+            // lista usuarios en el JList
+            listarUsuarios(sys.listarUsuarios());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
+        DefaultListModel modelo = new DefaultListModel();
+        ListaUsuarios.forEach((it) -> {
+            modelo.addElement(it.getNickname());
+            // a que te dejo re loco este for
+        });
+        lstDuenioVideo.setModel(modelo);
+        
+    }
+    private void listarVideos(ArrayList<DtVideo> listaVideos){
+        DefaultListModel modelo = new DefaultListModel();
+        for (DtVideo it : listaVideos) {
+            modelo.addElement(it.getNombre());
+        }
+        lstVideoUsuario.setModel(modelo);
+    }
+    private void mostrarDatosDeVideo(DtVideo v){
+        lbNombre.setText(v.getNombre());
+        lbDuracion.setText(v.getDuracion().toString());
+        lbUrl.setText(v.getUrlVideoOriginal());
+        lbPrivacidad.setText(v.getPrivacidad().toString());
+        lbCategoria.setText(v.getCategoria());
+        txtDescripcion.setText(v.getDescripcion());
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,6 +102,11 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel81.setText("Dueño del video:");
         jPanel15.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
+        lstDuenioVideo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstDuenioVideoMouseClicked(evt);
+            }
+        });
         jScrollPane22.setViewportView(lstDuenioVideo);
 
         jPanel15.add(jScrollPane22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 140, 300));
@@ -61,6 +115,11 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel82.setText("Comentarios:");
         jPanel15.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, -1, -1));
 
+        lstVideoUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstVideoUsuarioMouseClicked(evt);
+            }
+        });
         jScrollPane23.setViewportView(lstVideoUsuario);
 
         jPanel15.add(jScrollPane23, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, 160, 300));
@@ -164,8 +223,33 @@ public class frmConsultaVideo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+       // boton aceptar
        
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void lstDuenioVideoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDuenioVideoMouseClicked
+        // seleccionar usuario 
+        try {
+            lstVideoUsuario.clearSelection();
+            String nick = lstDuenioVideo.getSelectedValue();
+             sys.seleccionarUsuario(nick);
+            listarVideos(sys.listarVideosDeUsuario());
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lstDuenioVideoMouseClicked
+
+    private void lstVideoUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideoUsuarioMouseClicked
+        // seleccionar video
+        try {
+            int idVideo = lstVideoUsuario.getSelectedIndex() +1;
+            DtVideo dtv = sys.seleccionarVideo(idVideo);
+            mostrarDatosDeVideo(dtv);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }    }//GEN-LAST:event_lstVideoUsuarioMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
