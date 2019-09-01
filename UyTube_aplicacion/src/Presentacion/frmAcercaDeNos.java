@@ -71,8 +71,8 @@ public class frmAcercaDeNos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        //about->acptar
-        
+        // Boton Acptar
+        dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
 

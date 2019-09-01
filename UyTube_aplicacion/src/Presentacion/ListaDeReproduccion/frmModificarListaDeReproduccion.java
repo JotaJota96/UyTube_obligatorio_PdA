@@ -1,11 +1,38 @@
 package Presentacion.ListaDeReproduccion;
 
+import Logica.DataType.DtListaDeReproduccion;
+import Logica.DataType.DtUsuario;
+import Logica.Enumerados.Privacidad;
+import Logica.Enumerados.TipoListaDeReproduccion;
+import Logica.Fabrica;
+import Logica.Interfaces.IAdmin;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
 
+    
+    IAdmin sys;
+    ArrayList<DtListaDeReproduccion> listaDeListas;
+    
     public frmModificarListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        try {
+            // obtiene la instancia de sistema
+            sys = Fabrica.getInstancia().getIAdmin();
+
+            // lista usuarios y categorias en JList
+            mostrarListaDeUsuarios(sys.listarUsuarios());
+            mostrarListaDeCategorias(sys.listarCategorias());
+            limpiarElementosDeVentana();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
     }
 
     /**
@@ -17,6 +44,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        rbGrupo = new javax.swing.ButtonGroup();
         jPanel19 = new javax.swing.JPanel();
         jScrollPane33 = new javax.swing.JScrollPane();
         lstUsuarios = new javax.swing.JList<>();
@@ -37,6 +65,11 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
 
         jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lstUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstUsuariosValueChanged(evt);
+            }
+        });
         jScrollPane33.setViewportView(lstUsuarios);
 
         jPanel19.add(jScrollPane33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 240, 270));
@@ -53,10 +86,12 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         jLabel104.setText("Categoria:");
         jPanel19.add(jLabel104, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, -1));
 
+        rbGrupo.add(rbPrivada);
         rbPrivada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbPrivada.setText("Privada");
         jPanel19.add(rbPrivada, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, -1, -1));
 
+        rbGrupo.add(rbPublica);
         rbPublica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbPublica.setText("Publica");
         jPanel19.add(rbPublica, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, -1, -1));
@@ -83,6 +118,11 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         jLabel105.setText("List. Reproduccion:");
         jPanel19.add(jLabel105, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
 
+        lstListasRep.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstListasRepValueChanged(evt);
+            }
+        });
         jScrollPane35.setViewportView(lstListasRep);
 
         jPanel19.add(jScrollPane35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 250, 270));
@@ -112,12 +152,150 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //lista_rep->modificar->cancelar
+        // Boton Cancelar
+        try {
+            sys.liberarMemoriaUsuario();
+            sys.liberarMemoriaListaDeReproduccion();
+            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        //lista_rep->modificar->acptar
+        // Boton Aceptar
+        try {
+            // obtiene los datos para llenar el DataType y lo crea con ellos
+            int idLista;
+            String nuevoNombre = "";
+            Privacidad nuevaPrivacidad;
+            String nuevaCat;
+            
+            idLista = listaDeListas.get(lstListasRep.getSelectedIndex()).getId();
+            nuevoNombre = listaDeListas.get(lstListasRep.getSelectedIndex()).getNombre();
+            
+            if (rbPublica.isSelected()){
+                nuevaPrivacidad = Privacidad.PUBLICO;
+            }else{
+                nuevaPrivacidad = Privacidad.PRIVADO;
+            }
+            nuevaCat = lstCategorias.getSelectedValue();
+            
+            
+            DtListaDeReproduccion nuevosDatos = new DtListaDeReproduccion(
+                    idLista, nuevoNombre, nuevaPrivacidad, TipoListaDeReproduccion.PARTICULAR, nuevaCat
+            );
+            
+            sys.modificarListaDeReproduccion(nuevosDatos);
+            
+            sys.liberarMemoriaUsuario();
+            sys.liberarMemoriaListaDeReproduccion();
+            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
+        // seleccionar usuario 
+        if (evt.getValueIsAdjusting()) return;
+        if (lstUsuarios.getSelectedIndex()<0) return;
+        try {
+            limpiarElementosDeVentana();
+            
+            String nick = lstUsuarios.getSelectedValue();
+             sys.seleccionarUsuario(nick);
+             listaDeListas = sys.listarListasDeReproduccionDeUsuario(nick);
+             
+             System.out.println("OJO, si ves esto es que hay un parche sin solucionar");
+             System.out.println("    Revisar la funcion al seleccionar usuario en ventana Modificar lista de reproduccion");
+             /**
+              * Como el sistema no me da la lista de solo listas particulares tuve que hacer este for
+              */
+             for (int i = 0; i < listaDeListas.size(); i++){
+                 if (listaDeListas.get(i).getTipo() == TipoListaDeReproduccion.POR_DEFECTO){
+                     listaDeListas.remove(i);
+                     i--;
+                 }
+             }
+             
+            mostrarListaDeListasRep(listaDeListas);
+            //limpiarElementosDeVentana();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lstUsuariosValueChanged
+
+    private void lstListasRepValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstListasRepValueChanged
+        // Al seleccionar una Lista de reproduccion
+        if (evt.getValueIsAdjusting()) return;
+        if (lstListasRep.getSelectedIndex()<0) return;
+        try {
+            int indexSeleccionado = lstListasRep.getSelectedIndex();
+            int idLista = listaDeListas.get(indexSeleccionado).getId();
+            DtListaDeReproduccion dtl = sys.seleccionarListaDeReproduccion(idLista);
+            mostrarDatosDeListaRep(dtl);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lstListasRepValueChanged
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////
+     private void mostrarListaDeUsuarios(ArrayList<DtUsuario> ListaUsuarios){
+        DefaultListModel modelo = new DefaultListModel();
+        ListaUsuarios.forEach((it) -> {
+            modelo.addElement(it.getNickname());
+            // a que te dejo re loco este for
+        });
+        lstUsuarios.setModel(modelo);
+        
+    }
+    private void mostrarListaDeCategorias(ArrayList<String> l){
+        DefaultListModel modelo = new DefaultListModel();
+        l.forEach((it) -> {
+            modelo.addElement(it);
+            // a que te dejo re loco este for
+        });
+        lstCategorias.setModel(modelo);
+    }
+     private void mostrarListaDeListasRep(ArrayList<DtListaDeReproduccion> l){
+        DefaultListModel modelo = new DefaultListModel();
+        for (DtListaDeReproduccion it : l) {
+            modelo.addElement(it.getNombre());
+        }
+        lstListasRep.setModel(modelo);
+    }
+    private void mostrarDatosDeListaRep(DtListaDeReproduccion dtl) {
+        rbPublica.setEnabled(true);
+        rbPrivada.setEnabled(true);
+        
+        if (dtl.getPrivacidad() == Privacidad.PUBLICO) {
+            rbPublica.setSelected(true);
+            rbPrivada.setSelected(false);
+        } else {
+            rbPublica.setSelected(false);
+            rbPrivada.setSelected(true);
+        }
+        
+        lstCategorias.setSelectedValue(dtl.getCategoria(), true);
+        btnAceptar.setEnabled(true);
+    }
+    private void limpiarElementosDeVentana(){
+        // limpieza de radiobuttoms
+        rbGrupo.clearSelection();
+        rbPublica.setEnabled(false);
+        rbPrivada.setEnabled(false);
+        
+        // limpieza de listas
+        lstListasRep.setModel(new DefaultListModel());
+        
+        // desseleccionado de listas
+        lstCategorias.clearSelection();
+        
+        btnAceptar.setEnabled(false);
+    }
+    
+     ///////////////////////////////////////////////////////////////////////////////////////////
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -132,6 +310,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
     private javax.swing.JList<String> lstCategorias;
     private javax.swing.JList<String> lstListasRep;
     private javax.swing.JList<String> lstUsuarios;
+    private javax.swing.ButtonGroup rbGrupo;
     private javax.swing.JRadioButton rbPrivada;
     private javax.swing.JRadioButton rbPublica;
     // End of variables declaration//GEN-END:variables
