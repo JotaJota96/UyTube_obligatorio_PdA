@@ -150,6 +150,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuUsuario.add(mitNuevoUsuario);
 
+        mitConsultaUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         mitConsultaUsuario.setText("Consultar Usuario");
         mitConsultaUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
