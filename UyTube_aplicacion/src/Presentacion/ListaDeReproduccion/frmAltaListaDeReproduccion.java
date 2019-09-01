@@ -142,9 +142,9 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         GrupoTipo.add(rbPorDefecto);
         rbPorDefecto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbPorDefecto.setText("Por defecto");
-        rbPorDefecto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rbPorDefectoMouseClicked(evt);
+        rbPorDefecto.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbPorDefectoItemStateChanged(evt);
             }
         });
         pnlTipo.add(rbPorDefecto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
@@ -152,11 +152,6 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         GrupoTipo.add(rbParticular);
         rbParticular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbParticular.setText("Particular");
-        rbParticular.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rbParticularMouseClicked(evt);
-            }
-        });
         pnlTipo.add(rbParticular, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
 
         jPanel17.add(pnlTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 10, 330, 60));
@@ -185,30 +180,6 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rbParticularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbParticularMouseClicked
-        if (rbParticular.isSelected()== true) {
-            txtNombre.setText("");
-            rbPublica.setEnabled(true);
-            lstUsuarios.setEnabled(true);
-            lstCategorias.setEnabled(true);
-            lstCategorias.clearSelection();
-            lstUsuarios.clearSelection();
-        }
-    }//GEN-LAST:event_rbParticularMouseClicked
-
-    private void rbPorDefectoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbPorDefectoMouseClicked
-        if (rbPorDefecto.isSelected()== true) {
-            txtNombre.setText("");
-            rbPublica.setEnabled(false);
-            rbPrivada.setSelected(true);
-            lstUsuarios.setEnabled(false);
-            lstCategorias.setEnabled(false);
-            lstCategorias.clearSelection();
-            lstUsuarios.clearSelection();
-        }
-        
-    }//GEN-LAST:event_rbPorDefectoMouseClicked
-
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         DtListaDeReproduccion lst = null;
         Privacidad Priv = null;
@@ -224,11 +195,9 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             Priv = Privacidad.PUBLICO;
         }
         
-        if (rbParticular.isSelected()==true) {
-            lst = new DtListaDeReproduccion(ListaDeReproduccion.getNuevoId(), txtNombre.getText(), Priv, TipoListaDeReproduccion.PARTICULAR , lstCategorias.getSelectedValue());
-            
+        if (rbParticular.isSelected() == true) {
             try {
-                
+                lst = new DtListaDeReproduccion(ListaDeReproduccion.getNuevoId(), txtNombre.getText(), Priv, TipoListaDeReproduccion.PARTICULAR , lstCategorias.getSelectedValue());
                 Sys.seleccionarUsuario(lstUsuarios.getSelectedValue());
                 
                 if (!Sys.validarNuevaListaParticular(lst.getNombre())){
@@ -240,43 +209,68 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null,"Lista particular creada", "Informacion:", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
         
         
         if (rbPorDefecto.isSelected() == true) {
-            lst = new DtListaDeReproduccion(ListaDeReproduccion.getNuevoId(), txtNombre.getText(), Priv, TipoListaDeReproduccion.POR_DEFECTO ,"UNDEFINED");
-            
             try {
+                lst = new DtListaDeReproduccion(ListaDeReproduccion.getNuevoId(), txtNombre.getText(), Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO ,"UNDEFINED");
+            
                 if (!Sys.validarNuevaListaPorDefecto(lst.getNombre())){
                     JOptionPane.showMessageDialog(null, "El nombre para la lista de reproduccion ya esta usado", "Error:", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 
-                Sys.altaListaDeReproduccionParticular(lst);
+                Sys.altaListaDeReproduccionPorDefecto(lst);
                 JOptionPane.showMessageDialog(null,"Lista por defecto creada", "Informacion:", JOptionPane.INFORMATION_MESSAGE);
                 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
-        
-        Sys.liberarMemoriaUsuario();
-        txtNombre.setText("");
-        dispose();
+        try {
+            Sys.liberarMemoriaUsuario();
+            txtNombre.setText("");
+            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+       
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
        if (!(Character.isDigit(evt.getKeyChar()) || Character.isLetter(evt.getKeyChar()))) {
-	getToolkit().beep();
-	evt.consume();
-}
+            getToolkit().beep();
+            evt.consume();
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
         txtNombre.setText("");
         dispose();
     }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void rbPorDefectoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbPorDefectoItemStateChanged
+         if (rbPorDefecto.isSelected() == true) {
+            txtNombre.setText("");
+            rbPublica.setEnabled(false);
+            rbPrivada.setSelected(true);
+            lstUsuarios.setEnabled(false);
+            lstCategorias.setEnabled(false);
+            lstCategorias.clearSelection();
+            lstUsuarios.clearSelection();
+        }else{
+            txtNombre.setText("");
+            rbPublica.setEnabled(true);
+            lstUsuarios.setEnabled(true);
+            lstCategorias.setEnabled(true);
+            lstCategorias.clearSelection();
+            lstUsuarios.clearSelection();
+        }
+    }//GEN-LAST:event_rbPorDefectoItemStateChanged
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup GrupoPublicoPrivado;

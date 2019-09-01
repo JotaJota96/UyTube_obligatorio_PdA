@@ -39,6 +39,11 @@ public class frmAcercaDeNos extends javax.swing.JDialog {
         btnAceptar.setText("Aceptar");
         btnAceptar.setBorderPainted(false);
         btnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAceptarMouseClicked(evt);
+            }
+        });
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -74,6 +79,10 @@ public class frmAcercaDeNos extends javax.swing.JDialog {
         //about->acptar
         
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+        dispose();
+    }//GEN-LAST:event_btnAceptarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
