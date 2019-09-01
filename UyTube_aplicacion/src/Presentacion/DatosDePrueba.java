@@ -186,6 +186,9 @@ public class DatosDePrueba {
         sys.altaListaDeReproduccionParticular(
                 new DtListaDeReproduccion(0, "Mis covers", Privacidad.PUBLICO, TipoListaDeReproduccion.PARTICULAR, "UNDEFINED")
         );
+        sys.altaListaDeReproduccionParticular(
+                new DtListaDeReproduccion(0, "Minecraft", Privacidad.PUBLICO, TipoListaDeReproduccion.PARTICULAR, "GAMING")
+        );
         sys.liberarMemoriaUsuario();
         
         sys.seleccionarUsuario("LuC31G");
