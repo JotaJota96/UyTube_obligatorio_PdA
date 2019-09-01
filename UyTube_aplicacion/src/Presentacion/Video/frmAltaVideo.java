@@ -10,13 +10,17 @@ import javax.swing.DefaultListModel;
 public class frmAltaVideo extends javax.swing.JDialog {
     
     public DefaultListModel listModelUsuario = new DefaultListModel();
+    public DefaultListModel listModelCategoria = new DefaultListModel();
+    Fabrica fabrica = Fabrica.getInstancia();
+    IAdmin sys = fabrica.getIAdmin();
+    
+    private String usrSeleccionado = new String();
     
     public frmAltaVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -63,9 +67,9 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel71.setText("Dueño del video:");
         jPanel14.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
-        lstDuenioVideo.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                lstDuenioVideoComponentShown(evt);
+        lstDuenioVideo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstDuenioVideoMouseClicked(evt);
             }
         });
         jScrollPane16.setViewportView(lstDuenioVideo);
@@ -172,25 +176,27 @@ public class frmAltaVideo extends javax.swing.JDialog {
         this.setVisible(false);//Oculata el formulario AltaVideo
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void lstDuenioVideoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_lstDuenioVideoComponentShown
-        //Carga todos los nicknames cuando se mustra el formulario()
-        Fabrica fabrica = Fabrica.getInstancia();
-        IAdmin sys = fabrica.getIAdmin();
-        for (int i = 0; i < sys.listarUsuarios().size(); i++) {
-            listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
-        }
-        lstDuenioVideo.setModel(listModelUsuario);
-    }//GEN-LAST:event_lstDuenioVideoComponentShown
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
-        Fabrica fabrica = Fabrica.getInstancia();
-        IAdmin sys = fabrica.getIAdmin();
+        // Obtengo todos los nickname y los cargo en el listDuenioVideo(Lista de dueños de videos)        
         for (int i = 0; i < sys.listarUsuarios().size(); i++) {
             listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
         }
         lstDuenioVideo.setModel(listModelUsuario);
+        // Obtengo todas las categorias de video y las muestro en la lista
+        for(int i = 0; i < sys.listarCategorias().size(); i++){
+            listModelCategoria.add(i, sys.listarCategorias().get(i));
+        }
+        lstAsignarCategoria.setModel(listModelCategoria);
+        for(int i=0; i< sys.listarCategorias().size(); i++){
+            System.out.println(" "+ sys.listarCategorias().get(i));
+        }
     }//GEN-LAST:event_formWindowActivated
+
+    private void lstDuenioVideoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDuenioVideoMouseClicked
+        // TODO add your handling code here:
+        usrSeleccionado = lstDuenioVideo.getSelectedValue();
+        txtDescripcion.setText(usrSeleccionado);
+    }//GEN-LAST:event_lstDuenioVideoMouseClicked
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
