@@ -1,63 +1,44 @@
 
 package Presentacion.Video;
 
+import Logica.DataType.DtComentario;
 import Logica.DataType.DtUsuario;
+import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
+import Logica.Enumerados.TipoValoracion;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 
 public class frmConsultaVideo extends javax.swing.JDialog {
 
     IAdmin sys;
+    ArrayList<DtVideo> listaDeVideos;
+    String enlace = "";
     
     public frmConsultaVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        
+        limpiarElementosDeVentana();
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
 
             // lista usuarios en el JList
-            listarUsuarios(sys.listarUsuarios());
+            mostrarListaDeUsuarios(sys.listarUsuarios());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
         }
         
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
-        DefaultListModel modelo = new DefaultListModel();
-        ListaUsuarios.forEach((it) -> {
-            modelo.addElement(it.getNickname());
-            // a que te dejo re loco este for
-        });
-        lstDuenioVideo.setModel(modelo);
-        
-    }
-    private void listarVideos(ArrayList<DtVideo> listaVideos){
-        DefaultListModel modelo = new DefaultListModel();
-        for (DtVideo it : listaVideos) {
-            modelo.addElement(it.getNombre());
-        }
-        lstVideoUsuario.setModel(modelo);
-    }
-    private void mostrarDatosDeVideo(DtVideo v){
-        lbNombre.setText(v.getNombre());
-        lbDuracion.setText(v.getDuracion().toString());
-        lbUrl.setText(v.getUrlVideoOriginal());
-        lbPrivacidad.setText(v.getPrivacidad().toString());
-        lbCategoria.setText(v.getCategoria());
-        txtDescripcion.setText(v.getDescripcion());
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -92,6 +73,8 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jScrollPane27 = new javax.swing.JScrollPane();
         treeComentarios = new javax.swing.JTree();
         jLabel99 = new javax.swing.JLabel();
+        lbCantDisLikes = new javax.swing.JLabel();
+        lbCantLikes = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultar video");
@@ -102,9 +85,9 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel81.setText("Dueño del video:");
         jPanel15.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
-        lstDuenioVideo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstDuenioVideoMouseClicked(evt);
+        lstDuenioVideo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstDuenioVideoValueChanged(evt);
             }
         });
         jScrollPane22.setViewportView(lstDuenioVideo);
@@ -115,9 +98,9 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel82.setText("Comentarios:");
         jPanel15.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, -1, -1));
 
-        lstVideoUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstVideoUsuarioMouseClicked(evt);
+        lstVideoUsuario.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstVideoUsuarioValueChanged(evt);
             }
         });
         jScrollPane23.setViewportView(lstVideoUsuario);
@@ -136,7 +119,9 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel86.setText("Descripción:");
         jPanel15.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
 
+        txtDescripcion.setEditable(false);
         txtDescripcion.setColumns(20);
+        txtDescripcion.setLineWrap(true);
         txtDescripcion.setRows(5);
         jScrollPane24.setViewportView(txtDescripcion);
 
@@ -155,6 +140,11 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jPanel15.add(lbDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 170, -1));
 
         lbUrl.setText(" ");
+        lbUrl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lbUrlMousePressed(evt);
+            }
+        });
         jPanel15.add(lbUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 180, -1));
 
         lbPrivacidad.setText(" ");
@@ -198,6 +188,12 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel99.setText("Video del Usuario:");
         jPanel15.add(jLabel99, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
 
+        lbCantDisLikes.setText(" ");
+        jPanel15.add(lbCantDisLikes, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 200, 20));
+
+        lbCantLikes.setText(" ");
+        jPanel15.add(lbCantLikes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, 200, 20));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -224,33 +220,201 @@ public class frmConsultaVideo extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
        // boton aceptar
-       
+        try {
+            sys.liberarMemoriaUsuario();
+            sys.liberarMemoriaVideo();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }finally{
+            dispose();
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void lstDuenioVideoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDuenioVideoMouseClicked
+    private void lstDuenioVideoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDuenioVideoValueChanged
         // seleccionar usuario 
+        if (evt.getValueIsAdjusting()) return;
+        if (lstDuenioVideo.getSelectedIndex()<0) return;
         try {
-            lstVideoUsuario.clearSelection();
             String nick = lstDuenioVideo.getSelectedValue();
              sys.seleccionarUsuario(nick);
-            listarVideos(sys.listarVideosDeUsuario());
+             listaDeVideos = sys.listarVideosDeUsuario();
+            mostrarListaDeVideos(listaDeVideos);
+            limpiarElementosDeVentana();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lstDuenioVideoValueChanged
+
+    private void lstVideoUsuarioValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstVideoUsuarioValueChanged
+        // seleccionar video
+        if (evt.getValueIsAdjusting()) return;
+        if (lstVideoUsuario.getSelectedIndex()<0) return;
+        try {
+            int indexSeleccionado = lstVideoUsuario.getSelectedIndex();
+            int idVideo = listaDeVideos.get(indexSeleccionado).getId();
+            DtVideo dtv = sys.seleccionarVideo(idVideo);
+            mostrarDatosDeVideo(dtv);
+            mostrarListasDrValoraciones(sys.obtenerValoracionesDeVideo());
+            mostrarListaDeComentarios(sys.listarComentariosDeVideo());
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_lstDuenioVideoMouseClicked
+    }//GEN-LAST:event_lstVideoUsuarioValueChanged
 
-    private void lstVideoUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideoUsuarioMouseClicked
-        // seleccionar video
+    private void lbUrlMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUrlMousePressed
+        // al cloquear sobre la URL del video
+        if (lbUrl.getText().isEmpty() || enlace.isEmpty()) return;
+        
+        // Fuente:
+        // http://www.forosdelweb.com/f45/jlabel-como-hipervinculo-netbeans-948388/
         try {
-            int idVideo = lstVideoUsuario.getSelectedIndex() +1;
-            DtVideo dtv = sys.seleccionarVideo(idVideo);
-            mostrarDatosDeVideo(dtv);
-            
+            if (java.awt.Desktop.isDesktopSupported()) {
+                java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+                if (desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
+                    desktop.browse(new java.net.URI(enlace));
+                }
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }    }//GEN-LAST:event_lstVideoUsuarioMouseClicked
+        }
+    }//GEN-LAST:event_lbUrlMousePressed
 
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    private void mostrarListaDeUsuarios(ArrayList<DtUsuario> ListaUsuarios){
+        DefaultListModel modelo = new DefaultListModel();
+        ListaUsuarios.forEach((it) -> {
+            modelo.addElement(it.getNickname());
+            // a que te dejo re loco este for
+        });
+        lstDuenioVideo.setModel(modelo);
+        
+    }
+    private void mostrarListaDeVideos(ArrayList<DtVideo> listaVideos){
+        DefaultListModel modelo = new DefaultListModel();
+        for (DtVideo it : listaVideos) {
+            modelo.addElement(it.getNombre());
+        }
+        lstVideoUsuario.setModel(modelo);
+    }
+    private void mostrarDatosDeVideo(DtVideo v){
+        lbNombre.setText(v.getNombre());
+        lbDuracion.setText(v.getDuracion().toString());
+        lbUrl.setText(obtenerTextoComoEnlace(v.getUrlVideoOriginal(), v.getUrlVideoOriginal()));
+        enlace = v.getUrlVideoOriginal();
+        lbPrivacidad.setText(v.getPrivacidad().toString());
+        lbCategoria.setText(v.getCategoria());
+        txtDescripcion.setText(v.getDescripcion());
+        lbCantLikes.setText(String.valueOf(v.getCantLikes()));
+        lbCantDisLikes.setText(String.valueOf(v.getCantDisLikes()));
+    }
+    private void mostrarListasDrValoraciones(ArrayList<DtValoracion> lVal){
+        DefaultListModel modeloLikes = new DefaultListModel();
+        DefaultListModel modeloDisLikes = new DefaultListModel();
+        for (DtValoracion it : lVal){
+            if (it.getVal() == TipoValoracion.LIKE){
+            modeloLikes.addElement(it.getNickname());
+            }else{
+            modeloDisLikes.addElement(it.getNickname());
+            }
+        }
+        lstLike.setModel(modeloLikes);
+        lstDislike.setModel(modeloDisLikes);
+    }
+    private void mostrarListaDeComentarios(ArrayList<DtComentario> lCom){
+        // crea el nodo raiz
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
+        // agrega al nodo raiz toodos los comentarios
+        agregarNodoATree(lCom, 0, raiz);
+
+        // Carga el arbol en el TreeModel
+        TreeModel datos = new DefaultTreeModel(raiz);
+        // Carga el TreeModel en el JTree
+        treeComentarios.setModel(datos);
+        // la siguiente funcion la saque de stackoverflow
+        expandAllNodes(treeComentarios, 0, treeComentarios.getRowCount());
+    }
+    private void expandAllNodes(javax.swing.JTree tree, int startingIndex, int rowCount) {
+        // Extraido de:
+        // https://stackoverflow.com/questions/15210979/how-do-i-auto-expand-a-jtree-when-setting-a-new-treemodel
+        for (int i = startingIndex; i < rowCount; ++i) {
+            tree.expandRow(i);
+        }
+
+        if (tree.getRowCount() != rowCount) {
+            expandAllNodes(tree, rowCount, tree.getRowCount());
+        }
+    }
+    private void agregarNodoATree(ArrayList<DtComentario> l, int e, DefaultMutableTreeNode nodoPadre){
+        // si el array vacio, no hay nada que hacer
+        if (e == l.size()){
+            return;
+        }
+        
+        // guardo el nivel del prmer comentario con el que se trabajara (no siempre sera el primer elemento del array)
+        int nivelActual = l.get(e).getNivelSubComentario();
+        // Variable para el nuevo comentario a procesar
+        DefaultMutableTreeNode nodoComentario = null;
+        // sera true si se ebe llamar a la recursividad
+        boolean llamarRecursividad = false;
+        
+        // recorre los elementos desde el indice pasado como parametro hasta el final del array
+        for (; e < l.size(); e++){
+            // variable del comentario para trabajar en esta iteracion del for
+            DtComentario coment = l.get(e);
+            
+            if (coment.getNivelSubComentario() == nivelActual) {
+                // Si el coment esta al nivel a partir del cual se procesara
+                // extrae los datos en un string
+                String textoAMostrar = coment.getNickname() + ": " + coment.getTexto();
+                // instancia el nodo con los datos
+                nodoComentario = new DefaultMutableTreeNode(textoAMostrar);
+                // lo agrega como hijo del nodo padre recibido como parametro
+                nodoPadre.add(nodoComentario);
+                // activa la recursividad en caso de que se encuentren hijos del comentario
+                llamarRecursividad = true;
+            }else if (coment.getNivelSubComentario() > nivelActual){
+                // Si el comentario de esta iteracion es menor que el nivel a procesar
+                
+                // si hay que llamar recursividd
+                if (llamarRecursividad){
+                    // llama a recursividad pero pasando como nodo padre al comentario recien creado
+                    agregarNodoATree(l, e, nodoComentario);
+                    // en este punto ya se han agregado todos los hijos y nietos del comentario recien creado
+                    // asi que ya no hay que llamar recursividad hasta agregar otro nodo en el primer if
+                    llamarRecursividad = false;
+                }
+            }else{
+                // si se encuentra un comentario de menor nivel al que se esta procesando
+                // debe salir, esa es otra familia de comentarios
+                return;
+            }
+        }
+    }
+    private void limpiarElementosDeVentana(){
+        enlace = "";
+        // limpieza de labels
+        lbNombre.setText("");
+        lbDuracion.setText("");
+        lbUrl.setText("");
+        lbPrivacidad.setText("");
+        lbCategoria.setText("");
+        txtDescripcion.setText("");
+        lbCantLikes.setText("");
+        lbCantDisLikes.setText("");
+        // limpieza de listas
+        lstLike.setModel(new DefaultListModel());
+        lstDislike.setModel(new DefaultListModel());
+        // limpieza de Arbol
+        treeComentarios.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Comentarios:")));
+    }
+    public String obtenerTextoComoEnlace(String enlace, String texto) {
+        // Extraido de
+        // http://www.forosdelweb.com/f45/jlabel-como-hipervinculo-netbeans-948388/
+        return"<html><a href=" + '"' + enlace + '"'+ ">" + texto + "</a></html>";
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JLabel jLabel81;
@@ -271,6 +435,8 @@ public class frmConsultaVideo extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane25;
     private javax.swing.JScrollPane jScrollPane26;
     private javax.swing.JScrollPane jScrollPane27;
+    private javax.swing.JLabel lbCantDisLikes;
+    private javax.swing.JLabel lbCantLikes;
     private javax.swing.JLabel lbCategoria;
     private javax.swing.JLabel lbDuracion;
     private javax.swing.JLabel lbNombre;

@@ -236,6 +236,10 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
+        // Al seleccionar un usuario
+        if (evt.getValueIsAdjusting()) return;
+        if (lstUsuarios.getSelectedIndex()<0) return;
+
         try {
             String nick = lstUsuarios.getSelectedValue();
             DtUsuario dtu = sys.seleccionarUsuario(nick);
@@ -304,7 +308,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         lstSeguidores.setModel(modelo);
     }
     private void cargarLabelsConDatosDelUsuario(DtUsuario u){
-        lbCantSeguidores.setText(u.getNickname());
+        lbNickName.setText(u.getNickname());
         lbNombre.setText(u.getNombre());
         lbApellido.setText(u.getApellido());
         lbEmail.setText(u.getCorreo());
