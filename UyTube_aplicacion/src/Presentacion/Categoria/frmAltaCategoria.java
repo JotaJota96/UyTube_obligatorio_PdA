@@ -111,7 +111,7 @@ public class frmAltaCategoria extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nuevaCategoria = txtNombre.getText().trim();
+        String nuevaCategoria = txtNombre.getText().trim().toUpperCase();
         if(!nuevaCategoria.equals("") && nuevaCategoria.length()<31){
             //Recorre todas las categorias existentes
             boolean existe = false;//Variable 
@@ -185,7 +185,7 @@ public class frmAltaCategoria extends javax.swing.JDialog {
     private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
         // Al presionar ENTER
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            String nuevaCategoria = txtNombre.getText().trim();
+            String nuevaCategoria = txtNombre.getText().trim().toUpperCase();
             if(!nuevaCategoria.equals("") && nuevaCategoria.length()<31){
                 //Recorre todas las categorias existentes
                 boolean existe = false;//Variable 

@@ -22,6 +22,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
     Fabrica fabrica = Fabrica.getInstancia();
     IAdmin sys = fabrica.getIAdmin();    
     private String categoria = "";
+    private String usrSeleccionado = "";
     Border bordeDefault;
     Color colorOK = new ColorUIResource(40,167,69);
     Color colorError = new ColorUIResource(220,53,69);
@@ -30,6 +31,25 @@ public class frmAltaVideo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+    private void limpiarCampos(){
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtUrl.setText("");
+        spHora.setValue(0);
+        spMinuto.setValue(0);
+        spSegundos.setValue(0);
+        usrSeleccionado="";
+        categoria = "";
+        jDateChooser1.setDate(null);
+    }
+    
+    private void limpiarListas(){
+        listModelUsuario.clear();//Limpia la listaModeloUsuario
+        lstDuenioVideo.setModel(listModelUsuario); //Borra todos los datos del JList DuenioVideo
+        listModelCategoria.clear();//Limpia el modeo de Categorias
+        lstAsignarCategoria.setModel(listModelCategoria);
     }
     
     @SuppressWarnings("unchecked")
@@ -73,6 +93,9 @@ public class frmAltaVideo extends javax.swing.JDialog {
             }
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                formWindowDeactivated(evt);
             }
         });
 
@@ -123,7 +146,6 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel78.setText("(Opcional)");
         jPanel14.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, -1, -1));
         jPanel14.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 330, -1));
-
         jPanel14.add(txtUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 330, -1));
 
         txtDescripcion.setColumns(20);
@@ -208,25 +230,32 @@ public class frmAltaVideo extends javax.swing.JDialog {
         }        
         try {
             DtVideo dtVideo = new DtVideo(Video.getNuevoId(), nombre, descripcion, duracion, fecha, url, Privacidad.PRIVADO, categoria, 0, 0);
-            sys.altaVideo(dtVideo);
+            int opcion=JOptionPane.showConfirmDialog(null, 
+                        "Desea guardar el video con los siguientes datos?\n"+
+                            "Usuario: "+usrSeleccionado+"\n"+
+                            "Nombre: "+nombre+"\n"+
+                            "Descripción: "+descripcion+"\n"+
+                            "Duración: "+duracion+"\n"+
+                            "fecha de publicacón: "+fecha
+                        , "Confirmar alt de Video", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(opcion==0)
+                sys.altaVideo(dtVideo);
+                limpiarCampos();
+                
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Se produjo un error al intentar ingresar el video.", "Alta de Video", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Se produjo un error al intentar ingresar el video.", "Alta de Video", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        listModelUsuario.clear();//Limpia la listaModeloUsuario
-        lstDuenioVideo.setModel(listModelUsuario); //Borra todos los datos del JList DuenioVideo
-        listModelCategoria.clear();//Limpia el modeo de Categorias
-        lstAsignarCategoria.setModel(listModelCategoria);
-        txtNombre.setText("");
-        txtDescripcion.setText("");
-        txtUrl.setText("");
+        limpiarListas();
+        limpiarCampos();
         this.setVisible(false);//Oculta el formulario AltaVideo
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // Obtengo todos los nickname y los cargo en el listDuenioVideo(Lista de dueños de videos) 
+        // Obtengo todos los nickname y los cargo en el listDuenioVideo(Lista de dueños de videos)
+        limpiarListas();
         if(!sys.listarUsuarios().isEmpty()){
             for (int i = 0; i < sys.listarUsuarios().size(); i++) {
                 listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
@@ -239,31 +268,33 @@ public class frmAltaVideo extends javax.swing.JDialog {
                 listModelCategoria.add(i, sys.listarCategorias().get(i));
             }
             lstAsignarCategoria.setModel(listModelCategoria);
-        }
-        
-               
+        }               
     }//GEN-LAST:event_formWindowActivated
 
     private void lstDuenioVideoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDuenioVideoMouseClicked
         // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
-        sys.seleccionarUsuario(lstDuenioVideo.getSelectedValue());
+        usrSeleccionado = lstDuenioVideo.getSelectedValue();
+        sys.seleccionarUsuario(usrSeleccionado);
     }//GEN-LAST:event_lstDuenioVideoMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // Al cerrar el formulario se borran todos los datos
-        listModelUsuario.clear();//Limpia el Modelo de Usuarios
-        lstDuenioVideo.setModel(listModelUsuario); //Borra todos los datos del JList DuenioVideo
-        listModelCategoria.clear();//Limpia el modeo de Categorias
-        lstAsignarCategoria.setModel(listModelCategoria);
-        txtNombre.setText("");
-        txtDescripcion.setText("");
-        txtUrl.setText("");
+        limpiarCampos();
+        limpiarListas();
     }//GEN-LAST:event_formWindowClosing
 
     private void lstAsignarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstAsignarCategoriaMouseClicked
         // Selecciona una categoria de la lista de categorias
         categoria = lstAsignarCategoria.getSelectedValue();
     }//GEN-LAST:event_lstAsignarCategoriaMouseClicked
+
+    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
+        // Al abrise el cuadro de dialogo se desactiva el formulario se limpian los datos de las listas
+//        listModelUsuario.clear();//Limpia la listaModeloUsuario
+//        lstDuenioVideo.setModel(listModelUsuario); //Borra todos los datos del JList DuenioVideo
+//        listModelCategoria.clear();//Limpia el modeo de Categorias
+//        lstAsignarCategoria.setModel(listModelCategoria);
+    }//GEN-LAST:event_formWindowDeactivated
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
