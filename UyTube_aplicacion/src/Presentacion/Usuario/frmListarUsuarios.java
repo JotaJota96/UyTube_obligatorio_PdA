@@ -49,42 +49,44 @@ public class frmListarUsuarios extends javax.swing.JDialog {
 
         jScrollPane10.setViewportView(lstListaDeUsuario);
 
-        lbListarUasario.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 250));
+        lbListarUasario.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 300, 250));
 
         jLabel60.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel60.setText("Usuarios:");
-        lbListarUasario.add(jLabel60, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        lbListarUasario.add(jLabel60, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
-        btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAceptarMouseClicked(evt);
             }
         });
-        lbListarUasario.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 140, 40));
+        lbListarUasario.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 300, 80));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbListarUasario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(lbListarUasario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbListarUasario, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(lbListarUasario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
-    }//GEN-LAST:event_btnAceptarActionPerformed
+    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+       dispose();
+    }//GEN-LAST:event_btnAceptarMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
