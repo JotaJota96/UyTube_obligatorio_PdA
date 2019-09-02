@@ -22,6 +22,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
     String enlace = "";
     
     public frmConsultaVideo(java.awt.Frame parent, boolean modal) {
+        // Constructor para abrir ventana desde la ventana principal
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -38,7 +39,35 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         }
         
     }
+    
+    public frmConsultaVideo(javax.swing.JDialog parent, boolean modal, String nickname, int idVideo) {
+        // Constructor para abrir ventana desde otro caso de uso
+        super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        limpiarElementosDeVentana();
+        try {
+            // obtiene la instancia de sistema
+            sys = Fabrica.getInstancia().getIAdmin();
 
+            // El sistema ya tiene un usuario seleccionado
+            // El sistema ya tiene un video seleccionado
+            
+            // lista usuarios en el JList
+            mostrarListaDeUsuarios(sys.listarUsuarios());
+            lstDuenioVideo.setSelectedValue(nickname, true);
+            lstVideoUsuario.setSelectedValue(sys.seleccionarVideo(idVideo).getNombre(), true);
+            //mostrarListaDeVideos(sys.listarVideosDeUsuario());
+            
+            lstDuenioVideo.setEnabled(false);
+            lstVideoUsuario.setEnabled(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+        
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

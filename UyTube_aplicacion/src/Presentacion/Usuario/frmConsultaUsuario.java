@@ -7,6 +7,7 @@ import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
+import Presentacion.Video.frmConsultaVideo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 public class frmConsultaUsuario extends javax.swing.JDialog {
 
     IAdmin sys;
+    ArrayList<DtVideo> listaDeVideos;
     
     public frmConsultaUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -194,6 +196,11 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel80.setText("Listas de Reproduccion:");
         jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 240, -1, -1));
 
+        lstVideos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstVideosMouseClicked(evt);
+            }
+        });
         jScrollPane20.setViewportView(lstVideos);
 
         jPanel6.add(jScrollPane20, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 200, 190));
@@ -247,7 +254,8 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
             DtCanal dtc = sys.obtenerCanalDeUsuario();
             cargarLabelsConDatosDelCanal(dtc);
             
-            listarVideos(sys.listarVideosDeUsuario());
+            listaDeVideos = sys.listarVideosDeUsuario();
+            listarVideos(listaDeVideos);
             listarListassRep(sys.listarListasDeReproduccionDeUsuario(nick));
             listarUsuariosSeguidores(sys.listarUsuarioSeguidores());
             listarUsuariosSeguidos(sys.listarUsuarioSeguidos());
@@ -267,6 +275,16 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
+        // Clic en listar videos
+        if (evt.getClickCount() != 2) return;
+        if (lstVideos.getSelectedIndex()<0) return;
+
+        int indexSeleccionado = lstVideos.getSelectedIndex();
+        int idVideo = listaDeVideos.get(indexSeleccionado).getId();
+        new frmConsultaVideo(this, true, lstUsuarios.getSelectedValue(), idVideo).setVisible(true);
+    }//GEN-LAST:event_lstVideosMouseClicked
     
     ///////////////////////////////////////////////////////////////////////////////////////////
     private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
