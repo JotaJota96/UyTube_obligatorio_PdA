@@ -9,22 +9,28 @@ import Presentacion.Video.*;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
-
-
+    
 public class frmPrincipal extends javax.swing.JFrame {
 
+    private boolean sesionIniciada;
+    
     public frmPrincipal() {
         initComponents();
-        
-        pnlFondo.setSize(this.getSize());
-        
+        // centra la ventana
         this.setLocationRelativeTo(null);
         
+        // carga la imagen de fondo
         this.lbFondo.setText(null);
         Image img3 = new ImageIcon("Imagenes/des.jpeg").getImage();
         ImageIcon img4 = new ImageIcon(img3.getScaledInstance(lbFondo.getWidth(), lbFondo.getHeight(), Image.SCALE_SMOOTH));
         lbFondo.setIcon(img4);
         
+        //#######  Descomentar la siguiente linea ###### //
+        //activarBarraDeMenu(false);
+        sesionIniciada = false;
+        mitCerrarSesion.setEnabled(false);
+        
+        // Carga los datos de prueba
         DatosDePrueba.cargarDatos();
     }
 
@@ -146,6 +152,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuUsuario.add(mitNuevoUsuario);
 
+        mitConsultaUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         mitConsultaUsuario.setText("Consultar Usuario");
         mitConsultaUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,12 +343,27 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void mitIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitIniciarSesionActionPerformed
         //Sesion->iniciarSecion
-        new frmInicioSesion(this, true).setVisible(true);
+        
+        frmInicioSesion login = new frmInicioSesion(this, true);
+        login.setVisible(true);
+        sesionIniciada = login.seInicioLaSesion();
+        
+        if (sesionIniciada){
+            activarBarraDeMenu(true);
+        mitCerrarSesion.setEnabled(true);
+        mitIniciarSesion.setEnabled(false);
+        }else{
+            activarBarraDeMenu(false);
+        }
     }//GEN-LAST:event_mitIniciarSesionActionPerformed
 
     private void mitCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitCerrarSesionActionPerformed
         //Sesion->cerrar secion
-        
+        sesionIniciada = false;
+        mitCerrarSesion.setEnabled(false);
+        mitIniciarSesion.setEnabled(true);
+        activarBarraDeMenu(false);
+
     }//GEN-LAST:event_mitCerrarSesionActionPerformed
 
     private void mitNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitNuevoUsuarioActionPerformed
@@ -460,6 +482,14 @@ public class frmPrincipal extends javax.swing.JFrame {
     private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_formPropertyChange
+
+    
+    private void activarBarraDeMenu(boolean b){
+        menuUsuario.setEnabled(b);
+        menuListaDeReproduccion.setEnabled(b);
+        menuVideo.setEnabled(b);
+        menuCategoria.setEnabled(b);
+    }
 
     /**
      * @param args the command line arguments

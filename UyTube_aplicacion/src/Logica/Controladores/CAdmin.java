@@ -620,7 +620,7 @@ public class CAdmin implements IAdmin{
     
     public boolean validarNuevaListaParticular(String nombre){
         /**
-         * Devuelve true si usuarioSeleccionado posee una lista de reproducion con ese nombre
+         * Devuelve false si usuarioSeleccionado posee una lista de reproducion con ese nombre
          */
         if (this.usuarioSeleccionado == null){
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
