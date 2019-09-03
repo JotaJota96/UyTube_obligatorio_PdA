@@ -55,7 +55,6 @@ public class CAdminTest {
         );
 
         System.out.println("Agregando categoria y lista por defecto");
-        instance.altaCategoria("UNDEFINED");
         instance.altaCategoria("ARTE");
         instance.altaListaDeReproduccionPorDefecto(
                 new DtListaDeReproduccion(0, "Favoritos", Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED")
