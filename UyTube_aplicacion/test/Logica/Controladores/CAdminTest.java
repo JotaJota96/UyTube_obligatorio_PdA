@@ -1334,7 +1334,7 @@ public class CAdminTest {
         instance.quitarVideoDeListaDeReproduccion(5);
         int despues = instance.listarVideosDeListaDeReproduccion().size();
         
-        assertNotEquals(antes, despues);
+        assertEquals(antes-1, despues);
     }
     
     
