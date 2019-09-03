@@ -3,6 +3,7 @@ package Presentacion.ListaDeReproduccion;
 import Logica.DataType.*;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
+import Presentacion.Video.frmConsultaVideo;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -12,21 +13,53 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
     Fabrica f = Fabrica.getInstancia();
     IAdmin Sys = f.getIAdmin();
     ArrayList<DtListaDeReproduccion> ListasDeReproducion;
+    ArrayList<DtVideo> Listavideos;
 
     public frmConsultaListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
-        this.setLocationRelativeTo(null);
+        
+        try {
+            initComponents();
+            this.setLocationRelativeTo(null);
 
-        ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
-        DefaultListModel modeloUsuario = new DefaultListModel();
+            ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
+            DefaultListModel modeloUsuario = new DefaultListModel();
 
-        for (DtUsuario it : ListaUsuarios) {
-            modeloUsuario.addElement(it.getNickname());
+            for (DtUsuario it : ListaUsuarios) {
+                modeloUsuario.addElement(it.getNickname());
+            }
+            lstUsuarios.setModel(modeloUsuario);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-        lstUsuarios.setModel(modeloUsuario);
-
     }
+    
+    public frmConsultaListaDeReproduccion(javax.swing.JDialog parent, boolean modal,String nickname, int idListaVideo) {
+        super(parent, modal);
+        try {
+            initComponents();
+            this.setLocationRelativeTo(null);
+
+            ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
+            DefaultListModel modeloUsuario = new DefaultListModel();
+
+            for (DtUsuario it : ListaUsuarios) {
+                modeloUsuario.addElement(it.getNickname());
+            }
+            lstUsuarios.setModel(modeloUsuario);
+
+            lstUsuarios.setSelectedValue(nickname, true);
+
+            lstListasRep.setSelectedValue(Sys.seleccionarListaDeReproduccion(idListaVideo).getNombre(), true);
+            lstListasRep.setEnabled(false);
+            lstUsuarios.setEnabled(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -80,6 +113,12 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
 
         jPanel20.add(jScrollPane37, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 240, 320));
 
+        lstVideos.setToolTipText("Doble clic para ver mas informacion de video");
+        lstVideos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstVideosMouseClicked(evt);
+            }
+        });
         jScrollPane38.setViewportView(lstVideos);
 
         jPanel20.add(jScrollPane38, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 240, 320));
@@ -196,7 +235,7 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
                 lbTipo.setText("  " + "PARTICULAR");
             }
 
-            ArrayList<DtVideo> Listavideos = Sys.listarVideosDeListaDeReproduccion();
+            Listavideos = Sys.listarVideosDeListaDeReproduccion();
             DefaultListModel modelo = new DefaultListModel();
             for (DtVideo it : Listavideos) {
                 modelo.addElement(it.getNombre());
@@ -207,6 +246,16 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_lstListasRepValueChanged
+
+    private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
+        if (evt.getClickCount() != 2) return;
+        if (lstVideos.getSelectedIndex()<0) return;
+
+        int indexSeleccionado = lstVideos.getSelectedIndex();
+        int idVideo = Listavideos.get(indexSeleccionado).getId();
+        
+        new frmConsultaVideo(this, true, lstUsuarios.getSelectedValue(), idVideo).setVisible(true);
+    }//GEN-LAST:event_lstVideosMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
