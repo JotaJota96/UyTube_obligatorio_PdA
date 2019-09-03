@@ -30,6 +30,7 @@ public class frmAcercaDeNos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Acerca de nos");
+        setResizable(false);
 
         jPanel10.setBackground(new java.awt.Color(20, 20, 20));
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
