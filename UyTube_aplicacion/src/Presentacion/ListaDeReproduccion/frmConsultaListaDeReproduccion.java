@@ -190,10 +190,10 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
             lbCategoria.setText("  " + dtLista.getCategoria());
             lbPrivacidad.setText("  " + dtLista.getPrivacidad().toString());
             if (dtLista.getTipo().toString() == "POR_DEFECTO") {
-                lbTipo.setText("  " + "Por defecto");
+                lbTipo.setText("  " + "POR DEFECTO");
             }
             if (dtLista.getTipo().toString() == "PARTICULAR") {
-                lbTipo.setText("  " + "Particular");
+                lbTipo.setText("  " + "PARTICULAR");
             }
 
             ArrayList<DtVideo> Listavideos = Sys.listarVideosDeListaDeReproduccion();
