@@ -22,37 +22,47 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         sys = Fabrica.getInstancia().getIAdmin();
-    }    
+    }  
+    
+    private void limpiarLstVideos(){
+        DefaultListModel modelo = new DefaultListModel();
+        lstVideos.setModel(modelo);
+        indexVideos.clear();
+    }
     
     private void cargarListaUsuarios(){
         DefaultListModel modelo = new DefaultListModel();
         if(!sys.listarUsuarios().isEmpty()){
             for(DtUsuario elem: sys.listarUsuarios()){
                 modelo.addElement(elem.getNickname());
+                System.out.println("Lista Usuarios, nombre: "+elem.getNickname());
             }
             lstUsuarios.setModel(modelo);                 
         } 
     }
     
-    private void cargarListaReproducion(){
+    private void cargarListaReproducion(ArrayList<DtListaDeReproduccion> dts){
+        indexListRes.clear();
         DefaultListModel modelo = new DefaultListModel();
-        if(!sys.listarListasDeReproduccionDeUsuario(usrSeleccionado).isEmpty()){
-            for (DtListaDeReproduccion elem : sys.listarListasDeReproduccionDeUsuario(usrSeleccionado)) {
+        if(!dts.isEmpty()){
+            for (DtListaDeReproduccion elem : dts) {
                 modelo.addElement(elem.getNombre());
                 indexListRes.add(elem.getId());//guarda todos los id en la misma posicion que el modelo
+                System.out.println("Lista Reprocuccion, nombre: "+elem.getNombre()+" id: "+elem.getId());
             }            
             lstListasRep.setModel(modelo);
-            lstListasRep.setSelectedIndex(0); //Selecciona le primer elemento
-            cargarListaVideos();
+            limpiarLstVideos();
         }
     }
     
     private void cargarListaVideos(){
+        indexVideos.clear();
         DefaultListModel modelo = new DefaultListModel();
         if(!sys.listarVideosDeListaDeReproduccion().isEmpty()){ //Obtiene los videos de la lista de reproduccion seleccionada
             for (DtVideo elem : sys.listarVideosDeListaDeReproduccion()) {
                 modelo.addElement(elem.getNombre());
                 indexVideos.add(elem.getId());//guarda todos los id en la misma posicion que el modelo
+                System.out.println("Lista Videos, nombre: "+elem.getNombre()+" id: "+elem.getId());
             }            
             lstVideos.setModel(modelo);                 
         }
@@ -205,8 +215,9 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
       //  limpiarListaRerp();//Borra la lista de reproduccion para mostrar las listas de reproduccion del usuario seleccionado         
         usrSeleccionado = lstUsuarios.getSelectedValue(); // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
         sys.seleccionarUsuario(usrSeleccionado); //Selecciona el usuarioSeleccionado
-        indexListRes.clear();
-        cargarListaReproducion();
+        ArrayList<DtListaDeReproduccion> dtListRep = new ArrayList<>();
+        dtListRep = sys.listarListasDeReproduccionDeUsuario(usrSeleccionado);
+        cargarListaReproducion(dtListRep);
     }//GEN-LAST:event_lstUsuariosMouseClicked
 
     private void lstListasRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListasRepMouseClicked
