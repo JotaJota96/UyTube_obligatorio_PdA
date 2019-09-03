@@ -77,9 +77,9 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         lstVideos = new javax.swing.JList<>();
         jScrollPane21 = new javax.swing.JScrollPane();
         lstListaReproduccion = new javax.swing.JList<>();
-        jLabel51 = new javax.swing.JLabel();
         lbNickName = new javax.swing.JLabel();
         lbCantSeguidos = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta usuario");
@@ -141,8 +141,9 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel30.setText("Canal:");
         jPanel6.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
 
+        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel32.setText("Descripcion:");
-        jPanel6.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, -1, -1));
+        jPanel6.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, -1, -1));
 
         txtDescripcion.setEditable(false);
         txtDescripcion.setColumns(20);
@@ -150,17 +151,16 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         txtDescripcion.setRows(5);
         jScrollPane5.setViewportView(txtDescripcion);
 
-        jPanel6.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 290, 100));
+        jPanel6.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, 390, 100));
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel6.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, 10, 560));
 
-        lbPrivacidad.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lbPrivacidad.setText(" ");
-        jPanel6.add(lbPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 450, 120, 40));
+        jPanel6.add(lbPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, 110, -1));
 
         lbNombreCanal.setText(" ");
-        jPanel6.add(lbNombreCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 110, -1));
+        jPanel6.add(lbNombreCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 110, -1));
         jPanel6.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 460, 10));
 
         jLabel39.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -196,6 +196,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel80.setText("Listas de Reproduccion:");
         jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 240, -1, -1));
 
+        lstVideos.setToolTipText("Doble clic para mas ver informacion del video");
         lstVideos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstVideosMouseClicked(evt);
@@ -205,12 +206,10 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
 
         jPanel6.add(jScrollPane20, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 200, 190));
 
+        lstListaReproduccion.setToolTipText("Doble clic para mas ver informacion de la lista");
         jScrollPane21.setViewportView(lstListaReproduccion);
 
         jPanel6.add(jScrollPane21, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 272, 190, 190));
-
-        jLabel51.setBorder(javax.swing.BorderFactory.createTitledBorder("Privacidad"));
-        jPanel6.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 410, 160, 110));
 
         lbNickName.setText(" ");
         jPanel6.add(lbNickName, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 200, -1));
@@ -218,25 +217,21 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         lbCantSeguidos.setText(" ");
         jPanel6.add(lbCantSeguidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, 100, -1));
 
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel31.setText("Privacidad:");
+        jPanel6.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -356,10 +351,10 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel80;
     private javax.swing.JPanel jPanel1;
