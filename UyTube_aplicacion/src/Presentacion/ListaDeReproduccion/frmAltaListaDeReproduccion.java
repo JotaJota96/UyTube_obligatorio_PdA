@@ -15,30 +15,35 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
     IAdmin Sys = f.getIAdmin();
     public frmAltaListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
         
-        try {
-            initComponents();
-            this.setLocationRelativeTo(null);
-            ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
-            DefaultListModel modeloUsuario = new DefaultListModel();
-            for (DtUsuario it : ListaUsuarios) {
-                modeloUsuario.addElement(it.getNickname());
-            }
-            lstUsuarios.setModel(modeloUsuario);
-            ArrayList<String> ListaCategoria = Sys.listarCategorias();
-            DefaultListModel modeloCategoria = new DefaultListModel();
-            for (String it : ListaCategoria) {
-                modeloCategoria.addElement(it);
-            }
-            lstCategorias.setModel(modeloCategoria);
-            lstCategorias.setSelectedIndex(0);
-            rbParticular.setSelected(true);
-            rbPublica.setSelected(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+      
+        
+        ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
+                
+        
+        DefaultListModel modeloUsuario = new DefaultListModel();
+        
+        for (DtUsuario it : ListaUsuarios) {
+            modeloUsuario.addElement(it.getNickname());
         }
-            
+        lstUsuarios.setModel(modeloUsuario);
         
+        
+         ArrayList<String> ListaCategoria = Sys.listarCategorias();
+                
+        
+        DefaultListModel modeloCategoria = new DefaultListModel();
+        
+        for (String it : ListaCategoria) {
+            modeloCategoria.addElement(it);
+        }
+        lstCategorias.setModel(modeloCategoria);
+        
+        lstCategorias.setSelectedIndex(0);
+        rbParticular.setSelected(true);
+        rbPublica.setSelected(true);
         }
 
     @SuppressWarnings("unchecked")
@@ -67,13 +72,18 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nueva lista de reproduccion");
-        setResizable(false);
 
         jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel100.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel100.setText("Nombre:");
         jPanel17.add(jLabel100, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, -1, -1));
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
         jPanel17.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 310, -1));
 
         jPanel18.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -228,13 +238,18 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-        
-       Sys.liberarMemoriaUsuario();
-       dispose();
+       
     }//GEN-LAST:event_btnAceptarMouseClicked
 
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+       if (!(Character.isDigit(evt.getKeyChar()) || Character.isLetter(evt.getKeyChar()))) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        Sys.liberarMemoriaUsuario();
+        txtNombre.setText("");
         dispose();
     }//GEN-LAST:event_btnCancelarMouseClicked
 

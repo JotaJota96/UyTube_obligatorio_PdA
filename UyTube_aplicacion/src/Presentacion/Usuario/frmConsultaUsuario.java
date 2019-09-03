@@ -1,6 +1,5 @@
 package Presentacion.Usuario;
 
-import Presentacion.ListaDeReproduccion.*;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
@@ -18,7 +17,6 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
 
     IAdmin sys;
     ArrayList<DtVideo> listaDeVideos;
-    ArrayList<DtListaDeReproduccion> listaDeListasRep;
     
     public frmConsultaUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -198,7 +196,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel80.setText("Listas de Reproduccion:");
         jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 240, -1, -1));
 
-        lstVideos.setToolTipText("Doble clic para ver mas informacion del video");
+        lstVideos.setToolTipText("Doble clic para mas ver informacion del video");
         lstVideos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstVideosMouseClicked(evt);
@@ -208,12 +206,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
 
         jPanel6.add(jScrollPane20, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 200, 190));
 
-        lstListaReproduccion.setToolTipText("Doble clic para ver mas informacion de la lista");
-        lstListaReproduccion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstListaReproduccionMouseClicked(evt);
-            }
-        });
+        lstListaReproduccion.setToolTipText("Doble clic para mas ver informacion de la lista");
         jScrollPane21.setViewportView(lstListaReproduccion);
 
         jPanel6.add(jScrollPane21, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 272, 190, 190));
@@ -258,8 +251,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
             
             listaDeVideos = sys.listarVideosDeUsuario();
             listarVideos(listaDeVideos);
-            listaDeListasRep = sys.listarListasDeReproduccionDeUsuario(nick);
-            listarListassRep(listaDeListasRep);
+            listarListassRep(sys.listarListasDeReproduccionDeUsuario(nick));
             listarUsuariosSeguidores(sys.listarUsuarioSeguidores());
             listarUsuariosSeguidos(sys.listarUsuarioSeguidos());
             
@@ -280,7 +272,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
-        // Doble clic en la lista de videos
+        // Clic en listar videos
         if (evt.getClickCount() != 2) return;
         if (lstVideos.getSelectedIndex()<0) return;
 
@@ -288,16 +280,6 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         int idVideo = listaDeVideos.get(indexSeleccionado).getId();
         new frmConsultaVideo(this, true, lstUsuarios.getSelectedValue(), idVideo).setVisible(true);
     }//GEN-LAST:event_lstVideosMouseClicked
-
-    private void lstListaReproduccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListaReproduccionMouseClicked
-        // Doble clic en la lista de Listas de reproduccion
-        if (evt.getClickCount() != 2) return;
-        if (lstListaReproduccion.getSelectedIndex()<0) return;
-
-        int indexSeleccionado = lstListaReproduccion.getSelectedIndex();
-        int idLista = listaDeListasRep.get(indexSeleccionado).getId();
-        new frmConsultaListaDeReproduccion(this, true, lstUsuarios.getSelectedValue(), idLista).setVisible(true);
-    }//GEN-LAST:event_lstListaReproduccionMouseClicked
     
     ///////////////////////////////////////////////////////////////////////////////////////////
     private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
