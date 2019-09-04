@@ -16,8 +16,9 @@ public class frmPrincipal extends javax.swing.JFrame {
     
     public frmPrincipal() {
         initComponents();
-        // centra la ventana
+        // centra la ventana y se maximiza
         this.setLocationRelativeTo(null);
+        this.setExtendedState(MAXIMIZED_BOTH);
         
         // carga la imagen de fondo
         this.lbFondo.setText(null);
@@ -66,6 +67,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         mitModificarUsuario = new javax.swing.JMenuItem();
         mitListarUsuarios = new javax.swing.JMenuItem();
         mitSeguirUsuario = new javax.swing.JMenuItem();
+        mitSeguirUsuario1 = new javax.swing.JMenuItem();
         menuVideo = new javax.swing.JMenu();
         mitNuevoVideo = new javax.swing.JMenuItem();
         mitModificarVideo = new javax.swing.JMenuItem();
@@ -100,20 +102,18 @@ public class frmPrincipal extends javax.swing.JFrame {
         setTitle("UyTube");
         setIconImage(getTconImage());
         setLocationByPlatform(true);
-        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                formPropertyChange(evt);
-            }
-        });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setMinimumSize(new java.awt.Dimension(800, 525));
+        setPreferredSize(new java.awt.Dimension(800, 525));
 
-        pnlFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlFondo.setBackground(new java.awt.Color(0, 0, 26));
+        pnlFondo.setLayout(new java.awt.GridLayout(1, 0));
 
+        lbFondo.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         lbFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbFondo.setText("Aqui va la imagen de fondo");
-        pnlFondo.add(lbFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1240, 710));
+        lbFondo.setText("(  >  ) UyTube");
+        pnlFondo.add(lbFondo);
 
-        getContentPane().add(pnlFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1240, 720));
+        getContentPane().add(pnlFondo, java.awt.BorderLayout.CENTER);
 
         jMenuBar1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
@@ -187,6 +187,15 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(mitSeguirUsuario);
+
+        mitSeguirUsuario1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mitSeguirUsuario1.setText("Dejar de seguir usuario");
+        mitSeguirUsuario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitSeguirUsuario1ActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(mitSeguirUsuario1);
 
         jMenuBar1.add(menuUsuario);
 
@@ -363,7 +372,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         mitCerrarSesion.setEnabled(false);
         mitIniciarSesion.setEnabled(true);
         activarBarraDeMenu(false);
-
     }//GEN-LAST:event_mitCerrarSesionActionPerformed
 
     private void mitNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitNuevoUsuarioActionPerformed
@@ -479,9 +487,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         new frmConsultaCategoria(this, true).setVisible(true);
     }//GEN-LAST:event_mitConsultarCategoriaActionPerformed
 
-    private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
+    private void mitSeguirUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitSeguirUsuario1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_formPropertyChange
+        new frmDejarDeSeguirUsuario(this, true).setVisible(true);
+    }//GEN-LAST:event_mitSeguirUsuario1ActionPerformed
 
     
     private void activarBarraDeMenu(boolean b){
@@ -569,6 +578,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mitNuevoVideo;
     private javax.swing.JMenuItem mitQuitarVideoDeListaDeReproduccion;
     private javax.swing.JMenuItem mitSeguirUsuario;
+    private javax.swing.JMenuItem mitSeguirUsuario1;
     private javax.swing.JMenuItem mitValorarVideo;
     private javax.swing.JDesktopPane pnlFondo;
     public static javax.swing.ButtonGroup privacidad_NuevaLR;
