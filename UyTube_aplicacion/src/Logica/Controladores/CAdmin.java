@@ -551,7 +551,7 @@ public class CAdmin implements IAdmin{
         if (idVideo == 0){
             throw new RuntimeException("El ID de video no es valido");
         }
-        usuarioSeleccionado.quitarVideoDeListaDeReproduccion(idListaSeleccionada, idVideoSeleccionado);
+        usuarioSeleccionado.quitarVideoDeListaDeReproduccion(idListaSeleccionada, idVideo);
     }
     
     public DtUsuario seleccionarUsuario(String nickname){

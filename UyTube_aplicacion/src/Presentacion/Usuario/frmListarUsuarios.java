@@ -9,25 +9,31 @@ import Logica.DataType.DtUsuario;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class frmListarUsuarios extends javax.swing.JDialog {
     public frmListarUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
-        this.setLocationRelativeTo(null);
         
-        Fabrica f = Fabrica.getInstancia();
-        IAdmin Sys = f.getIAdmin();
-        
-        ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
-                
-        
-        DefaultListModel modelo = new DefaultListModel();
-        
-        for (DtUsuario it : ListaUsuarios) {
-            modelo.addElement(it.getNickname());
+        try {
+            initComponents();
+            this.setLocationRelativeTo(null);
+
+            Fabrica f = Fabrica.getInstancia();
+            IAdmin Sys = f.getIAdmin();
+
+            ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
+
+            DefaultListModel modelo = new DefaultListModel();
+
+            for (DtUsuario it : ListaUsuarios) {
+                modelo.addElement(it.getNickname());
+            }
+            lstListaDeUsuario.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-        lstListaDeUsuario.setModel(modelo);
+        
         
         
     }
@@ -44,6 +50,7 @@ public class frmListarUsuarios extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listar usuarios");
+        setResizable(false);
 
         lbListarUasario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

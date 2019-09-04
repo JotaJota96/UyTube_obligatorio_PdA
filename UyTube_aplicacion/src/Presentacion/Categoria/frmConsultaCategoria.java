@@ -14,17 +14,21 @@ public class frmConsultaCategoria extends javax.swing.JDialog {
     String CategoriaActual;
     public frmConsultaCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
-        this.setLocationRelativeTo(null);
-        
-        
-        ArrayList<String> ListaCategorias = Sys.listarCategorias();
-        DefaultListModel modelo = new DefaultListModel();
-        
-        for (String it : ListaCategorias) {
-            modelo.addElement(it);
+        try {
+            initComponents();
+            this.setLocationRelativeTo(null);
+            ArrayList<String> ListaCategorias = Sys.listarCategorias();
+            DefaultListModel modelo = new DefaultListModel();
+
+            for (String it : ListaCategorias) {
+                modelo.addElement(it);
+            }
+            lstCategorias.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-        lstCategorias.setModel(modelo);
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -45,6 +49,7 @@ public class frmConsultaCategoria extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultar categoria");
+        setResizable(false);
 
         jPanel25.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
