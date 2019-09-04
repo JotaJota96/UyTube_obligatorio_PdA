@@ -19,10 +19,12 @@ import javax.swing.JOptionPane;
 public class frmModificarVideo extends javax.swing.JDialog {
     IAdmin sys;
     DefaultListModel s = new DefaultListModel();
+    boolean liberarMemoria;
     public frmModificarVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        liberarMemoria = true;
         
      
         
@@ -145,7 +147,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
         jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 210, 120));
 
         jLabel77.setText("Fecha publicación:");
-        jPanel14.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 330, -1, -1));
+        jPanel14.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, -1, -1));
 
         jLabel78.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel78.setText("Asignar categoría:");
@@ -181,7 +183,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
         jScrollPane19.setViewportView(lstCategorias);
 
         jPanel14.add(jScrollPane19, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 180, 400));
-        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 140, -1));
+        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, 180, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,7 +202,33 @@ public class frmModificarVideo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
+public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickname) {
+        super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        liberarMemoria = false;
+        try {
+            // obtiene la instancia de sistema
+            sys = Fabrica.getInstancia().getIAdmin();
+            
+            // Limpio la ventana
+           // limpiarElementosDeVentana();
+            
+            // lista usuarios y categorias en JList
+            listarUsuarios(sys.listarUsuarios());
+            lstDuenioVideo.setSelectedValue(nickname, true);
+            lstDuenioVideo.setEnabled(false);
+            
+            // Selecciono el usuario en la lista de usuarios
+            // deshabilito la lista de usuarios para que no lo cambien
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
+
+    
+    private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
         DefaultListModel modelo = new DefaultListModel();
         for (DtUsuario it : ListaUsuarios) {
             modelo.addElement(it.getNickname());
@@ -284,8 +312,10 @@ private void cargarDatosDeVideo(DtVideo v){
                                 JOptionPane.showMessageDialog(null, "No es posible hacer público un video si su canal es privado", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                             sys.modificarVideo(video);
-                            sys.liberarMemoriaListaDeReproduccion();
-                            sys.liberarMemoriaUsuario();
+                            
+                            if(liberarMemoria){
+                                sys.liberarMemoriaUsuario();
+                            }
                             sys.liberarMemoriaVideo();
 
                             JOptionPane.showMessageDialog(null, "Se han efectuado los cambios", "OK", JOptionPane.INFORMATION_MESSAGE);
@@ -302,8 +332,9 @@ private void cargarDatosDeVideo(DtVideo v){
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
             try{
-                    sys.liberarMemoriaListaDeReproduccion();
+                if(liberarMemoria){
                     sys.liberarMemoriaUsuario();
+                }
                     sys.liberarMemoriaVideo();
                     dispose();
                 } catch (Exception e) {
@@ -322,6 +353,7 @@ private void cargarDatosDeVideo(DtVideo v){
         spHora.setValue(0);
         spMinuto.setValue(0);
         spSegundos.setValue(0);
+        lstCategorias.clearSelection();
         String nick = lstDuenioVideo.getSelectedValue();
         sys.seleccionarUsuario(nick);
         listarVideos(sys.listarVideosDeUsuario());

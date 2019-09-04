@@ -34,6 +34,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         txtContraNueva1.setEnabled(false); // TODO add your handling code here:
         lbCN.setEnabled(false);
         lbRCN.setEnabled(false);
+        btnVideo.setEnabled(false);
+        btnListaReprodiccion.setEnabled(false);
 
          try {
             // obtiene la instancia de sistema
@@ -51,6 +53,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grpPrivacidad = new javax.swing.ButtonGroup();
         jPanel7 = new javax.swing.JPanel();
         jLabel126 = new javax.swing.JLabel();
         jLabel127 = new javax.swing.JLabel();
@@ -74,7 +77,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         jLabel134 = new javax.swing.JLabel();
         jScrollPane51 = new javax.swing.JScrollPane();
         txtDescrpcion = new javax.swing.JTextArea();
-        rbCambiarContra = new javax.swing.JRadioButton();
         btnListaReprodiccion = new javax.swing.JButton();
         btnVideo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -92,8 +94,10 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbRCN = new javax.swing.JLabel();
         lbCN = new javax.swing.JLabel();
         jLabel138 = new javax.swing.JLabel();
-        chkPrivado = new javax.swing.JCheckBox();
-        chkPublico = new javax.swing.JCheckBox();
+        chkPrivado = new javax.swing.JRadioButton();
+        chkPublico = new javax.swing.JRadioButton();
+        chkPrivado1 = new javax.swing.JRadioButton();
+        rbCambiarContra = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar usuario");
@@ -176,15 +180,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
         jPanel7.add(jScrollPane51, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 200, 160));
 
-        rbCambiarContra.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        rbCambiarContra.setText("Cambiar contraseña");
-        rbCambiarContra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbCambiarContraActionPerformed(evt);
-            }
-        });
-        jPanel7.add(rbCambiarContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 220, 20));
-
         btnListaReprodiccion.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnListaReprodiccion.setText("Lista de reproduccion");
         btnListaReprodiccion.addActionListener(new java.awt.event.ActionListener() {
@@ -201,7 +196,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 btnVideoActionPerformed(evt);
             }
         });
-        jPanel7.add(btnVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 420, 270, 50));
+        jPanel7.add(btnVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 400, 270, 50));
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -246,22 +241,20 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         jLabel138.setText("Fecha de Nac.");
         jPanel7.add(jLabel138, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, -1, -1));
 
-        chkPrivado.setText("Privado");
-        chkPrivado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkPrivadoActionPerformed(evt);
-            }
-        });
-        jPanel7.add(chkPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 260, -1, -1));
+        grpPrivacidad.add(chkPrivado);
+        chkPrivado.setText("Público");
+        jPanel7.add(chkPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
 
-        chkPublico.setSelected(true);
-        chkPublico.setText("Público");
-        chkPublico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkPublicoActionPerformed(evt);
-            }
-        });
-        jPanel7.add(chkPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 260, -1, -1));
+        grpPrivacidad.add(chkPublico);
+        chkPublico.setText("Privado");
+        jPanel7.add(chkPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 270, -1, -1));
+
+        grpPrivacidad.add(chkPrivado1);
+        chkPrivado1.setText("Público");
+        jPanel7.add(chkPrivado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
+
+        rbCambiarContra.setText("Cambiar contraseña");
+        jPanel7.add(rbCambiarContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -339,6 +332,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnListaReprodiccionActionPerformed
 
     private void btnVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVideoActionPerformed
+        new frmModificarVideo(this, true, lstUsuarios.getSelectedValue()).setVisible(true);
     }//GEN-LAST:event_btnVideoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -369,6 +363,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     
     private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
          try {
+             btnVideo.setEnabled(true);
+             btnListaReprodiccion.setEnabled(true);
             String nick = lstUsuarios.getSelectedValue();
             user = sys.seleccionarUsuario(nick);
             cargarDatosDelUsuario(user);
@@ -385,43 +381,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
   
     
     
-    private void rbCambiarContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCambiarContraActionPerformed
-        if((rbCambiarContra.isSelected())){
-            txtContraNueva.setEnabled(true); // TODO add your handling code here:
-            txtContraNueva1.setEnabled(true); // TODO add your handling code here:
-            lbCN.setEnabled(true);
-            lbRCN.setEnabled(true);
-            
-        }
-        else{
-            lbCN.setEnabled(false);
-            lbRCN.setEnabled(false);
-            txtContraNueva.setText("");
-            txtContraNueva1.setText("");
-            txtContraNueva.setEnabled(false); // TODO add your handling code here:
-            txtContraNueva1.setEnabled(false); // TODO add your handling code here:
-        }
-            
-            
-    }//GEN-LAST:event_rbCambiarContraActionPerformed
-
-    private void chkPrivadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPrivadoActionPerformed
-        if(chkPrivado.isSelected()){
-            chkPublico.setSelected(false);
-        }else{
-            chkPublico.setSelected(true);
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_chkPrivadoActionPerformed
-
-    private void chkPublicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPublicoActionPerformed
-        if(chkPublico.isSelected()){
-            chkPrivado.setSelected(false);
-        }else{
-            chkPrivado.setSelected(true);
-        }
-                // TODO add your handling code here:
-    }//GEN-LAST:event_chkPublicoActionPerformed
-
     
     private void cargarImagen(javax.swing.JLabel jLabelx) {
         JFileChooser jf = new JFileChooser();
@@ -459,8 +418,10 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSeleccionar;
     private javax.swing.JButton btnVideo;
-    private javax.swing.JCheckBox chkPrivado;
-    private javax.swing.JCheckBox chkPublico;
+    private javax.swing.JRadioButton chkPrivado;
+    public static javax.swing.JRadioButton chkPrivado1;
+    public static javax.swing.JRadioButton chkPublico;
+    private javax.swing.ButtonGroup grpPrivacidad;
     private javax.swing.JLabel jLabel126;
     private javax.swing.JLabel jLabel127;
     private javax.swing.JLabel jLabel128;
