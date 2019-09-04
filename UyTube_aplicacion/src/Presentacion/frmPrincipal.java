@@ -16,8 +16,9 @@ public class frmPrincipal extends javax.swing.JFrame {
     
     public frmPrincipal() {
         initComponents();
-        // centra la ventana
+        // centra la ventana y se maximiza
         this.setLocationRelativeTo(null);
+        this.setExtendedState(MAXIMIZED_BOTH);
         
         // carga la imagen de fondo
         this.lbFondo.setText(null);
@@ -100,20 +101,23 @@ public class frmPrincipal extends javax.swing.JFrame {
         setTitle("UyTube");
         setIconImage(getTconImage());
         setLocationByPlatform(true);
+        setMinimumSize(new java.awt.Dimension(800, 525));
+        setPreferredSize(new java.awt.Dimension(800, 525));
         addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 formPropertyChange(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlFondo.setBackground(new java.awt.Color(0, 0, 26));
+        pnlFondo.setLayout(new java.awt.GridLayout(1, 0));
 
+        lbFondo.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         lbFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbFondo.setText("Aqui va la imagen de fondo");
-        pnlFondo.add(lbFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1240, 710));
+        lbFondo.setText("(  >  ) UyTube");
+        pnlFondo.add(lbFondo);
 
-        getContentPane().add(pnlFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1240, 720));
+        getContentPane().add(pnlFondo, java.awt.BorderLayout.CENTER);
 
         jMenuBar1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
