@@ -180,9 +180,7 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        sys.liberarMemoriaUsuario();
-        sys.liberarMemoriaUsuarioActual();
-        sys.liberarMemoriaVideo();  
+        
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -223,7 +221,7 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
             }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }        //listaRep->agregarVideo->aceptar
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -239,7 +237,7 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
             listarVideos(listaDeVideos);
             
                 } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
         }       // TODO add your handling code here:
     }//GEN-LAST:event_lstUsuariosVValueChanged
@@ -257,7 +255,7 @@ if (evt.getValueIsAdjusting()) return;
             listarListassRep(listaDeListasRep);
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
         }        // TODO add your handling code here:
     }//GEN-LAST:event_lstUsuariosLValueChanged
@@ -269,7 +267,7 @@ if (evt.getValueIsAdjusting()) return;
              sys.seleccionarVideo(idVideo);
              }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }        // TODO add your handling code here:
     }//GEN-LAST:event_lstVideosValueChanged
 

@@ -181,7 +181,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
         jScrollPane19.setViewportView(lstCategorias);
 
         jPanel14.add(jScrollPane19, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 180, 400));
-        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 170, 20));
+        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 140, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -241,6 +241,9 @@ private void cargarDatosDeVideo(DtVideo v){
         }else{
             rbPrivado.setSelected(true);
         }
+        
+        lstCategorias.setSelectedValue(v.getCategoria(), true);
+
 }
 
 
