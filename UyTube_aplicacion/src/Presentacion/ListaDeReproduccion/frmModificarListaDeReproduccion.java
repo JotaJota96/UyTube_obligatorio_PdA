@@ -35,7 +35,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         }
     }
 
-    public frmModificarListaDeReproduccion(javax.swing.JDialog parent, boolean modal, String nickname, int idLista) {
+    public frmModificarListaDeReproduccion(javax.swing.JDialog parent, boolean modal, String nickname) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -43,18 +43,17 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
-
+            
+            // Limpio la ventana
             limpiarElementosDeVentana();
             
             // lista usuarios y categorias en JList
-            mostrarListaDeCategorias(sys.listarCategorias());
             mostrarListaDeUsuarios(sys.listarUsuarios());
+            mostrarListaDeCategorias(sys.listarCategorias());
+            // Selecciono el usuario en la lista de usuarios
             lstUsuarios.setSelectedValue(nickname, true);
-            lstListasRep.setSelectedValue(sys.seleccionarListaDeReproduccion(idLista).getNombre(), true);
-            
+            // deshabilito la lista de usuarios para que no lo cambien
             lstUsuarios.setEnabled(false);
-            lstListasRep.setEnabled(false);
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             dispose();
@@ -183,8 +182,8 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         try {
             if (liberarMemoria) {
                 sys.liberarMemoriaUsuario();
-                sys.liberarMemoriaListaDeReproduccion();
             }
+                sys.liberarMemoriaListaDeReproduccion();
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -219,8 +218,8 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
             
             if (liberarMemoria) {
                 sys.liberarMemoriaUsuario();
-                sys.liberarMemoriaListaDeReproduccion();
             }
+                sys.liberarMemoriaListaDeReproduccion();
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
