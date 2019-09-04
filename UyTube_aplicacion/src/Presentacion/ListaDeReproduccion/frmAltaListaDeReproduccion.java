@@ -176,6 +176,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         
         if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null,"El nombre de la lista de reproduccion no puede ser vacio", "Avertencia:", JOptionPane.WARNING_MESSAGE);
+            return;
         }
         
         if (rbPrivada.isSelected() == true) {
