@@ -306,7 +306,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
             rbPublica.setSelected(false);
             rbPrivada.setSelected(true);
         }
-        
+        lstCategorias.setEnabled(true);
         lstCategorias.setSelectedValue(dtl.getCategoria(), true);
         btnAceptar.setEnabled(true);
     }
@@ -321,7 +321,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         
         // desseleccionado de listas
         lstCategorias.clearSelection();
-        
+        lstCategorias.setEnabled(false);
         btnAceptar.setEnabled(false);
     }
     
