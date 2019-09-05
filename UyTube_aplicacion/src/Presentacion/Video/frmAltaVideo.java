@@ -10,6 +10,8 @@ import Logica.Interfaces.IAdmin;
 import java.awt.Color;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
@@ -26,6 +28,8 @@ public class frmAltaVideo extends javax.swing.JDialog {
     Border bordeDefault;
     Color colorOK = new ColorUIResource(40,167,69);
     Color colorError = new ColorUIResource(220,53,69);
+    // Patrón para validar el email
+    Pattern patronURL = Pattern.compile("\"(http://|https://)(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?\"");
     
     public frmAltaVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -50,6 +54,14 @@ public class frmAltaVideo extends javax.swing.JDialog {
         lstDuenioVideo.setModel(listModelUsuario); //Borra todos los datos del JList DuenioVideo
         listModelCategoria.clear();//Limpia el modeo de Categorias
         lstAsignarCategoria.setModel(listModelCategoria);
+    }
+    
+    private boolean validarFormatoURL(String _url){
+        Matcher mather = patronURL.matcher(_url); 
+        if (mather.find() == true) {
+            return true;
+        } 
+        return false;        
     }
     
     @SuppressWarnings("unchecked")

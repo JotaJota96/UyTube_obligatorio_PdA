@@ -8,12 +8,8 @@ import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.FocusTraversalPolicy;
 import java.awt.Image;
 import java.io.File;
-import java.sql.Date;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -53,7 +49,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         
     }
     
-    private boolean validarEmail(String _email){
+    private boolean validarFormatoEmail(String _email){
         Matcher mather = patronEmail.matcher(_email); 
         if (mather.find() == true) {
             return true;
@@ -105,7 +101,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                 }
             }
             else if(nombreCampo.equals("Email")){
-                if(!validarEmail(email)){
+                if(!validarFormatoEmail(email)){
                     lb.setText(" El Email no es válido");
                     cambiarColoresError(txt, lb);
                     System.out.println("Formato el email es "+email);
@@ -145,6 +141,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         txtDescripcion.setText("");
         txtNombreCanal.setText("");
         jDateChooser1.setDate(null);
+        lbImagen.setIcon(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -218,7 +215,18 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                 txtNombreFocusGained(evt);
             }
         });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreKeyPressed(evt);
+            }
+        });
         jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 270, -1));
+
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyPressed(evt);
+            }
+        });
         jPanel2.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 270, -1));
 
         txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -233,18 +241,27 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtEmailKeyTyped(evt);
             }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEmailKeyPressed(evt);
+            }
         });
         jPanel2.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 300, -1));
         jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 100, -1));
 
-        btSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btSeleccionar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btSeleccionar.setText("Selecionar");
         btSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSeleccionarActionPerformed(evt);
             }
         });
-        jPanel2.add(btSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 130, 70));
+        jPanel2.add(btSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 160, 60));
+
+        txtNombreCanal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreCanalKeyPressed(evt);
+            }
+        });
         jPanel2.add(txtNombreCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 280, -1));
 
         txtDescripcion.setColumns(20);
@@ -486,6 +503,34 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         lbMsjNombre.setText("");
         lbMsjNombre.setOpaque(false);
     }//GEN-LAST:event_txtNombreFocusGained
+
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                txtApellido.requestFocus();                
+        }
+    }//GEN-LAST:event_txtNombreKeyPressed
+
+    private void txtApellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                txtEmail.requestFocus();                
+        }
+    }//GEN-LAST:event_txtApellidoKeyPressed
+
+    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                jDateChooser1.requestFocus();                
+        }
+    }//GEN-LAST:event_txtEmailKeyPressed
+
+    private void txtNombreCanalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCanalKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                txtDescripcion.requestFocus();                
+        }
+    }//GEN-LAST:event_txtNombreCanalKeyPressed
 
     private void cargarImagen(javax.swing.JLabel jLabelx) {
         JFileChooser jf = new JFileChooser();
