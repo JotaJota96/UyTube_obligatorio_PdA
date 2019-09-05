@@ -9,6 +9,7 @@ import Presentacion.Video.*;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
     
 public class frmPrincipal extends javax.swing.JFrame {
 
@@ -19,6 +20,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         // centra la ventana y se maximiza
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
+        //tienes que agregar esto nada mas
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         
         // carga la imagen de fondo
         this.lbFondo.setText(null);
@@ -57,7 +60,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         tipo_nLR = new javax.swing.ButtonGroup();
         pnlFondo = new javax.swing.JDesktopPane();
         lbFondo = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        barraDeMenu = new javax.swing.JMenuBar();
         menuSesion = new javax.swing.JMenu();
         mitIniciarSesion = new javax.swing.JMenuItem();
         mitCerrarSesion = new javax.swing.JMenuItem();
@@ -104,6 +107,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(800, 525));
         setPreferredSize(new java.awt.Dimension(800, 525));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlFondo.setBackground(new java.awt.Color(0, 0, 26));
         pnlFondo.setLayout(new java.awt.GridLayout(1, 0));
@@ -115,7 +123,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(pnlFondo, java.awt.BorderLayout.CENTER);
 
-        jMenuBar1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        barraDeMenu.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         menuSesion.setText("Sesion");
         menuSesion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -138,7 +146,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuSesion.add(mitCerrarSesion);
 
-        jMenuBar1.add(menuSesion);
+        barraDeMenu.add(menuSesion);
 
         menuUsuario.setText("Usuario");
         menuUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -197,7 +205,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuUsuario.add(mitSeguirUsuario1);
 
-        jMenuBar1.add(menuUsuario);
+        barraDeMenu.add(menuUsuario);
 
         menuVideo.setText("Video");
         menuVideo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -247,7 +255,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuVideo.add(mitValorarVideo);
 
-        jMenuBar1.add(menuVideo);
+        barraDeMenu.add(menuVideo);
 
         menuListaDeReproduccion.setText("Lista de reproduccion");
         menuListaDeReproduccion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -297,7 +305,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuListaDeReproduccion.add(mitQuitarVideoDeListaDeReproduccion);
 
-        jMenuBar1.add(menuListaDeReproduccion);
+        barraDeMenu.add(menuListaDeReproduccion);
 
         menuCategoria.setText("Categoria");
         menuCategoria.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -329,7 +337,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuCategoria.add(mitListarCategorias);
 
-        jMenuBar1.add(menuCategoria);
+        barraDeMenu.add(menuCategoria);
 
         menuAbout.setText("About");
         menuAbout.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -343,9 +351,9 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuAbout.add(mitAcercaDeNos);
 
-        jMenuBar1.add(menuAbout);
+        barraDeMenu.add(menuAbout);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(barraDeMenu);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -492,6 +500,20 @@ public class frmPrincipal extends javax.swing.JFrame {
         new frmDejarDeSeguirUsuario(this, true).setVisible(true);
     }//GEN-LAST:event_mitSeguirUsuario1ActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // al cerrar la ventana
+        int exit = JOptionPane.showConfirmDialog(
+                this, /* Ventana padre*/
+                "¿Seguro que quieres salir?", /* mensaje */
+                "¿Seguro?", /* Titulo */
+                JOptionPane.YES_NO_OPTION,  /* opciones en botones */
+                JOptionPane.QUESTION_MESSAGE /* tipo de icono */
+        );
+        if (exit == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     
     private void activarBarraDeMenu(boolean b){
         menuUsuario.setEnabled(b);
@@ -546,8 +568,8 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar barraDeMenu;
     private javax.swing.JList<String> jList27;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JScrollPane jScrollPane36;

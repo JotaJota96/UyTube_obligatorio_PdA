@@ -72,7 +72,7 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
-    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+    <Menu class="javax.swing.JMenuBar" name="barraDeMenu">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="18" style="0"/>
@@ -399,10 +399,14 @@
     </Property>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="barraDeMenu"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="formPropertyChange"/>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
