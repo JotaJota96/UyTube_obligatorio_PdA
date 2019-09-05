@@ -31,7 +31,8 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
                 modeloCategoria.addElement(it);
             }
             lstCategorias.setModel(modeloCategoria);
-            lstCategorias.setSelectedIndex(0);
+            lstCategorias.setSelectedValue("UNDEFINED", true);
+            lstUsuarios.setSelectedIndex(0);
             rbParticular.setSelected(true);
             rbPublica.setSelected(true);
         } catch (Exception e) {
@@ -199,7 +200,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
                 Sys.altaListaDeReproduccionParticular(lst);
                 JOptionPane.showMessageDialog(null,"Lista particular creada", "Informacion:", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -218,7 +219,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null,"Lista por defecto creada", "Informacion:", JOptionPane.INFORMATION_MESSAGE);
                 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -227,7 +228,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             txtNombre.setText("");
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,(String)e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
         
        Sys.liberarMemoriaUsuario();
@@ -255,6 +256,8 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             lstCategorias.setEnabled(true);
             lstCategorias.clearSelection();
             lstUsuarios.clearSelection();
+            lstCategorias.setSelectedValue("UNDEFINED", true);
+            lstUsuarios.setSelectedIndex(0);
         }
     }//GEN-LAST:event_rbPorDefectoItemStateChanged
   
