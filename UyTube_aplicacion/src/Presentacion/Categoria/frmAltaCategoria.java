@@ -14,8 +14,7 @@ import javax.swing.plaf.ColorUIResource;
 
 public class frmAltaCategoria extends javax.swing.JDialog {
     
-    Fabrica fabrica = Fabrica.getInstancia();
-    IAdmin sys = fabrica.getIAdmin();
+    IAdmin sys;
     Border bordeDefault;
     Color colorOK = new ColorUIResource(40,167,69);
     Color colorError = new ColorUIResource(220,53,69);
@@ -25,6 +24,7 @@ public class frmAltaCategoria extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         bordeDefault = txtNombre.getBorder();
+        sys = Fabrica.getInstancia().getIAdmin();
     }
 
     @SuppressWarnings("unchecked")

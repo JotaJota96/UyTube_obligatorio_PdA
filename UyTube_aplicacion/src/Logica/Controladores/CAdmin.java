@@ -236,7 +236,7 @@ public class CAdmin implements IAdmin{
          * Verifica si existe un usuario con el mail recibido
          */
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
-            if (u.getValue().getCorreo() == email){
+            if (u.getValue().getCorreo().equals(email)){
                 return true;
             }
         }
