@@ -35,6 +35,8 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             lstUsuarios.setSelectedIndex(0);
             rbParticular.setSelected(true);
             rbPublica.setSelected(true);
+            
+            btnAceptar.setEnabled(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
@@ -75,6 +77,12 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         jLabel100.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel100.setText("Nombre:");
         jPanel17.add(jLabel100, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, -1, -1));
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
         jPanel17.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 310, -1));
 
         jPanel18.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -260,6 +268,14 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             lstUsuarios.setSelectedIndex(0);
         }
     }//GEN-LAST:event_rbPorDefectoItemStateChanged
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        if (!txtNombre.getText().isEmpty()) {
+            btnAceptar.setEnabled(true);
+        }else{
+            btnAceptar.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtNombreKeyReleased
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup GrupoPublicoPrivado;
