@@ -58,6 +58,7 @@ public class frmInicioSesion extends javax.swing.JDialog {
         txtContrasenia = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -135,17 +136,20 @@ public class frmInicioSesion extends javax.swing.JDialog {
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         //Sesion->iniciarSecion->iniciar
-        
-        int nro = Integer.parseInt(txtNroEmpleado.getText());
-        String contrasenia = txtContrasenia.getText();
-        this.resultado = sys.iniciarSesionAdministrador(nro, contrasenia);
-        
-        if (resultado){
-            dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "El número de empleado o la contraseña son incorrectos", "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
-            txtNroEmpleado.setText("");
-            txtContrasenia.setText("");
+        try {
+            int nro = Integer.parseInt(txtNroEmpleado.getText());
+            String contrasenia = txtContrasenia.getText();
+            this.resultado = sys.iniciarSesionAdministrador(nro, contrasenia);
+
+            if (resultado) {
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "El número de empleado o la contraseña son incorrectos", "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
+                txtNroEmpleado.setText("");
+                txtContrasenia.setText("");
+                btnIniciar.setEnabled(false);
+            }
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
 

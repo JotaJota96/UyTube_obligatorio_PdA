@@ -94,10 +94,9 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbRCN = new javax.swing.JLabel();
         lbCN = new javax.swing.JLabel();
         jLabel138 = new javax.swing.JLabel();
-        chkPrivado = new javax.swing.JRadioButton();
-        chkPublico = new javax.swing.JRadioButton();
-        chkPrivado1 = new javax.swing.JRadioButton();
-        rbCambiarContra = new javax.swing.JRadioButton();
+        chkCambiarContra = new javax.swing.JCheckBox();
+        rbPublico = new javax.swing.JRadioButton();
+        rbPrivado = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar usuario");
@@ -241,20 +240,21 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         jLabel138.setText("Fecha de Nac.");
         jPanel7.add(jLabel138, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, -1, -1));
 
-        grpPrivacidad.add(chkPrivado);
-        chkPrivado.setText("Público");
-        jPanel7.add(chkPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
+        chkCambiarContra.setText("Cambiar contraseña");
+        chkCambiarContra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkCambiarContraActionPerformed(evt);
+            }
+        });
+        jPanel7.add(chkCambiarContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
 
-        grpPrivacidad.add(chkPublico);
-        chkPublico.setText("Privado");
-        jPanel7.add(chkPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 270, -1, -1));
+        grpPrivacidad.add(rbPublico);
+        rbPublico.setText("Publico");
+        jPanel7.add(rbPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
 
-        grpPrivacidad.add(chkPrivado1);
-        chkPrivado1.setText("Público");
-        jPanel7.add(chkPrivado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
-
-        rbCambiarContra.setText("Cambiar contraseña");
-        jPanel7.add(rbCambiarContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
+        grpPrivacidad.add(rbPrivado);
+        rbPrivado.setText("Privado");
+        jPanel7.add(rbPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -291,17 +291,22 @@ public class frmModificarUsuario extends javax.swing.JDialog {
  
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
+            if(lstUsuarios.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Seleccione un usuario para modificar", "Error", JOptionPane.WARNING_MESSAGE);
+
+            }else{
             int anio = (Integer) spAnio.getValue();
             int mes = (Integer) spMes.getValue();
             int dia = (Integer) spDia.getValue();
             String pass = user.getContrasenia();
-            if (rbCambiarContra.isSelected()) {
+            if (chkCambiarContra.isSelected()) {
+                        
                 if (!(txtContraNueva.getText().equals("") && txtContraNueva1.getText().equals(""))) {
 
                     if (txtContraNueva.getText().equals(txtContraNueva1.getText())) {
                         pass = txtContraNueva.getText();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, no se pudo efectuar el cambio de contraseña", "OK", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, no se pudo efectuar el cambio de contraseña. Inténtelo de nuevo", "OK", JOptionPane.WARNING_MESSAGE);
                         return;
                     }
 
@@ -312,13 +317,19 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             }
         
                 DtUsuario u = new DtUsuario(user.getNickname(), pass, txtNombre.getText(), txtApellido.getText(), user.getCorreo(), new Date(anio, mes, dia), "imagen", PROPERTIES);
-                DtCanal c = new DtCanal(0, txtNombreCanal.getText(), txtDescrpcion.getText(), Privacidad.PRIVADO);
+                Privacidad priv;
+                if(rbPrivado.isSelected()){
+                    priv = Privacidad.PRIVADO;
+                }else{
+                    priv = Privacidad.PUBLICO;
+                }
+                DtCanal c = new DtCanal(0, txtNombreCanal.getText(), txtDescrpcion.getText(), priv);
                 sys.modificarUsuarioYCanal(u, c);
 
                 JOptionPane.showMessageDialog(null, "Datos modificados correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
              
-
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -329,6 +340,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnListaReprodiccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaReprodiccionActionPerformed
+        new frmModificarListaDeReproduccion(this,true,lstUsuarios.getSelectedValue()).setVisible(true);
     }//GEN-LAST:event_btnListaReprodiccionActionPerformed
 
     private void btnVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVideoActionPerformed
@@ -351,9 +363,9 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         txtNombreCanal.setText(c.getNombre());
         txtDescrpcion.setText(c.getDescripcion());
         if (c.getPrivacidad() == Privacidad.PUBLICO){
-            //rbPublico.ch;
+            rbPublico.setSelected(true);
         }else{
-          //  lbPrivacidad.setText("Privado");
+          rbPrivado.setSelected(true);
         }
     }
     
@@ -377,6 +389,20 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
         }        // TODO add your handling code here:
     }//GEN-LAST:event_lstUsuariosValueChanged
+
+    private void chkCambiarContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkCambiarContraActionPerformed
+        if(chkCambiarContra.isSelected()){
+            txtContraNueva.setEnabled(true);
+            txtContraNueva1.setEnabled(true);
+            lbCN.setEnabled(true);
+            lbRCN.setEnabled(true);
+        }else{
+             txtContraNueva.setEnabled(false);
+            txtContraNueva1.setEnabled(false);
+            lbCN.setEnabled(false);
+            lbRCN.setEnabled(false);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_chkCambiarContraActionPerformed
 
   
     
@@ -418,9 +444,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSeleccionar;
     private javax.swing.JButton btnVideo;
-    private javax.swing.JRadioButton chkPrivado;
-    public static javax.swing.JRadioButton chkPrivado1;
-    public static javax.swing.JRadioButton chkPublico;
+    private javax.swing.JCheckBox chkCambiarContra;
     private javax.swing.ButtonGroup grpPrivacidad;
     private javax.swing.JLabel jLabel126;
     private javax.swing.JLabel jLabel127;
@@ -447,7 +471,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel lbImagen;
     private javax.swing.JLabel lbRCN;
     private javax.swing.JList<String> lstUsuarios;
-    private javax.swing.JRadioButton rbCambiarContra;
+    private javax.swing.JRadioButton rbPrivado;
+    private javax.swing.JRadioButton rbPublico;
     private javax.swing.JSpinner spAnio;
     private javax.swing.JSpinner spDia;
     private javax.swing.JSpinner spMes;

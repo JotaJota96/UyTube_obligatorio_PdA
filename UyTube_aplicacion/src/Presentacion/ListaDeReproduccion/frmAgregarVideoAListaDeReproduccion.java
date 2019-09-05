@@ -15,6 +15,8 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
     IAdmin sys;
     ArrayList<DtVideo> listaDeVideos;
     ArrayList<DtListaDeReproduccion> listaDeListasRep;
+    
+    boolean liberarMemoria;
     public frmAgregarVideoAListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -41,6 +43,7 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
         lstUsuariosL.setModel(modelo);
         
     }
+   
     
     private void listarVideos(ArrayList<DtVideo> ListaVideos){
         DefaultListModel modelo = new DefaultListModel();
@@ -107,6 +110,11 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
 
         jPanel21.add(jScrollPane41, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 210, 290));
 
+        lstListasRep.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstListasRepValueChanged(evt);
+            }
+        });
         jScrollPane42.setViewportView(lstListasRep);
 
         jPanel21.add(jScrollPane42, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 240, 290));
@@ -201,6 +209,8 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
                         if (lstListasRep.isSelectionEmpty()) {
                             JOptionPane.showMessageDialog(null, "Debe seleccionar una lista para agregarle el video", "Error", JOptionPane.WARNING_MESSAGE);
                         } else {
+                             
+                            
                             int idLista = listaDeListasRep.get(lstListasRep.getSelectedIndex()).getId();
                             String nombreVideo = listaDeVideos.get(lstVideos.getSelectedIndex()).getNombre();
                             String nombreLista = listaDeListasRep.get(lstListasRep.getSelectedIndex()).getNombre();
@@ -212,7 +222,10 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
                             model1.clear();
                             lstUsuariosL.clearSelection();
                             lstUsuariosV.clearSelection();
+                            if(liberarMemoria){
                             sys.liberarMemoriaUsuario();
+                            }
+                            
                             sys.liberarMemoriaUsuarioActual();
                             sys.liberarMemoriaVideo();
                         }
@@ -225,6 +238,7 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
         }        //listaRep->agregarVideo->aceptar
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    
     private void lstUsuariosVValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosVValueChanged
         if (evt.getValueIsAdjusting()) return;
         if (lstUsuariosV.getSelectedIndex()<0) return;
@@ -271,6 +285,9 @@ if (evt.getValueIsAdjusting()) return;
         }        // TODO add your handling code here:
     }//GEN-LAST:event_lstVideosValueChanged
 
+    private void lstListasRepValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstListasRepValueChanged
+        // TODO add your handling code here:    }//GEN-LAST:event_lstListasRepValueChanged
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
