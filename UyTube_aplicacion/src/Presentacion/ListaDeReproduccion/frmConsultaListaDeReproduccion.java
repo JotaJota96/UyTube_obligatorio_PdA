@@ -14,10 +14,11 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
     IAdmin Sys = f.getIAdmin();
     ArrayList<DtListaDeReproduccion> ListasDeReproducion;
     ArrayList<DtVideo> Listavideos;
-
+    boolean liberarMemoria;
+    
     public frmConsultaListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+        liberarMemoria = true;
         try {
             initComponents();
             this.setLocationRelativeTo(null);
@@ -37,6 +38,7 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
     
     public frmConsultaListaDeReproduccion(javax.swing.JDialog parent, boolean modal,String nickname, int idListaVideo) {
         super(parent, modal);
+        liberarMemoria = false;
         try {
             initComponents();
             this.setLocationRelativeTo(null);
@@ -179,8 +181,10 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+        if (liberarMemoria){
+            Sys.liberarMemoriaUsuario();
+        }
         Sys.liberarMemoriaListaDeReproduccion();
-        Sys.liberarMemoriaUsuario();
         Sys.liberarMemoriaVideo();
 
         lstListasRep.clearSelection();
