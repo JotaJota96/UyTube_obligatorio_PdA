@@ -36,6 +36,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbRCN.setEnabled(false);
         btnVideo.setEnabled(false);
         btnListaReprodiccion.setEnabled(false);
+        desactivarCampos();
 
          try {
             // obtiene la instancia de sistema
@@ -54,14 +55,14 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private void initComponents() {
 
         grpPrivacidad = new javax.swing.ButtonGroup();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel126 = new javax.swing.JLabel();
-        jLabel127 = new javax.swing.JLabel();
+        lbMes = new javax.swing.JPanel();
+        lbNombre = new javax.swing.JLabel();
+        lbCorreo = new javax.swing.JLabel();
         jLabel128 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
-        jLabel130 = new javax.swing.JLabel();
+        lbImagen1 = new javax.swing.JLabel();
         spAnio = new javax.swing.JSpinner();
         spMes = new javax.swing.JSpinner();
         spDia = new javax.swing.JSpinner();
@@ -72,28 +73,28 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         btnSeleccionar = new javax.swing.JButton();
         jSeparator10 = new javax.swing.JSeparator();
         jLabel132 = new javax.swing.JLabel();
-        jLabel133 = new javax.swing.JLabel();
+        lbNombreC = new javax.swing.JLabel();
         txtNombreCanal = new javax.swing.JTextField();
-        jLabel134 = new javax.swing.JLabel();
+        lbDescripcion = new javax.swing.JLabel();
         jScrollPane51 = new javax.swing.JScrollPane();
         txtDescrpcion = new javax.swing.JTextArea();
         btnListaReprodiccion = new javax.swing.JButton();
         btnVideo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jPanel27 = new javax.swing.JPanel();
+        jpImagen = new javax.swing.JPanel();
         jSeparator6 = new javax.swing.JSeparator();
-        jLabel141 = new javax.swing.JLabel();
+        lbAnio = new javax.swing.JLabel();
         jLabel142 = new javax.swing.JLabel();
-        jLabel143 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
+        lbDia = new javax.swing.JLabel();
+        lbOpcional = new javax.swing.JLabel();
         lbImagen = new javax.swing.JLabel();
         txtContraNueva1 = new javax.swing.JTextField();
         txtContraNueva = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
-        jLabel135 = new javax.swing.JLabel();
+        lbApellido = new javax.swing.JLabel();
         lbRCN = new javax.swing.JLabel();
         lbCN = new javax.swing.JLabel();
-        jLabel138 = new javax.swing.JLabel();
+        lbFecha = new javax.swing.JLabel();
         chkCambiarContra = new javax.swing.JCheckBox();
         rbPublico = new javax.swing.JRadioButton();
         rbPrivado = new javax.swing.JRadioButton();
@@ -101,34 +102,34 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar usuario");
 
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        lbMes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel126.setText("Nombre");
-        jPanel7.add(jLabel126, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
+        lbNombre.setText("Nombre");
+        lbMes.add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
 
-        jLabel127.setText("Correo");
-        jPanel7.add(jLabel127, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, -1, -1));
+        lbCorreo.setText("Correo");
+        lbMes.add(lbCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, -1, -1));
 
         jLabel128.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel128.setText("Usuario");
-        jPanel7.add(jLabel128, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, -1, -1));
-        jPanel7.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 230, -1));
+        lbMes.add(jLabel128, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, -1, -1));
+        lbMes.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 230, -1));
 
         txtCorreo.setEnabled(false);
-        jPanel7.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 230, -1));
+        lbMes.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 230, -1));
 
         jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel7.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 10, 560));
+        lbMes.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 10, 560));
 
-        jLabel130.setText("Imagen");
-        jPanel7.add(jLabel130, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, 20));
-        jPanel7.add(spAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 60, -1));
-        jPanel7.add(spMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 40, -1));
-        jPanel7.add(spDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 40, -1));
+        lbImagen1.setText("Imagen");
+        lbMes.add(lbImagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, 20));
+        lbMes.add(spAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 60, -1));
+        lbMes.add(spMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 40, -1));
+        lbMes.add(spDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 40, -1));
 
         jLabel131.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel131.setText("Seleccionar usuario");
-        jPanel7.add(jLabel131, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        lbMes.add(jLabel131, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         lstUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -137,7 +138,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         });
         jScrollPane50.setViewportView(lstUsuarios);
 
-        jPanel7.add(jScrollPane50, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 260, 420));
+        lbMes.add(jScrollPane50, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 260, 420));
 
         btnModificar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnModificar.setText("Modificar");
@@ -146,7 +147,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel7.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 490, 270, 50));
+        lbMes.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 490, 270, 50));
 
         btnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSeleccionar.setText("Seleccionar");
@@ -157,27 +158,27 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 btnSeleccionarActionPerformed(evt);
             }
         });
-        jPanel7.add(btnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 120, 60));
+        lbMes.add(btnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 120, 60));
 
         jSeparator10.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel7.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 10, 560));
+        lbMes.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 10, 560));
 
         jLabel132.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel132.setText("Canal");
-        jPanel7.add(jLabel132, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, -1, -1));
+        lbMes.add(jLabel132, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, -1, -1));
 
-        jLabel133.setText("Nombre");
-        jPanel7.add(jLabel133, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 60, -1, -1));
-        jPanel7.add(txtNombreCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, 200, -1));
+        lbNombreC.setText("Nombre");
+        lbMes.add(lbNombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 60, -1, -1));
+        lbMes.add(txtNombreCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, 200, -1));
 
-        jLabel134.setText("Descripción");
-        jPanel7.add(jLabel134, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 100, -1, -1));
+        lbDescripcion.setText("Descripción");
+        lbMes.add(lbDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 100, -1, -1));
 
         txtDescrpcion.setColumns(20);
         txtDescrpcion.setRows(5);
         jScrollPane51.setViewportView(txtDescrpcion);
 
-        jPanel7.add(jScrollPane51, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 200, 160));
+        lbMes.add(jScrollPane51, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 200, 160));
 
         btnListaReprodiccion.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnListaReprodiccion.setText("Lista de reproduccion");
@@ -186,7 +187,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 btnListaReprodiccionActionPerformed(evt);
             }
         });
-        jPanel7.add(btnListaReprodiccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 340, 270, 50));
+        lbMes.add(btnListaReprodiccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 340, 270, 50));
 
         btnVideo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnVideo.setText("Video");
@@ -195,7 +196,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 btnVideoActionPerformed(evt);
             }
         });
-        jPanel7.add(btnVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 400, 270, 50));
+        lbMes.add(btnVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 400, 270, 50));
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -204,41 +205,41 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel7.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 260, 50));
+        lbMes.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 260, 50));
 
-        jPanel27.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel27.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel7.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 140, 110));
-        jPanel7.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 650, 20));
+        jpImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jpImagen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        lbMes.add(jpImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 140, 110));
+        lbMes.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 650, 20));
 
-        jLabel141.setText("Año");
-        jPanel7.add(jLabel141, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, -1, -1));
+        lbAnio.setText("Año");
+        lbMes.add(lbAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, -1, -1));
 
         jLabel142.setText("Mes");
-        jPanel7.add(jLabel142, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, -1, -1));
+        lbMes.add(jLabel142, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, -1, -1));
 
-        jLabel143.setText("Dia");
-        jPanel7.add(jLabel143, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, -1, -1));
+        lbDia.setText("Dia");
+        lbMes.add(lbDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, -1, -1));
 
-        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel33.setText("Opcional *");
-        jPanel7.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, -1, -1));
-        jPanel7.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 140, 110));
-        jPanel7.add(txtContraNueva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, 160, -1));
-        jPanel7.add(txtContraNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 160, -1));
-        jPanel7.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 230, -1));
+        lbOpcional.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbOpcional.setText("Opcional *");
+        lbMes.add(lbOpcional, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, -1, -1));
+        lbMes.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 140, 110));
+        lbMes.add(txtContraNueva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, 160, -1));
+        lbMes.add(txtContraNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 160, -1));
+        lbMes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 230, -1));
 
-        jLabel135.setText("Apellido");
-        jPanel7.add(jLabel135, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, -1, -1));
+        lbApellido.setText("Apellido");
+        lbMes.add(lbApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, -1, -1));
 
         lbRCN.setText("Repita contraseña");
-        jPanel7.add(lbRCN, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, -1, -1));
+        lbMes.add(lbRCN, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, -1, -1));
 
         lbCN.setText("Contraseña nueva");
-        jPanel7.add(lbCN, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, -1, -1));
+        lbMes.add(lbCN, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, -1, -1));
 
-        jLabel138.setText("Fecha de Nac.");
-        jPanel7.add(jLabel138, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, -1, -1));
+        lbFecha.setText("Fecha de Nac.");
+        lbMes.add(lbFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, -1, -1));
 
         chkCambiarContra.setText("Cambiar contraseña");
         chkCambiarContra.addActionListener(new java.awt.event.ActionListener() {
@@ -246,15 +247,15 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 chkCambiarContraActionPerformed(evt);
             }
         });
-        jPanel7.add(chkCambiarContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
+        lbMes.add(chkCambiarContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
 
         grpPrivacidad.add(rbPublico);
         rbPublico.setText("Publico");
-        jPanel7.add(rbPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
+        lbMes.add(rbPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
 
         grpPrivacidad.add(rbPrivado);
         rbPrivado.setText("Privado");
-        jPanel7.add(rbPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
+        lbMes.add(rbPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -264,7 +265,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -273,7 +274,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -286,6 +287,73 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         }
         lstUsuarios.setModel(modelo);
         
+    }
+ private void desactivarCampos(){
+        txtNombre.setEnabled(false);
+        txtContraNueva.setEnabled(false);
+        txtContraNueva1.setEnabled(false);
+        txtDescrpcion.setEnabled(false);
+        txtNombreCanal.setEnabled(false);
+        txtApellido.setEnabled(false);
+        spAnio.setEnabled(false);
+        spMes.setEnabled(false);
+        spDia.setEnabled(false);
+        lbImagen1.setEnabled(false);
+        lbDia.setEnabled(false);
+        lbMes.setEnabled(false);
+        lbAnio.setEnabled(false);
+        lbNombre.setEnabled(false);
+        lbApellido.setEnabled(false);
+        lbNombreC.setEnabled(false);
+        lbCorreo.setEnabled(false);
+        lbDescripcion.setEnabled(false);
+        lbFecha.setEnabled(false);
+        lbOpcional.setEnabled(false);
+        chkCambiarContra.setEnabled(false);
+        rbPublico.setEnabled(false);
+        rbPrivado.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnSeleccionar.setEnabled(false);
+        
+        
+        
+    }
+ private void activarCampos(){
+//        txtNombre.setEnabled(true);
+//        txtContraNueva.setEnabled(true);
+//        txtContraNueva1.setEnabled(true);
+//        txtDescrpcion.setEnabled(true);
+//        txtNombreCanal.setEnabled(true);
+//        txtApellido.setEnabled(true);
+//        spAnio.setEnabled(true);
+//        spMes.setEnabled(true);
+//        spDia.setEnabled(true);
+//        
+  txtNombre.setEnabled(true);
+        txtContraNueva.setEnabled(true);
+        txtContraNueva1.setEnabled(true);
+        txtDescrpcion.setEnabled(true);
+        txtNombreCanal.setEnabled(true);
+        txtApellido.setEnabled(true);
+        spAnio.setEnabled(true);
+        spMes.setEnabled(true);
+        spDia.setEnabled(true);
+        lbImagen1.setEnabled(true);
+        lbDia.setEnabled(true);
+        lbMes.setEnabled(true);
+        lbAnio.setEnabled(true);
+        lbNombre.setEnabled(true);
+        lbApellido.setEnabled(true);
+        lbNombreC.setEnabled(true);
+        lbCorreo.setEnabled(true);
+        lbDescripcion.setEnabled(true);
+        lbFecha.setEnabled(true);
+        lbOpcional.setEnabled(true);
+        chkCambiarContra.setEnabled(true);
+        rbPublico.setEnabled(true);
+        rbPrivado.setEnabled(true);
+        btnModificar.setEnabled(true);
+        btnSeleccionar.setEnabled(true);
     }
  
  
@@ -348,7 +416,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVideoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       
+        sys.liberarMemoriaUsuario();
+        dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
  private void cargarDatosDelUsuario(DtUsuario u){
         txtNombre.setText(u.getNombre());
@@ -375,6 +444,9 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     
     private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
          try {
+             if(! lstUsuarios.isSelectionEmpty()){
+                 activarCampos();
+             }
              btnVideo.setEnabled(true);
              btnListaReprodiccion.setEnabled(true);
             String nick = lstUsuarios.getSelectedValue();
@@ -446,29 +518,29 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private javax.swing.JButton btnVideo;
     private javax.swing.JCheckBox chkCambiarContra;
     private javax.swing.ButtonGroup grpPrivacidad;
-    private javax.swing.JLabel jLabel126;
-    private javax.swing.JLabel jLabel127;
     private javax.swing.JLabel jLabel128;
-    private javax.swing.JLabel jLabel130;
     private javax.swing.JLabel jLabel131;
     private javax.swing.JLabel jLabel132;
-    private javax.swing.JLabel jLabel133;
-    private javax.swing.JLabel jLabel134;
-    private javax.swing.JLabel jLabel135;
-    private javax.swing.JLabel jLabel138;
-    private javax.swing.JLabel jLabel141;
     private javax.swing.JLabel jLabel142;
-    private javax.swing.JLabel jLabel143;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JPanel jPanel27;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane50;
     private javax.swing.JScrollPane jScrollPane51;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JPanel jpImagen;
+    private javax.swing.JLabel lbAnio;
+    private javax.swing.JLabel lbApellido;
     private javax.swing.JLabel lbCN;
+    private javax.swing.JLabel lbCorreo;
+    private javax.swing.JLabel lbDescripcion;
+    private javax.swing.JLabel lbDia;
+    private javax.swing.JLabel lbFecha;
     private javax.swing.JLabel lbImagen;
+    private javax.swing.JLabel lbImagen1;
+    private javax.swing.JPanel lbMes;
+    private javax.swing.JLabel lbNombre;
+    private javax.swing.JLabel lbNombreC;
+    private javax.swing.JLabel lbOpcional;
     private javax.swing.JLabel lbRCN;
     private javax.swing.JList<String> lstUsuarios;
     private javax.swing.JRadioButton rbPrivado;

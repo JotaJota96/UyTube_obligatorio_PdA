@@ -228,6 +228,17 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
     }
 
     
+    private boolean existeVideo(String nombre){
+        String listaVideos = lstVideoUsuario.getModel().toString();
+            int intIndex = nombre.indexOf(listaVideos);
+          if(intIndex == - 1){
+             return true;
+          }else{
+             return false;
+            
+                        }
+        
+    }
     private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
         DefaultListModel modelo = new DefaultListModel();
         for (DtUsuario it : ListaUsuarios) {
@@ -290,7 +301,10 @@ private void cargarDatosDeVideo(DtVideo v){
                         if (txtURL.getText().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "La URL del video no puede ser vacía", "Error", JOptionPane.ERROR_MESSAGE);
                         } else {
-
+                            if(existeVideo(txtNombre.getText())){
+                            JOptionPane.showMessageDialog(null, "Ya existe este video en la lista seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
+                            }else{
+                            
                             int hora = (Integer) spHora.getValue();
                             int minuto = (Integer) spMinuto.getValue();
                             int segundo = (Integer) spSegundos.getValue();
@@ -321,7 +335,7 @@ private void cargarDatosDeVideo(DtVideo v){
                             JOptionPane.showMessageDialog(null, "Se han efectuado los cambios", "OK", JOptionPane.INFORMATION_MESSAGE);
                             dispose();
                         }
-                    }
+                    }}
                 }
             }
         } catch (Exception e) {

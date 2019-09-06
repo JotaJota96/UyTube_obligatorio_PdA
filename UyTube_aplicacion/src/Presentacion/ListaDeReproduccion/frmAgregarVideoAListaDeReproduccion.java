@@ -15,21 +15,22 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
     IAdmin sys;
     ArrayList<DtVideo> listaDeVideos;
     ArrayList<DtListaDeReproduccion> listaDeListasRep;
-    
+    ArrayList<DtVideo> dtv;
     boolean liberarMemoria;
     public frmAgregarVideoAListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         
+  
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
-
+           
             // lista usuarios en el JList
             listarUsuarios(sys.listarUsuarios());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         
@@ -44,7 +45,20 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
         
     }
    
+      private boolean habilitarAceptar(){
+         if(!(lstListasRep.isSelectionEmpty() ||
+            lstVideos.isSelectionEmpty() ||
+            lstUsuariosL.isSelectionEmpty() ||
+            lstUsuariosV.isSelectionEmpty()))
+         {
+             return true;
+         }else{
+             return false;
+         }
+    }
     
+    
+  
     private void listarVideos(ArrayList<DtVideo> ListaVideos){
         DefaultListModel modelo = new DefaultListModel();
         for (DtVideo it : ListaVideos) {
@@ -143,6 +157,7 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAceptar.setText("Agregar");
+        btnAceptar.setEnabled(false);
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -210,7 +225,7 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
                             JOptionPane.showMessageDialog(null, "Debe seleccionar una lista para agregarle el video", "Error", JOptionPane.WARNING_MESSAGE);
                         } else {
                              
-                            
+                          
                             int idLista = listaDeListasRep.get(lstListasRep.getSelectedIndex()).getId();
                             String nombreVideo = listaDeVideos.get(lstVideos.getSelectedIndex()).getNombre();
                             String nombreLista = listaDeListasRep.get(lstListasRep.getSelectedIndex()).getNombre();
@@ -249,11 +264,14 @@ public class frmAgregarVideoAListaDeReproduccion extends javax.swing.JDialog {
             
             listaDeVideos = sys.listarVideosDeUsuario();
             listarVideos(listaDeVideos);
+                    btnAceptar.setEnabled(habilitarAceptar());
+
+            
             
                 } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
-        }       // TODO add your handling code here:
+        }       // TODO add your handling code heres:
     }//GEN-LAST:event_lstUsuariosVValueChanged
 
     private void lstUsuariosLValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosLValueChanged
@@ -267,6 +285,8 @@ if (evt.getValueIsAdjusting()) return;
             
             listaDeListasRep = sys.listarListasDeReproduccionDeUsuario(nick);
             listarListassRep(listaDeListasRep);
+                    btnAceptar.setEnabled(habilitarAceptar());
+
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -278,7 +298,10 @@ if (evt.getValueIsAdjusting()) return;
          try {
              if(!(lstVideos.isSelectionEmpty())){
              int idVideo = listaDeVideos.get(lstVideos.getSelectedIndex()).getId();
+                     btnAceptar.setEnabled(habilitarAceptar());
+
              sys.seleccionarVideo(idVideo);
+             
              }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -286,6 +309,9 @@ if (evt.getValueIsAdjusting()) return;
     }//GEN-LAST:event_lstVideosValueChanged
 
     private void lstListasRepValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstListasRepValueChanged
+        btnAceptar.setEnabled(habilitarAceptar());
+ 
+        
         // TODO add your handling code here:    }//GEN-LAST:event_lstListasRepValueChanged
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
