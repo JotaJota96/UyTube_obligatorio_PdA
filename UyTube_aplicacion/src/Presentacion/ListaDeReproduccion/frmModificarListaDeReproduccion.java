@@ -235,20 +235,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
             
             String nick = lstUsuarios.getSelectedValue();
              sys.seleccionarUsuario(nick);
-             listaDeListas = sys.listarListasDeReproduccionDeUsuario(nick);
-             
-             System.out.println("OJO, si ves esto es que hay un parche sin solucionar");
-             System.out.println("    Revisar la funcion al seleccionar usuario en ventana Modificar lista de reproduccion");
-             /**
-              * Como el sistema no me da la lista de solo listas particulares tuve que hacer este for
-              */
-             for (int i = 0; i < listaDeListas.size(); i++){
-                 if (listaDeListas.get(i).getTipo() == TipoListaDeReproduccion.POR_DEFECTO){
-                     listaDeListas.remove(i);
-                     i--;
-                 }
-             }
-             
+             listaDeListas = sys.listarListasDeReproduccionParticularesDeUsuario();
             mostrarListaDeListasRep(listaDeListas);
             //limpiarElementosDeVentana();
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package Presentacion.Usuario;
 
+import Presentacion.ListaDeReproduccion.*;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
@@ -8,15 +9,18 @@ import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import Presentacion.Video.frmConsultaVideo;
+import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class frmConsultaUsuario extends javax.swing.JDialog {
 
     IAdmin sys;
     ArrayList<DtVideo> listaDeVideos;
+    ArrayList<DtListaDeReproduccion> listaDeListasRep;
     
     public frmConsultaUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -49,7 +53,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        lstImagen = new javax.swing.JLabel();
+        lbImagen = new javax.swing.JLabel();
         lbFechaN = new javax.swing.JLabel();
         lbEmail = new javax.swing.JLabel();
         lbApellido = new javax.swing.JLabel();
@@ -120,7 +124,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(lstImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 90));
+        jPanel1.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 90));
 
         jPanel6.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 100, 90));
         jPanel6.add(lbFechaN, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 200, 20));
@@ -197,7 +201,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel80.setText("Listas de Reproduccion:");
         jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 240, -1, -1));
 
-        lstVideos.setToolTipText("Doble clic para mas ver informacion del video");
+        lstVideos.setToolTipText("Doble clic para ver mas informacion del video");
         lstVideos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstVideosMouseClicked(evt);
@@ -207,7 +211,12 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
 
         jPanel6.add(jScrollPane20, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 200, 190));
 
-        lstListaReproduccion.setToolTipText("Doble clic para mas ver informacion de la lista");
+        lstListaReproduccion.setToolTipText("Doble clic para ver mas informacion de la lista");
+        lstListaReproduccion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstListaReproduccionMouseClicked(evt);
+            }
+        });
         jScrollPane21.setViewportView(lstListaReproduccion);
 
         jPanel6.add(jScrollPane21, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 272, 190, 190));
@@ -252,7 +261,8 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
             
             listaDeVideos = sys.listarVideosDeUsuario();
             listarVideos(listaDeVideos);
-            listarListassRep(sys.listarListasDeReproduccionDeUsuario(nick));
+            listaDeListasRep = sys.listarListasDeReproduccionDeUsuario(nick);
+            listarListassRep(listaDeListasRep);
             listarUsuariosSeguidores(sys.listarUsuarioSeguidores());
             listarUsuariosSeguidos(sys.listarUsuarioSeguidos());
             
@@ -273,7 +283,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
-        // Clic en listar videos
+        // Doble clic en la lista de videos
         if (evt.getClickCount() != 2) return;
         if (lstVideos.getSelectedIndex()<0) return;
 
@@ -281,6 +291,16 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         int idVideo = listaDeVideos.get(indexSeleccionado).getId();
         new frmConsultaVideo(this, true, lstUsuarios.getSelectedValue(), idVideo).setVisible(true);
     }//GEN-LAST:event_lstVideosMouseClicked
+
+    private void lstListaReproduccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListaReproduccionMouseClicked
+        // Doble clic en la lista de Listas de reproduccion
+        if (evt.getClickCount() != 2) return;
+        if (lstListaReproduccion.getSelectedIndex()<0) return;
+
+        int indexSeleccionado = lstListaReproduccion.getSelectedIndex();
+        int idLista = listaDeListasRep.get(indexSeleccionado).getId();
+        new frmConsultaListaDeReproduccion(this, true, lstUsuarios.getSelectedValue(), idLista).setVisible(true);
+    }//GEN-LAST:event_lstListaReproduccionMouseClicked
     
     ///////////////////////////////////////////////////////////////////////////////////////////
     private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
@@ -328,6 +348,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         lbEmail.setText(u.getCorreo());
         lbFechaN.setText(new SimpleDateFormat("dd-MM-yyyy").format(u.getFechaNacimiento()));
         lbCantSeguidores.setText(String.valueOf(u.getCantSeguidores()));
+        cargarImagenEnJlabel(lbImagen, u.getImagen());
     }
     private void cargarLabelsConDatosDelCanal(DtCanal c){
         lbNombreCanal.setText(c.getNombre());
@@ -337,6 +358,17 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         }else{
             lbPrivacidad.setText("Privado");
         }
+    }
+    private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta){
+        jLabelx.setText(null);
+        // Carga la imagen a la variable de tipo Image
+        Image img = new ImageIcon(Ruta).getImage();
+        // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
+        ImageIcon icono = new ImageIcon(
+                img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH)
+        );
+        // establece la imagen en el label
+        jLabelx.setIcon(icono);
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
     
@@ -374,11 +406,11 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel lbCantSeguidos;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbFechaN;
+    private javax.swing.JLabel lbImagen;
     private javax.swing.JLabel lbNickName;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbNombreCanal;
     private javax.swing.JLabel lbPrivacidad;
-    private javax.swing.JLabel lstImagen;
     private javax.swing.JList<String> lstListaReproduccion;
     private javax.swing.JList<String> lstSeguidores;
     private javax.swing.JList<String> lstSeguidos;

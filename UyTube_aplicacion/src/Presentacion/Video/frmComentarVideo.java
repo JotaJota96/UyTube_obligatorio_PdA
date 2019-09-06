@@ -69,8 +69,8 @@ public class frmComentarVideo extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         Comentador = new javax.swing.JList<>();
         jLabel50 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         DateCh = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comentar video");
@@ -161,10 +161,10 @@ public class frmComentarVideo extends javax.swing.JDialog {
         jLabel50.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel50.setText("Comentado:");
         jPanel6.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        jPanel6.add(DateCh, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 310, 30));
 
         jLabel1.setText("Fecha del comentario:");
         jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, -1, -1));
-        jPanel6.add(DateCh, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 370, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

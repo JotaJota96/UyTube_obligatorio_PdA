@@ -147,10 +147,8 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
             lstNoSeguido.setEnabled(true);
             lstNoSeguido.clearSelection();
 
-            ArrayList<DtUsuario> Seguidos = Sys.listarUsuarioSeguidos();
-            ArrayList<DtUsuario> NoSeguidos = new ArrayList(ListaTodosUsuarios);
-            quitarUsuariosSeguidos(NickName, NoSeguidos, Seguidos);
-
+            ArrayList<DtUsuario> NoSeguidos = Sys.listarUsuarioNoSeguidos();
+            
             DefaultListModel modelo = new DefaultListModel();
             for (DtUsuario it : NoSeguidos) {
                 modelo.addElement(it.getNickname());
@@ -163,24 +161,7 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSeguirActionPerformed
-    private void quitarUsuariosSeguidos(String yo, ArrayList<DtUsuario> ListaTodosUsuarios, ArrayList<DtUsuario> Seguidos) {
-        DtUsuario borrar = null;
-        for (DtUsuario ltu : ListaTodosUsuarios) {
-            if (ltu.getNickname() == yo) {
-                ListaTodosUsuarios.remove(ltu);
-                break;
-            }
-        }
-        for (DtUsuario s : Seguidos) {
-            for (DtUsuario ltu : ListaTodosUsuarios) {
-                if (ltu.getNickname() == s.getNickname()) {
-                    ListaTodosUsuarios.remove(ltu);
-                    break;
-                }
-            }
-        }
-        //debuelta un array (ListaTodosUsuarios) sin los seguidos
-    }
+
     private void lstSeguidorValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSeguidorValueChanged
         // SegidoRRR
         if (evt.getValueIsAdjusting()) {
@@ -198,10 +179,8 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
             lstNoSeguido.setEnabled(true);
             lstNoSeguido.clearSelection();
 
-            ArrayList<DtUsuario> Seguidos = Sys.listarUsuarioSeguidos();
-            ArrayList<DtUsuario> NoSeguidos = new ArrayList(ListaTodosUsuarios);
-            quitarUsuariosSeguidos(NickName, NoSeguidos, Seguidos);
-
+            ArrayList<DtUsuario> NoSeguidos = Sys.listarUsuarioNoSeguidos();
+            
             DefaultListModel modelo = new DefaultListModel();
             for (DtUsuario it : NoSeguidos) {
                 modelo.addElement(it.getNickname());

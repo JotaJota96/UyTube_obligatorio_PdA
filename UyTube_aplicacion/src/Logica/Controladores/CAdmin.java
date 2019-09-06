@@ -364,6 +364,42 @@ public class CAdmin implements IAdmin{
         return usuarioSeleccionado.listarUsuariosSeguidores();
     }
     
+    public ArrayList<DtUsuario> listarUsuarioNoSeguidos(){
+        /**
+         * Devuelve todos los usuarios a quienes sigue usuarioSeleccionado
+         */
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        // creo el array de retorno y obtengo la lista de usuarios seguidos
+        ArrayList<DtUsuario> noSeguidos = new ArrayList();
+        ArrayList<DtUsuario> seguidos = listarUsuarioSeguidos();
+        // para saber si hay que agregar a la lista de retorno o no
+        boolean agregar;
+        
+        // no quiero que incluya al usuario seleccinado, asi que lo agrego para excluirlo
+        seguidos.add(usuarioSeleccionado.getDT());
+        
+        // rrecorro los usuarios del sistema
+        for (Map.Entry<String, Usuario> u : usuarios.entrySet()) {
+            agregar = true;
+            // recorro los usuarios seguidos para ver si debo agregar a u al array de retorno
+            for (DtUsuario uSegido : seguidos){
+                // si encuentra coincidencia, no debo agregarlo ya que es un usuario seguido
+                if (u.getKey().equals(uSegido.getNickname())){
+                    // lo saco del array para ahorrar procesamiento
+                    seguidos.remove(uSegido);
+                    agregar = false;
+                    break;
+                }
+            }
+            if (agregar){
+                noSeguidos.add(u.getValue().getDT());
+            }
+        }
+        return noSeguidos;
+    }
+    
     public ArrayList<DtUsuario> listarUsuarioSeguidos(){
         /**
          * Devuelve todos los usuarios a quienes sigue usuarioSeleccionado
