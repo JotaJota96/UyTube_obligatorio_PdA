@@ -17,9 +17,10 @@ import javax.swing.tree.TreeModel;
 
 public class frmConsultaVideo extends javax.swing.JDialog {
 
-    IAdmin sys;
-    ArrayList<DtVideo> listaDeVideos;
-    String enlace = "";
+    private IAdmin sys;
+    private ArrayList<DtVideo> listaDeVideos;
+    private String enlace = "";
+    private boolean liberarMemoria;
     
     public frmConsultaVideo(java.awt.Frame parent, boolean modal) {
         // Constructor para abrir ventana desde la ventana principal
@@ -27,6 +28,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         limpiarElementosDeVentana();
+        liberarMemoria = true;
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
@@ -46,6 +48,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         limpiarElementosDeVentana();
+        liberarMemoria = false;
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
@@ -250,7 +253,9 @@ public class frmConsultaVideo extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
        // boton aceptar
         try {
-            sys.liberarMemoriaUsuario();
+            if (liberarMemoria){
+                sys.liberarMemoriaUsuario();
+            }
             sys.liberarMemoriaVideo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
