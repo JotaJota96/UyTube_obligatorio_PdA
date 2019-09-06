@@ -233,11 +233,12 @@ public class Canal {
         }
     }
 
-    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(boolean porDefecto) {
+    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(boolean soloParticulares) {
         ArrayList<DtListaDeReproduccion> ret = new ArrayList();
-        
+        // porDefecto = false --> lista todas las listas
+        // porDefecto = true --> lista solo las particulares
         for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
-            if(porDefecto && m.getValue().getTipo()==TipoListaDeReproduccion.PARTICULAR){
+            if(soloParticulares && m.getValue().getTipo()==TipoListaDeReproduccion.POR_DEFECTO){
                 continue;
             }
             ret.add(m.getValue().getDt());

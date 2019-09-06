@@ -844,7 +844,7 @@ public class CAdminTest {
         instance.seleccionarUsuario("usu3");
         ArrayList<DtListaDeReproduccion> result = instance.listarListasDeReproduccionParticularesDeUsuario();
         for (int i = 0; i < result.size(); i++) {
-            if (result.get(i).getTipo() == TipoListaDeReproduccion.PARTICULAR) {
+            if (result.get(i).getTipo() != TipoListaDeReproduccion.PARTICULAR) {
                 assertTrue(false);
                 return;
             }
