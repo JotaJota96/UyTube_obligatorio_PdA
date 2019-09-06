@@ -212,10 +212,18 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
     }//GEN-LAST:event_rbPorDefectoItemStateChanged
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
-        if (!txtNombre.getText().isEmpty() && !lstUsuarios.getSelectedValue().isEmpty()) {
-            btnAceptar.setEnabled(true);
+        if (rbParticular.isSelected()) {
+            if (!txtNombre.getText().isEmpty() && !lstUsuarios.getSelectedValue().isEmpty()) {
+                btnAceptar.setEnabled(true);
+            } else {
+                btnAceptar.setEnabled(false);
+            }
         } else {
-            btnAceptar.setEnabled(false);
+            if (!txtNombre.getText().isEmpty()) {
+                btnAceptar.setEnabled(true);
+            } else {
+                btnAceptar.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_txtNombreKeyReleased
 
@@ -228,7 +236,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             return;
         }
         if (lstUsuarios.getSelectedValue().isEmpty()) {
-             JOptionPane.showMessageDialog(null, "Deve seleccionar un usuario para continuar", "Avertencia:", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Deve seleccionar un usuario para continuar", "Avertencia:", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -284,10 +292,18 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
-        if (!txtNombre.getText().isEmpty() && !lstUsuarios.getSelectedValue().isEmpty()) {
-            btnAceptar.setEnabled(true);
+        if (rbParticular.isSelected()) {
+            if (!txtNombre.getText().isEmpty() && !lstUsuarios.getSelectedValue().isEmpty()) {
+                btnAceptar.setEnabled(true);
+            } else {
+                btnAceptar.setEnabled(false);
+            }
         } else {
-            btnAceptar.setEnabled(false);
+            if (!txtNombre.getText().isEmpty()) {
+                btnAceptar.setEnabled(true);
+            } else {
+                btnAceptar.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_lstUsuariosValueChanged
 
