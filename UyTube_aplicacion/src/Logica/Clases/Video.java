@@ -213,6 +213,7 @@ public class Video {
         }
         // Recorrer todas las valoraciones hasta encontrar la valoracion cuyo usuario sea el que tiene ese nickname
         // cuando la encuentre, la saca de la coleccion
+
         for(int i = 0; i < this.valoraciones.size(); i++){
             if(valoraciones.get(i).getNicknameDeUsuario().equals(nickname) ){
 
@@ -227,6 +228,7 @@ public class Video {
                 valoraciones.remove(i);
                 break;
             }
+
         }
     }
     

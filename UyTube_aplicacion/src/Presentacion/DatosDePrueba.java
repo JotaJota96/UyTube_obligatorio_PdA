@@ -96,7 +96,7 @@ public class DatosDePrueba {
         sys.seleccionarUsuarioActual("MCBolso");
         sys.seguirUsuario();
         sys.seleccionarUsuarioActual("camilillo15");
-        sys.seguirUsuario();
+        sys.seguirUsuario();        
         
         sys.liberarMemoriaUsuario();
         sys.liberarMemoriaUsuarioActual();
@@ -208,7 +208,7 @@ public class DatosDePrueba {
         );
         sys.liberarMemoriaUsuario();
         
-        
+     
     }
     
     private static void agregarVideosAListasDeReproduccion(){

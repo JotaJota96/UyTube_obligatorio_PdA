@@ -135,7 +135,7 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("La categoria no existe");
         }
         usuarioSeleccionado.agregarListaParticular(lista);
-        
+      
     }
     
     public void altaListaDeReproduccionPorDefecto(DtListaDeReproduccion lista){
@@ -236,7 +236,7 @@ public class CAdmin implements IAdmin{
          * Verifica si existe un usuario con el mail recibido
          */
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
-            if (u.getValue().getCorreo() == email){
+            if (u.getValue().getCorreo().equals(email)){
                 return true;
             }
         }
@@ -690,3 +690,4 @@ public class CAdmin implements IAdmin{
         return true;
     }
 }
+
