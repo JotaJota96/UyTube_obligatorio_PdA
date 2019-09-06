@@ -34,7 +34,6 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             }
             lstCategorias.setModel(modeloCategoria);
             lstCategorias.setSelectedValue("UNDEFINED", true);
-            lstUsuarios.setSelectedIndex(0);
             rbParticular.setSelected(true);
             rbPublica.setSelected(true);
 
@@ -192,8 +191,9 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             rbPrivada.setSelected(true);
             lstUsuarios.setEnabled(false);
             lstCategorias.setEnabled(false);
-            lstCategorias.clearSelection();
+            lstCategorias.setSelectedValue("UNDEFINED", true);
             lstUsuarios.clearSelection();
+            btnAceptar.setEnabled(false);
         } else {
             txtNombre.setText("");
             rbPublica.setEnabled(true);
@@ -202,7 +202,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             lstCategorias.clearSelection();
             lstUsuarios.clearSelection();
             lstCategorias.setSelectedValue("UNDEFINED", true);
-            lstUsuarios.setSelectedIndex(0);
+            btnAceptar.setEnabled(false);
         }
     }//GEN-LAST:event_rbPorDefectoItemStateChanged
 
