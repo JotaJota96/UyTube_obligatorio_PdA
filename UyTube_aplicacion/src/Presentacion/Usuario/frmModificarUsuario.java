@@ -61,9 +61,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
-        spAnio = new javax.swing.JSpinner();
-        spMes = new javax.swing.JSpinner();
-        spDia = new javax.swing.JSpinner();
         jLabel131 = new javax.swing.JLabel();
         jScrollPane50 = new javax.swing.JScrollPane();
         lstUsuarios = new javax.swing.JList<>();
@@ -82,9 +79,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         jpImagen = new javax.swing.JPanel();
         lbImg = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
-        lbAnio = new javax.swing.JLabel();
-        jLabel142 = new javax.swing.JLabel();
-        lbDia = new javax.swing.JLabel();
         lbOpcional = new javax.swing.JLabel();
         lbImagen = new javax.swing.JLabel();
         txtContraNueva1 = new javax.swing.JTextField();
@@ -98,6 +92,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         rbPublico = new javax.swing.JRadioButton();
         rbPrivado = new javax.swing.JRadioButton();
         lbImagen1 = new javax.swing.JLabel();
+        dcFecha = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar usuario");
@@ -120,9 +115,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
         jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
         lbMes.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 10, 560));
-        lbMes.add(spAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 60, -1));
-        lbMes.add(spMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 40, -1));
-        lbMes.add(spDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 40, -1));
 
         jLabel131.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel131.setText("Seleccionar usuario");
@@ -211,15 +203,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbMes.add(jpImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 140, 110));
         lbMes.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 650, 20));
 
-        lbAnio.setText("Año");
-        lbMes.add(lbAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, -1, -1));
-
-        jLabel142.setText("Mes");
-        lbMes.add(jLabel142, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, -1, -1));
-
-        lbDia.setText("Dia");
-        lbMes.add(lbDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, -1, -1));
-
         lbOpcional.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbOpcional.setText("Opcional *");
         lbMes.add(lbOpcional, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, -1, -1));
@@ -258,6 +241,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
         lbImagen1.setText("Imagen");
         lbMes.add(lbImagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, 20));
+        lbMes.add(dcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 170, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,13 +281,9 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         txtDescrpcion.setEnabled(false);
         txtNombreCanal.setEnabled(false);
         txtApellido.setEnabled(false);
-        spAnio.setEnabled(false);
-        spMes.setEnabled(false);
-        spDia.setEnabled(false);
+        dcFecha.setEnabled(false);
         lbImg.setEnabled(false);
-        lbDia.setEnabled(false);
         lbMes.setEnabled(false);
-        lbAnio.setEnabled(false);
         lbNombre.setEnabled(false);
         lbApellido.setEnabled(false);
         lbNombreC.setEnabled(false);
@@ -316,34 +296,22 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         rbPrivado.setEnabled(false);
         btnModificar.setEnabled(false);
         btnSeleccionar.setEnabled(false);
+        txtDescrpcion.setEnabled(false);
         
         
         
     }
  private void activarCampos(){
-//        txtNombre.setEnabled(true);
-//        txtContraNueva.setEnabled(true);
-//        txtContraNueva1.setEnabled(true);
-//        txtDescrpcion.setEnabled(true);
-//        txtNombreCanal.setEnabled(true);
-//        txtApellido.setEnabled(true);
-//        spAnio.setEnabled(true);
-//        spMes.setEnabled(true);
-//        spDia.setEnabled(true);
-//        
+    
   txtNombre.setEnabled(true);
         txtContraNueva.setEnabled(true);
         txtContraNueva1.setEnabled(true);
         txtDescrpcion.setEnabled(true);
         txtNombreCanal.setEnabled(true);
         txtApellido.setEnabled(true);
-        spAnio.setEnabled(true);
-        spMes.setEnabled(true);
-        spDia.setEnabled(true);
+        dcFecha.setEnabled(true);
         lbImg.setEnabled(true);
-        lbDia.setEnabled(true);
         lbMes.setEnabled(true);
-        lbAnio.setEnabled(true);
         lbNombre.setEnabled(true);
         lbApellido.setEnabled(true);
         lbNombreC.setEnabled(true);
@@ -356,6 +324,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         rbPrivado.setEnabled(true);
         btnModificar.setEnabled(true);
         btnSeleccionar.setEnabled(true);
+        txtDescrpcion.setEnabled(true);
     }
  
  private String seleccionarImagen() {
@@ -436,9 +405,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Seleccione un usuario para modificar", "Error", JOptionPane.WARNING_MESSAGE);
 
             }else{
-            int anio = (Integer) spAnio.getValue();
-            int mes = (Integer) spMes.getValue();
-            int dia = (Integer) spDia.getValue();
             String pass = user.getContrasenia();
             if (chkCambiarContra.isSelected()) {
                         
@@ -456,8 +422,12 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                     return;
                 }
             }
-        
-                DtUsuario u = new DtUsuario(user.getNickname(), pass, txtNombre.getText(), txtApellido.getText(), user.getCorreo(), new Date(anio, mes, dia), ruta, PROPERTIES);
+                java.sql.Date fecha = null; //casteo fecha
+                            if (dcFecha.getDate() != null) {
+                                java.util.Date utilDate = dcFecha.getDate();
+                                fecha = new java.sql.Date(utilDate.getTime());
+                            }
+                DtUsuario u = new DtUsuario(user.getNickname(), pass, txtNombre.getText(), txtApellido.getText(), user.getCorreo(), fecha, ruta, PROPERTIES);
                 Privacidad priv;
                 if(rbPrivado.isSelected()){
                     priv = Privacidad.PRIVADO;
@@ -498,10 +468,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
  private void cargarDatosDelUsuario(DtUsuario u){
         txtNombre.setText(u.getNombre());
         txtApellido.setText(u.getApellido());
-        txtCorreo.setText(u.getCorreo());        
-        spAnio.setValue(u.getFechaNacimiento().getYear());
-        spMes.setValue(u.getFechaNacimiento().getMonth());
-        spDia.setValue(u.getFechaNacimiento().getDay());
+        txtCorreo.setText(u.getCorreo());   
+        dcFecha.setDate(u.getFechaNacimiento());
         cargarImagenEnJlabel(lbImg, u.getImagen());
         
     }
@@ -567,23 +535,21 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private javax.swing.JButton btnSeleccionar;
     private javax.swing.JButton btnVideo;
     private javax.swing.JCheckBox chkCambiarContra;
+    private com.toedter.calendar.JDateChooser dcFecha;
     private javax.swing.ButtonGroup grpPrivacidad;
     private javax.swing.JLabel jLabel128;
     private javax.swing.JLabel jLabel131;
     private javax.swing.JLabel jLabel132;
-    private javax.swing.JLabel jLabel142;
     private javax.swing.JScrollPane jScrollPane50;
     private javax.swing.JScrollPane jScrollPane51;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JPanel jpImagen;
-    private javax.swing.JLabel lbAnio;
     private javax.swing.JLabel lbApellido;
     private javax.swing.JLabel lbCN;
     private javax.swing.JLabel lbCorreo;
     private javax.swing.JLabel lbDescripcion;
-    private javax.swing.JLabel lbDia;
     private javax.swing.JLabel lbFecha;
     private javax.swing.JLabel lbImagen;
     private javax.swing.JLabel lbImagen1;
@@ -596,9 +562,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private javax.swing.JList<String> lstUsuarios;
     private javax.swing.JRadioButton rbPrivado;
     private javax.swing.JRadioButton rbPublico;
-    private javax.swing.JSpinner spAnio;
-    private javax.swing.JSpinner spDia;
-    private javax.swing.JSpinner spMes;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtContraNueva;
     private javax.swing.JTextField txtContraNueva1;

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 public class frmModificarVideo extends javax.swing.JDialog {
     IAdmin sys;
@@ -183,7 +184,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
         jScrollPane19.setViewportView(lstCategorias);
 
         jPanel14.add(jScrollPane19, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 180, 400));
-        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, 180, -1));
+        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 340, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,16 +229,24 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
     }
 
     
-    private boolean existeVideo(String nombre){
-        String listaVideos = lstVideoUsuario.getModel().toString();
-            int intIndex = nombre.indexOf(listaVideos);
-          if(intIndex == - 1){
-             return true;
-          }else{
-             return false;
-            
-                        }
-        
+ private void habilitarModificar() {
+        if (!lstVideoUsuario.isSelectionEmpty()) {
+            btnModificar.setEnabled(true);
+        } else {
+            btnModificar.setEnabled(false);
+        }
+    }
+
+ private boolean existeVideo(String nombre) {
+        ListModel<String> lst = lstVideoUsuario.getModel();
+        for (int i = 0; i < lst.getSize(); i++) {
+            if (lst.getElementAt(i).equals(nombre)) {
+                return true;
+            }
+
+        }
+        return false;
+
     }
     private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
         DefaultListModel modelo = new DefaultListModel();
@@ -371,6 +380,8 @@ private void cargarDatosDeVideo(DtVideo v){
         String nick = lstDuenioVideo.getSelectedValue();
         sys.seleccionarUsuario(nick);
         listarVideos(sys.listarVideosDeUsuario());
+                    habilitarModificar();
+
     }//GEN-LAST:event_lstDuenioVideoValueChanged
 
     private void lstVideoUsuarioValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstVideoUsuarioValueChanged
@@ -378,6 +389,7 @@ private void cargarDatosDeVideo(DtVideo v){
         if (lstVideoUsuario.getSelectedIndex()<0) return;
 
         try {
+                        habilitarModificar();
             String nombre = lstVideoUsuario.getSelectedValue();
             ArrayList<DtVideo> arr = sys.listarVideosDeUsuario();
             int idVideo = arr.get(lstVideoUsuario.getSelectedIndex()).getId();
@@ -392,7 +404,7 @@ private void cargarDatosDeVideo(DtVideo v){
     }//GEN-LAST:event_lstVideoUsuarioValueChanged
 
     private void rbPrivadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPrivadoActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code heres:
     }//GEN-LAST:event_rbPrivadoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
