@@ -9,9 +9,11 @@ import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import Presentacion.Video.frmConsultaVideo;
+import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class frmConsultaUsuario extends javax.swing.JDialog {
@@ -51,7 +53,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        lstImagen = new javax.swing.JLabel();
+        lbImagen = new javax.swing.JLabel();
         lbFechaN = new javax.swing.JLabel();
         lbEmail = new javax.swing.JLabel();
         lbApellido = new javax.swing.JLabel();
@@ -122,7 +124,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(lstImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 90));
+        jPanel1.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 90));
 
         jPanel6.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 100, 90));
         jPanel6.add(lbFechaN, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 200, 20));
@@ -346,6 +348,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         lbEmail.setText(u.getCorreo());
         lbFechaN.setText(new SimpleDateFormat("dd-MM-yyyy").format(u.getFechaNacimiento()));
         lbCantSeguidores.setText(String.valueOf(u.getCantSeguidores()));
+        cargarImagenEnJlabel(lbImagen, u.getImagen());
     }
     private void cargarLabelsConDatosDelCanal(DtCanal c){
         lbNombreCanal.setText(c.getNombre());
@@ -355,6 +358,17 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         }else{
             lbPrivacidad.setText("Privado");
         }
+    }
+    private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta){
+        jLabelx.setText(null);
+        // Carga la imagen a la variable de tipo Image
+        Image img = new ImageIcon(Ruta).getImage();
+        // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
+        ImageIcon icono = new ImageIcon(
+                img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH)
+        );
+        // establece la imagen en el label
+        jLabelx.setIcon(icono);
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
     
@@ -392,11 +406,11 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel lbCantSeguidos;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbFechaN;
+    private javax.swing.JLabel lbImagen;
     private javax.swing.JLabel lbNickName;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbNombreCanal;
     private javax.swing.JLabel lbPrivacidad;
-    private javax.swing.JLabel lstImagen;
     private javax.swing.JList<String> lstListaReproduccion;
     private javax.swing.JList<String> lstSeguidores;
     private javax.swing.JList<String> lstSeguidos;
