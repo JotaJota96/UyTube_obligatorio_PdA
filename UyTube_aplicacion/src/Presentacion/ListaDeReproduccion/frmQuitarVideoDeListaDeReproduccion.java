@@ -21,7 +21,11 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        sys = Fabrica.getInstancia().getIAdmin();
+        try {
+            sys = Fabrica.getInstancia().getIAdmin();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }        
     }  
     
     private void limpiarLstVideos(){
@@ -32,13 +36,18 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
     
     private void cargarListaUsuarios(){
         DefaultListModel modelo = new DefaultListModel();
-        if(!sys.listarUsuarios().isEmpty()){
+        try {
+           if(!sys.listarUsuarios().isEmpty()){
             for(DtUsuario elem: sys.listarUsuarios()){
                 modelo.addElement(elem.getNickname());
                 System.out.println("Lista Usuarios, nombre: "+elem.getNickname());
             }
             lstUsuarios.setModel(modelo);                 
-        } 
+        }  
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
     
     private void cargarListaReproducion(ArrayList<DtListaDeReproduccion> dts){
@@ -48,7 +57,6 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
             for (DtListaDeReproduccion elem : dts) {
                 modelo.addElement(elem.getNombre());
                 indexListRes.add(elem.getId());//guarda todos los id en la misma posicion que el modelo
-                System.out.println("Lista Reprocuccion, nombre: "+elem.getNombre()+" id: "+elem.getId());
             }            
             lstListasRep.setModel(modelo);
             limpiarLstVideos();
@@ -58,7 +66,8 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
     private void cargarListaVideos(){
         indexVideos.clear();
         DefaultListModel modelo = new DefaultListModel();
-        if(!sys.listarVideosDeListaDeReproduccion().isEmpty()){ //Obtiene los videos de la lista de reproduccion seleccionada
+        try {
+            if(!sys.listarVideosDeListaDeReproduccion().isEmpty()){ //Obtiene los videos de la lista de reproduccion seleccionada
             for (DtVideo elem : sys.listarVideosDeListaDeReproduccion()) {
                 modelo.addElement(elem.getNombre());
                 indexVideos.add(elem.getId());//guarda todos los id en la misma posicion que el modelo
@@ -66,6 +75,10 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
             }            
             lstVideos.setModel(modelo);                 
         }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
 
     /**
@@ -203,7 +216,7 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
                 sys.quitarVideoDeListaDeReproduccion(idVideo);//Elimina el video de la lista de reproduccion
             }                
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Se produjo un error al intentar quitar el video.", "Quitar Video", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         } 
     }//GEN-LAST:event_btnQuitarActionPerformed
 
@@ -214,16 +227,26 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
     private void lstUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstUsuariosMouseClicked
       //  limpiarListaRerp();//Borra la lista de reproduccion para mostrar las listas de reproduccion del usuario seleccionado         
         usrSeleccionado = lstUsuarios.getSelectedValue(); // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
-        sys.seleccionarUsuario(usrSeleccionado); //Selecciona el usuarioSeleccionado
-        ArrayList<DtListaDeReproduccion> dtListRep = new ArrayList<>();
-        dtListRep = sys.listarListasDeReproduccionDeUsuario(usrSeleccionado);
-        cargarListaReproducion(dtListRep);
+        try {
+            sys.seleccionarUsuario(usrSeleccionado); //Selecciona el usuarioSeleccionado
+            ArrayList<DtListaDeReproduccion> dtListRep = new ArrayList<>();
+            dtListRep = sys.listarListasDeReproduccionDeUsuario(usrSeleccionado);
+            cargarListaReproducion(dtListRep);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_lstUsuariosMouseClicked
 
     private void lstListasRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListasRepMouseClicked
-        idListaRep=indexListRes.get(lstListasRep.getSelectedIndex());
-        DtListaDeReproduccion dt = sys.seleccionarListaDeReproduccion(idListaRep);//Selecciona la lista de reproduccion        
-        cargarListaVideos();                //Carga los videos de la lista seleccionada      
+        try {
+            idListaRep=indexListRes.get(lstListasRep.getSelectedIndex());
+            DtListaDeReproduccion dt = sys.seleccionarListaDeReproduccion(idListaRep);//Selecciona la lista de reproduccion        
+            cargarListaVideos();                //Carga los videos de la lista seleccionada 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+             
     }//GEN-LAST:event_lstListasRepMouseClicked
 
     private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked

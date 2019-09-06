@@ -39,6 +39,12 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     String email = new String();
     String nombre = new String();
     String apellido = new String();
+    String nombreCanal = new String();
+    String descripcion = new String();
+    Privacidad privacidad = Privacidad.PRIVADO;
+    String imagen = new String();
+    
+    java.sql.Date fecha = null;
     
     public frmAltaUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -61,14 +67,14 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         Matcher mather = patronNombres.matcher(_nombre); 
         if (mather.find() == true) {
             return true;
-        } else {
-            return false;
-        }
+        } 
+        return false;
+        
     }
     
     private boolean validarTxt(JTextField txt, int largo,JLabel lb,String nombreCampo){
         try{
-            if(txt.getText().length() > largo){
+            if(txt.getText().length() > largo ){
                 lb.setText(" El campo supera los "+largo+" caracteres");
                 cambiarColoresError(txt, lb);
                 return false;
@@ -83,8 +89,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                     lb.setText(" El nickname \"" + nickname + "\" ya existe");
                     cambiarColoresError(txt, lb);
                     return false;
-                }    
-
+                }
             }
             else if(nombreCampo.equals("Nombre") ){
                 if(!validarNombres(nombre)){
@@ -104,7 +109,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                 if(!validarFormatoEmail(email)){
                     lb.setText(" El Email no es válido");
                     cambiarColoresError(txt, lb);
-                    System.out.println("Formato el email es "+email);
+                    System.out.println(" Formato el email es "+email);
                     return false;                                        
                 }      
                 if(sys.existeEmail(email)){
@@ -113,8 +118,9 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                     System.out.println("Existe el email es "+email);
                     return false;
                 }
-            }                  
-            else{
+            }
+            
+            else{                
                 txt.setBorder(bordeDefault);
                 lb.setText("");
                 lb.setOpaque(false);
@@ -199,11 +205,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtNiknameFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNiknameFocusLost(evt);
+            }
         });
         txtNikname.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNiknameKeyTyped(evt);
-            }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNiknameKeyPressed(evt);
             }
@@ -222,6 +228,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         });
         jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 270, -1));
 
+        txtApellido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtApellidoFocusGained(evt);
+            }
+        });
         txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtApellidoKeyPressed(evt);
@@ -232,9 +243,6 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtEmailFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtEmailFocusLost(evt);
             }
         });
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -387,21 +395,25 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         //Usiario->nuevo Usuario->seleccionar
         cargarImagen(lbImagen);
     }//GEN-LAST:event_btSeleccionarActionPerformed
-
+    
+    
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        jDateChooser1.setBorder(bordeDefault);
+        lbMsjFecha.setText("");
+        lbMsjFecha.setOpaque(false); 
         nombre = txtNombre.getText().trim();
         nickname = txtNikname.getText().trim();
         apellido = txtApellido.getText().trim();
         email = txtEmail.getText().toLowerCase().trim();
-        String descripcion = txtDescripcion.getText().trim();
-        String nombreCanal = txtNombreCanal.getText().trim();
-        Privacidad privacidad = Privacidad.PRIVADO; //Privacidad Privado por default 
-        String imagen= "";
+        descripcion = txtDescripcion.getText().trim();
+        nombreCanal = txtNombreCanal.getText().trim();
+         //Privacidad Privado por default 
+        imagen= "";
         //Verifica la opcion seleccionada por los radioButton (Privado o Publico)
         if(rdPublico.isSelected()){
             privacidad = Privacidad.PUBLICO;
         }
-        java.sql.Date fecha = null;//Verifica que la fecha no sea nula
+        //Verifica que la fecha no sea nula
         if( jDateChooser1.getDate() != null){
             java.util.Date utilDate = jDateChooser1.getDate();//Obtiene la fecha del JDateChooser en formato Date        
             fecha = new java.sql.Date(utilDate.getTime());//Lo combierte al tipo Date sql
@@ -417,20 +429,23 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             if (validarTxt(v1[i], v2[i], v3[i], v4[i])) {
                 v5[i] = 1;
             }
-        }    
-        if(v5[0]==0 || v5[1]==0 || v5[2]==0 || v5[3]==0){
-            return;
-        }
+        } 
         if (fecha == null) {
+            jDateChooser1.setBorder(BorderFactory.createLineBorder(colorError, 1));
             lbMsjFecha.setText(" La fecha de nacimiento es obligatoria");
             lbMsjFecha.setOpaque(true);
             lbMsjFecha.setForeground(Color.WHITE);
             lbMsjFecha.setBackground(colorError);
-            return;
         }
-        if(txtNombreCanal.equals("")){
-            nombreCanal = nickname;            
-        }                
+        if(v5[0]==0 || v5[1]==0 || v5[2]==0 || v5[3]==0){
+            return;            
+        }
+        
+        if(txtNombreCanal.getText().equals("")){
+            nombreCanal = nickname;
+            txtNombreCanal.setText(nickname);
+        }
+        btnCargar.setEnabled(true);
         try {    
             DtUsuario dtUsuario = new DtUsuario(nickname, nickname, nombre, apellido, email, fecha, imagen, 0);
             DtCanal dtCanal = new DtCanal(Canal.getNuevoId(), nombre, descripcion, privacidad);
@@ -470,18 +485,6 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         lbMsjNikname.setText("");
         lbMsjNikname.setOpaque(false);        
     }//GEN-LAST:event_txtNiknameFocusGained
-
-    private void txtNiknameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNiknameKeyTyped
-//        // al escribir
-//        txtNikname.setBorder(bordeDefault);
-//        lbMsjNikname.setText("");
-//        lbMsjNikname.setOpaque(false);
-    }//GEN-LAST:event_txtNiknameKeyTyped
-
-    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
-        // Al perder el foco valida el email
-             
-    }//GEN-LAST:event_txtEmailFocusLost
 
     private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
         //Al recibir el foco restaura los valores
@@ -531,6 +534,21 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                 txtDescripcion.requestFocus();                
         }
     }//GEN-LAST:event_txtNombreCanalKeyPressed
+
+    private void txtApellidoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidoFocusGained
+        //Al recibir el foco restaura los valores
+        txtApellido.setBorder(bordeDefault);
+        lbMsjApellido.setText("");
+        lbMsjApellido.setOpaque(false);
+    }//GEN-LAST:event_txtApellidoFocusGained
+
+    private void txtNiknameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNiknameFocusLost
+        // Al perder el foco
+        if(txtNombreCanal.getText().equals("")){
+            nombreCanal = txtNikname.getText().trim();
+            txtNombreCanal.setText(txtNikname.getText().trim());
+        }
+    }//GEN-LAST:event_txtNiknameFocusLost
 
     private void cargarImagen(javax.swing.JLabel jLabelx) {
         JFileChooser jf = new JFileChooser();

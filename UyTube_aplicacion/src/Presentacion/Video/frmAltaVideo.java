@@ -255,7 +255,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
                 limpiarCampos();
                 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Se produjo un error al intentar ingresar el video.", "Alta de Video", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
