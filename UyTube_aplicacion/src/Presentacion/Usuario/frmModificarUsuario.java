@@ -25,7 +25,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     
     IAdmin sys;
     DtUsuario user;
-
+    String ruta;
     public frmModificarUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -37,7 +37,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         btnVideo.setEnabled(false);
         btnListaReprodiccion.setEnabled(false);
         desactivarCampos();
-
          try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
@@ -62,7 +61,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
-        lbImagen1 = new javax.swing.JLabel();
         spAnio = new javax.swing.JSpinner();
         spMes = new javax.swing.JSpinner();
         spDia = new javax.swing.JSpinner();
@@ -82,6 +80,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         btnVideo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jpImagen = new javax.swing.JPanel();
+        lbImg = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         lbAnio = new javax.swing.JLabel();
         jLabel142 = new javax.swing.JLabel();
@@ -98,6 +97,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         chkCambiarContra = new javax.swing.JCheckBox();
         rbPublico = new javax.swing.JRadioButton();
         rbPrivado = new javax.swing.JRadioButton();
+        lbImagen1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar usuario");
@@ -120,9 +120,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
         jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
         lbMes.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 10, 560));
-
-        lbImagen1.setText("Imagen");
-        lbMes.add(lbImagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, 20));
         lbMes.add(spAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 60, -1));
         lbMes.add(spMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 40, -1));
         lbMes.add(spDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 40, -1));
@@ -209,6 +206,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
         jpImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jpImagen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpImagen.add(lbImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 110));
+
         lbMes.add(jpImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 140, 110));
         lbMes.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 650, 20));
 
@@ -257,6 +256,9 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         rbPrivado.setText("Privado");
         lbMes.add(rbPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
 
+        lbImagen1.setText("Imagen");
+        lbMes.add(lbImagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, 20));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -298,7 +300,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         spAnio.setEnabled(false);
         spMes.setEnabled(false);
         spDia.setEnabled(false);
-        lbImagen1.setEnabled(false);
+        lbImg.setEnabled(false);
         lbDia.setEnabled(false);
         lbMes.setEnabled(false);
         lbAnio.setEnabled(false);
@@ -338,7 +340,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         spAnio.setEnabled(true);
         spMes.setEnabled(true);
         spDia.setEnabled(true);
-        lbImagen1.setEnabled(true);
+        lbImg.setEnabled(true);
         lbDia.setEnabled(true);
         lbMes.setEnabled(true);
         lbAnio.setEnabled(true);
@@ -354,6 +356,77 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         rbPrivado.setEnabled(true);
         btnModificar.setEnabled(true);
         btnSeleccionar.setEnabled(true);
+    }
+ 
+ private String seleccionarImagen() {
+        // Crea un JFileChooser
+        JFileChooser JFC = new JFileChooser();
+        // crea un filtro para aceptar solo algunas extensiones
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
+        // Agrega el filtro al JFileChooser
+        JFC.setFileFilter(filtroImagen);
+        
+        // archivo seleccionado
+        File archivo;
+        // para saber si se selecciono algo o se cancelo
+        int resultado;
+        
+        while (true) {
+            // muestra el JFileChooser
+            resultado = JFC.showOpenDialog(this);
+            
+            // Si pasa algo que no sea el aceptar
+            if (resultado != JFileChooser.APPROVE_OPTION){
+                return "";
+            }
+            
+            // obtiene el archivo seleccionado
+            archivo = JFC.getSelectedFile();
+
+            // Si se selecciono algun archivo
+            if (archivo != null) {
+                // obtiene la ruta del archivo
+                String rutaArchivo = archivo.getAbsolutePath();
+                // obtiene el archivo como imagen a partir de la ruta
+                Image img = new ImageIcon(rutaArchivo).getImage();
+                
+                // verifica que tanto se deformará la imagen al mostrarla en un cuadrado
+                float deformacion;
+                if (img.getHeight(null) > img.getWidth(null)) {
+                    deformacion = img.getHeight(null) / img.getWidth(null);
+                } else {
+                    deformacion = img.getWidth(null) / img.getHeight(null);
+                }
+                
+                if (deformacion < 1.3 && deformacion >= 1) {
+                    // si no se deforma demasiado
+                    // devuelve la ruta absoluta
+                    return rutaArchivo;
+                } else {
+                    // si se deforma demasiado, lo avisa al usuario para que escoja otra
+                    JOptionPane.showMessageDialog(null,
+                            "La imagen es demasiado alta o demasiado ancha.\n" + img.getWidth(null) + "x" + img.getHeight(null),
+                            "Problemas con la imagen",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                }
+            } else {
+                // sino devuelve un string vacio
+                return "";
+            }
+        }
+    }
+ 
+ private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta){
+        jLabelx.setText(null);
+        // Carga la imagen a la variable de tipo Image
+        Image img = new ImageIcon(Ruta).getImage();
+        // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
+        ImageIcon icono = new ImageIcon(
+                img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH)
+        );
+        // establece la imagen en el label
+        jLabelx.setIcon(icono);
     }
  
  
@@ -384,7 +457,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 }
             }
         
-                DtUsuario u = new DtUsuario(user.getNickname(), pass, txtNombre.getText(), txtApellido.getText(), user.getCorreo(), new Date(anio, mes, dia), "imagen", PROPERTIES);
+                DtUsuario u = new DtUsuario(user.getNickname(), pass, txtNombre.getText(), txtApellido.getText(), user.getCorreo(), new Date(anio, mes, dia), ruta, PROPERTIES);
                 Privacidad priv;
                 if(rbPrivado.isSelected()){
                     priv = Privacidad.PRIVADO;
@@ -404,7 +477,10 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
-        cargarImagen(lbImagen);
+        //cargarImagen(lbImagen);
+        ruta = seleccionarImagen();
+                cargarImagenEnJlabel(lbImg, ruta);
+
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnListaReprodiccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaReprodiccionActionPerformed
@@ -426,6 +502,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         spAnio.setValue(u.getFechaNacimiento().getYear());
         spMes.setValue(u.getFechaNacimiento().getMonth());
         spDia.setValue(u.getFechaNacimiento().getDay());
+        cargarImagenEnJlabel(lbImg, u.getImagen());
         
     }
     private void cargarDatosDelCanal(DtCanal c){
@@ -480,34 +557,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     
     
     
-    private void cargarImagen(javax.swing.JLabel jLabelx) {
-        JFileChooser jf = new JFileChooser();
-        jf.showOpenDialog(this);
-        File archivo = jf.getSelectedFile();
-
-        if (archivo != null) {
-            FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
-            jf.setFileFilter(filtroImagen);
-            //jLabel4.setText(archivo.getAbsolutePath());
-            Image img = new ImageIcon(archivo.getAbsolutePath()).getImage();
-            float i = 0f;
-            if (img.getHeight(null) > img.getWidth(null)) {
-                i = img.getHeight(null) / img.getWidth(null);
-            } else {
-                i = img.getWidth(null) / img.getHeight(null);
-            }
-            if (i < 1.4 && i >= 1) {
-                ImageIcon img2 = new ImageIcon(img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH));
-                jLabelx.setIcon(img2);
-                /*
-                ImageIcon img3 = new ImageIcon(img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH));
-                jLabelx.setIcon(img3);//cuidado!!
-                jLabelx.setVisible(false);//cuidado!!*/
-            } else {
-                JOptionPane.showMessageDialog(null, "Imagen fuera de dimenciones " + img.getWidth(null) + " x " + img.getHeight(null));
-            }
-        }
-    }
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -537,6 +587,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel lbFecha;
     private javax.swing.JLabel lbImagen;
     private javax.swing.JLabel lbImagen1;
+    private javax.swing.JLabel lbImg;
     private javax.swing.JPanel lbMes;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbNombreC;
