@@ -29,6 +29,13 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         limpiarElementosDeVentana();
         liberarMemoria = true;
+        
+        // quita el icono de carpetas en el JTree de comentarios
+        javax.swing.tree.DefaultTreeCellRenderer render = (javax.swing.tree.DefaultTreeCellRenderer) treeComentarios.getCellRenderer();
+        render.setLeafIcon(null);
+        render.setOpenIcon(null);
+        render.setClosedIcon(null);
+        
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
@@ -49,6 +56,13 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         limpiarElementosDeVentana();
         liberarMemoria = false;
+        
+        // quita el icono de carpetas en el JTree de comentarios
+        javax.swing.tree.DefaultTreeCellRenderer render = (javax.swing.tree.DefaultTreeCellRenderer) treeComentarios.getCellRenderer();
+        render.setLeafIcon(null);
+        render.setOpenIcon(null);
+        render.setClosedIcon(null);
+        
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
@@ -128,7 +142,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
 
         jLabel82.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel82.setText("Comentarios:");
-        jPanel15.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, -1, -1));
+        jPanel15.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, -1, -1));
 
         lstVideoUsuario.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -166,10 +180,10 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jPanel15.add(jLabel88, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
 
         lbNombre.setText(" ");
-        jPanel15.add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 50, 220, -1));
+        jPanel15.add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, 580, -1));
 
         lbDuracion.setText(" ");
-        jPanel15.add(lbDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 170, -1));
+        jPanel15.add(lbDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 580, -1));
 
         lbUrl.setText(" ");
         lbUrl.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -177,13 +191,13 @@ public class frmConsultaVideo extends javax.swing.JDialog {
                 lbUrlMousePressed(evt);
             }
         });
-        jPanel15.add(lbUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 180, -1));
+        jPanel15.add(lbUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 580, -1));
 
         lbPrivacidad.setText(" ");
-        jPanel15.add(lbPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 170, -1));
+        jPanel15.add(lbPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 580, -1));
 
         lbCategoria.setText(" ");
-        jPanel15.add(lbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, 170, -1));
+        jPanel15.add(lbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, 580, -1));
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -192,7 +206,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
                 btnAceptarActionPerformed(evt);
             }
         });
-        jPanel15.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 480, 280, 60));
+        jPanel15.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 480, 380, 60));
 
         jLabel94.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel94.setText("Les gusto:");
@@ -214,7 +228,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         treeComentarios.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane27.setViewportView(treeComentarios);
 
-        jPanel15.add(jScrollPane27, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 50, 280, 420));
+        jPanel15.add(jScrollPane27, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 220, 380, 250));
 
         jLabel99.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel99.setText("Video del Usuario:");
@@ -230,21 +244,15 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
+            .addGap(0, 1069, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, 1069, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGap(0, 574, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
         );
 
         pack();
