@@ -28,6 +28,7 @@ public interface IAdmin {
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeUsuario(String nickname);
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionParticularesDeUsuario();
     public ArrayList<DtUsuario> listarUsuarioSeguidores();
+    public ArrayList<DtUsuario> listarUsuarioNoSeguidos();
     public ArrayList<DtUsuario> listarUsuarioSeguidos();
     public ArrayList<DtUsuario> listarUsuarios();
     public ArrayList<DtVideo> listarVideosEnCategoria(String cat);
