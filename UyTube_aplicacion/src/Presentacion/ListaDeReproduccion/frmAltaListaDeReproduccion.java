@@ -110,6 +110,11 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         jLabel102.setText("Categoria:");
         jPanel18.add(jLabel102, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, -1));
 
+        lstUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstUsuariosValueChanged(evt);
+            }
+        });
         jScrollPane32.setViewportView(lstUsuarios);
 
         jPanel18.add(jScrollPane32, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 320, 180));
@@ -207,7 +212,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
     }//GEN-LAST:event_rbPorDefectoItemStateChanged
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
-        if (!txtNombre.getText().isEmpty()) {
+        if (!txtNombre.getText().isEmpty() && !lstUsuarios.getSelectedValue().isEmpty()) {
             btnAceptar.setEnabled(true);
         } else {
             btnAceptar.setEnabled(false);
@@ -220,6 +225,10 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
 
         if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "El nombre de la lista de reproduccion no puede ser vacio", "Avertencia:", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lstUsuarios.getSelectedValue().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "Deve seleccionar un usuario para continuar", "Avertencia:", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -273,6 +282,14 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         Sys.liberarMemoriaUsuario();
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
+        if (!txtNombre.getText().isEmpty() && !lstUsuarios.getSelectedValue().isEmpty()) {
+            btnAceptar.setEnabled(true);
+        } else {
+            btnAceptar.setEnabled(false);
+        }
+    }//GEN-LAST:event_lstUsuariosValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup GrupoPublicoPrivado;
