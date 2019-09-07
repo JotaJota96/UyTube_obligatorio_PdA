@@ -208,6 +208,12 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbMes.add(lbOpcional, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, -1, -1));
         lbMes.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 140, 110));
         lbMes.add(txtContraNueva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, 160, -1));
+
+        txtContraNueva.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtContraNuevaKeyTyped(evt);
+            }
+        });
         lbMes.add(txtContraNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 160, -1));
         lbMes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 230, -1));
 
@@ -304,8 +310,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
  private void activarCampos(){
     
   txtNombre.setEnabled(true);
-        txtContraNueva.setEnabled(true);
-        txtContraNueva1.setEnabled(true);
         txtDescrpcion.setEnabled(true);
         txtNombreCanal.setEnabled(true);
         txtApellido.setEnabled(true);
@@ -401,10 +405,26 @@ public class frmModificarUsuario extends javax.swing.JDialog {
  
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
+            
+            
             if(lstUsuarios.isSelectionEmpty()){
                     JOptionPane.showMessageDialog(null, "Seleccione un usuario para modificar", "Error", JOptionPane.WARNING_MESSAGE);
 
             }else{
+                if(txtNombre.getText().isEmpty()){
+                                JOptionPane.showMessageDialog(null, "El campo nombre no puede quedar vacío", "Error", JOptionPane.WARNING_MESSAGE);
+
+            }else{
+                if(txtApellido.getText().isEmpty()){
+                                JOptionPane.showMessageDialog(null, "El campo apellido no puede quedar vacío", "Error", JOptionPane.WARNING_MESSAGE);
+
+            }else{
+                    if(txtNombreCanal.getText().isEmpty()){
+                                JOptionPane.showMessageDialog(null, "El campo nombre de canal no puede quedar vacío", "Error", JOptionPane.WARNING_MESSAGE);
+
+            }else{
+                
+                
             String pass = user.getContrasenia();
             if (chkCambiarContra.isSelected()) {
                         
@@ -440,7 +460,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Datos modificados correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
              
-            }
+            }}}}
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -499,6 +519,10 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             cargarDatosDelUsuario(user);
             DtCanal dtc = sys.obtenerCanalDeUsuario();
             cargarDatosDelCanal(dtc);
+            ruta=user.getImagen();
+            txtContraNueva.setText("");
+            txtContraNueva1.setText("");
+            
             
             
         } catch (Exception e) {
@@ -513,6 +537,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             txtContraNueva1.setEnabled(true);
             lbCN.setEnabled(true);
             lbRCN.setEnabled(true);
+            
         }else{
              txtContraNueva.setEnabled(false);
             txtContraNueva1.setEnabled(false);
@@ -520,6 +545,10 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             lbRCN.setEnabled(false);
         }        // TODO add your handling code here:
     }//GEN-LAST:event_chkCambiarContraActionPerformed
+
+    private void txtContraNuevaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraNuevaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtContraNuevaKeyTyped
 
   
     

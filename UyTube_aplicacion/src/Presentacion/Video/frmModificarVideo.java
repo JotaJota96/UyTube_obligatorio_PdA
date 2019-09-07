@@ -21,6 +21,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
     IAdmin sys;
     DefaultListModel s = new DefaultListModel();
     boolean liberarMemoria;
+    String validarNombre;
     public frmModificarVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -85,6 +86,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
 
         btnModificar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -310,10 +312,13 @@ private void cargarDatosDeVideo(DtVideo v){
                         if (txtURL.getText().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "La URL del video no puede ser vacía", "Error", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            if(existeVideo(txtNombre.getText())){
-                            JOptionPane.showMessageDialog(null, "Ya existe este video en la lista seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
-                            }else{
-                            
+                            if (!txtNombre.getText().equals(validarNombre)) {
+                                if (existeVideo(txtNombre.getText())) {
+                                    JOptionPane.showMessageDialog(null, "Ya existe este video en la lista seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
+                                    return;
+                                }
+                            }
+
                             int hora = (Integer) spHora.getValue();
                             int minuto = (Integer) spMinuto.getValue();
                             int segundo = (Integer) spSegundos.getValue();
@@ -335,8 +340,8 @@ private void cargarDatosDeVideo(DtVideo v){
                                 JOptionPane.showMessageDialog(null, "No es posible hacer público un video si su canal es privado", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                             sys.modificarVideo(video);
-                            
-                            if(liberarMemoria){
+
+                            if (liberarMemoria) {
                                 sys.liberarMemoriaUsuario();
                             }
                             sys.liberarMemoriaVideo();
@@ -344,10 +349,13 @@ private void cargarDatosDeVideo(DtVideo v){
                             JOptionPane.showMessageDialog(null, "Se han efectuado los cambios", "OK", JOptionPane.INFORMATION_MESSAGE);
                             dispose();
                         }
-                    }}
+                    }
                 }
             }
-        } catch (Exception e) {
+        }
+    
+
+catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
         }
@@ -394,6 +402,7 @@ private void cargarDatosDeVideo(DtVideo v){
             ArrayList<DtVideo> arr = sys.listarVideosDeUsuario();
             int idVideo = arr.get(lstVideoUsuario.getSelectedIndex()).getId();
             DtVideo dtv = sys.seleccionarVideo(idVideo);
+            validarNombre=dtv.getNombre();
             
             listarCategorias(sys.listarCategorias());
             cargarDatosDeVideo(dtv);
