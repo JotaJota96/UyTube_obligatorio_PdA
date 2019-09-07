@@ -122,6 +122,11 @@ public class frmAltaVideo extends javax.swing.JDialog {
                 lstDuenioVideoMouseClicked(evt);
             }
         });
+        lstDuenioVideo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstDuenioVideoValueChanged(evt);
+            }
+        });
         jScrollPane16.setViewportView(lstDuenioVideo);
 
         jPanel14.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 290, 370));
@@ -148,6 +153,11 @@ public class frmAltaVideo extends javax.swing.JDialog {
         lstAsignarCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstAsignarCategoriaMouseClicked(evt);
+            }
+        });
+        lstAsignarCategoria.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstAsignarCategoriaValueChanged(evt);
             }
         });
         jScrollPane17.setViewportView(lstAsignarCategoria);
@@ -266,27 +276,29 @@ public class frmAltaVideo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // Obtengo todos los nickname y los cargo en el listDuenioVideo(Lista de dueños de videos)
-        limpiarListas();
-        if(!sys.listarUsuarios().isEmpty()){
-            for (int i = 0; i < sys.listarUsuarios().size(); i++) {
-                listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
+        try {
+            // Obtengo todos los nickname y los cargo en el listDuenioVideo(Lista de dueños de videos)
+            limpiarListas();
+            if (!sys.listarUsuarios().isEmpty()) {
+                for (int i = 0; i < sys.listarUsuarios().size(); i++) {
+                    listModelUsuario.add(i, sys.listarUsuarios().get(i).getNickname());
+                }
+                lstDuenioVideo.setModel(listModelUsuario);
             }
-            lstDuenioVideo.setModel(listModelUsuario);                  
-        }         
-        // Obtengo todas las categorias de video y las muestro en la lista
-        if(!sys.listarCategorias().isEmpty()){
-            for(int i = 0; i < sys.listarCategorias().size(); i++){
-                listModelCategoria.add(i, sys.listarCategorias().get(i));
+            // Obtengo todas las categorias de video y las muestro en la lista
+            if (!sys.listarCategorias().isEmpty()) {
+                for (int i = 0; i < sys.listarCategorias().size(); i++) {
+                    listModelCategoria.add(i, sys.listarCategorias().get(i));
+                }
+                lstAsignarCategoria.setModel(listModelCategoria);
             }
-            lstAsignarCategoria.setModel(listModelCategoria);
-        }               
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_formWindowActivated
 
     private void lstDuenioVideoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDuenioVideoMouseClicked
-        // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
-        usrSeleccionado = lstDuenioVideo.getSelectedValue();
-        sys.seleccionarUsuario(usrSeleccionado);
+        
     }//GEN-LAST:event_lstDuenioVideoMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -296,8 +308,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void lstAsignarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstAsignarCategoriaMouseClicked
-        // Selecciona una categoria de la lista de categorias
-        categoria = lstAsignarCategoria.getSelectedValue();
+        
     }//GEN-LAST:event_lstAsignarCategoriaMouseClicked
 
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
@@ -307,6 +318,29 @@ public class frmAltaVideo extends javax.swing.JDialog {
 //        listModelCategoria.clear();//Limpia el modeo de Categorias
 //        lstAsignarCategoria.setModel(listModelCategoria);
     }//GEN-LAST:event_formWindowDeactivated
+
+    private void lstDuenioVideoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDuenioVideoValueChanged
+        if (evt.getValueIsAdjusting()) return;
+        if (lstDuenioVideo.getSelectedIndex()<0) return;
+        try {
+            // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
+            usrSeleccionado = lstDuenioVideo.getSelectedValue();
+            sys.seleccionarUsuario(usrSeleccionado);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lstDuenioVideoValueChanged
+
+    private void lstAsignarCategoriaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstAsignarCategoriaValueChanged
+        if (evt.getValueIsAdjusting()) return;
+        if (lstAsignarCategoria.getSelectedIndex()<0) return;
+        try {
+            // Selecciona una categoria de la lista de categorias
+            categoria = lstAsignarCategoria.getSelectedValue();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lstAsignarCategoriaValueChanged
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

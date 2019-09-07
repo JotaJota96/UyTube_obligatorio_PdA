@@ -450,7 +450,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             DtUsuario dtUsuario = new DtUsuario(nickname, nickname, nombre, apellido, email, fecha, imagen, 0);
             DtCanal dtCanal = new DtCanal(Canal.getNuevoId(), nombre, descripcion, privacidad);
             sys.altaUsuarioCanal(dtUsuario, dtCanal);
-            JOptionPane.showMessageDialog(null, "Se ha creado el usuario "+nickname, "Error:", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Se ha creado el usuario "+nickname, "Alta de usuario", JOptionPane.INFORMATION_MESSAGE);
             limpiarCampos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
