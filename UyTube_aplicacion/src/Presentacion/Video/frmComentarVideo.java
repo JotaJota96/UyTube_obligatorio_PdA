@@ -32,6 +32,12 @@ public class frmComentarVideo extends javax.swing.JDialog {
             Sys.liberarMemoriaUsuarioActual();
             Sys.liberarMemoriaUsuario();
 
+            // quita el icono de carpetas en el JTree de comentarios
+            javax.swing.tree.DefaultTreeCellRenderer render = (javax.swing.tree.DefaultTreeCellRenderer) ArbolComentarios.getCellRenderer();
+            render.setLeafIcon(null);
+            render.setOpenIcon(null);
+            render.setClosedIcon(null);
+
             ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
 
             DefaultListModel modelo = new DefaultListModel();
@@ -41,7 +47,9 @@ public class frmComentarVideo extends javax.swing.JDialog {
                 modelo2.addElement(it.getNickname());
             }
             lstUsuario.setModel(modelo);
-            Comentador.setModel(modelo2);
+            lstUsuarioComentador.setModel(modelo2);
+            
+            limpiarComponentesComentario(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -67,7 +75,7 @@ public class frmComentarVideo extends javax.swing.JDialog {
         lstVideos = new javax.swing.JList<>();
         jLabel150 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Comentador = new javax.swing.JList<>();
+        lstUsuarioComentador = new javax.swing.JList<>();
         jLabel50 = new javax.swing.JLabel();
         DateCh = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
@@ -78,12 +86,12 @@ public class frmComentarVideo extends javax.swing.JDialog {
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         AreaComentario.setColumns(20);
-        AreaComentario.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        AreaComentario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         AreaComentario.setRows(5);
         AreaComentario.setToolTipText("Ingrese aqui nuevo comentario");
         jScrollPane3.setViewportView(AreaComentario);
 
-        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 310, 50));
+        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 310, 90));
 
         btnComentar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnComentar.setText("Comentar");
@@ -92,9 +100,9 @@ public class frmComentarVideo extends javax.swing.JDialog {
                 btnComentarActionPerformed(evt);
             }
         });
-        jPanel6.add(btnComentar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 470, 210, 60));
+        jPanel6.add(btnComentar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 460, 210, 60));
 
-        ArbolComentarios.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ArbolComentarios.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         ArbolComentarios.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         ArbolComentarios.setToolTipText("");
@@ -110,14 +118,14 @@ public class frmComentarVideo extends javax.swing.JDialog {
                 btnAceptarActionPerformed(evt);
             }
         });
-        jPanel6.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 470, 210, 60));
+        jPanel6.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 460, 210, 60));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel15.setText("Comentarios:");
         jPanel6.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, -1));
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel35.setText("Ingrese comentario:");
+        jLabel35.setText("Texto del comentario:");
         jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, -1, -1));
 
         lstUsuario.setToolTipText("");
@@ -131,7 +139,7 @@ public class frmComentarVideo extends javax.swing.JDialog {
         jPanel6.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 150, 150));
 
         jLabel45.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel45.setText("Comentador:");
+        jLabel45.setText("Usuario que comenta:");
         jPanel6.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
         lstVideos.setToolTipText("");
@@ -148,23 +156,24 @@ public class frmComentarVideo extends javax.swing.JDialog {
         jLabel150.setText("Videos:");
         jPanel6.add(jLabel150, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
 
-        Comentador.setToolTipText("Seleccione usuario que realizara el nuevo comentario");
-        Comentador.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lstUsuarioComentador.setToolTipText("Seleccione usuario que realizara el nuevo comentario");
+        lstUsuarioComentador.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                ComentadorValueChanged(evt);
+                lstUsuarioComentadorValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(Comentador);
+        jScrollPane1.setViewportView(lstUsuarioComentador);
 
         jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 150, 150));
 
         jLabel50.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel50.setText("Comentado:");
+        jLabel50.setText("Propietario del video:");
         jPanel6.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
-        jPanel6.add(DateCh, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 310, 30));
+        jPanel6.add(DateCh, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 390, 150, 30));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Fecha del comentario:");
-        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, -1, -1));
+        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,7 +198,7 @@ public class frmComentarVideo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
+    
 
     private boolean isSelected(TreePath d) {
         boolean b;
@@ -263,40 +272,44 @@ DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
     private void btnComentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarActionPerformed
         //Video->comentar video->comentar
         try {
-            if (AreaComentario.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Ingrese un comentario! \n", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                java.sql.Date fecha = null;
-
-                if (DateCh.getDate() != null) {
-                    java.util.Date utilDate = DateCh.getDate();//Obtiene la fecha del JDateChooser en formato Date
-                    fecha = new java.sql.Date(utilDate.getTime());//Lo combierte al tipo Date sql
-                }
-
-                DtComentario dtc = new DtComentario(WIDTH, "", fecha, AreaComentario.getText(), 0);
-
-                int index = obtenerIndexComentarioSeleccionadoEnJTree(ArbolComentarios);
-                if (index < 0) {
-                    Sys.altaComentario(dtc);
-                } else {
-                    ComentariosDelVideo = Sys.listarComentariosDeVideo();
-                    int comPad = ComentariosDelVideo.get(index).getId();
-                    Sys.altaComentario(dtc, comPad);
-                }
-                mostrarComentarios(Sys.listarComentariosDeVideo());
-
-                AreaComentario.setText(""); //hacer esto en una funcion no seas desprolijo!
+            if (lstUsuarioComentador.getSelectedIndex() < 0){
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el usuario que realizará el comentario!", "¡Atención!", JOptionPane.WARNING_MESSAGE);
+                return;
             }
+            if (AreaComentario.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No ha escrito el comentario!", "¡Atención!", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (DateCh.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el usuario que realizará el comentario!", "¡Atención!", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            java.sql.Date fecha = null;
+            java.util.Date utilDate = DateCh.getDate();//Obtiene la fecha del JDateChooser en formato Date
+            fecha = new java.sql.Date(utilDate.getTime());//Lo combierte al tipo Date sql
+
+            DtComentario dtc = new DtComentario(WIDTH, "", fecha, AreaComentario.getText(), 0);
+
+            int index = obtenerIndexComentarioSeleccionadoEnJTree(ArbolComentarios);
+            if (index < 0) {
+                Sys.altaComentario(dtc);
+            } else {
+                ComentariosDelVideo = Sys.listarComentariosDeVideo();
+                int comPad = ComentariosDelVideo.get(index).getId();
+                Sys.altaComentario(dtc, comPad);
+            }
+            mostrarComentarios(Sys.listarComentariosDeVideo());
+            AreaComentario.setText(""); //hacer esto en una funcion no seas desprolijo!
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btnComentarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         try {
             if (!AreaComentario.getText().isEmpty()) {
-                int resp = JOptionPane.showConfirmDialog(null, "No se ha realizado el comentario\n¿Seguro que desea salir?", "Alerta!", JOptionPane.YES_NO_OPTION);//yes 0, no 1.
+                int resp = JOptionPane.showConfirmDialog(null, "No se ha realizado el comentario\n¿Seguro que desea salir?", "¿Seguro que desea salir?", JOptionPane.YES_NO_OPTION);//yes 0, no 1.
                 if (resp == 0) {
                     Sys.liberarMemoriaVideo();
                     Sys.liberarMemoriaUsuarioActual();
@@ -313,6 +326,7 @@ DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+    
     private void mostrarComentarios(ArrayList<DtComentario> ComentariosDelVideo) {
 
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
@@ -323,6 +337,25 @@ DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
             ArbolComentarios.expandRow(i);
         }
     }
+    
+    private void limpiarComponentesComentario(boolean habilitado){
+
+        lstUsuarioComentador.clearSelection();
+        lstUsuarioComentador.setEnabled(habilitado);
+        
+        AreaComentario.setText("");
+        AreaComentario.setEnabled(habilitado);
+        
+        DateCh.setEnabled(habilitado);
+        btnComentar.setEnabled(habilitado);
+        
+        java.util.Date hoyAhora = new java.util.Date();
+        DateCh.setDate(hoyAhora);
+
+        mostrarComentarios(new ArrayList<>());
+        ArbolComentarios.setEnabled(habilitado);
+    }
+    
     private void lstUsuarioValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuarioValueChanged
         // Usuario seleccionado
         if (evt.getValueIsAdjusting()) {
@@ -350,14 +383,16 @@ DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_lstUsuarioValueChanged
+
     private void lstVideosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstVideosValueChanged
         if (evt.getValueIsAdjusting()) {
             return;
         }
         if (lstVideos.getSelectedIndex() < 0) {
+            limpiarComponentesComentario(false);
             return;
         }
-
+        limpiarComponentesComentario(true);
         try {
             //lstUsuarioValoradoR.clearSelection();
             int VideoIndex = lstVideos.getSelectedIndex();
@@ -371,28 +406,27 @@ DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
         }
     }//GEN-LAST:event_lstVideosValueChanged
 
-    private void ComentadorValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ComentadorValueChanged
+    private void lstUsuarioComentadorValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuarioComentadorValueChanged
         // Usuario seleccionado
         if (evt.getValueIsAdjusting()) {
             return;
         }
-        if (Comentador.getSelectedIndex() < 0) {
+        if (lstUsuarioComentador.getSelectedIndex() < 0) {
             return;
         }
 
-        String Nickname = Comentador.getSelectedValue();
+        String Nickname = lstUsuarioComentador.getSelectedValue();
 
         try {
             DtUsuario user = Sys.seleccionarUsuarioActual(Nickname);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_ComentadorValueChanged
+    }//GEN-LAST:event_lstUsuarioComentadorValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTree ArbolComentarios;
     private javax.swing.JTextArea AreaComentario;
-    private javax.swing.JList<String> Comentador;
     private com.toedter.calendar.JDateChooser DateCh;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnComentar;
@@ -409,6 +443,7 @@ DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios:");
     private javax.swing.JScrollPane jScrollPane52;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JList<String> lstUsuario;
+    private javax.swing.JList<String> lstUsuarioComentador;
     private javax.swing.JList<String> lstVideos;
     // End of variables declaration//GEN-END:variables
 }
