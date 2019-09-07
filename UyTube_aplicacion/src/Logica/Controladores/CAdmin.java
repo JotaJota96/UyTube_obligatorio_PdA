@@ -13,6 +13,7 @@ import Logica.Clases.ListaDeReproduccion;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class CAdmin implements IAdmin{
@@ -27,7 +28,7 @@ public class CAdmin implements IAdmin{
 
     
     private CAdmin(){
-        this.usuarios = new TreeMap();
+        this.usuarios = new TreeMap(String.CASE_INSENSITIVE_ORDER);
         this.administradores = new TreeMap();
         this.categorias = new TreeMap();
         this.usuarioActual = null;
