@@ -1,12 +1,11 @@
 package Presentacion.ListaDeReproduccion;
 
 import Logica.DataType.*;
-import Logica.Clases.*;
 import Logica.Enumerados.Privacidad;
 import Logica.Enumerados.TipoListaDeReproduccion;
-import java.util.ArrayList;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -185,7 +184,11 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        Sys.liberarMemoriaUsuario();
+        try {
+            Sys.liberarMemoriaUsuario();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
         dispose();
     }//GEN-LAST:event_btnCancelarMouseClicked
 
@@ -212,19 +215,8 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
     }//GEN-LAST:event_rbPorDefectoItemStateChanged
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
-        if (rbParticular.isSelected()) {
-            if (!txtNombre.getText().isEmpty() && !lstUsuarios.getSelectedValue().isEmpty()) {
-                btnAceptar.setEnabled(true);
-            } else {
-                btnAceptar.setEnabled(false);
-            }
-        } else {
-            if (!txtNombre.getText().isEmpty()) {
-                btnAceptar.setEnabled(true);
-            } else {
-                btnAceptar.setEnabled(false);
-            }
-        }
+        // mientras se escrbe el nombre de la lista
+        habilitarDeshabilitarBotonAceptar();
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -247,7 +239,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             if (rbParticular.isSelected() == true) {
 
                 if (lstUsuarios.getSelectedValue().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Deve seleccionar un usuario para continuar", "Avertencia:", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario para continuar", "Avertencia:", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 
@@ -258,11 +250,11 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
                     return;
                 }
                 
-                lst = new DtListaDeReproduccion(ListaDeReproduccion.getNuevoId(), txtNombre.getText(), Priv, TipoListaDeReproduccion.PARTICULAR, lstCategorias.getSelectedValue());
+                lst = new DtListaDeReproduccion(0, txtNombre.getText(), Priv, TipoListaDeReproduccion.PARTICULAR, lstCategorias.getSelectedValue());
                 
 
                 if (!Sys.validarNuevaListaParticular(lst.getNombre())) {
-                    JOptionPane.showMessageDialog(null, "El nombre para la lista de reproduccion ya esta usado", "Error:", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "El usuario ya posee una lista de reproduccion con ese nombre", "Avertencia:", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -272,10 +264,10 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
 
             if (rbPorDefecto.isSelected() == true) {
 
-                lst = new DtListaDeReproduccion(ListaDeReproduccion.getNuevoId(), txtNombre.getText(), Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED");
+                lst = new DtListaDeReproduccion(0, txtNombre.getText(), Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED");
 
                 if (!Sys.validarNuevaListaPorDefecto(lst.getNombre())) {
-                    JOptionPane.showMessageDialog(null, "El nombre para la lista de reproduccion ya esta usado", "Error:", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "El nombre para la lista de reproduccion ya esta usado", "Avertencia:", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -291,26 +283,34 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             txtNombre.setText("");
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
-        if (rbParticular.isSelected()) {
-            if (!txtNombre.getText().isEmpty() && !lstUsuarios.getSelectedValue().isEmpty()) {
-                btnAceptar.setEnabled(true);
-            } else {
-                btnAceptar.setEnabled(false);
-            }
-        } else {
-            if (!txtNombre.getText().isEmpty()) {
-                btnAceptar.setEnabled(true);
-            } else {
-                btnAceptar.setEnabled(false);
-            }
-        }
+        // al seleccionar un usuario
+        habilitarDeshabilitarBotonAceptar();
     }//GEN-LAST:event_lstUsuariosValueChanged
 
+    private void habilitarDeshabilitarBotonAceptar(){
+        // si se selecciono para crear lista particular
+        if (rbParticular.isSelected()) {
+            if (lstUsuarios.getSelectedIndex() < 0 || lstCategorias.getSelectedIndex() < 0 || txtNombre.getText().isEmpty()) {
+                btnAceptar.setEnabled(false);
+                return;
+            }
+            btnAceptar.setEnabled(true);
+        } else { // si se selecciono para crear lista particular
+            if (txtNombre.getText().isEmpty()) {
+                btnAceptar.setEnabled(false);
+                return;
+            }
+            btnAceptar.setEnabled(true);
+        }
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup GrupoPublicoPrivado;
     private javax.swing.ButtonGroup GrupoTipo;
