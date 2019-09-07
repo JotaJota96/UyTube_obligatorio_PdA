@@ -55,7 +55,6 @@ public class CAdminTest {
         );
 
         System.out.println("Agregando categoria y lista por defecto");
-        instance.altaCategoria("UNDEFINED");
         instance.altaCategoria("ARTE");
         instance.altaListaDeReproduccionPorDefecto(
                 new DtListaDeReproduccion(0, "Favoritos", Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED")
@@ -845,7 +844,7 @@ public class CAdminTest {
         instance.seleccionarUsuario("usu3");
         ArrayList<DtListaDeReproduccion> result = instance.listarListasDeReproduccionParticularesDeUsuario();
         for (int i = 0; i < result.size(); i++) {
-            if (result.get(i).getTipo() == TipoListaDeReproduccion.PARTICULAR) {
+            if (result.get(i).getTipo() != TipoListaDeReproduccion.PARTICULAR) {
                 assertTrue(false);
                 return;
             }
@@ -895,6 +894,52 @@ public class CAdminTest {
         }
         assertTrue(true);
     }
+    
+    
+    
+    /**
+     * Test of listarUsuarioNoSeguidos method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ListarUsuarioNoSeguidos() {
+        System.out.println("listarUsuarioSeguidos");
+        ArrayList<DtUsuario> result = instance.listarUsuarioNoSeguidos();
+    }
+    @Test
+    public void test_ListarUsuarioNoSeguidos() {
+        System.out.println("listarUsuarioSeguidos");
+        
+        instance.seleccionarUsuario("usu3");
+        ArrayList<DtUsuario> seguidos = instance.listarUsuarioSeguidos();
+        instance.seleccionarUsuarioActual("usu3");
+        for (DtUsuario u : seguidos){
+            instance.seleccionarUsuario(u.getNickname());
+            instance.seguirUsuario();
+        }
+        
+        // usuarios 3 sige a 1
+        instance.seleccionarUsuarioActual("usu3");
+        instance.seleccionarUsuario("usu1");
+        instance.seguirUsuario();
+        
+        instance.seleccionarUsuario("usu3");
+        ArrayList<DtUsuario> result = instance.listarUsuarioNoSeguidos();
+        
+        for (DtUsuario u : result){
+            if (u.getNickname().equals("usu1") || u.getNickname().equals("usu3")){
+                assertTrue(false);
+            }
+        }
+        assertTrue(true);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1335,7 +1380,7 @@ public class CAdminTest {
         instance.quitarVideoDeListaDeReproduccion(5);
         int despues = instance.listarVideosDeListaDeReproduccion().size();
         
-        assertNotEquals(antes, despues);
+        assertEquals(antes-1, despues);
     }
     
     
@@ -1465,6 +1510,12 @@ public class CAdminTest {
     @Test
     public void test_SeguirUsuario() {
         System.out.println("seguirUsuario");
+        instance.seleccionarUsuario("usu1");
+        ArrayList<DtUsuario> seguidos = instance.listarUsuarioSeguidores();
+        for (DtUsuario u : seguidos){
+            instance.seleccionarUsuarioActual(u.getNickname());
+            instance.seguirUsuario();
+        }
         instance.seleccionarUsuario("usu1");
         instance.seleccionarUsuarioActual("usu3");
         

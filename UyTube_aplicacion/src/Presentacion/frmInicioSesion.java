@@ -48,22 +48,32 @@ public class frmInicioSesion extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
+        pnlFondo = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        txtNroEmpleado = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        btnCancelar = new javax.swing.JButton();
-        btnIniciar = new javax.swing.JButton();
         lbImagen = new javax.swing.JLabel();
+        txtNroEmpleado = new javax.swing.JTextField();
         txtContrasenia = new javax.swing.JPasswordField();
+        btnIniciar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Iniciar sesión");
+        setResizable(false);
 
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Nro de Empleado");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+        pnlFondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Contraseña");
+        pnlFondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, -1));
+
+        lbImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbImagen.setText("imagen");
+        pnlFondo.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 110, 100));
 
         txtNroEmpleado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNroEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -74,20 +84,15 @@ public class frmInicioSesion extends javax.swing.JDialog {
                 txtNroEmpleadoKeyTyped(evt);
             }
         });
-        jPanel4.add(txtNroEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 160, 30));
+        pnlFondo.add(txtNroEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 160, 30));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Contraseña");
-        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, -1));
-
-        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+        txtContrasenia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtContrasenia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtContraseniaKeyReleased(evt);
             }
         });
-        jPanel4.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 150, 40));
+        pnlFondo.add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 160, 30));
 
         btnIniciar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnIniciar.setText("Iniciar");
@@ -96,19 +101,16 @@ public class frmInicioSesion extends javax.swing.JDialog {
                 btnIniciarActionPerformed(evt);
             }
         });
-        jPanel4.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 150, 40));
+        pnlFondo.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 150, 40));
 
-        lbImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbImagen.setText("imagen");
-        jPanel4.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 110, 100));
-
-        txtContrasenia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtContrasenia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtContraseniaKeyReleased(evt);
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
-        jPanel4.add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 160, 30));
+        pnlFondo.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 150, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,11 +118,11 @@ public class frmInicioSesion extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -135,17 +137,20 @@ public class frmInicioSesion extends javax.swing.JDialog {
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         //Sesion->iniciarSecion->iniciar
-        
-        int nro = Integer.parseInt(txtNroEmpleado.getText());
-        String contrasenia = txtContrasenia.getText();
-        this.resultado = sys.iniciarSesionAdministrador(nro, contrasenia);
-        
-        if (resultado){
-            dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "El número de empleado o la contraseña son incorrectos", "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
-            txtNroEmpleado.setText("");
-            txtContrasenia.setText("");
+        try {
+            int nro = Integer.parseInt(txtNroEmpleado.getText());
+            String contrasenia = txtContrasenia.getText();
+            this.resultado = sys.iniciarSesionAdministrador(nro, contrasenia);
+
+            if (resultado) {
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "El número de empleado o la contraseña son incorrectos", "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
+                txtNroEmpleado.setText("");
+                txtContrasenia.setText("");
+                btnIniciar.setEnabled(false);
+            }
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
@@ -183,8 +188,8 @@ public class frmInicioSesion extends javax.swing.JDialog {
     private javax.swing.JButton btnIniciar;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lbImagen;
+    private javax.swing.JPanel pnlFondo;
     private javax.swing.JPasswordField txtContrasenia;
     private javax.swing.JTextField txtNroEmpleado;
     // End of variables declaration//GEN-END:variables

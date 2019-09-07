@@ -12,15 +12,15 @@ import javax.swing.JOptionPane;
 
 public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
 
-    
     IAdmin sys;
     ArrayList<DtListaDeReproduccion> listaDeListas;
+    boolean liberarMemoria;
     
     public frmModificarListaDeReproduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        
+        liberarMemoria = true;
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
@@ -29,6 +29,31 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
             mostrarListaDeUsuarios(sys.listarUsuarios());
             mostrarListaDeCategorias(sys.listarCategorias());
             limpiarElementosDeVentana();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
+
+    public frmModificarListaDeReproduccion(javax.swing.JDialog parent, boolean modal, String nickname) {
+        super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        liberarMemoria = false;
+        try {
+            // obtiene la instancia de sistema
+            sys = Fabrica.getInstancia().getIAdmin();
+            
+            // Limpio la ventana
+            limpiarElementosDeVentana();
+            
+            // lista usuarios y categorias en JList
+            mostrarListaDeUsuarios(sys.listarUsuarios());
+            mostrarListaDeCategorias(sys.listarCategorias());
+            // Selecciono el usuario en la lista de usuarios
+            lstUsuarios.setSelectedValue(nickname, true);
+            // deshabilito la lista de usuarios para que no lo cambien
+            lstUsuarios.setEnabled(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             dispose();
@@ -62,6 +87,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar lista de reproduccion");
+        setResizable(false);
 
         jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -154,8 +180,10 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // Boton Cancelar
         try {
-            sys.liberarMemoriaUsuario();
-            sys.liberarMemoriaListaDeReproduccion();
+            if (liberarMemoria) {
+                sys.liberarMemoriaUsuario();
+            }
+                sys.liberarMemoriaListaDeReproduccion();
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -188,8 +216,10 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
             
             sys.modificarListaDeReproduccion(nuevosDatos);
             
-            sys.liberarMemoriaUsuario();
-            sys.liberarMemoriaListaDeReproduccion();
+            if (liberarMemoria) {
+                sys.liberarMemoriaUsuario();
+            }
+                sys.liberarMemoriaListaDeReproduccion();
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -205,20 +235,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
             
             String nick = lstUsuarios.getSelectedValue();
              sys.seleccionarUsuario(nick);
-             listaDeListas = sys.listarListasDeReproduccionDeUsuario(nick);
-             
-             System.out.println("OJO, si ves esto es que hay un parche sin solucionar");
-             System.out.println("    Revisar la funcion al seleccionar usuario en ventana Modificar lista de reproduccion");
-             /**
-              * Como el sistema no me da la lista de solo listas particulares tuve que hacer este for
-              */
-             for (int i = 0; i < listaDeListas.size(); i++){
-                 if (listaDeListas.get(i).getTipo() == TipoListaDeReproduccion.POR_DEFECTO){
-                     listaDeListas.remove(i);
-                     i--;
-                 }
-             }
-             
+             listaDeListas = sys.listarListasDeReproduccionParticularesDeUsuario();
             mostrarListaDeListasRep(listaDeListas);
             //limpiarElementosDeVentana();
         } catch (Exception e) {
@@ -276,7 +293,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
             rbPublica.setSelected(false);
             rbPrivada.setSelected(true);
         }
-        
+        lstCategorias.setEnabled(true);
         lstCategorias.setSelectedValue(dtl.getCategoria(), true);
         btnAceptar.setEnabled(true);
     }
@@ -291,7 +308,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         
         // desseleccionado de listas
         lstCategorias.clearSelection();
-        
+        lstCategorias.setEnabled(false);
         btnAceptar.setEnabled(false);
     }
     

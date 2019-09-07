@@ -49,7 +49,7 @@ public class DatosDePrueba {
         
         // Creacion de usuario Juan
         sys.altaUsuarioCanal(
-                new DtUsuario("JotaJota96", "12345678", "Juan", "Alvarez", "jjap96@gmail.com", new Date(96, 9, 9), "", 0),
+                new DtUsuario("JotaJota96", "12345678", "Juan", "Alvarez", "jjap96@gmail.com", new Date(96, 9, 9), "Imagenes\\JotaJota96.jpg", 0),
                 new DtCanal(0, "GuitarCovers", "Covers en guitarra de rock uruguayo", Privacidad.PUBLICO)
         );
 	 sys.altaUsuarioCanal(

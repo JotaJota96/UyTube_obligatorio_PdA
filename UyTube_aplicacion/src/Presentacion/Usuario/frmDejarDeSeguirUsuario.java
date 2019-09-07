@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-public class frmSeguirUsuario extends javax.swing.JDialog {
+public class frmDejarDeSeguirUsuario extends javax.swing.JDialog {
 
     private IAdmin Sys;
-    public ArrayList<DtUsuario> ListaTodosUsuarios;
 
-    public frmSeguirUsuario(java.awt.Frame parent, boolean modal) {
+    public frmDejarDeSeguirUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         try {
             initComponents();
@@ -24,16 +23,18 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
             Sys.liberarMemoriaUsuarioActual();
             Sys.liberarMemoriaUsuario();
 
-            ListaTodosUsuarios = Sys.listarUsuarios();
+            ArrayList<DtUsuario> ListaUsuarios = Sys.listarUsuarios();
 
             DefaultListModel modelo = new DefaultListModel();
-            for (DtUsuario it : ListaTodosUsuarios) {
+
+            for (DtUsuario it : ListaUsuarios) {
                 modelo.addElement(it.getNickname());
+
             }
             lstSeguidor.setModel(modelo);
 
-            btnSeguir.setEnabled(false);
-            lstNoSeguido.setEnabled(false);
+            btnDejarDeSeguir.setEnabled(false);
+            lstSeguido.setEnabled(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -47,14 +48,14 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
         jScrollPane11 = new javax.swing.JScrollPane();
         lstSeguidor = new javax.swing.JList<>();
         jScrollPane12 = new javax.swing.JScrollPane();
-        lstNoSeguido = new javax.swing.JList<>();
+        lstSeguido = new javax.swing.JList<>();
         jLabel61 = new javax.swing.JLabel();
         jLabel62 = new javax.swing.JLabel();
-        btnSeguir = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnDejarDeSeguir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Seguir usuario");
+        setTitle("Dejar de seguir usuario");
 
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -67,12 +68,12 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
 
         jPanel12.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 330, 290));
 
-        lstNoSeguido.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lstSeguido.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstNoSeguidoValueChanged(evt);
+                lstSeguidoValueChanged(evt);
             }
         });
-        jScrollPane12.setViewportView(lstNoSeguido);
+        jScrollPane12.setViewportView(lstSeguido);
 
         jPanel12.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 320, 290));
 
@@ -81,17 +82,8 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
         jPanel12.add(jLabel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
         jLabel62.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel62.setText("No Seguidos:");
+        jLabel62.setText("Seguidos:");
         jPanel12.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, -1));
-
-        btnSeguir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnSeguir.setText("Seguir");
-        btnSeguir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSeguirActionPerformed(evt);
-            }
-        });
-        jPanel12.add(btnSeguir, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, 190, 40));
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSalir.setText("salir");
@@ -100,7 +92,16 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel12.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 120, 40));
+        jPanel12.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 120, 40));
+
+        btnDejarDeSeguir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnDejarDeSeguir.setText("Dejar de Seguir");
+        btnDejarDeSeguir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDejarDeSeguirActionPerformed(evt);
+            }
+        });
+        jPanel12.add(btnDejarDeSeguir, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 200, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,94 +138,89 @@ public class frmSeguirUsuario extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnSeguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeguirActionPerformed
-        // TODO add your handling code here:
+    private void btnDejarDeSeguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDejarDeSeguirActionPerformed
+
         try {
-            Sys.seguirUsuario();// SEGUIR
-            String NickName = lstSeguidor.getSelectedValue();
-
-            DtUsuario user = Sys.seleccionarUsuario(NickName);
-            lstNoSeguido.setEnabled(true);
-            lstNoSeguido.clearSelection();
-
-            ArrayList<DtUsuario> NoSeguidos = Sys.listarUsuarioNoSeguidos();
-            
-            DefaultListModel modelo = new DefaultListModel();
-            for (DtUsuario it : NoSeguidos) {
-                modelo.addElement(it.getNickname());
-            }
-            lstNoSeguido.setModel(modelo);
-            Sys.seleccionarUsuarioActual(NickName);
+            Sys.seguirUsuario();//DEJA de SEGUIR
+            Sys.seleccionarUsuario(lstSeguidor.getSelectedValue());
+            mostrarSeguidos(Sys.listarUsuarioSeguidos());
+            Sys.seleccionarUsuarioActual(lstSeguidor.getSelectedValue());
             Sys.liberarMemoriaUsuario();
-            //Sys.seguirUsuario();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnSeguirActionPerformed
-
+    }//GEN-LAST:event_btnDejarDeSeguirActionPerformed
+    private void mostrarSeguidos(ArrayList<DtUsuario> Seguidos) {
+        try {
+            Seguidos = Sys.listarUsuarioSeguidos();
+            DefaultListModel modelo = new DefaultListModel();
+            for (DtUsuario it : Seguidos) {
+                modelo.addElement(it.getNickname());
+            }
+            lstSeguido.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     private void lstSeguidorValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSeguidorValueChanged
-        // SegidoRRR
+        // SegidoRRR 
         if (evt.getValueIsAdjusting()) {
             return;
         }
         if (lstSeguidor.getSelectedIndex() < 0) {
             return;
         }
-        btnSeguir.setEnabled(false);
+        btnDejarDeSeguir.setEnabled(false);
 
-        String NickName = lstSeguidor.getSelectedValue();
+        String Nickname = lstSeguidor.getSelectedValue();
 
         try {
-            DtUsuario user = Sys.seleccionarUsuario(NickName);
-            lstNoSeguido.setEnabled(true);
-            lstNoSeguido.clearSelection();
+            DtUsuario user = Sys.seleccionarUsuario(Nickname);
+            lstSeguido.setEnabled(true);
+            lstSeguido.clearSelection();
 
-            ArrayList<DtUsuario> NoSeguidos = Sys.listarUsuarioNoSeguidos();
-            
-            DefaultListModel modelo = new DefaultListModel();
-            for (DtUsuario it : NoSeguidos) {
-                modelo.addElement(it.getNickname());
-            }
-            lstNoSeguido.setModel(modelo);
-            Sys.seleccionarUsuarioActual(NickName);
+            mostrarSeguidos(Sys.listarUsuarioSeguidos());
+
             Sys.liberarMemoriaUsuario();
+
+            Sys.seleccionarUsuarioActual(Nickname);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_lstSeguidorValueChanged
 
-    private void lstNoSeguidoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstNoSeguidoValueChanged
+    private void lstSeguidoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSeguidoValueChanged
         // Segidoooo
         if (evt.getValueIsAdjusting()) {
             return;
         }
-        if (lstNoSeguido.getSelectedIndex() < 0) {
+        if (lstSeguido.getSelectedIndex() < 0) {
             return;
         }
 
-        String Nickname = lstNoSeguido.getSelectedValue();
+        String SegidOOO = lstSeguido.getSelectedValue();
         //lstVideos.setEnabled(true);
 
         try {
-            DtUsuario user = Sys.seleccionarUsuario(Nickname);
-            btnSeguir.setEnabled(true);
+            DtUsuario user = Sys.seleccionarUsuario(SegidOOO);
+            btnDejarDeSeguir.setEnabled(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_lstNoSeguidoValueChanged
+    }//GEN-LAST:event_lstSeguidoValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDejarDeSeguir;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnSeguir;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JList<String> lstNoSeguido;
+    private javax.swing.JList<String> lstSeguido;
     private javax.swing.JList<String> lstSeguidor;
     // End of variables declaration//GEN-END:variables
 }

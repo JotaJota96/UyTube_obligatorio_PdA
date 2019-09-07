@@ -1,12 +1,21 @@
 
 package Presentacion.Categoria;
 
+import Logica.Controladores.CAdmin;
+import javax.swing.DefaultListModel;
+
 public class frmListarCategorias extends javax.swing.JDialog {
 
     public frmListarCategorias(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        DefaultListModel modelo2 = new DefaultListModel();
+        for(int i = 0; i<CAdmin.getInstancia().listarCategorias().size(); i++){
+            modelo2.add(i, CAdmin.getInstancia().listarCategorias().get(i));
+        }
+            lstCategorias.setModel(modelo2);
     }
 
     @SuppressWarnings("unchecked")
@@ -56,7 +65,7 @@ public class frmListarCategorias extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-       
+        dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
 
