@@ -13,6 +13,7 @@ import Logica.Clases.ListaDeReproduccion;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class CAdmin implements IAdmin{
@@ -27,7 +28,7 @@ public class CAdmin implements IAdmin{
 
     
     private CAdmin(){
-        this.usuarios = new TreeMap();
+        this.usuarios = new TreeMap(String.CASE_INSENSITIVE_ORDER);
         this.administradores = new TreeMap();
         this.categorias = new TreeMap();
         this.usuarioActual = null;
@@ -531,6 +532,20 @@ public class CAdmin implements IAdmin{
                 0, 0);
         
         usuarioSeleccionado.modificarVideoDeCanal(dtv);
+    }
+    
+    public DtUsuario obtenerPropietarioDeVideo(int idVideo){
+        // Esto es un parche, pero de los que nunca se despegan...
+        // A tiempos desesperados, medidas desesperadas
+        for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
+            try {
+                u.getValue().obtenerVideo(idVideo);
+                return u.getValue().getDT();
+            } catch (Exception e) {
+                // a seguir buscando
+            }
+        }
+        throw new RuntimeException("El iID de video no crresponde a ningun usuario");
     }
     
     public DtCanal obtenerCanalDeUsuario(){

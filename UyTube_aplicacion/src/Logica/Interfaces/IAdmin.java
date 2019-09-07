@@ -37,6 +37,7 @@ public interface IAdmin {
     public void modificarListaDeReproduccion(DtListaDeReproduccion lista);
     public void modificarUsuarioYCanal(DtUsuario usr,DtCanal canal);
     public void modificarVideo(DtVideo video);
+    public DtUsuario obtenerPropietarioDeVideo(int idVideo);
     public DtCanal obtenerCanalDeUsuario();
     public ArrayList<DtValoracion> obtenerValoracionesDeVideo();
     public DtValoracion obtenerValoracionDada();

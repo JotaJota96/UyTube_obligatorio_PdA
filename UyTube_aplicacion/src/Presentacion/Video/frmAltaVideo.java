@@ -1,7 +1,7 @@
 
 package Presentacion.Video;
 
-import Logica.Clases.Fabrica;
+import Logica.Fabrica;
 import Logica.Clases.Video;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
