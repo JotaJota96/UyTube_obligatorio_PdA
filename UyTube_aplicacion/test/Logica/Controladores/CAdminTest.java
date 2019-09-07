@@ -1231,6 +1231,24 @@ public class CAdminTest {
     }
 
     
+    
+    /**
+     * Test of obtenerPropietarioDeVideo method, of class CAdmin.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testThrow_1_ObtenerPropietarioDeVideo() {
+        System.out.println("obtenerCanalDeUsuario");
+        DtUsuario dtu = instance.obtenerPropietarioDeVideo(500);
+    }
+    @Test
+    public void test_ObtenerPropietarioDeVideo() {
+        System.out.println("obtenerCanalDeUsuario");
+        DtUsuario dtu = instance.obtenerPropietarioDeVideo(8);
+        assertTrue(dtu.getNickname().equals("usu3"));
+    }
+    
+    
+    
     /**
      * Test of obtenerCanalDeUsuario method, of class CAdmin.
      */

@@ -1,6 +1,6 @@
 package Presentacion.ListaDeReproduccion;
 
-import Logica.Clases.Fabrica;
+import Logica.Fabrica;
 import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
