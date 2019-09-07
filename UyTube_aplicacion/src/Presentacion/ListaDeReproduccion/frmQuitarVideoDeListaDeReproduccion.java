@@ -126,6 +126,11 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
                 lstUsuariosMouseClicked(evt);
             }
         });
+        lstUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstUsuariosValueChanged(evt);
+            }
+        });
         jScrollPane43.setViewportView(lstUsuarios);
 
         jPanel22.add(jScrollPane43, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 300));
@@ -150,6 +155,11 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
                 lstListasRepMouseClicked(evt);
             }
         });
+        lstListasRep.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstListasRepValueChanged(evt);
+            }
+        });
         jScrollPane44.setViewportView(lstListasRep);
 
         jPanel22.add(jScrollPane44, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 200, 300));
@@ -162,6 +172,11 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         lstVideos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstVideosMouseClicked(evt);
+            }
+        });
+        lstVideos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstVideosValueChanged(evt);
             }
         });
         jScrollPane45.setViewportView(lstVideos);
@@ -225,7 +240,27 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowActivated
 
     private void lstUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstUsuariosMouseClicked
-      //  limpiarListaRerp();//Borra la lista de reproduccion para mostrar las listas de reproduccion del usuario seleccionado         
+      
+        
+    }//GEN-LAST:event_lstUsuariosMouseClicked
+
+    private void lstListasRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListasRepMouseClicked
+        
+             
+    }//GEN-LAST:event_lstListasRepMouseClicked
+
+    private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
+        
+    }//GEN-LAST:event_lstVideosMouseClicked
+
+    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
+        
+    }//GEN-LAST:event_formWindowDeactivated
+
+    private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
+        
+        if (evt.getValueIsAdjusting()) return;
+        if (lstUsuarios.getSelectedIndex()<0) return;
         usrSeleccionado = lstUsuarios.getSelectedValue(); // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
         try {
             sys.seleccionarUsuario(usrSeleccionado); //Selecciona el usuarioSeleccionado
@@ -235,10 +270,11 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-        
-    }//GEN-LAST:event_lstUsuariosMouseClicked
+    }//GEN-LAST:event_lstUsuariosValueChanged
 
-    private void lstListasRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListasRepMouseClicked
+    private void lstListasRepValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstListasRepValueChanged
+        if (evt.getValueIsAdjusting()) return;
+        if (lstListasRep.getSelectedIndex()<0) return;
         try {
             idListaRep=indexListRes.get(lstListasRep.getSelectedIndex());
             DtListaDeReproduccion dt = sys.seleccionarListaDeReproduccion(idListaRep);//Selecciona la lista de reproduccion        
@@ -246,17 +282,14 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-             
-    }//GEN-LAST:event_lstListasRepMouseClicked
+    }//GEN-LAST:event_lstListasRepValueChanged
 
-    private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
+    private void lstVideosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstVideosValueChanged
+        if (evt.getValueIsAdjusting()) return;
+        if (lstVideos.getSelectedIndex()<0) return;
         idVideo = indexVideos.get(lstVideos.getSelectedIndex());
         nombreVideo = lstVideos.getSelectedValue();
-    }//GEN-LAST:event_lstVideosMouseClicked
-
-    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
-        
-    }//GEN-LAST:event_formWindowDeactivated
+    }//GEN-LAST:event_lstVideosValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
