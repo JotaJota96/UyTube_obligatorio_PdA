@@ -81,9 +81,9 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         rbPublica = new javax.swing.JRadioButton();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
-        jLabel105 = new javax.swing.JLabel();
         jScrollPane35 = new javax.swing.JScrollPane();
         lstListasRep = new javax.swing.JList<>();
+        jLabel106 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar lista de reproduccion");
@@ -140,10 +140,6 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         });
         jPanel19.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, 240, 50));
 
-        jLabel105.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel105.setText("List. Reproduccion:");
-        jPanel19.add(jLabel105, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
-
         lstListasRep.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstListasRepValueChanged(evt);
@@ -152,6 +148,10 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         jScrollPane35.setViewportView(lstListasRep);
 
         jPanel19.add(jScrollPane35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 250, 270));
+
+        jLabel106.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel106.setText("List. Reproduccion:");
+        jPanel19.add(jLabel106, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,6 +193,12 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // Boton Aceptar
         try {
+            // si se puso como publico pero el canal es privado, muestra error
+            if (rbPublica.isSelected() && sys.obtenerCanalDeUsuario().getPrivacidad() == Privacidad.PRIVADO) {
+                JOptionPane.showMessageDialog(null, "Un canal privado no puede tener listas de reproduccion públicas", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             // obtiene los datos para llenar el DataType y lo crea con ellos
             int idLista;
             String nuevoNombre = "";
@@ -219,7 +225,10 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
             if (liberarMemoria) {
                 sys.liberarMemoriaUsuario();
             }
-                sys.liberarMemoriaListaDeReproduccion();
+            sys.liberarMemoriaListaDeReproduccion();
+            
+            JOptionPane.showMessageDialog(null, "Datos modificados correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -319,7 +328,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel103;
     private javax.swing.JLabel jLabel104;
-    private javax.swing.JLabel jLabel105;
+    private javax.swing.JLabel jLabel106;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JScrollPane jScrollPane33;
     private javax.swing.JScrollPane jScrollPane34;
