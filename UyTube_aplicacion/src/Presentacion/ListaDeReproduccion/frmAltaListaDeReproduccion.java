@@ -250,12 +250,16 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Deve seleccionar un usuario para continuar", "Avertencia:", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
+                
+                Sys.seleccionarUsuario(lstUsuarios.getSelectedValue());
+                
                 if (Sys.obtenerCanalDeUsuario().getPrivacidad() == Privacidad.PRIVADO && rbPublica.isSelected() == true) {
                     JOptionPane.showMessageDialog(null, "Un canal privado no puede tener una lista de reproducion publica", "Avertencia:", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
+                
                 lst = new DtListaDeReproduccion(ListaDeReproduccion.getNuevoId(), txtNombre.getText(), Priv, TipoListaDeReproduccion.PARTICULAR, lstCategorias.getSelectedValue());
-                Sys.seleccionarUsuario(lstUsuarios.getSelectedValue());
+                
 
                 if (!Sys.validarNuevaListaParticular(lst.getNombre())) {
                     JOptionPane.showMessageDialog(null, "El nombre para la lista de reproduccion ya esta usado", "Error:", JOptionPane.WARNING_MESSAGE);
