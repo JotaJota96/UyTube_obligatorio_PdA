@@ -534,6 +534,20 @@ public class CAdmin implements IAdmin{
         usuarioSeleccionado.modificarVideoDeCanal(dtv);
     }
     
+    public DtUsuario obtenerPropietarioDeVideo(int idVideo){
+        // Esto es un parche, pero de los que nunca se despegan...
+        // A tiempos desesperados, medidas desesperadas
+        for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
+            try {
+                u.getValue().obtenerVideo(idVideo);
+                return u.getValue().getDT();
+            } catch (Exception e) {
+                // a seguir buscando
+            }
+        }
+        throw new RuntimeException("El iID de video no crresponde a ningun usuario");
+    }
+    
     public DtCanal obtenerCanalDeUsuario(){
         /**
          * Devuelve los datos del canal del usuario en memoria usuarioSeleccionado
