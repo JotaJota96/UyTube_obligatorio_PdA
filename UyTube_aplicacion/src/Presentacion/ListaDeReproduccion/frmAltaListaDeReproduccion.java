@@ -235,11 +235,6 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "El nombre de la lista de reproduccion no puede ser vacio", "Avertencia:", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (lstUsuarios.getSelectedValue().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Deve seleccionar un usuario para continuar", "Avertencia:", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
         if (rbPrivada.isSelected() == true) {
             Priv = Privacidad.PRIVADO;
         }
@@ -251,6 +246,14 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
 
             if (rbParticular.isSelected() == true) {
 
+                if (lstUsuarios.getSelectedValue().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Deve seleccionar un usuario para continuar", "Avertencia:", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (Sys.obtenerCanalDeUsuario().getPrivacidad() == Privacidad.PRIVADO && rbPublica.isSelected() == true) {
+                    JOptionPane.showMessageDialog(null, "Un canal privado no puede tener una lista de reproducion publica", "Avertencia:", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
                 lst = new DtListaDeReproduccion(ListaDeReproduccion.getNuevoId(), txtNombre.getText(), Priv, TipoListaDeReproduccion.PARTICULAR, lstCategorias.getSelectedValue());
                 Sys.seleccionarUsuario(lstUsuarios.getSelectedValue());
 
@@ -261,7 +264,6 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
 
                 Sys.altaListaDeReproduccionParticular(lst);
                 JOptionPane.showMessageDialog(null, "Lista particular creada", "Informacion:", JOptionPane.INFORMATION_MESSAGE);
-
             }
 
             if (rbPorDefecto.isSelected() == true) {
@@ -279,6 +281,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
         try {
             Sys.liberarMemoriaUsuario();
             txtNombre.setText("");
@@ -286,9 +289,6 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-
-        Sys.liberarMemoriaUsuario();
-        dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
