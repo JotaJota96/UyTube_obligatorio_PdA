@@ -74,6 +74,18 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         return false;        
     }
     
+    private String convertirPrimeraEnMayusculas(String cadena){
+        char[] caracteres = cadena.toCharArray();
+        caracteres[0] = Character.toUpperCase(caracteres[0]);//Convierte el primer caracter de la primer palabra
+        // el -2 es para evitar una excepción al caernos del arreglo
+        for (int i = 0; i < cadena.length() - 2; i++) { // Es 'palabra'
+            if (caracteres[i] == ' ' || caracteres[i] == '.' || caracteres[i] == ',') { // Reemplazamos
+                caracteres[i + 1] = Character.toUpperCase(caracteres[i + 1]);
+            }
+        }
+        return new String(caracteres);
+    }
+    
     private boolean validarTxt(JTextField txt, int largo,JLabel lb,String nombreCampo){
         try{
             if(txt.getText().length() > largo ){
@@ -491,9 +503,9 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jDateChooser1.setBorder(bordeDefault);
         lbMsjFecha.setText("");
         lbMsjFecha.setOpaque(false); 
-        nombre = txtNombre.getText().trim();
+        nombre = convertirPrimeraEnMayusculas(txtNombre.getText().trim());
         nickname = txtNikname.getText().trim();
-        apellido = txtApellido.getText().trim();
+        apellido = convertirPrimeraEnMayusculas(txtApellido.getText().trim());
         email = txtEmail.getText().toLowerCase().trim();
         descripcion = txtDescripcion.getText().trim();
         nombreCanal = txtNombreCanal.getText().trim();
