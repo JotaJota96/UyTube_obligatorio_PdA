@@ -343,6 +343,7 @@ private void cargarDatosDeVideo(DtVideo v){
                             DtVideo video = new DtVideo(WIDTH, txtNombre.getText(), txtDescripcion.getText(), new Time(hora, minuto, segundo), fecha, txtURL.getText(), priv, lstCategorias.getSelectedValue(), ALLBITS, PROPERTIES);
                             if (sys.obtenerCanalDeUsuario().getPrivacidad() == Privacidad.PRIVADO && rbPublico.isSelected()) {
                                 JOptionPane.showMessageDialog(null, "No es posible hacer público un video si su canal es privado", "Error", JOptionPane.ERROR_MESSAGE);
+                                return;
                             }
                             sys.modificarVideo(video);
 
