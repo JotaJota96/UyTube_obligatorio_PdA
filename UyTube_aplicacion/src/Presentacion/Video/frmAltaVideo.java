@@ -3,20 +3,15 @@ package Presentacion.Video;
 
 import Logica.Fabrica;
 import Logica.Clases.Video;
-import Logica.DataType.DtCategoria;
-import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Interfaces.IAdmin;
 import java.awt.Color;
-//
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
@@ -58,23 +53,23 @@ public class frmAltaVideo extends javax.swing.JDialog {
         descripcion = "";
     }
     
-    private boolean validarDuracion(int _segundos){
-        if (_segundos <= 0) {
-            lbMsjDescripcion.setText(" La duración no puede ser cero");
-            lbMsjDuracion.setOpaque(true);
-            lbMsjDuracion.setForeground(Color.WHITE);
-            lbMsjDuracion.setBackground(colorError);              
-            return false;
+    private boolean validarDuracion(int s, int m, int h){
+        if ( s > 0 || m > 0 || h > 0) {             
+            return true;
         }
-        return true;
+        lbMsjDuracion.setOpaque(true);
+        lbMsjDuracion.setForeground(Color.WHITE);
+        lbMsjDuracion.setBackground(colorError);
+        lbMsjDuracion.setText(" El campo duración es obligatorio");
+        return false;                   
     }
     
     private void limpiarCampos(){
         txtNombre.setText("");
         txtDescripcion.setText("");
         txtUrl.setText("");
-        spHora.setValue(0);
-        spMinuto.setValue(0);
+        spHoras.setValue(0);
+        spMinutos.setValue(0);
         spSegundos.setValue(0);
         usrSeleccionado="";
         categoria = "";
@@ -109,10 +104,10 @@ public class frmAltaVideo extends javax.swing.JDialog {
         return false;        
     }
     
-    private boolean validarTxt(JTextField txt, int largo,JLabel lb,String nombreCampo){
+    private boolean validarTxt(JTextField txt, int max,JLabel lb,String nombreCampo){
         try{
-            if(txt.getText().length() > largo ){
-                lb.setText(" El campo supera los "+largo+" caracteres");
+            if(txt.getText().length() > max ){
+                lb.setText(" El campo supera los "+max+" caracteres");
                 cambiarColoresError(txt, lb);
                 return false;
             }
@@ -121,12 +116,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
                 cambiarColoresError(txt, lb);
                 return false;
             }            
-            else if(nombreCampo.equals("Nombre") ){
-//                if(!validarNombres(nombre)){
-//                    lb.setText(" El nombre \"" + nombre + "\" no es válido");
-//                    cambiarColoresError(txt, lb);
-//                    return false;
-//                }
+            else if(nombreCampo.equals("Nombre") ){                
                 for (DtVideo video : sys.listarVideosDeUsuario()) {
                     if(video.getNombre().equals(nombre)){
                         lb.setText(" El nombre del video ya existe");
@@ -149,7 +139,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
             }
                    
         } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return true;
     }
@@ -177,7 +167,6 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel77 = new javax.swing.JLabel();
         jScrollPane17 = new javax.swing.JScrollPane();
         lstAsignarCategoria = new javax.swing.JList<>();
-        jLabel78 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtUrl = new javax.swing.JTextField();
         jScrollPane18 = new javax.swing.JScrollPane();
@@ -185,8 +174,8 @@ public class frmAltaVideo extends javax.swing.JDialog {
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         spSegundos = new javax.swing.JSpinner();
-        spHora = new javax.swing.JSpinner();
-        spMinuto = new javax.swing.JSpinner();
+        spHoras = new javax.swing.JSpinner();
+        spMinutos = new javax.swing.JSpinner();
         jLabel135 = new javax.swing.JLabel();
         jLabel136 = new javax.swing.JLabel();
         jLabel137 = new javax.swing.JLabel();
@@ -221,7 +210,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
         });
         jScrollPane16.setViewportView(lstDuenioVideo);
 
-        jPanel14.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 290, 370));
+        jPanel14.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 290, 360));
 
         jLabel72.setText("Nombre:");
         jPanel14.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, -1, -1));
@@ -233,10 +222,10 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jPanel14.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, -1, -1));
 
         jLabel75.setText("Descripción:");
-        jPanel14.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
+        jPanel14.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, -1, -1));
 
         jLabel76.setText("Fecha publicación:");
-        jPanel14.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, -1, -1));
+        jPanel14.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, -1, -1));
 
         jLabel77.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel77.setText("Asignar categoría:");
@@ -250,10 +239,6 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jScrollPane17.setViewportView(lstAsignarCategoria);
 
         jPanel14.add(jScrollPane17, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 50, 260, 360));
-
-        jLabel78.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel78.setText("(Opcional)");
-        jPanel14.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, -1, -1));
 
         txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -273,7 +258,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
         txtDescripcion.setRows(5);
         jScrollPane18.setViewportView(txtDescripcion);
 
-        jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 330, 120));
+        jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 330, 120));
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -282,7 +267,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
                 btnAceptarActionPerformed(evt);
             }
         });
-        jPanel14.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 460, 260, 70));
+        jPanel14.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 440, 260, 70));
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -291,21 +276,31 @@ public class frmAltaVideo extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel14.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 463, 290, 70));
+        jPanel14.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 290, 70));
 
-        spSegundos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 60, 1));
-        spSegundos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                spSegundosFocusGained(evt);
+        spSegundos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
+        spSegundos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spSegundosStateChanged(evt);
             }
         });
         jPanel14.add(spSegundos, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 120, 60, -1));
 
-        spHora.setModel(new javax.swing.SpinnerNumberModel(0, 0, 5, 1));
-        jPanel14.add(spHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 60, -1));
+        spHoras.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
+        spHoras.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spHorasStateChanged(evt);
+            }
+        });
+        jPanel14.add(spHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 60, -1));
 
-        spMinuto.setModel(new javax.swing.SpinnerNumberModel(0, 0, 60, 1));
-        jPanel14.add(spMinuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 60, -1));
+        spMinutos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
+        spMinutos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spMinutosStateChanged(evt);
+            }
+        });
+        jPanel14.add(spMinutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 60, -1));
 
         jLabel135.setText("Duración:");
         jPanel14.add(jLabel135, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, -1, -1));
@@ -318,7 +313,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
 
         jDateChooser1.setMaxSelectableDate(new java.util.Date(2524622503000L));
         jDateChooser1.setMinSelectableDate(new java.util.Date(-2208971613000L));
-        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 400, 110, -1));
+        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 380, 220, 20));
 
         lbMsjNombre.setMaximumSize(new java.awt.Dimension(0, 15));
         lbMsjNombre.setMinimumSize(new java.awt.Dimension(0, 15));
@@ -326,27 +321,19 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jPanel14.add(lbMsjUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 330, 15));
         jPanel14.add(lbMsjFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 430, 250, 15));
         jPanel14.add(lbMsjDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 330, 15));
-        jPanel14.add(lbMsjDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, 200, 15));
+        jPanel14.add(lbMsjDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 330, 15));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
         );
 
         pack();
@@ -359,8 +346,8 @@ public class frmAltaVideo extends javax.swing.JDialog {
         nombre = txtNombre.getText().trim();//Obtiene el nombre y quita los espacios de los extremos
         descripcion = txtDescripcion.getText().trim();//Obtiene la descripcion y quita los espacios de los extremos
         url = txtUrl.getText().trim();//Obtiene la url y quita los espacios de los extremos
-        int horas = (Integer)spHora.getValue();
-        int minutos = (Integer)spMinuto.getValue();
+        int horas = (Integer)spHoras.getValue();
+        int minutos = (Integer)spMinutos.getValue();
         int segundos = (Integer)spSegundos.getValue();
         Time duracion = new Time(horas, minutos, segundos);
         java.sql.Date fecha = null;
@@ -368,11 +355,10 @@ public class frmAltaVideo extends javax.swing.JDialog {
         if( jDateChooser1.getDate() != null){
             java.util.Date utilDate = jDateChooser1.getDate();//Obtiene la fecha del JDateChooser en formato Date        
             fecha = new java.sql.Date(utilDate.getTime());//Lo combierte al tipo Date sql
-        }
-        
+        }        
         //Arrays para validaciones campos de texto   
         JTextField v1[] = {txtNombre,txtUrl}; //campos a validar
-        int[] v2= {30,2083}; //Largos de los campos
+        int[] v2= {100,2083}; //Largos maximos de los campos Nombre y URL
         JLabel[] v3= { lbMsjNombre, lbMsjUrl}; //labels para mostrar mensajes       
         String[] v4 ={"Nombre","URL","Descricion"};//Nombre del campo
         boolean[] v5 ={false,false,false};//Estado inicial de las validaciones, cada elemento es una validacion de un campo especifico
@@ -381,7 +367,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
                 v5[i] = true;
             }
         }         
-        if(validarDuracion(segundos)){
+        if(validarDuracion(segundos, minutos, horas)){
            v5[2] = true;
         }        
         if (fecha == null) {
@@ -393,27 +379,19 @@ public class frmAltaVideo extends javax.swing.JDialog {
         }
         if(v5[0]==false|| v5[1]==false || v5[2]==false){
             return;            
-        }
-
-        
+        }        
         try {
             DtVideo dtVideo = new DtVideo(Video.getNuevoId(), nombre, descripcion, duracion, fecha, url, Privacidad.PRIVADO, categoria, 0, 0);
             int opcion=JOptionPane.showConfirmDialog(null, 
-                        "Desea guardar el video con los siguientes datos?\n"+
-                            "Usuario: "+usrSeleccionado+"\n"+
-                            "Nombre: "+nombre+"\n"+
-                            "Descripción: "+descripcion+"\n"+
-                            "Duración: "+duracion+"\n"+
-                            "fecha de publicacón: "+fecha
-                        , "Confirmar alt de Video", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        "¿Desea guardar el video \""+nombre+"\"?"
+                        , "Confirmar alta de Video", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(opcion==0){
-                System.out.println("nomre: "+nombre+" descripcion: "+descripcion+" duracion: "+duracion+" fecha: "+ fecha+" url: "+url+" privacidad: "+Privacidad.PRIVADO+" categoria: "+categoria);
                 sys.altaVideo(dtVideo);
                 limpiarCampos();
             }
                 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -430,17 +408,6 @@ public class frmAltaVideo extends javax.swing.JDialog {
         Calendar c = new GregorianCalendar();//Objeto de tipo calendario con la fecha actual
         java.util.Date fechaActual = new Date(c.get(Calendar.YEAR)-1900,c.get(Calendar.MONTH),c.get(Calendar.DATE));//Obtiene la fecha actual del calendario     
         jDateChooser1.setDate(fechaActual);//Setea el JDateChooser con la fecha actual
-        //Se obtienen los valores de la fecha actual para su validacion
-//        anioActual = c.get(Calendar.YEAR);
-//        mesActual = c.get(Calendar.MONTH);
-//        diaActual = c.get(Calendar.DATE);
-//        System.out.println("dia actual"+diaActual);
-//        Calendar max = Calendar.getInstance();    
-//        max.set(Calendar.YEAR,anioActual);    
-//        max.set(Calendar.MONTH,mesActual);    
-//        max.set(Calendar.DATE,diaActual);    
-//        jDateChooser1.setMaxSelectableDate(max.getTime()); 
-   //     jDateChooser1.setMaxSelectableDate(fechaActual.getTime());
         try {
             // Obtengo todos los nickname y los cargo en el listDuenioVideo(Lista de dueños de videos)
             limpiarLstCategorias();
@@ -471,7 +438,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_formWindowActivated
 
@@ -490,7 +457,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
             usrSeleccionado = lstDuenioVideo.getSelectedValue();
             sys.seleccionarUsuario(usrSeleccionado);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_lstDuenioVideoValueChanged
 
@@ -501,7 +468,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
             // Selecciona una categoria de la lista de categorias
             categoria = lstAsignarCategoria.getSelectedValue();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_lstAsignarCategoriaValueChanged
 
@@ -519,11 +486,29 @@ public class frmAltaVideo extends javax.swing.JDialog {
         lbMsjUrl.setOpaque(false); 
     }//GEN-LAST:event_txtUrlFocusGained
 
-    private void spSegundosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spSegundosFocusGained
-        // TODO add your handling code here:
-        lbMsjDuracion.setText("");
-        lbMsjDuracion.setOpaque(false);
-    }//GEN-LAST:event_spSegundosFocusGained
+    private void spSegundosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spSegundosStateChanged
+        // Al cambiar el valor verifica y restaura los valores
+        if(validarDuracion((Integer)spSegundos.getValue(),(Integer)spMinutos.getValue(),(Integer)spHoras.getValue())){
+            lbMsjDuracion.setText("");
+            lbMsjDuracion.setOpaque(false);
+        }
+    }//GEN-LAST:event_spSegundosStateChanged
+
+    private void spMinutosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spMinutosStateChanged
+        // Al cambiar el valor verifica y restaura los valores
+        if(validarDuracion((Integer)spSegundos.getValue(),(Integer)spMinutos.getValue(),(Integer)spHoras.getValue())){
+            lbMsjDuracion.setText("");
+            lbMsjDuracion.setOpaque(false);
+        }
+    }//GEN-LAST:event_spMinutosStateChanged
+
+    private void spHorasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spHorasStateChanged
+        // Al cambiar el valor verifica y restaura los valores
+        if(validarDuracion((Integer)spSegundos.getValue(),(Integer)spMinutos.getValue(),(Integer)spHoras.getValue())){
+            lbMsjDuracion.setText("");
+            lbMsjDuracion.setOpaque(false);
+        }
+    }//GEN-LAST:event_spHorasStateChanged
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -540,7 +525,6 @@ public class frmAltaVideo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel76;
     private javax.swing.JLabel jLabel77;
-    private javax.swing.JLabel jLabel78;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane17;
@@ -552,8 +536,8 @@ public class frmAltaVideo extends javax.swing.JDialog {
     private javax.swing.JLabel lbMsjUrl;
     private javax.swing.JList<String> lstAsignarCategoria;
     private javax.swing.JList<String> lstDuenioVideo;
-    private javax.swing.JSpinner spHora;
-    private javax.swing.JSpinner spMinuto;
+    private javax.swing.JSpinner spHoras;
+    private javax.swing.JSpinner spMinutos;
     private javax.swing.JSpinner spSegundos;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNombre;
