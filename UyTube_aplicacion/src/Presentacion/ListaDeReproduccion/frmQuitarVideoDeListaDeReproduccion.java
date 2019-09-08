@@ -23,8 +23,9 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         try {
             sys = Fabrica.getInstancia().getIAdmin();
+            cargarListaUsuarios();// Carga los usuarios al abrir el formulario
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }        
     }  
     
@@ -40,12 +41,11 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
            if(!sys.listarUsuarios().isEmpty()){
             for(DtUsuario elem: sys.listarUsuarios()){
                 modelo.addElement(elem.getNickname());
-                System.out.println("Lista Usuarios, nombre: "+elem.getNickname());
             }
             lstUsuarios.setModel(modelo);                 
         }  
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         
     }
@@ -59,25 +59,22 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
                 indexListRes.add(elem.getId());//guarda todos los id en la misma posicion que el modelo
             }            
             lstListasRep.setModel(modelo);
-            limpiarLstVideos();
         }
+        limpiarLstVideos();
     }
     
     private void cargarListaVideos(){
         indexVideos.clear();
         DefaultListModel modelo = new DefaultListModel();
         try {
-            if(!sys.listarVideosDeListaDeReproduccion().isEmpty()){ //Obtiene los videos de la lista de reproduccion seleccionada
             for (DtVideo elem : sys.listarVideosDeListaDeReproduccion()) {
                 modelo.addElement(elem.getNombre());
                 indexVideos.add(elem.getId());//guarda todos los id en la misma posicion que el modelo
-            }            
-            lstVideos.setModel(modelo);                 
-        }
+            }
+            lstVideos.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
     }
 
     /**
@@ -104,14 +101,6 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quitar video de lista de reproduccion");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-            public void windowDeactivated(java.awt.event.WindowEvent evt) {
-                formWindowDeactivated(evt);
-            }
-        });
 
         jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -136,7 +125,7 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel22.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 210, 40));
+        jPanel22.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 180, 40));
 
         jLabel119.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel119.setText("Videos:");
@@ -144,11 +133,6 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         jPanel22.add(jLabel119, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
 
         lstListasRep.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lstListasRep.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstListasRepMouseClicked(evt);
-            }
-        });
         lstListasRep.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstListasRepValueChanged(evt);
@@ -163,11 +147,6 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         jPanel22.add(jLabel120, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, -1, -1));
 
         lstVideos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lstVideos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstVideosMouseClicked(evt);
-            }
-        });
         lstVideos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstVideosValueChanged(evt);
@@ -184,7 +163,7 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
                 btnQuitarActionPerformed(evt);
             }
         });
-        jPanel22.add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, 230, 40));
+        jPanel22.add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 350, 320, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,35 +190,46 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //listaRep->quitarVideo->cancelar       
-        this.setVisible(false);
+        //listaRep->quitarVideo->cancelar
+        try {
+            sys.liberarMemoriaUsuario();
+            sys.liberarMemoriaListaDeReproduccion();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }finally{
+            dispose();
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
-        try {            
-            int opcion=JOptionPane.showConfirmDialog(null, 
-                        "¿Realmente desea quitar de la lista el video: \""+nombreVideo+"\"?"                            
-                        , "Confirmar quitar Video", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(opcion == 0){
-                System.out.println("estoy en el if con id: " + idVideo);
+        if (lstUsuarios.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lstListasRep.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una lista de reproducción", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lstVideos.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un video", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int opcion = JOptionPane.showConfirmDialog(null,
+                    "¿Realmente desea quitar de la lista el video: \"" + nombreVideo + "\"?",
+                    "Confirmar quitar Video",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            
+            if (opcion == 0) {
                 sys.quitarVideoDeListaDeReproduccion(idVideo);//Elimina el video de la lista de reproduccion
-            }                
+                cargarListaVideos();
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
-        } 
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnQuitarActionPerformed
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        cargarListaUsuarios();// Carga los usuarios al abrir el formulario
-    }//GEN-LAST:event_formWindowActivated
-
-    private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
-        
-    }//GEN-LAST:event_lstVideosMouseClicked
-
-    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
-        
-    }//GEN-LAST:event_formWindowDeactivated
 
     private void lstUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUsuariosValueChanged
         
@@ -248,11 +238,10 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         usrSeleccionado = lstUsuarios.getSelectedValue(); // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
         try {
             sys.seleccionarUsuario(usrSeleccionado); //Selecciona el usuarioSeleccionado
-            ArrayList<DtListaDeReproduccion> dtListRep = new ArrayList<>();
-            dtListRep = sys.listarListasDeReproduccionDeUsuario(usrSeleccionado);
+            ArrayList<DtListaDeReproduccion> dtListRep = sys.listarListasDeReproduccionDeUsuario(usrSeleccionado);
             cargarListaReproducion(dtListRep);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_lstUsuariosValueChanged
 
@@ -264,7 +253,7 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
             DtListaDeReproduccion dt = sys.seleccionarListaDeReproduccion(idListaRep);//Selecciona la lista de reproduccion        
             cargarListaVideos();                //Carga los videos de la lista seleccionada 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_lstListasRepValueChanged
 
@@ -274,10 +263,6 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         idVideo = indexVideos.get(lstVideos.getSelectedIndex());
         nombreVideo = lstVideos.getSelectedValue();
     }//GEN-LAST:event_lstVideosValueChanged
-
-    private void lstListasRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListasRepMouseClicked
-
-    }//GEN-LAST:event_lstListasRepMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
