@@ -318,6 +318,11 @@ private void cargarDatosDeVideo(DtVideo v){
                                     return;
                                 }
                             }
+                            
+                            if (spHora.getValue().toString().equals("0") && spMinuto.getValue().toString().equals("0") && spSegundos.getValue().toString().equals("0")) {
+                            JOptionPane.showMessageDialog(null, "La duración del video no puede ser 0", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            
 
                             int hora = (Integer) spHora.getValue();
                             int minuto = (Integer) spMinuto.getValue();
@@ -352,7 +357,9 @@ private void cargarDatosDeVideo(DtVideo v){
                     }
                 }
             }
-        }
+        }}
+                
+                
     
 
 catch (Exception e) {
