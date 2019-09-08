@@ -10,6 +10,9 @@ import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -30,7 +33,8 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     Pattern patronEmail = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     
-    Pattern patronNombres= Pattern.compile("^([A-Za-zÑñÁáÉéÍíÓóÚú]+)\\s*([A-Za-zÑñÁáÉéÍíÓóÚú]+)\\s*([A-Za-zÑñÁáÉéÍíÓóÚú]+)$");
+    Pattern patronNombres= Pattern.compile("^([A-Za-zÑñÁáÉéÍíÓóÚú]+)\\s*([A-Za-zÑñÁáÉéÍíÓóÚú]+)\\s*"
+            + "([A-Za-zÑñÁáÉéÍíÓóÚú]+)$");
     IAdmin sys;       
     Border bordeDefault;
     Color colorOK = new ColorUIResource(40,167,69);
@@ -68,8 +72,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         if (mather.find() == true) {
             return true;
         } 
-        return false;
-        
+        return false;        
     }
     
     private boolean validarTxt(JTextField txt, int largo,JLabel lb,String nombreCampo){
@@ -160,7 +163,6 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         btSeleccionar = new javax.swing.JButton();
         txtNombreCanal = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -190,12 +192,16 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         lbMsjApellido = new javax.swing.JLabel();
         lbMsjEmail = new javax.swing.JLabel();
         lbMsjFecha = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta usuario");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
             }
         });
 
@@ -254,7 +260,6 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             }
         });
         jPanel2.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 300, -1));
-        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 100, -1));
 
         btSeleccionar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btSeleccionar.setText("Selecionar");
@@ -316,7 +321,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel9.setText("Seleccione la fecha de nacimiento");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("Canal");
@@ -365,7 +370,8 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jPanel2.add(lbMsjNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 270, -1));
         jPanel2.add(lbMsjApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 270, -1));
         jPanel2.add(lbMsjEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 300, -1));
-        jPanel2.add(lbMsjFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 350, -1));
+        jPanel2.add(lbMsjFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 350, 15));
+        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -445,7 +451,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             nombreCanal = nickname;
             txtNombreCanal.setText(nickname);
         }
-        btnCargar.setEnabled(true);
+        
         try {    
             DtUsuario dtUsuario = new DtUsuario(nickname, nickname, nombre, apellido, email, fecha, imagen, 0);
             DtCanal dtCanal = new DtCanal(Canal.getNuevoId(), nombre, descripcion, privacidad);
@@ -549,6 +555,13 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             txtNombreCanal.setText(txtNikname.getText().trim());
         }
     }//GEN-LAST:event_txtNiknameFocusLost
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // Fecha actual del sistema
+        Calendar c = new GregorianCalendar();//Objeto de tipo calendario con la fecha actual
+        java.util.Date fechaActual = new Date(c.get(Calendar.YEAR)-1900,c.get(Calendar.MONTH),c.get(Calendar.DATE));//Obtiene la fecha actual del calendario     
+        jDateChooser1.setDate(fechaActual);//Setea el JDateChooser con la fecha actual
+    }//GEN-LAST:event_formWindowActivated
 
     private void cargarImagen(javax.swing.JLabel jLabelx) {
         JFileChooser jf = new JFileChooser();

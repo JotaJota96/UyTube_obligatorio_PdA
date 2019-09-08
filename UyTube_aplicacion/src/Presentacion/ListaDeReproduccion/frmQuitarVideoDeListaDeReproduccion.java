@@ -71,7 +71,6 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
             for (DtVideo elem : sys.listarVideosDeListaDeReproduccion()) {
                 modelo.addElement(elem.getNombre());
                 indexVideos.add(elem.getId());//guarda todos los id en la misma posicion que el modelo
-                System.out.println("Lista Videos, nombre: "+elem.getNombre()+" id: "+elem.getId());
             }            
             lstVideos.setModel(modelo);                 
         }
@@ -121,11 +120,6 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         jPanel22.add(jLabel118, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         lstUsuarios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lstUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstUsuariosMouseClicked(evt);
-            }
-        });
         lstUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstUsuariosValueChanged(evt);
@@ -239,16 +233,6 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         cargarListaUsuarios();// Carga los usuarios al abrir el formulario
     }//GEN-LAST:event_formWindowActivated
 
-    private void lstUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstUsuariosMouseClicked
-      
-        
-    }//GEN-LAST:event_lstUsuariosMouseClicked
-
-    private void lstListasRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListasRepMouseClicked
-        
-             
-    }//GEN-LAST:event_lstListasRepMouseClicked
-
     private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
         
     }//GEN-LAST:event_lstVideosMouseClicked
@@ -290,6 +274,10 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         idVideo = indexVideos.get(lstVideos.getSelectedIndex());
         nombreVideo = lstVideos.getSelectedValue();
     }//GEN-LAST:event_lstVideosValueChanged
+
+    private void lstListasRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListasRepMouseClicked
+
+    }//GEN-LAST:event_lstListasRepMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
