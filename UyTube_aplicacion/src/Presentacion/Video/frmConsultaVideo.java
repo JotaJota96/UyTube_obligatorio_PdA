@@ -121,6 +121,8 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel99 = new javax.swing.JLabel();
         lbCantDisLikes = new javax.swing.JLabel();
         lbCantLikes = new javax.swing.JLabel();
+        jLabel89 = new javax.swing.JLabel();
+        lbFechaPublicacion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultar video");
@@ -142,7 +144,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
 
         jLabel82.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel82.setText("Comentarios:");
-        jPanel15.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, -1, -1));
+        jPanel15.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 220, -1, -1));
 
         lstVideoUsuario.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -163,7 +165,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jPanel15.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, -1, -1));
 
         jLabel86.setText("Descripción:");
-        jPanel15.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
+        jPanel15.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, -1, -1));
 
         txtDescripcion.setEditable(false);
         txtDescripcion.setColumns(20);
@@ -171,13 +173,13 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         txtDescripcion.setRows(5);
         jScrollPane24.setViewportView(txtDescripcion);
 
-        jPanel15.add(jScrollPane24, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 270, 130));
+        jPanel15.add(jScrollPane24, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 270, 130));
 
         jLabel87.setText("Privacidad:");
-        jPanel15.add(jLabel87, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, -1, -1));
+        jPanel15.add(jLabel87, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
 
         jLabel88.setText("Categoria:");
-        jPanel15.add(jLabel88, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
+        jPanel15.add(jLabel88, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
 
         lbNombre.setText(" ");
         jPanel15.add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, 580, -1));
@@ -194,10 +196,10 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jPanel15.add(lbUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 580, -1));
 
         lbPrivacidad.setText(" ");
-        jPanel15.add(lbPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 580, -1));
+        jPanel15.add(lbPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, 580, -1));
 
         lbCategoria.setText(" ");
-        jPanel15.add(lbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, 580, -1));
+        jPanel15.add(lbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 580, -1));
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -206,39 +208,45 @@ public class frmConsultaVideo extends javax.swing.JDialog {
                 btnAceptarActionPerformed(evt);
             }
         });
-        jPanel15.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 480, 380, 60));
+        jPanel15.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 510, 380, 60));
 
         jLabel94.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel94.setText("Les gusto:");
-        jPanel15.add(jLabel94, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, -1));
+        jPanel15.add(jLabel94, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
 
         jLabel95.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel95.setText("No les gusto:");
-        jPanel15.add(jLabel95, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, -1, -1));
+        jPanel15.add(jLabel95, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, -1, -1));
 
         jScrollPane25.setViewportView(lstLike);
 
-        jPanel15.add(jScrollPane25, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 290, 140));
+        jPanel15.add(jScrollPane25, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 290, 140));
 
         jScrollPane26.setViewportView(lstDislike);
 
-        jPanel15.add(jScrollPane26, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, 300, 140));
+        jPanel15.add(jScrollPane26, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 430, 300, 140));
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         treeComentarios.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane27.setViewportView(treeComentarios);
 
-        jPanel15.add(jScrollPane27, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 220, 380, 250));
+        jPanel15.add(jScrollPane27, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 250, 380, 230));
 
         jLabel99.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel99.setText("Video del Usuario:");
         jPanel15.add(jLabel99, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
 
         lbCantDisLikes.setText(" ");
-        jPanel15.add(lbCantDisLikes, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 200, 20));
+        jPanel15.add(lbCantDisLikes, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 200, 20));
 
         lbCantLikes.setText(" ");
-        jPanel15.add(lbCantLikes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, 200, 20));
+        jPanel15.add(lbCantLikes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, 200, 20));
+
+        jLabel89.setText("Publicación:");
+        jPanel15.add(jLabel89, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, -1, -1));
+
+        lbFechaPublicacion.setText(" ");
+        jPanel15.add(lbFechaPublicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 580, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -250,9 +258,9 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
+            .addGap(0, 592, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE))
         );
 
         pack();
@@ -349,6 +357,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         txtDescripcion.setText(v.getDescripcion());
         lbCantLikes.setText(String.valueOf(v.getCantLikes()));
         lbCantDisLikes.setText(String.valueOf(v.getCantDisLikes()));
+        lbFechaPublicacion.setText(v.getFechaPublicacion().toString());
     }
     private void mostrarListasDrValoraciones(ArrayList<DtValoracion> lVal){
         DefaultListModel modeloLikes = new DefaultListModel();
@@ -444,6 +453,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         txtDescripcion.setText("");
         lbCantLikes.setText("");
         lbCantDisLikes.setText("");
+        lbFechaPublicacion.setText("");
         // limpieza de listas
         lstLike.setModel(new DefaultListModel());
         lstDislike.setModel(new DefaultListModel());
@@ -467,6 +477,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel86;
     private javax.swing.JLabel jLabel87;
     private javax.swing.JLabel jLabel88;
+    private javax.swing.JLabel jLabel89;
     private javax.swing.JLabel jLabel94;
     private javax.swing.JLabel jLabel95;
     private javax.swing.JLabel jLabel99;
@@ -481,6 +492,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
     private javax.swing.JLabel lbCantLikes;
     private javax.swing.JLabel lbCategoria;
     private javax.swing.JLabel lbDuracion;
+    private javax.swing.JLabel lbFechaPublicacion;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbPrivacidad;
     private javax.swing.JLabel lbUrl;

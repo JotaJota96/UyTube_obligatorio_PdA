@@ -1,4 +1,3 @@
-
 package Presentacion.Video;
 
 import Logica.DataType.DtCanal;
@@ -12,32 +11,33 @@ import Presentacion.DatosDePrueba;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 
 public class frmModificarVideo extends javax.swing.JDialog {
+
     IAdmin sys;
     DefaultListModel s = new DefaultListModel();
     boolean liberarMemoria;
     String validarNombre;
+
     public frmModificarVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         liberarMemoria = true;
-        
-     
-        
-        
+
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
 
             // lista usuarios en el JList
             listarUsuarios(sys.listarUsuarios());
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -77,7 +77,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
         jLabel146 = new javax.swing.JLabel();
         jScrollPane19 = new javax.swing.JScrollPane();
         lstCategorias = new javax.swing.JList<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dcFechaPublicacion = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar video");
@@ -164,20 +164,21 @@ public class frmModificarVideo extends javax.swing.JDialog {
         buttonGroup1.add(rbPrivado);
         rbPrivado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         rbPrivado.setText("Privado");
-        rbPrivado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbPrivadoActionPerformed(evt);
-            }
-        });
         jPanel14.add(rbPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, -1, -1));
+
+        spHora.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
         jPanel14.add(spHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 60, -1));
 
         jLabel144.setText("Horas");
         jPanel14.add(jLabel144, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, -1, -1));
+
+        spMinuto.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
         jPanel14.add(spMinuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 50, -1));
 
         jLabel145.setText("Minutos");
         jPanel14.add(jLabel145, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 80, -1, -1));
+
+        spSegundos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
         jPanel14.add(spSegundos, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 50, -1));
 
         jLabel146.setText("Segundos");
@@ -186,7 +187,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
         jScrollPane19.setViewportView(lstCategorias);
 
         jPanel14.add(jScrollPane19, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 180, 400));
-        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 340, -1, -1));
+        jPanel14.add(dcFechaPublicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(564, 340, 180, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,15 +214,14 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
         try {
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
-            
+
             // Limpio la ventana
-           // limpiarElementosDeVentana();
-            
+            // limpiarElementosDeVentana();
             // lista usuarios y categorias en JList
             listarUsuarios(sys.listarUsuarios());
             lstDuenioVideo.setSelectedValue(nickname, true);
             lstDuenioVideo.setEnabled(false);
-            
+
             // Selecciono el usuario en la lista de usuarios
             // deshabilito la lista de usuarios para que no lo cambien
         } catch (Exception e) {
@@ -230,8 +230,7 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
         }
     }
 
-    
- private void habilitarModificar() {
+    private void habilitarModificar() {
         if (!lstVideoUsuario.isSelectionEmpty()) {
             btnModificar.setEnabled(true);
         } else {
@@ -239,7 +238,7 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
         }
     }
 
- private boolean existeVideo(String nombre) {
+    private boolean existeVideo(String nombre) {
         ListModel<String> lst = lstVideoUsuario.getModel();
         for (int i = 0; i < lst.getSize(); i++) {
             if (lst.getElementAt(i).equals(nombre)) {
@@ -250,134 +249,147 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
         return false;
 
     }
-    private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios){
+
+    private void listarUsuarios(ArrayList<DtUsuario> ListaUsuarios) {
         DefaultListModel modelo = new DefaultListModel();
         for (DtUsuario it : ListaUsuarios) {
             modelo.addElement(it.getNickname());
         }
         lstDuenioVideo.setModel(modelo);
-        
+
     }
-private void listarCategorias(ArrayList<String> ListaCategorias){
+
+    private void listarCategorias(ArrayList<String> ListaCategorias) {
         DefaultListModel modelo2 = new DefaultListModel();
-        for(int i = 0; i<sys.listarCategorias().size(); i++){
+        for (int i = 0; i < sys.listarCategorias().size(); i++) {
             modelo2.add(i, sys.listarCategorias().get(i));
         }
-            lstCategorias.setModel(modelo2);
+        lstCategorias.setModel(modelo2);
     }
-        
-    
-private void listarVideos(ArrayList<DtVideo> ListaVideos){
+
+    private void listarVideos(ArrayList<DtVideo> ListaVideos) {
         DefaultListModel modelo1 = new DefaultListModel();
         for (DtVideo it : ListaVideos) {
             modelo1.addElement(it.getNombre());
         }
         lstVideoUsuario.setModel(modelo1);
-        
+
     }
-private void cargarDatosDeVideo(DtVideo v){
-        int hora,minuto,segundo;
+
+    private void cargarDatosDeVideo(DtVideo v) {
+        int hora, minuto, segundo;
         txtNombre.setText(v.getNombre());
         txtDescripcion.setText(v.getDescripcion());
         txtURL.setText(v.getUrlVideoOriginal());
-        jDateChooser1.setDate(v.getFechaPublicacion());
-        
+        dcFechaPublicacion.setDate(v.getFechaPublicacion());
+
         spHora.setValue(v.getDuracion().getHours());
         spMinuto.setValue(v.getDuracion().getMinutes());
         spSegundos.setValue(v.getDuracion().getSeconds());
-        
-        if (v.getPrivacidad() == Privacidad.PUBLICO){
+
+        if (v.getPrivacidad() == Privacidad.PUBLICO) {
             rbPublico.setSelected(true);
-        }else{
+        } else {
             rbPrivado.setSelected(true);
         }
-        
+
         lstCategorias.setSelectedValue(v.getCategoria(), true);
 
-}
-
+    }
 
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
             if (lstVideoUsuario.isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(null, "Seleccione un video para modificar", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Seleccione un video para modificar", "Error", JOptionPane.WARNING_MESSAGE);
             } else {
                 if (txtNombre.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El nombre de video no puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "El nombre del video no puede ser vacío", "Error", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    if (lstCategorias.isSelectionEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Seleccione una categoría", "Error", JOptionPane.ERROR_MESSAGE);
+                    if (txtNombre.getText().length() > 100) {
+                        JOptionPane.showMessageDialog(null, "El nombre del video no puede tener mas de 100 caracteres", "Error", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        if (txtURL.getText().isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "La URL del video no puede ser vacía", "Error", JOptionPane.ERROR_MESSAGE);
+                        if (lstCategorias.isSelectionEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Seleccione una categoría", "Error", JOptionPane.WARNING_MESSAGE);
                         } else {
-                            if (!txtNombre.getText().equals(validarNombre)) {
-                                if (existeVideo(txtNombre.getText())) {
-                                    JOptionPane.showMessageDialog(null, "Ya existe este video en la lista seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
-                                    return;
+                            if (txtURL.getText().isEmpty()) {
+                                JOptionPane.showMessageDialog(null, "La URL del video no puede ser vacía", "Error", JOptionPane.WARNING_MESSAGE);
+                            } else {
+                                if (! validarFormatoURL(txtURL.getText())){
+                                    JOptionPane.showMessageDialog(null, "La URL del video no es válida", "Error", JOptionPane.WARNING_MESSAGE);
+                                } else {
+                                    if (dcFechaPublicacion.getDate() == null) {
+                                        JOptionPane.showMessageDialog(null, "Seleccione una fecha de publicacion", "Error", JOptionPane.WARNING_MESSAGE);
+                                    } else {
+                                        if (!txtNombre.getText().equals(validarNombre)) {
+                                            if (existeVideo(txtNombre.getText())) {
+                                                JOptionPane.showMessageDialog(null, "Ya existe este video en la lista seleccionada", "Error", JOptionPane.WARNING_MESSAGE);
+                                                return;
+                                            }
+                                        }
+
+                                        int hora = (Integer) spHora.getValue();
+                                        int minuto = (Integer) spMinuto.getValue();
+                                        int segundo = (Integer) spSegundos.getValue();
+                                        Privacidad priv = Privacidad.PRIVADO;
+                                        if (rbPrivado.isSelected() && !(rbPublico.isSelected())) {
+                                            priv = Privacidad.PRIVADO;
+                                        } else if (rbPublico.isSelected() && !(rbPrivado.isSelected())) {
+                                            priv = Privacidad.PUBLICO;
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Seleccione privacidad del video", "Error", JOptionPane.WARNING_MESSAGE);
+                                        }
+                                        java.sql.Date fecha = null;
+                                        if (dcFechaPublicacion.getDate() != null) {
+                                            java.util.Date utilDate = dcFechaPublicacion.getDate();
+                                            fecha = new java.sql.Date(utilDate.getTime());
+                                        }
+                                        DtVideo video = new DtVideo(WIDTH, txtNombre.getText(), txtDescripcion.getText(), new Time(hora, minuto, segundo), fecha, txtURL.getText(), priv, lstCategorias.getSelectedValue(), ALLBITS, PROPERTIES);
+                                        if (sys.obtenerCanalDeUsuario().getPrivacidad() == Privacidad.PRIVADO && rbPublico.isSelected()) {
+                                            JOptionPane.showMessageDialog(null, "No es posible hacer público un video si su canal es privado", "Error", JOptionPane.WARNING_MESSAGE);
+                                        }
+                                        sys.modificarVideo(video);
+
+                                        if (liberarMemoria) {
+                                            sys.liberarMemoriaUsuario();
+                                        }
+                                        sys.liberarMemoriaVideo();
+
+                                        JOptionPane.showMessageDialog(null, "Se han efectuado los cambios", "OK", JOptionPane.INFORMATION_MESSAGE);
+                                        dispose();
+                                    }
                                 }
                             }
-
-                            int hora = (Integer) spHora.getValue();
-                            int minuto = (Integer) spMinuto.getValue();
-                            int segundo = (Integer) spSegundos.getValue();
-                            Privacidad priv = Privacidad.PRIVADO;
-                            if (rbPrivado.isSelected() && !(rbPublico.isSelected())) {
-                                priv = Privacidad.PRIVADO;
-                            } else if (rbPublico.isSelected() && !(rbPrivado.isSelected())) {
-                                priv = Privacidad.PUBLICO;
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Seleccione privacidad del video", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
-                            java.sql.Date fecha = null;
-                            if (jDateChooser1.getDate() != null) {
-                                java.util.Date utilDate = jDateChooser1.getDate();
-                                fecha = new java.sql.Date(utilDate.getTime());
-                            }
-                            DtVideo video = new DtVideo(WIDTH, txtNombre.getText(), txtDescripcion.getText(), new Time(hora, minuto, segundo), fecha, txtURL.getText(), priv, lstCategorias.getSelectedValue(), ALLBITS, PROPERTIES);
-                            if (sys.obtenerCanalDeUsuario().getPrivacidad() == Privacidad.PRIVADO && rbPublico.isSelected()) {
-                                JOptionPane.showMessageDialog(null, "No es posible hacer público un video si su canal es privado", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
-                            sys.modificarVideo(video);
-
-                            if (liberarMemoria) {
-                                sys.liberarMemoriaUsuario();
-                            }
-                            sys.liberarMemoriaVideo();
-
-                            JOptionPane.showMessageDialog(null, "Se han efectuado los cambios", "OK", JOptionPane.INFORMATION_MESSAGE);
-                            dispose();
                         }
                     }
                 }
             }
-        }
-    
-
-catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-            try{
-                if(liberarMemoria){
-                    sys.liberarMemoriaUsuario();
-                }
-                    sys.liberarMemoriaVideo();
-                    dispose();
-                } catch (Exception e) {
+        try {
+            if (liberarMemoria) {
+                sys.liberarMemoriaUsuario();
+            }
+            sys.liberarMemoriaVideo();
+            dispose();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
-        
-            }
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void lstDuenioVideoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDuenioVideoValueChanged
-        if (evt.getValueIsAdjusting()) return;
-        if (lstDuenioVideo.getSelectedIndex()<0) return;
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
+        if (lstDuenioVideo.getSelectedIndex() < 0) {
+            return;
+        }
         txtDescripcion.setText("");
         txtNombre.setText("");
         txtURL.setText("");
@@ -388,39 +400,49 @@ catch (Exception e) {
         String nick = lstDuenioVideo.getSelectedValue();
         sys.seleccionarUsuario(nick);
         listarVideos(sys.listarVideosDeUsuario());
-                    habilitarModificar();
-
+        habilitarModificar();
+        buttonGroup1.clearSelection();
+        dcFechaPublicacion.setDate(null);
     }//GEN-LAST:event_lstDuenioVideoValueChanged
 
     private void lstVideoUsuarioValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstVideoUsuarioValueChanged
-        if (evt.getValueIsAdjusting()) return;
-        if (lstVideoUsuario.getSelectedIndex()<0) return;
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
+        if (lstVideoUsuario.getSelectedIndex() < 0) {
+            return;
+        }
 
         try {
-                        habilitarModificar();
+            habilitarModificar();
             String nombre = lstVideoUsuario.getSelectedValue();
             ArrayList<DtVideo> arr = sys.listarVideosDeUsuario();
             int idVideo = arr.get(lstVideoUsuario.getSelectedIndex()).getId();
             DtVideo dtv = sys.seleccionarVideo(idVideo);
-            validarNombre=dtv.getNombre();
-            
+            validarNombre = dtv.getNombre();
+
             listarCategorias(sys.listarCategorias());
             cargarDatosDeVideo(dtv);
-        }catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_lstVideoUsuarioValueChanged
 
-    private void rbPrivadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPrivadoActionPerformed
-        // TODO add your handling code heres:
-    }//GEN-LAST:event_rbPrivadoActionPerformed
-
+    private boolean validarFormatoURL(String _url){
+       Pattern patronURL = Pattern.compile("^((((https?|ftps?|gopher|telnet|nntp)://)|(mailto:|news:))(%[0-9A-Fa-f]{2}|[-()_.!~*’;/?:@&=+$, A-Za-z0-9])+)([).!’;/?:, ][[:blank:]])?$");
+        Matcher mather = patronURL.matcher(_url); 
+        if (mather.find() == true) {
+            return true;
+        } 
+        return false;        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser dcFechaPublicacion;
     private javax.swing.JLabel jLabel144;
     private javax.swing.JLabel jLabel145;
     private javax.swing.JLabel jLabel146;
