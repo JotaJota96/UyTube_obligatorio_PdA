@@ -258,7 +258,9 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
         int indexSeleccionado = lstVideos.getSelectedIndex();
         int idVideo = Listavideos.get(indexSeleccionado).getId();
         
-        new frmConsultaVideo(this, true, lstUsuarios.getSelectedValue(), idVideo).setVisible(true);
+        DtUsuario Usu = Sys.obtenerPropietarioDeVideo(idVideo);
+        
+        new frmConsultaVideo(this, true, Usu.getNickname(), idVideo).setVisible(true);
     }//GEN-LAST:event_lstVideosMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
