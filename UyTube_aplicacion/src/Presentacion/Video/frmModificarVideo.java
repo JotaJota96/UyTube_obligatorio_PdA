@@ -39,7 +39,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
             listarUsuarios(sys.listarUsuarios());
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

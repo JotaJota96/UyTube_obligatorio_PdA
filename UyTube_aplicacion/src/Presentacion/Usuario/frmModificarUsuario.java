@@ -42,7 +42,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             // lista usuarios en el JList
             listarUsuarios(sys.listarUsuarios());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -444,14 +444,14 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                                             if (txtContraNueva1.getText().equals(txtContraNueva2.getText())) {
                                                 pass = txtContraNueva1.getText();
                                             } else {
-                                                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, no se pudo efectuar el cambio de contraseña. Inténtelo de nuevo", "OK", JOptionPane.WARNING_MESSAGE);
+                                                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, no se pudo efectuar el cambio de contraseña. Inténtelo de nuevo", "Error", JOptionPane.WARNING_MESSAGE);
                                                 txtContraNueva1.setText("");
                                                 txtContraNueva2.setText("");
                                                 return;
                                             }
 
                                         } else {
-                                            JOptionPane.showMessageDialog(null, "Ingrese la contraseña nueva", "OK", JOptionPane.WARNING_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, "Ingrese la contraseña nueva", "Error", JOptionPane.WARNING_MESSAGE);
                                             return;
                                         }
                                     }
@@ -460,7 +460,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                                         java.util.Date utilDate = dcFecha.getDate();
                                         fecha = new java.sql.Date(utilDate.getTime());
                                     }else{
-                                        JOptionPane.showMessageDialog(null, "Debe seleccionar la fecha de nacimiento", "OK", JOptionPane.WARNING_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "Debe seleccionar la fecha de nacimiento", "Error", JOptionPane.WARNING_MESSAGE);
                                         return;
                                     }
                                     DtUsuario u = new DtUsuario(user.getNickname(), pass, txtNombre.getText(), txtApellido.getText(), user.getCorreo(), fecha, ruta, PROPERTIES);
@@ -546,7 +546,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             txtContraNueva2.setText("");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
         }        // TODO add your handling code here:
     }//GEN-LAST:event_lstUsuariosValueChanged

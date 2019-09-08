@@ -3,6 +3,7 @@ package Presentacion.Categoria;
 
 import Logica.Controladores.CAdmin;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class frmListarCategorias extends javax.swing.JDialog {
 
@@ -10,12 +11,16 @@ public class frmListarCategorias extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        
-        DefaultListModel modelo2 = new DefaultListModel();
-        for(int i = 0; i<CAdmin.getInstancia().listarCategorias().size(); i++){
-            modelo2.add(i, CAdmin.getInstancia().listarCategorias().get(i));
-        }
+
+        try {
+            DefaultListModel modelo2 = new DefaultListModel();
+            for (int i = 0; i < CAdmin.getInstancia().listarCategorias().size(); i++) {
+                modelo2.add(i, CAdmin.getInstancia().listarCategorias().get(i));
+            }
             lstCategorias.setModel(modelo2);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
