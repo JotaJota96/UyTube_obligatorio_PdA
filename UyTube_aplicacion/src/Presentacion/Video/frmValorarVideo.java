@@ -7,7 +7,6 @@ import Logica.DataType.DtVideo;
 import Logica.Enumerados.TipoValoracion;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
-import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -214,6 +213,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
             return;
         }
         if (lstVideoAValorar.getSelectedIndex() < 0) {
+            mostrarValoracionEnRadioButtons();
             return;
         }
 
@@ -250,6 +250,25 @@ public class frmValorarVideo extends javax.swing.JDialog {
 
     private void btnValorarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValorarActionPerformed
         // Clic en boton Valorar
+        
+        // validaciones
+        if (lstUsuarioValorado.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario propietario del video", "¡Atención!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lstVideoAValorar.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un video", "¡Atención!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lstUsuarioValoradoR.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar el usuario que realizará la valoración", "¡Atención!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if ( ! (rbMeGusta.isSelected() || rbNoMeGusta.isSelected())) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la opcion de valoración", "¡Atención!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         try {
             String nick;
             int indiceSeleccionado;
@@ -277,7 +296,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
             sys.liberarMemoriaVideo();
             sys.liberarMemoriaUsuarioActual();
             sys.liberarMemoriaUsuario();
-            JOptionPane.showMessageDialog(null, "Usuario valorado exitosamente\n", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Video valorado exitosamente\n", "Informacion", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -321,6 +340,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
                 buttonGroup1.clearSelection();
                 rbMeGusta.setEnabled(false);
                 rbNoMeGusta.setEnabled(false);
+                btnValorar.setEnabled(false);
                 return;
             }
             rbMeGusta.setEnabled(true);
@@ -330,6 +350,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
 
             if (dtv == null) {
                 buttonGroup1.clearSelection();
+                btnValorar.setEnabled(false);
                 //rbMeGusta.setSelected(false);
                 //rbNoMeGusta.setSelected(false);
             } else {
