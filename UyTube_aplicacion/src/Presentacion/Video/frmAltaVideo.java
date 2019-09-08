@@ -3,38 +3,70 @@ package Presentacion.Video;
 
 import Logica.Fabrica;
 import Logica.Clases.Video;
+import Logica.DataType.DtCategoria;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Interfaces.IAdmin;
 import java.awt.Color;
+//
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.plaf.ColorUIResource;
 
 public class frmAltaVideo extends javax.swing.JDialog {
     
-    public DefaultListModel listModelUsuario = new DefaultListModel();
-    public DefaultListModel listModelCategoria = new DefaultListModel();
-    Fabrica fabrica = Fabrica.getInstancia();
-    IAdmin sys = fabrica.getIAdmin();    
+    private ArrayList<String> indexDuenioVideo = new ArrayList();
+    private ArrayList<String> indexCategorias = new ArrayList(); 
+    private IAdmin sys;  
     private String categoria = "";
-    private String usrSeleccionado = "";
-    Border bordeDefault;
-    Color colorOK = new ColorUIResource(40,167,69);
-    Color colorError = new ColorUIResource(220,53,69);
-    // Patrón para validar el email
-    Pattern patronURL = Pattern.compile("\"(http://|https://)(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?\"");
+    private String usrSeleccionado = "";   
+    private Border bordeDefault;
+    private Color colorOK = new ColorUIResource(40,167,69);
+    private Color colorError = new ColorUIResource(220,53,69);
+    private String nombre = new String();
+    private String url = new String();
+    private String descripcion = new String();
+    int anioActual,diaActual,mesActual;
     
+    // Patrón para validar el email
+    Pattern patronURL = Pattern.compile("^((((https?|ftps?|gopher|telnet|nntp)://)|(mailto:|news:))(%[0-9A-Fa-f]{2}|[-()_.!~*’;/?:@&=+$, A-Za-z0-9])+)([).!’;/?:, ][[:blank:]])?$");
+    
+    Pattern patronNombre= Pattern.compile("^([A-Za-zÑñÁáÉéÍíÓóÚú0-9]+)\\s*([A-Za-zÑñÁáÉéÍíÓóÚú0-9]+)\\s*"
+            + "([A-Za-zÑñÁáÉéÍíÓóÚú0-9]+)$");
     public frmAltaVideo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        sys = Fabrica.getInstancia().getIAdmin();
+        bordeDefault = txtNombre.getBorder();
+        nombre = "";
+        url = "";
+        descripcion = "";
+    }
+    
+    private boolean validarDuracion(int _segundos){
+        if (_segundos <= 0) {
+            lbMsjDescripcion.setText(" La duración no puede ser cero");
+            lbMsjDuracion.setOpaque(true);
+            lbMsjDuracion.setForeground(Color.WHITE);
+            lbMsjDuracion.setBackground(colorError);              
+            return false;
+        }
+        return true;
     }
     
     private void limpiarCampos(){
@@ -49,11 +81,16 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jDateChooser1.setDate(null);
     }
     
-    private void limpiarListas(){
-        listModelUsuario.clear();//Limpia la listaModeloUsuario
-        lstDuenioVideo.setModel(listModelUsuario); //Borra todos los datos del JList DuenioVideo
-        listModelCategoria.clear();//Limpia el modeo de Categorias
-        lstAsignarCategoria.setModel(listModelCategoria);
+    private void limpiarLstDuenios(){
+        DefaultListModel modelo = new DefaultListModel();
+        lstDuenioVideo.setModel(modelo);
+        indexDuenioVideo.clear();        
+    }
+    
+    private void limpiarLstCategorias(){
+        DefaultListModel modelo = new DefaultListModel();
+        lstAsignarCategoria.setModel(modelo);
+        indexCategorias.clear();   
     }
     
     private boolean validarFormatoURL(String _url){
@@ -62,6 +99,66 @@ public class frmAltaVideo extends javax.swing.JDialog {
             return true;
         } 
         return false;        
+    }
+    
+    private boolean validarNombres(String _nombre){
+        Matcher mather = patronNombre.matcher(_nombre); 
+        if (mather.find() == true) {
+            return true;
+        } 
+        return false;        
+    }
+    
+    private boolean validarTxt(JTextField txt, int largo,JLabel lb,String nombreCampo){
+        try{
+            if(txt.getText().length() > largo ){
+                lb.setText(" El campo supera los "+largo+" caracteres");
+                cambiarColoresError(txt, lb);
+                return false;
+            }
+            else if(txt.getText().equals("")){
+                lb.setText(" El campo "+nombreCampo+" es obligatorio");
+                cambiarColoresError(txt, lb);
+                return false;
+            }            
+            else if(nombreCampo.equals("Nombre") ){
+//                if(!validarNombres(nombre)){
+//                    lb.setText(" El nombre \"" + nombre + "\" no es válido");
+//                    cambiarColoresError(txt, lb);
+//                    return false;
+//                }
+                for (DtVideo video : sys.listarVideosDeUsuario()) {
+                    if(video.getNombre().equals(nombre)){
+                        lb.setText(" El nombre del video ya existe");
+                        cambiarColoresError(txt, lb);
+                        return false;
+                    }
+                }
+            }            
+            else if(nombreCampo.equals("URL")){
+                if(!validarFormatoURL(url)){
+                    lb.setText(" El formato de la URI no es válido");
+                    cambiarColoresError(txt, lb);
+                    return false;                                        
+                }
+            }            
+            else{                
+                txt.setBorder(bordeDefault);
+                lb.setText("");
+                lb.setOpaque(false);
+            }
+                   
+        } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+        return true;
+    }
+    
+    private void cambiarColoresError(JTextField txt, JLabel lb){
+        lb.setOpaque(true);
+        lb.setForeground(Color.WHITE);
+        lb.setBackground(colorError);  
+        txt.setBorder(BorderFactory.createLineBorder(colorError, 1));
     }
     
     @SuppressWarnings("unchecked")
@@ -94,8 +191,11 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel136 = new javax.swing.JLabel();
         jLabel137 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        lbMensajeNombre = new javax.swing.JLabel();
-        lbMensajeUrl = new javax.swing.JLabel();
+        lbMsjNombre = new javax.swing.JLabel();
+        lbMsjUrl = new javax.swing.JLabel();
+        lbMsjFecha = new javax.swing.JLabel();
+        lbMsjDescripcion = new javax.swing.JLabel();
+        lbMsjDuracion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta video");
@@ -106,9 +206,6 @@ public class frmAltaVideo extends javax.swing.JDialog {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
-            public void windowDeactivated(java.awt.event.WindowEvent evt) {
-                formWindowDeactivated(evt);
-            }
         });
 
         jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -117,9 +214,9 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel71.setText("Dueño del video:");
         jPanel14.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
-        lstDuenioVideo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstDuenioVideoMouseClicked(evt);
+        lstDuenioVideo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstDuenioVideoValueChanged(evt);
             }
         });
         jScrollPane16.setViewportView(lstDuenioVideo);
@@ -133,10 +230,10 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jPanel14.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 100, -1, -1));
 
         jLabel74.setText("URL:");
-        jPanel14.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
+        jPanel14.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, -1, -1));
 
         jLabel75.setText("Descripción:");
-        jPanel14.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, -1, -1));
+        jPanel14.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
 
         jLabel76.setText("Fecha publicación:");
         jPanel14.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, -1, -1));
@@ -145,9 +242,9 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel77.setText("Asignar categoría:");
         jPanel14.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, -1, -1));
 
-        lstAsignarCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstAsignarCategoriaMouseClicked(evt);
+        lstAsignarCategoria.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstAsignarCategoriaValueChanged(evt);
             }
         });
         jScrollPane17.setViewportView(lstAsignarCategoria);
@@ -157,14 +254,26 @@ public class frmAltaVideo extends javax.swing.JDialog {
         jLabel78.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel78.setText("(Opcional)");
         jPanel14.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, -1, -1));
+
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombreFocusGained(evt);
+            }
+        });
         jPanel14.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 330, -1));
-        jPanel14.add(txtUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 330, -1));
+
+        txtUrl.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUrlFocusGained(evt);
+            }
+        });
+        jPanel14.add(txtUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 330, -1));
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
         jScrollPane18.setViewportView(txtDescripcion);
 
-        jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 330, 140));
+        jPanel14.add(jScrollPane18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 330, 120));
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -183,8 +292,19 @@ public class frmAltaVideo extends javax.swing.JDialog {
             }
         });
         jPanel14.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 463, 290, 70));
+
+        spSegundos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 60, 1));
+        spSegundos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                spSegundosFocusGained(evt);
+            }
+        });
         jPanel14.add(spSegundos, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 120, 60, -1));
+
+        spHora.setModel(new javax.swing.SpinnerNumberModel(0, 0, 5, 1));
         jPanel14.add(spHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 60, -1));
+
+        spMinuto.setModel(new javax.swing.SpinnerNumberModel(0, 0, 60, 1));
         jPanel14.add(spMinuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 60, -1));
 
         jLabel135.setText("Duración:");
@@ -195,12 +315,18 @@ public class frmAltaVideo extends javax.swing.JDialog {
 
         jLabel137.setText("Minutos");
         jPanel14.add(jLabel137, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, -1, -1));
+
+        jDateChooser1.setMaxSelectableDate(new java.util.Date(2524622503000L));
+        jDateChooser1.setMinSelectableDate(new java.util.Date(-2208971613000L));
         jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 400, 110, -1));
 
-        lbMensajeNombre.setMaximumSize(new java.awt.Dimension(0, 15));
-        lbMensajeNombre.setMinimumSize(new java.awt.Dimension(0, 15));
-        jPanel14.add(lbMensajeNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 260, 15));
-        jPanel14.add(lbMensajeUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 330, 15));
+        lbMsjNombre.setMaximumSize(new java.awt.Dimension(0, 15));
+        lbMsjNombre.setMinimumSize(new java.awt.Dimension(0, 15));
+        jPanel14.add(lbMsjNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 330, 15));
+        jPanel14.add(lbMsjUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 330, 15));
+        jPanel14.add(lbMsjFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 430, 250, 15));
+        jPanel14.add(lbMsjDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 330, 15));
+        jPanel14.add(lbMsjDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, 200, 15));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,9 +353,12 @@ public class frmAltaVideo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nombre = txtNombre.getText().trim();//Obtiene el nombre y quita los espacios de los extremos
-        String descripcion = txtDescripcion.getText().trim();//Obtiene la descripcion y quita los espacios de los extremos
-        String url = txtUrl.getText().trim();//Obtiene la url y quita los espacios de los extremos
+        jDateChooser1.setBorder(bordeDefault);
+        lbMsjFecha.setText("");
+        lbMsjFecha.setOpaque(false); 
+        nombre = txtNombre.getText().trim();//Obtiene el nombre y quita los espacios de los extremos
+        descripcion = txtDescripcion.getText().trim();//Obtiene la descripcion y quita los espacios de los extremos
+        url = txtUrl.getText().trim();//Obtiene la url y quita los espacios de los extremos
         int horas = (Integer)spHora.getValue();
         int minutos = (Integer)spMinuto.getValue();
         int segundos = (Integer)spSegundos.getValue();
@@ -239,7 +368,34 @@ public class frmAltaVideo extends javax.swing.JDialog {
         if( jDateChooser1.getDate() != null){
             java.util.Date utilDate = jDateChooser1.getDate();//Obtiene la fecha del JDateChooser en formato Date        
             fecha = new java.sql.Date(utilDate.getTime());//Lo combierte al tipo Date sql
+        }
+        
+        //Arrays para validaciones campos de texto   
+        JTextField v1[] = {txtNombre,txtUrl}; //campos a validar
+        int[] v2= {30,2083}; //Largos de los campos
+        JLabel[] v3= { lbMsjNombre, lbMsjUrl}; //labels para mostrar mensajes       
+        String[] v4 ={"Nombre","URL","Descricion"};//Nombre del campo
+        boolean[] v5 ={false,false,false};//Estado inicial de las validaciones, cada elemento es una validacion de un campo especifico
+        for (int i = 0; i < v5.length-1; i++) {
+            if (validarTxt(v1[i], v2[i], v3[i], v4[i])) {
+                v5[i] = true;
+            }
+        }         
+        if(validarDuracion(segundos)){
+           v5[2] = true;
         }        
+        if (fecha == null) {
+            jDateChooser1.setBorder(BorderFactory.createLineBorder(colorError, 1));
+            lbMsjFecha.setText(" La fecha es obligatoria");
+            lbMsjFecha.setOpaque(true);
+            lbMsjFecha.setForeground(Color.WHITE);
+            lbMsjFecha.setBackground(colorError);
+        }
+        if(v5[0]==false|| v5[1]==false || v5[2]==false){
+            return;            
+        }
+
+        
         try {
             DtVideo dtVideo = new DtVideo(Video.getNuevoId(), nombre, descripcion, duracion, fecha, url, Privacidad.PRIVADO, categoria, 0, 0);
             int opcion=JOptionPane.showConfirmDialog(null, 
@@ -250,9 +406,11 @@ public class frmAltaVideo extends javax.swing.JDialog {
                             "Duración: "+duracion+"\n"+
                             "fecha de publicacón: "+fecha
                         , "Confirmar alt de Video", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(opcion==0)
+            if(opcion==0){
+                System.out.println("nomre: "+nombre+" descripcion: "+descripcion+" duracion: "+duracion+" fecha: "+ fecha+" url: "+url+" privacidad: "+Privacidad.PRIVADO+" categoria: "+categoria);
                 sys.altaVideo(dtVideo);
                 limpiarCampos();
+            }
                 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
@@ -260,53 +418,112 @@ public class frmAltaVideo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        limpiarListas();
+        limpiarLstDuenios();
+        limpiarLstCategorias();
         limpiarCampos();
         this.setVisible(false);//Oculta el formulario AltaVideo
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // Obtengo todos los nickname y los cargo en el listDuenioVideo(Lista de dueños de videos)
-        limpiarListas();
-        if(!sys.listarUsuarios().isEmpty()){
-            for (int i = 0; i < sys.listarUsuarios().size(); i++) {
-                listModelUsuario.add(i,sys.listarUsuarios().get(i).getNickname());
+        DefaultListModel modeloDuenio = new DefaultListModel();
+        DefaultListModel modeloCategoria = new DefaultListModel();
+        Calendar c = new GregorianCalendar();//Objeto de tipo calendario con la fecha actual
+        java.util.Date fechaActual = new Date(c.get(Calendar.YEAR)-1900,c.get(Calendar.MONTH),c.get(Calendar.DATE));//Obtiene la fecha actual del calendario     
+        jDateChooser1.setDate(fechaActual);//Setea el JDateChooser con la fecha actual
+        //Se obtienen los valores de la fecha actual para su validacion
+//        anioActual = c.get(Calendar.YEAR);
+//        mesActual = c.get(Calendar.MONTH);
+//        diaActual = c.get(Calendar.DATE);
+//        System.out.println("dia actual"+diaActual);
+//        Calendar max = Calendar.getInstance();    
+//        max.set(Calendar.YEAR,anioActual);    
+//        max.set(Calendar.MONTH,mesActual);    
+//        max.set(Calendar.DATE,diaActual);    
+//        jDateChooser1.setMaxSelectableDate(max.getTime()); 
+   //     jDateChooser1.setMaxSelectableDate(fechaActual.getTime());
+        try {
+            // Obtengo todos los nickname y los cargo en el listDuenioVideo(Lista de dueños de videos)
+            limpiarLstCategorias();
+            limpiarLstDuenios();
+            if (!sys.listarUsuarios().isEmpty()) {
+                for (int i = 0; i < sys.listarUsuarios().size(); i++) {
+                    modeloDuenio.add(i, sys.listarUsuarios().get(i).getNickname());
+                }
+                lstDuenioVideo.setModel(modeloDuenio);
+                lstDuenioVideo.setSelectedIndex(0);//Setea la lista en el primer usuario
+                usrSeleccionado = lstDuenioVideo.getSelectedValue();
+                sys.seleccionarUsuario(usrSeleccionado);
             }
-            lstDuenioVideo.setModel(listModelUsuario);                  
-        }         
-        // Obtengo todas las categorias de video y las muestro en la lista
-        if(!sys.listarCategorias().isEmpty()){
-            for(int i = 0; i < sys.listarCategorias().size(); i++){
-                listModelCategoria.add(i, sys.listarCategorias().get(i));
+            // Obtengo todas las categorias de video y las muestro en la lista
+            if (!sys.listarCategorias().isEmpty()) {
+                for (int i = 0; i < sys.listarCategorias().size(); i++) {
+                    modeloCategoria.add(i, sys.listarCategorias().get(i));
+                    indexCategorias.add(i, sys.listarCategorias().get(i));//Alamacena cada categoria obtenida en el mismo orde
+                }
+                lstAsignarCategoria.setModel(modeloCategoria);
+                //Setea la lista Categoria en el elemento UNDEFINE
+                for (int i = 0; i < indexCategorias.size(); i++) {
+                    if( indexCategorias.get(i).equals("UNDEFINED") ){
+                        lstAsignarCategoria.setSelectedIndex(i);
+                        categoria = lstAsignarCategoria.getSelectedValue();
+                        break;
+                    }                    
+                }
             }
-            lstAsignarCategoria.setModel(listModelCategoria);
-        }               
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_formWindowActivated
-
-    private void lstDuenioVideoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDuenioVideoMouseClicked
-        // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
-        usrSeleccionado = lstDuenioVideo.getSelectedValue();
-        sys.seleccionarUsuario(usrSeleccionado);
-    }//GEN-LAST:event_lstDuenioVideoMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // Al cerrar el formulario se borran todos los datos
         limpiarCampos();
-        limpiarListas();
+        limpiarLstCategorias();
+        limpiarLstDuenios();
     }//GEN-LAST:event_formWindowClosing
 
-    private void lstAsignarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstAsignarCategoriaMouseClicked
-        // Selecciona una categoria de la lista de categorias
-        categoria = lstAsignarCategoria.getSelectedValue();
-    }//GEN-LAST:event_lstAsignarCategoriaMouseClicked
+    private void lstDuenioVideoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDuenioVideoValueChanged
+        if (evt.getValueIsAdjusting()) return;
+        if (lstDuenioVideo.getSelectedIndex()<0) return;
+        try {
+            // El sistema selecciona al usuario actual con el nickname seleccionado de la lista 
+            usrSeleccionado = lstDuenioVideo.getSelectedValue();
+            sys.seleccionarUsuario(usrSeleccionado);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lstDuenioVideoValueChanged
 
-    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
-        // Al abrise el cuadro de dialogo se desactiva el formulario se limpian los datos de las listas
-//        listModelUsuario.clear();//Limpia la listaModeloUsuario
-//        lstDuenioVideo.setModel(listModelUsuario); //Borra todos los datos del JList DuenioVideo
-//        listModelCategoria.clear();//Limpia el modeo de Categorias
-//        lstAsignarCategoria.setModel(listModelCategoria);
-    }//GEN-LAST:event_formWindowDeactivated
+    private void lstAsignarCategoriaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstAsignarCategoriaValueChanged
+        if (evt.getValueIsAdjusting()) return;
+        if (lstAsignarCategoria.getSelectedIndex()<0) return;
+        try {
+            // Selecciona una categoria de la lista de categorias
+            categoria = lstAsignarCategoria.getSelectedValue();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lstAsignarCategoriaValueChanged
+
+    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
+        //Al recibir el foco restaura los valores
+        txtNombre.setBorder(bordeDefault);
+        lbMsjNombre.setText("");
+        lbMsjNombre.setOpaque(false);         
+    }//GEN-LAST:event_txtNombreFocusGained
+
+    private void txtUrlFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUrlFocusGained
+        //Al recibir el foco restaura los valores
+        txtUrl.setBorder(bordeDefault);
+        lbMsjUrl.setText("");
+        lbMsjUrl.setOpaque(false); 
+    }//GEN-LAST:event_txtUrlFocusGained
+
+    private void spSegundosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spSegundosFocusGained
+        // TODO add your handling code here:
+        lbMsjDuracion.setText("");
+        lbMsjDuracion.setOpaque(false);
+    }//GEN-LAST:event_spSegundosFocusGained
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -328,8 +545,11 @@ public class frmAltaVideo extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane17;
     private javax.swing.JScrollPane jScrollPane18;
-    private javax.swing.JLabel lbMensajeNombre;
-    private javax.swing.JLabel lbMensajeUrl;
+    private javax.swing.JLabel lbMsjDescripcion;
+    private javax.swing.JLabel lbMsjDuracion;
+    private javax.swing.JLabel lbMsjFecha;
+    private javax.swing.JLabel lbMsjNombre;
+    private javax.swing.JLabel lbMsjUrl;
     private javax.swing.JList<String> lstAsignarCategoria;
     private javax.swing.JList<String> lstDuenioVideo;
     private javax.swing.JSpinner spHora;
