@@ -28,8 +28,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        txtContraNueva.setEnabled(false); // TODO add your handling code here:
         txtContraNueva1.setEnabled(false); // TODO add your handling code here:
+        txtContraNueva2.setEnabled(false); // TODO add your handling code here:
         lbCN.setEnabled(false);
         lbRCN.setEnabled(false);
         btnVideo.setEnabled(false);
@@ -77,8 +77,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         jpImagen = new javax.swing.JPanel();
         lbImg = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
-        txtContraNueva1 = new javax.swing.JTextField();
-        txtContraNueva = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         lbApellido = new javax.swing.JLabel();
         lbRCN = new javax.swing.JLabel();
@@ -90,6 +88,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbImagen1 = new javax.swing.JLabel();
         dcFecha = new com.toedter.calendar.JDateChooser();
         btnQuitarImagen = new javax.swing.JButton();
+        txtContraNueva2 = new javax.swing.JPasswordField();
+        txtContraNueva1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar usuario");
@@ -199,8 +199,6 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
         lbMes.add(jpImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 110, 110));
         lbMes.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 650, 20));
-        lbMes.add(txtContraNueva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 160, -1));
-        lbMes.add(txtContraNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 160, -1));
         lbMes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 230, -1));
 
         lbApellido.setText("Apellido");
@@ -246,6 +244,12 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         });
         lbMes.add(btnQuitarImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, 170, 50));
 
+        txtContraNueva2.setText("jPasswordField1");
+        lbMes.add(txtContraNueva2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, 170, -1));
+
+        txtContraNueva1.setText("jPasswordField1");
+        lbMes.add(txtContraNueva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 170, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -280,8 +284,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
     private void desactivarCampos() {
         txtNombre.setEnabled(false);
-        txtContraNueva.setEnabled(false);
         txtContraNueva1.setEnabled(false);
+        txtContraNueva2.setEnabled(false);
         txtDescrpcion.setEnabled(false);
         txtNombreCanal.setEnabled(false);
         txtApellido.setEnabled(false);
@@ -435,12 +439,14 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                                     String pass = user.getContrasenia();
                                     if (chkCambiarContra.isSelected()) {
 
-                                        if (!(txtContraNueva.getText().equals("") && txtContraNueva1.getText().equals(""))) {
+                                        if (!(txtContraNueva1.getText().equals("") && txtContraNueva2.getText().equals(""))) {
 
-                                            if (txtContraNueva.getText().equals(txtContraNueva1.getText())) {
-                                                pass = txtContraNueva.getText();
+                                            if (txtContraNueva1.getText().equals(txtContraNueva2.getText())) {
+                                                pass = txtContraNueva1.getText();
                                             } else {
                                                 JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, no se pudo efectuar el cambio de contraseña. Inténtelo de nuevo", "OK", JOptionPane.WARNING_MESSAGE);
+                                                txtContraNueva1.setText("");
+                                                txtContraNueva2.setText("");
                                                 return;
                                             }
 
@@ -533,8 +539,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             DtCanal dtc = sys.obtenerCanalDeUsuario();
             cargarDatosDelCanal(dtc);
             ruta = user.getImagen();
-            txtContraNueva.setText("");
             txtContraNueva1.setText("");
+            txtContraNueva2.setText("");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
@@ -544,14 +550,14 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
     private void chkCambiarContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkCambiarContraActionPerformed
         if (chkCambiarContra.isSelected()) {
-            txtContraNueva.setEnabled(true);
             txtContraNueva1.setEnabled(true);
+            txtContraNueva2.setEnabled(true);
             lbCN.setEnabled(true);
             lbRCN.setEnabled(true);
 
         } else {
-            txtContraNueva.setEnabled(false);
             txtContraNueva1.setEnabled(false);
+            txtContraNueva2.setEnabled(false);
             lbCN.setEnabled(false);
             lbRCN.setEnabled(false);
         }        // TODO add your handling code here:
@@ -598,8 +604,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private javax.swing.JRadioButton rbPrivado;
     private javax.swing.JRadioButton rbPublico;
     private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtContraNueva;
-    private javax.swing.JTextField txtContraNueva1;
+    private javax.swing.JPasswordField txtContraNueva1;
+    private javax.swing.JPasswordField txtContraNueva2;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextArea txtDescrpcion;
     private javax.swing.JTextField txtNombre;
