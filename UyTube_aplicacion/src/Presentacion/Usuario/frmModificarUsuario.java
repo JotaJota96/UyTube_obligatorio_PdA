@@ -459,6 +459,9 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                                     if (dcFecha.getDate() != null) {
                                         java.util.Date utilDate = dcFecha.getDate();
                                         fecha = new java.sql.Date(utilDate.getTime());
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "Debe seleccionar la fecha de nacimiento", "OK", JOptionPane.WARNING_MESSAGE);
+                                        return;
                                     }
                                     DtUsuario u = new DtUsuario(user.getNickname(), pass, txtNombre.getText(), txtApellido.getText(), user.getCorreo(), fecha, ruta, PROPERTIES);
                                     Privacidad priv;
