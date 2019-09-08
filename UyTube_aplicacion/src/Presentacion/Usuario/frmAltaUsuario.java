@@ -28,7 +28,6 @@ import javax.swing.plaf.ColorUIResource;
 
 public class frmAltaUsuario extends javax.swing.JDialog {
     
-
     // Patrón para validar el email
     Pattern patronEmail = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
@@ -46,7 +45,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     String nombreCanal = new String();
     String descripcion = new String();
     Privacidad privacidad = Privacidad.PRIVADO;
-    String imagen = new String();
+    String ruta;
     
     java.sql.Date fecha = null;
     
@@ -150,7 +149,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         txtDescripcion.setText("");
         txtNombreCanal.setText("");
         jDateChooser1.setDate(null);
-        lbImagen.setIcon(null);
+        lbImg.setIcon(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -182,9 +181,9 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         rdPublico = new javax.swing.JRadioButton();
         jSeparator2 = new javax.swing.JSeparator();
-        pnlImagen = new javax.swing.JPanel();
-        lbImagen = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        pnlImagen = new javax.swing.JPanel();
+        lbImg = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
         lbMsjNikname = new javax.swing.JLabel();
@@ -193,6 +192,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         lbMsjEmail = new javax.swing.JLabel();
         lbMsjFecha = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        btnQuitarImagen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta usuario");
@@ -262,13 +262,13 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jPanel2.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 300, -1));
 
         btSeleccionar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btSeleccionar.setText("Selecionar");
+        btSeleccionar.setText("Selecionar Imagen");
         btSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSeleccionarActionPerformed(evt);
             }
         });
-        jPanel2.add(btSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 160, 60));
+        jPanel2.add(btSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 200, 60));
 
         txtNombreCanal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -346,6 +346,9 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jPanel2.add(rdPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 350, -1, -1));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 980, 10));
 
+        jLabel10.setText("Imagen");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, 20));
+
         pnlImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlImagen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -353,25 +356,31 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             }
         });
         pnlImagen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        pnlImagen.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 110));
+        pnlImagen.add(lbImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 110));
 
-        jPanel2.add(pnlImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 130, 110));
-
-        jLabel10.setText("Imagen");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, 20));
+        jPanel2.add(pnlImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 130, 110));
 
         jLabel42.setText("Email");
         jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         jLabel50.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel50.setText("(Opcional)");
-        jPanel2.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 350, 90, -1));
+        jPanel2.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 90, -1));
         jPanel2.add(lbMsjNikname, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 270, -1));
         jPanel2.add(lbMsjNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 270, -1));
         jPanel2.add(lbMsjApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 270, -1));
         jPanel2.add(lbMsjEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 300, -1));
         jPanel2.add(lbMsjFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 350, 15));
-        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 100, -1));
+        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 130, -1));
+
+        btnQuitarImagen.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnQuitarImagen.setText("Quitar Imagen");
+        btnQuitarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarImagenActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnQuitarImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 200, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -398,10 +407,85 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeleccionarActionPerformed
-        //Usiario->nuevo Usuario->seleccionar
-        cargarImagen(lbImagen);
+        //cargarImagen(lbImagen);
+        String rutaAnterior = ruta;
+        ruta = seleccionarImagen();
+        if (ruta.isEmpty()) {
+            ruta = rutaAnterior;
+        }
+        cargarImagenEnJlabel(lbImg, ruta);
     }//GEN-LAST:event_btSeleccionarActionPerformed
     
+    private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta) {
+        jLabelx.setText(null);
+        // Carga la imagen a la variable de tipo Image
+        Image img = new ImageIcon(Ruta).getImage();
+        // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
+        ImageIcon icono = new ImageIcon(
+                img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH)
+        );
+        // establece la imagen en el label
+        jLabelx.setIcon(icono);
+    }
+    
+    private String seleccionarImagen() {
+        // Crea un JFileChooser
+        JFileChooser JFC = new JFileChooser();
+        // crea un filtro para aceptar solo algunas extensiones
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
+        // Agrega el filtro al JFileChooser
+        JFC.setFileFilter(filtroImagen);
+
+        // archivo seleccionado
+        File archivo;
+        // para saber si se selecciono algo o se cancelo
+        int resultado;
+
+        while (true) {
+            // muestra el JFileChooser
+            resultado = JFC.showOpenDialog(this);
+
+            // Si pasa algo que no sea el aceptar
+            if (resultado != JFileChooser.APPROVE_OPTION) {
+                return "";
+            }
+
+            // obtiene el archivo seleccionado
+            archivo = JFC.getSelectedFile();
+
+            // Si se selecciono algun archivo
+            if (archivo != null) {
+                // obtiene la ruta del archivo
+                String rutaArchivo = archivo.getAbsolutePath();
+                // obtiene el archivo como imagen a partir de la ruta
+                Image img = new ImageIcon(rutaArchivo).getImage();
+
+                // verifica que tanto se deformará la imagen al mostrarla en un cuadrado
+                float deformacion;
+                if (img.getHeight(null) > img.getWidth(null)) {
+                    deformacion = img.getHeight(null) / img.getWidth(null);
+                } else {
+                    deformacion = img.getWidth(null) / img.getHeight(null);
+                }
+
+                if (deformacion < 1.3 && deformacion >= 1) {
+                    // si no se deforma demasiado
+                    // devuelve la ruta absoluta
+                    return rutaArchivo;
+                } else {
+                    // si se deforma demasiado, lo avisa al usuario para que escoja otra
+                    JOptionPane.showMessageDialog(null,
+                            "La imagen es demasiado alta o demasiado ancha.\n" + img.getWidth(null) + "x" + img.getHeight(null),
+                            "Problemas con la imagen",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                }
+            } else {
+                // sino devuelve un string vacio
+                return "";
+            }
+        }
+    }
     
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         jDateChooser1.setBorder(bordeDefault);
@@ -413,8 +497,6 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         email = txtEmail.getText().toLowerCase().trim();
         descripcion = txtDescripcion.getText().trim();
         nombreCanal = txtNombreCanal.getText().trim();
-         //Privacidad Privado por default 
-        imagen= "";
         //Verifica la opcion seleccionada por los radioButton (Privado o Publico)
         if(rdPublico.isSelected()){
             privacidad = Privacidad.PUBLICO;
@@ -453,7 +535,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         }
         
         try {    
-            DtUsuario dtUsuario = new DtUsuario(nickname, nickname, nombre, apellido, email, fecha, imagen, 0);
+            DtUsuario dtUsuario = new DtUsuario(nickname, nickname, nombre, apellido, email, fecha, ruta, 0);
             DtCanal dtCanal = new DtCanal(Canal.getNuevoId(), nombre, descripcion, privacidad);
             sys.altaUsuarioCanal(dtUsuario, dtCanal);
             JOptionPane.showMessageDialog(null, "Se ha creado el usuario "+nickname, "Alta de usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -563,43 +645,20 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jDateChooser1.setDate(fechaActual);//Setea el JDateChooser con la fecha actual
     }//GEN-LAST:event_formWindowActivated
 
-    private void cargarImagen(javax.swing.JLabel jLabelx) {
-        JFileChooser jf = new JFileChooser();
-        jf.showOpenDialog(this);
-        File archivo = jf.getSelectedFile();
+    private void btnQuitarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarImagenActionPerformed
+         // Quitar imagen
+        ruta = "";
+        cargarImagenEnJlabel(lbImg, ruta);
+    }//GEN-LAST:event_btnQuitarImagenActionPerformed
 
-        if (archivo != null) {
-            FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
-            jf.setFileFilter(filtroImagen);
-            //jLabel4.setText(archivo.getAbsolutePath());
-            Image img = new ImageIcon(archivo.getAbsolutePath()).getImage();
-            float i = 0f;
-            if (img.getHeight(null) > img.getWidth(null)) {
-                i = img.getHeight(null) / img.getWidth(null);
-            } else {
-                i = img.getWidth(null) / img.getHeight(null);
-            }
-            if (i < 1.4 && i >= 1) {
-                ImageIcon img2 = new ImageIcon(img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH));
-                jLabelx.setIcon(img2);
-                /*
-                ImageIcon img3 = new ImageIcon(img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH));
-                jLabelx.setIcon(img3);//cuidado!!
-                jLabelx.setVisible(false);//cuidado!!*/
-            } else {
-                JOptionPane.showMessageDialog(null, "Imagen fuera de dimenciones " + img.getWidth(null) + " x " + img.getHeight(null));
-            }
-        }
-    }
-    
-    
-    
+       
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup GrupoPrivacidad;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSeleccionar;
     private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnQuitarImagen;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -617,7 +676,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lbImagen;
+    private javax.swing.JLabel lbImg;
     private javax.swing.JLabel lbMsjApellido;
     private javax.swing.JLabel lbMsjEmail;
     private javax.swing.JLabel lbMsjFecha;
