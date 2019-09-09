@@ -35,6 +35,7 @@ public class frmListarCategorias extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listar categoria");
+        setResizable(false);
 
         jPanel26.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
