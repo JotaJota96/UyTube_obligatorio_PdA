@@ -97,7 +97,12 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
 
         GrupoPublicoPrivado.add(rbPublica);
         rbPublica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        rbPublica.setText("Publica");
+        rbPublica.setText("Pública");
+        rbPublica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbPublicaActionPerformed(evt);
+            }
+        });
         jPanel18.add(rbPublica, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, -1, -1));
 
         GrupoPublicoPrivado.add(rbPrivada);
@@ -106,7 +111,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         jPanel18.add(rbPrivada, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, -1, -1));
 
         jLabel102.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel102.setText("Categoria:");
+        jLabel102.setText("Categoría:");
         jPanel18.add(jLabel102, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, -1));
 
         lstUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -291,6 +296,10 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
         // al seleccionar un usuario
         habilitarDeshabilitarBotonAceptar();
     }//GEN-LAST:event_lstUsuariosValueChanged
+
+    private void rbPublicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPublicaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbPublicaActionPerformed
 
     private void habilitarDeshabilitarBotonAceptar(){
         // si se selecciono para crear lista particular

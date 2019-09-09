@@ -125,11 +125,11 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         barraDeMenu.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        menuSesion.setText("Sesion");
+        menuSesion.setText("Sesión");
         menuSesion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         mitIniciarSesion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mitIniciarSesion.setText("Inisiar sesion");
+        mitIniciarSesion.setText("Iniciar sesión");
         mitIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mitIniciarSesionActionPerformed(evt);
@@ -138,7 +138,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         menuSesion.add(mitIniciarSesion);
 
         mitCerrarSesion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mitCerrarSesion.setText("Cerrar sesion");
+        mitCerrarSesion.setText("Cerrar sesión");
         mitCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mitCerrarSesionActionPerformed(evt);
@@ -188,7 +188,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         menuUsuario.add(mitListarUsuarios);
 
         mitSeguirUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mitSeguirUsuario.setText("Segir Usuario");
+        mitSeguirUsuario.setText("Seguir Usuario");
         mitSeguirUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mitSeguirUsuarioActionPerformed(evt);
@@ -257,7 +257,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         barraDeMenu.add(menuVideo);
 
-        menuListaDeReproduccion.setText("Lista de reproduccion");
+        menuListaDeReproduccion.setText("Lista de reproducción");
         menuListaDeReproduccion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         mitNuevaListaDeReproduccion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -307,11 +307,11 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         barraDeMenu.add(menuListaDeReproduccion);
 
-        menuCategoria.setText("Categoria");
+        menuCategoria.setText("Categoría");
         menuCategoria.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         mitNuevaCategoria.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mitNuevaCategoria.setText("Nueva Categoria");
+        mitNuevaCategoria.setText("Nueva Categoría");
         mitNuevaCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mitNuevaCategoriaActionPerformed(evt);
@@ -320,7 +320,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         menuCategoria.add(mitNuevaCategoria);
 
         mitConsultarCategoria.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mitConsultarCategoria.setText("Consultar Categoria");
+        mitConsultarCategoria.setText("Consultar Categoría");
         mitConsultarCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mitConsultarCategoriaActionPerformed(evt);
@@ -329,7 +329,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         menuCategoria.add(mitConsultarCategoria);
 
         mitListarCategorias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mitListarCategorias.setText("Listar Categoria");
+        mitListarCategorias.setText("Listar Categoría");
         mitListarCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mitListarCategoriasActionPerformed(evt);

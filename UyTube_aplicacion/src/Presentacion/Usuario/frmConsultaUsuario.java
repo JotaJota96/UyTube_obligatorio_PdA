@@ -92,7 +92,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel17.setText("Eliga un usuario:");
+        jLabel17.setText("Seleccione un usuario:");
         jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         lstUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -119,7 +119,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jLabel22.setText("Nacimiento: ");
         jPanel6.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, -1));
 
-        jLabel23.setText("Imagen:");
+        jLabel23.setText("Imágen:");
         jPanel6.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, -1, -1));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -147,7 +147,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jPanel6.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel32.setText("Descripcion:");
+        jLabel32.setText("Descripción:");
         jPanel6.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, -1, -1));
 
         txtDescripcion.setEditable(false);
@@ -169,11 +169,11 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jPanel6.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 460, 10));
 
         jLabel39.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel39.setText("Segidores:");
+        jLabel39.setText("Seguidores:");
         jPanel6.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, -1));
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel40.setText("Segidos:");
+        jLabel40.setText("Seguidos:");
         jPanel6.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, -1, -1));
 
         jScrollPane8.setViewportView(lstSeguidos);
@@ -198,7 +198,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jPanel6.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 240, -1, -1));
 
         jLabel80.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel80.setText("Listas de Reproduccion:");
+        jLabel80.setText("Listas de Reproducción:");
         jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 240, -1, -1));
 
         lstVideos.setToolTipText("Doble clic para ver mas informacion del video");

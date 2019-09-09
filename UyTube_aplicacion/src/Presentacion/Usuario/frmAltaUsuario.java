@@ -191,8 +191,8 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         lbMsjApellido = new javax.swing.JLabel();
         lbMsjEmail = new javax.swing.JLabel();
         lbMsjFecha = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         btnQuitarImagen = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta usuario");
@@ -262,7 +262,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jPanel2.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 300, -1));
 
         btSeleccionar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btSeleccionar.setText("Selecionar Imagen");
+        btSeleccionar.setText("Selecionar Imágen");
         btSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSeleccionarActionPerformed(evt);
@@ -342,11 +342,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
 
         GrupoPrivacidad.add(rdPublico);
         rdPublico.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        rdPublico.setText("Publico");
+        rdPublico.setText("Público");
         jPanel2.add(rdPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 350, -1, -1));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 980, 10));
 
-        jLabel10.setText("Imagen");
+        jLabel10.setText("Imágen");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, 20));
 
         pnlImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -371,16 +371,16 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jPanel2.add(lbMsjApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 270, -1));
         jPanel2.add(lbMsjEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 300, -1));
         jPanel2.add(lbMsjFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 350, 15));
-        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 130, -1));
 
         btnQuitarImagen.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnQuitarImagen.setText("Quitar Imagen");
+        btnQuitarImagen.setText("Quitar Imágen");
         btnQuitarImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnQuitarImagenActionPerformed(evt);
             }
         });
         jPanel2.add(btnQuitarImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 200, 60));
+        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 220, 130, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -52,7 +52,7 @@ public class frmListarCategorias extends javax.swing.JDialog {
         jPanel26.add(jScrollPane46, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 250, 280));
 
         jLabel122.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel122.setText("Categorias:");
+        jLabel122.setText("Categorías:");
         jPanel26.add(jLabel122, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -143,7 +143,7 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
         jPanel22.add(jScrollPane44, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 200, 300));
 
         jLabel120.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel120.setText("Listas de Reproduccion:");
+        jLabel120.setText("Listas de Reproducción:");
         jPanel22.add(jLabel120, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, -1, -1));
 
         lstVideos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

@@ -68,7 +68,7 @@ public class frmConsultaCategoria extends javax.swing.JDialog {
         jPanel25.add(cmdAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(543, 323, 220, 70));
 
         jLabel123.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel123.setText("Categorias:");
+        jLabel123.setText("Categorías:");
         jPanel25.add(jLabel123, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
         lstCategorias.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -89,7 +89,7 @@ public class frmConsultaCategoria extends javax.swing.JDialog {
         jPanel25.add(jScrollPane48, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 240, 350));
 
         jLabel125.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel125.setText("List. Reproduccion:");
+        jLabel125.setText("List. Reproducción:");
         jPanel25.add(jLabel125, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, -1));
 
         jScrollPane49.setViewportView(lstVideos);

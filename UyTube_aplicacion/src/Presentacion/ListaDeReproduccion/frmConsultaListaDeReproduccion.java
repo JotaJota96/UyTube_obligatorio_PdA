@@ -103,7 +103,7 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
         jPanel20.add(jLabel106, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLabel107.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel107.setText("Listas de Reproduccion:");
+        jLabel107.setText("Listas de Reproducción:");
         jPanel20.add(jLabel107, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
 
         lstUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -125,7 +125,7 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
 
         jPanel20.add(jScrollPane38, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 240, 320));
 
-        jLabel108.setText("Categoria:");
+        jLabel108.setText("Categoría:");
         jPanel20.add(jLabel108, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, -1, -1));
 
         jLabel109.setText("Privacidad:");

@@ -313,7 +313,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
 
         jDateChooser1.setMaxSelectableDate(new java.util.Date(2524622503000L));
         jDateChooser1.setMinSelectableDate(new java.util.Date(-2208971613000L));
-        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 380, 220, 20));
+        jPanel14.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 380, 190, -1));
 
         lbMsjNombre.setMaximumSize(new java.awt.Dimension(0, 15));
         lbMsjNombre.setMinimumSize(new java.awt.Dimension(0, 15));

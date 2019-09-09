@@ -81,7 +81,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuSesion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Sesion"/>
+            <Property name="text" type="java.lang.String" value="Sesi&#xf3;n"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="18" style="0"/>
             </Property>
@@ -92,7 +92,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Inisiar sesion"/>
+                <Property name="text" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mitIniciarSesionActionPerformed"/>
@@ -103,7 +103,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Cerrar sesion"/>
+                <Property name="text" type="java.lang.String" value="Cerrar sesi&#xf3;n"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mitCerrarSesionActionPerformed"/>
@@ -168,7 +168,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Segir Usuario"/>
+                <Property name="text" type="java.lang.String" value="Seguir Usuario"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mitSeguirUsuarioActionPerformed"/>
@@ -254,7 +254,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuListaDeReproduccion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Lista de reproduccion"/>
+            <Property name="text" type="java.lang.String" value="Lista de reproducci&#xf3;n"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="18" style="0"/>
             </Property>
@@ -319,7 +319,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuCategoria">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Categoria"/>
+            <Property name="text" type="java.lang.String" value="Categor&#xed;a"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="18" style="0"/>
             </Property>
@@ -330,7 +330,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Nueva Categoria"/>
+                <Property name="text" type="java.lang.String" value="Nueva Categor&#xed;a"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mitNuevaCategoriaActionPerformed"/>
@@ -341,7 +341,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Consultar Categoria"/>
+                <Property name="text" type="java.lang.String" value="Consultar Categor&#xed;a"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mitConsultarCategoriaActionPerformed"/>
@@ -352,7 +352,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Listar Categoria"/>
+                <Property name="text" type="java.lang.String" value="Listar Categor&#xed;a"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mitListarCategoriasActionPerformed"/>
@@ -404,7 +404,6 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
-    <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="formPropertyChange"/>
     <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
   </Events>
   <AuxValues>

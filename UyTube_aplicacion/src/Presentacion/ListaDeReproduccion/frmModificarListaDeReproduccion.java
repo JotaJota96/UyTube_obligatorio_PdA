@@ -109,7 +109,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         jPanel19.add(jScrollPane34, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 240, 270));
 
         jLabel104.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel104.setText("Categoria:");
+        jLabel104.setText("Categoría:");
         jPanel19.add(jLabel104, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, -1));
 
         rbGrupo.add(rbPrivada);
@@ -119,7 +119,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
 
         rbGrupo.add(rbPublica);
         rbPublica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        rbPublica.setText("Publica");
+        rbPublica.setText("Pública");
         jPanel19.add(rbPublica, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, -1, -1));
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -150,7 +150,7 @@ public class frmModificarListaDeReproduccion extends javax.swing.JDialog {
         jPanel19.add(jScrollPane35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 250, 270));
 
         jLabel106.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel106.setText("List. Reproduccion:");
+        jLabel106.setText("List. Reproducción:");
         jPanel19.add(jLabel106, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

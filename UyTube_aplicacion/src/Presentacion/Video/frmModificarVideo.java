@@ -158,7 +158,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
 
         buttonGroup1.add(rbPublico);
         rbPublico.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        rbPublico.setText("Publico");
+        rbPublico.setText("Público");
         jPanel14.add(rbPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 390, -1, -1));
 
         buttonGroup1.add(rbPrivado);
@@ -187,7 +187,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
         jScrollPane19.setViewportView(lstCategorias);
 
         jPanel14.add(jScrollPane19, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 180, 400));
-        jPanel14.add(dcFechaPublicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(564, 340, 180, 30));
+        jPanel14.add(dcFechaPublicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 140, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

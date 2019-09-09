@@ -178,7 +178,7 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jLabel87.setText("Privacidad:");
         jPanel15.add(jLabel87, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
 
-        jLabel88.setText("Categoria:");
+        jLabel88.setText("Categoría:");
         jPanel15.add(jLabel88, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
 
         lbNombre.setText(" ");
@@ -211,11 +211,11 @@ public class frmConsultaVideo extends javax.swing.JDialog {
         jPanel15.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 510, 380, 60));
 
         jLabel94.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel94.setText("Les gusto:");
+        jLabel94.setText("Les gustó:");
         jPanel15.add(jLabel94, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
 
         jLabel95.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel95.setText("No les gusto:");
+        jLabel95.setText("No les gustó:");
         jPanel15.add(jLabel95, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, -1, -1));
 
         jScrollPane25.setViewportView(lstLike);

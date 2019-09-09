@@ -136,7 +136,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbMes.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 490, 270, 50));
 
         btnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnSeleccionar.setText("Seleccionar imagen");
+        btnSeleccionar.setText("Seleccionar imágen");
         btnSeleccionar.setToolTipText("");
         btnSeleccionar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
@@ -222,19 +222,19 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbMes.add(chkCambiarContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 230, -1, -1));
 
         grpPrivacidad.add(rbPublico);
-        rbPublico.setText("Publico");
+        rbPublico.setText("Público");
         lbMes.add(rbPublico, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
 
         grpPrivacidad.add(rbPrivado);
         rbPrivado.setText("Privado");
         lbMes.add(rbPrivado, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
 
-        lbImagen1.setText("Imagen (opcional)");
+        lbImagen1.setText("Imágen (opcional)");
         lbMes.add(lbImagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, -1, 20));
-        lbMes.add(dcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, 170, 20));
+        lbMes.add(dcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, 170, -1));
 
         btnQuitarImagen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnQuitarImagen.setText("Quitar imagen");
+        btnQuitarImagen.setText("Quitar imágen");
         btnQuitarImagen.setToolTipText("");
         btnQuitarImagen.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnQuitarImagen.addActionListener(new java.awt.event.ActionListener() {
@@ -245,10 +245,10 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         lbMes.add(btnQuitarImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, 170, 50));
 
         txtContraNueva2.setText("jPasswordField1");
-        lbMes.add(txtContraNueva2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, 170, -1));
+        lbMes.add(txtContraNueva2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 150, -1));
 
         txtContraNueva1.setText("jPasswordField1");
-        lbMes.add(txtContraNueva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 170, -1));
+        lbMes.add(txtContraNueva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 150, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
