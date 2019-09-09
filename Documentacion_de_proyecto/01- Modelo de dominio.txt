@@ -75,4 +75,20 @@ usuarioSeleccionado:Usuario		// Usuario sobre el que se realizaran acciones
 
 
 
-
+-------------------------------------------------------------------------------
+Restricciones
+-Los administradores se identifican por el idAdmin
+-Los usuarios se identifican por nickname
+-Los videos se identifican por ID
+-Las listas de reproduccion se identifican por ID
+-Los canales se identifican por ID
+-Las categorias se identifican por su nombre
+-Los comentarios se identifican por ID
+-Un usuario puede valorar videos de otros usuarios
+-Un usuario puede agregar a sus listas de reproduccion, videos de otros usuario
+-Dos usuarios no pueden tener el mismo correo
+-Los videos son privados al momento de ser cargados
+-Si un canal privado, sus videos y listas de reproduccion tambien lo serán
+-Las listas de reproduccion con tipo = POR_DEFECTO son privadas
+-Un usuario no puede tener dos videos con el mismo nombre
+-Un usuario no puede tener dos listas de reproduccion con el mismo nombre (independientemente de su tipo)
