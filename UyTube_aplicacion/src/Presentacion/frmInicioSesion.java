@@ -151,6 +151,7 @@ public class frmInicioSesion extends javax.swing.JDialog {
                 btnIniciar.setEnabled(false);
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
 

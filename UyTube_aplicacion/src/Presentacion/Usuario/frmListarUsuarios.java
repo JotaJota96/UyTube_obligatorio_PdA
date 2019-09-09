@@ -31,7 +31,7 @@ public class frmListarUsuarios extends javax.swing.JDialog {
             }
             lstListaDeUsuario.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         

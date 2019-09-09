@@ -38,7 +38,7 @@ public class frmAltaListaDeReproduccion extends javax.swing.JDialog {
 
             btnAceptar.setEnabled(false);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }

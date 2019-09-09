@@ -49,25 +49,25 @@ public class DatosDePrueba {
         
         // Creacion de usuario Juan
         sys.altaUsuarioCanal(
-                new DtUsuario("JotaJota96", "12345678", "Juan", "Alvarez", "jjap96@gmail.com", new Date(96, 9, 9), "Imagenes\\JotaJota96.jpg", 0),
+                new DtUsuario("JotaJota96", "12345678", "Juan", "Alvarez", "jjap96@gmail.com", new Date(96, 9, 9), "Imagenes\\perfiles\\JotaJota96.jpg", 0),
                 new DtCanal(0, "GuitarCovers", "Covers en guitarra de rock uruguayo", Privacidad.PUBLICO)
         );
 	 sys.altaUsuarioCanal(
-                new DtUsuario("LuC31G", "12345678", "Lucas", "Garrido", "LuC31@gmail.com", new Date(98, 11, 31), "", 0),
+                new DtUsuario("LuC31G", "12345678", "Lucas", "Garrido", "LuC31@gmail.com", new Date(98, 11, 31), "Imagenes\\perfiles\\LuC31G.jpg", 0),
                 new DtCanal(0, "PricKG", "No se de que va a ser mi canal", Privacidad.PUBLICO)
         );
         sys.altaUsuarioCanal(
-                new DtUsuario("MCBolso", "12345678", "Mariano", "Castro", "mcbolso96@gmail.com", new Date(99, 7, 4), "", 0),
+                new DtUsuario("MCBolso", "12345678", "Mariano", "Castro", "mcbolso96@gmail.com", new Date(99, 7, 4), "Imagenes\\perfiles\\MCBolso.jpg", 0),
                 new DtCanal(0, "BolsoCovers", "Covers de lo mejor del futbool uruguayo", Privacidad.PUBLICO)
         );
         // Creacion de usuario Facundo
         sys.altaUsuarioCanal(
-                new DtUsuario("camilillo15", "12345678", "Facundo", "Camilo", "facu_camilo2@hotmail.com", new Date(99, 6, 13), "", 0),
+                new DtUsuario("camilillo15", "12345678", "Facundo", "Camilo", "facu_camilo2@hotmail.com", new Date(99, 6, 13), "Imagenes\\perfiles\\camilillo15.jpg", 0),
                 new DtCanal(0, "Rock ingles", "Temones" ,Privacidad.PUBLICO)
         );
         
         sys.altaUsuarioCanal(
-                new DtUsuario("jarrieta31", "jarrieta31", "Julio", "Arrieta", "julioarrieta23@gmail.com", new Date(76, 1, 31), "https://images.app.goo.gl/MX2hauy99QVndWdv6", 0),
+                new DtUsuario("jarrieta31", "jarrieta31", "Julio", "Arrieta", "julioarrieta23@gmail.com", new Date(76, 1, 31), "Imagenes\\perfiles\\jarrieta31.jpg", 0),
                 new DtCanal(0, "jarrieta31", "El mejor canal para pasar el rato", Privacidad.PUBLICO)
         );
     }

@@ -55,7 +55,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         sys = Fabrica.getInstancia().getIAdmin();
         bordeDefault = txtNombre.getBorder();
-        
+        cargarImagenEnJlabel(lbImg, "");
     }
     
     private boolean validarFormatoEmail(String _email){
@@ -72,6 +72,18 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             return true;
         } 
         return false;        
+    }
+    
+    private String convertirPrimeraEnMayusculas(String cadena){
+        char[] caracteres = cadena.toCharArray();
+        caracteres[0] = Character.toUpperCase(caracteres[0]);//Convierte el primer caracter de la primer palabra
+        // el -2 es para evitar una excepción al caernos del arreglo
+        for (int i = 0; i < cadena.length() - 2; i++) { // Es 'palabra'
+            if (caracteres[i] == ' ' || caracteres[i] == '.' || caracteres[i] == ',') { // Reemplazamos
+                caracteres[i + 1] = Character.toUpperCase(caracteres[i + 1]);
+            }
+        }
+        return new String(caracteres);
     }
     
     private boolean validarTxt(JTextField txt, int largo,JLabel lb,String nombreCampo){
@@ -111,13 +123,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                 if(!validarFormatoEmail(email)){
                     lb.setText(" El Email no es válido");
                     cambiarColoresError(txt, lb);
-                    System.out.println(" Formato el email es "+email);
                     return false;                                        
                 }      
                 if(sys.existeEmail(email)){
                     lb.setText(" El Email ya existe");
                     cambiarColoresError(txt, lb);
-                    System.out.println("Existe el email es "+email);
                     return false;
                 }
             }
@@ -129,7 +139,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             }
                    
         } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return true;
     }
@@ -150,6 +160,8 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         txtNombreCanal.setText("");
         jDateChooser1.setDate(null);
         lbImg.setIcon(null);
+        ruta = "";
+        cargarImagenEnJlabel(lbImg, ruta);
     }
 
     @SuppressWarnings("unchecked")
@@ -356,9 +368,9 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             }
         });
         pnlImagen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        pnlImagen.add(lbImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 110));
+        pnlImagen.add(lbImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 120, 120));
 
-        jPanel2.add(pnlImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 130, 110));
+        jPanel2.add(pnlImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 130, 130));
 
         jLabel42.setText("Email");
         jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
@@ -418,6 +430,9 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     
     private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta) {
         jLabelx.setText(null);
+        if (Ruta == null || Ruta.isEmpty()){
+            Ruta = "Imagenes\\ukp.png";
+        }
         // Carga la imagen a la variable de tipo Image
         Image img = new ImageIcon(Ruta).getImage();
         // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
@@ -432,7 +447,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         // Crea un JFileChooser
         JFileChooser JFC = new JFileChooser();
         // crea un filtro para aceptar solo algunas extensiones
-        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG", "JPEG", "PNG", "jpg", "jpeg", "png");
         // Agrega el filtro al JFileChooser
         JFC.setFileFilter(filtroImagen);
 
@@ -491,9 +506,9 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jDateChooser1.setBorder(bordeDefault);
         lbMsjFecha.setText("");
         lbMsjFecha.setOpaque(false); 
-        nombre = txtNombre.getText().trim();
+        nombre = convertirPrimeraEnMayusculas(txtNombre.getText().trim());
         nickname = txtNikname.getText().trim();
-        apellido = txtApellido.getText().trim();
+        apellido = convertirPrimeraEnMayusculas(txtApellido.getText().trim());
         email = txtEmail.getText().toLowerCase().trim();
         descripcion = txtDescripcion.getText().trim();
         nombreCanal = txtNombreCanal.getText().trim();
@@ -541,7 +556,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Se ha creado el usuario "+nickname, "Alta de usuario", JOptionPane.INFORMATION_MESSAGE);
             limpiarCampos();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCargarActionPerformed
 

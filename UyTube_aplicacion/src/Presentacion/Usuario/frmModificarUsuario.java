@@ -36,6 +36,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         btnListaReprodiccion.setEnabled(false);
         desactivarCampos();
         try {
+            cargarImagenEnJlabel(lbImg, "");
+
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
 
@@ -336,7 +338,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         // Crea un JFileChooser
         JFileChooser JFC = new JFileChooser();
         // crea un filtro para aceptar solo algunas extensiones
-        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG", "JPEG", "PNG", "jpg", "jpeg", "png");
         // Agrega el filtro al JFileChooser
         JFC.setFileFilter(filtroImagen);
 
@@ -393,6 +395,9 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
     private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta) {
         jLabelx.setText(null);
+        if (Ruta == null || Ruta.isEmpty()){
+            Ruta = "Imagenes\\ukp.png";
+        }
         // Carga la imagen a la variable de tipo Image
         Image img = new ImageIcon(Ruta).getImage();
         // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
@@ -413,6 +418,8 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        txtNombre.setText(convertirPrimeraEnMayusculas(txtNombre.getText()));
+        txtApellido.setText(convertirPrimeraEnMayusculas(txtApellido.getText()));
         try {
 
             if (lstUsuarios.isSelectionEmpty()) {
@@ -573,6 +580,18 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnQuitarImagenActionPerformed
 
 
+    private String convertirPrimeraEnMayusculas(String cadena){
+        char[] caracteres = cadena.toCharArray();
+        caracteres[0] = Character.toUpperCase(caracteres[0]);//Convierte el primer caracter de la primer palabra
+        // el -2 es para evitar una excepción al caernos del arreglo
+        for (int i = 0; i < cadena.length() - 2; i++) { // Es 'palabra'
+            if (caracteres[i] == ' ' || caracteres[i] == '.' || caracteres[i] == ',') { // Reemplazamos
+                caracteres[i + 1] = Character.toUpperCase(caracteres[i + 1]);
+            }
+        }
+        return new String(caracteres);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnListaReprodiccion;

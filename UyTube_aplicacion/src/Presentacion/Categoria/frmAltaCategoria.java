@@ -61,7 +61,7 @@ public class frmAltaCategoria extends javax.swing.JDialog {
                     }
                 }                
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
             }      
         }
         return true;
@@ -164,7 +164,7 @@ public class frmAltaCategoria extends javax.swing.JDialog {
                 cambiarColoresOK();
                 nuevaCategoria = "";
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -210,7 +210,7 @@ public class frmAltaCategoria extends javax.swing.JDialog {
                 cambiarColoresOK();
                 nuevaCategoria = "";
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         }    

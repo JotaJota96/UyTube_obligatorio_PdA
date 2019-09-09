@@ -30,7 +30,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         lbFondo.setIcon(img4);
         
         //#######  Descomentar la siguiente linea ###### //
-        //activarBarraDeMenu(false);
+        activarBarraDeMenu(false); // listo...
         sesionIniciada = false;
         mitCerrarSesion.setEnabled(false);
         

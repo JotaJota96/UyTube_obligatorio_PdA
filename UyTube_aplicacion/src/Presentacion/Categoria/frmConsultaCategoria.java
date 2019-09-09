@@ -25,7 +25,7 @@ public class frmConsultaCategoria extends javax.swing.JDialog {
             }
             lstCategorias.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         

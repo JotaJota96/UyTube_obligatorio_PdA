@@ -28,6 +28,8 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         
         try {
+            cargarImagenEnJlabel(lbImagen, "");
+            lbImagen.setEnabled(false);
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
 
@@ -105,38 +107,38 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jPanel6.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 170, 250));
 
         jLabel18.setText("Usuario:");
-        jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
+        jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, -1));
 
         jLabel19.setText("Nombre:");
-        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
+        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, -1, -1));
 
         jLabel20.setText("Apellido:");
-        jPanel6.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
+        jPanel6.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
 
         jLabel21.setText("Email:");
-        jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, -1, -1));
+        jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, -1, -1));
 
         jLabel22.setText("Nacimiento: ");
-        jPanel6.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, -1));
+        jPanel6.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
 
         jLabel23.setText("Imágen:");
-        jPanel6.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, -1, -1));
+        jPanel6.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, -1, -1));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 90));
+        jPanel1.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 100, 100));
 
-        jPanel6.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 100, 90));
-        jPanel6.add(lbFechaN, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 200, 20));
+        jPanel6.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 215, 110, 110));
+        jPanel6.add(lbFechaN, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 200, 20));
 
         lbEmail.setText(" ");
-        jPanel6.add(lbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 200, 20));
+        jPanel6.add(lbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 200, 20));
 
         lbApellido.setText(" ");
-        jPanel6.add(lbApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 200, -1));
+        jPanel6.add(lbApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 200, -1));
 
         lbNombre.setText(" ");
-        jPanel6.add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 200, -1));
+        jPanel6.add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 200, -1));
 
         lbCantSeguidores.setText(" ");
         jPanel6.add(lbCantSeguidores, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 100, -1));
@@ -222,7 +224,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         jPanel6.add(jScrollPane21, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 272, 190, 190));
 
         lbNickName.setText(" ");
-        jPanel6.add(lbNickName, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 200, -1));
+        jPanel6.add(lbNickName, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 200, -1));
 
         lbCantSeguidos.setText(" ");
         jPanel6.add(lbCantSeguidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, 100, -1));
@@ -349,6 +351,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         lbFechaN.setText(new SimpleDateFormat("dd-MM-yyyy").format(u.getFechaNacimiento()));
         lbCantSeguidores.setText(String.valueOf(u.getCantSeguidores()));
         cargarImagenEnJlabel(lbImagen, u.getImagen());
+        lbImagen.setEnabled(true);
     }
     private void cargarLabelsConDatosDelCanal(DtCanal c){
         lbNombreCanal.setText(c.getNombre());
@@ -361,6 +364,9 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
     }
     private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta){
         jLabelx.setText(null);
+        if (Ruta == null || Ruta.isEmpty()){
+            Ruta = "Imagenes\\ukp.png";
+        }
         // Carga la imagen a la variable de tipo Image
         Image img = new ImageIcon(Ruta).getImage();
         // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
