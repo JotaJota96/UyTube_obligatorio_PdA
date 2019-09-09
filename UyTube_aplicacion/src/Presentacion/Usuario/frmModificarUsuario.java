@@ -581,6 +581,9 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
 
     private String convertirPrimeraEnMayusculas(String cadena){
+         if (cadena.isEmpty()) {
+            return "";
+        }
         char[] caracteres = cadena.toCharArray();
         caracteres[0] = Character.toUpperCase(caracteres[0]);//Convierte el primer caracter de la primer palabra
         // el -2 es para evitar una excepción al caernos del arreglo

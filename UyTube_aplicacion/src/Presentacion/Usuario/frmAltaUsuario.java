@@ -75,6 +75,9 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     }
     
     private String convertirPrimeraEnMayusculas(String cadena){
+        if (cadena.isEmpty()){
+            return "";
+        }
         char[] caracteres = cadena.toCharArray();
         caracteres[0] = Character.toUpperCase(caracteres[0]);//Convierte el primer caracter de la primer palabra
         // el -2 es para evitar una excepción al caernos del arreglo
@@ -88,13 +91,13 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     
     private boolean validarTxt(JTextField txt, int largo,JLabel lb,String nombreCampo){
         try{
-            if(txt.getText().length() > largo ){
-                lb.setText(" El campo supera los "+largo+" caracteres");
+            if (txt.getText().isEmpty() || txt.getText().equals("")){
+                lb.setText(" El campo "+nombreCampo+" es obligatorio");
                 cambiarColoresError(txt, lb);
                 return false;
             }
-            else if(txt.getText().equals("")){
-                lb.setText(" El campo "+nombreCampo+" es obligatorio");
+            else if(txt.getText().length() > largo ){
+                lb.setText(" El campo supera los "+largo+" caracteres");
                 cambiarColoresError(txt, lb);
                 return false;
             }
