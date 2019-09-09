@@ -3,7 +3,8 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class frmAcercaDeNos extends javax.swing.JDialog {
-
+    boolean aburrido = false;
+    
     public frmAcercaDeNos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -34,6 +35,12 @@ public class frmAcercaDeNos extends javax.swing.JDialog {
 
         jPanel10.setBackground(new java.awt.Color(20, 20, 20));
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbImagen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbImagenMouseClicked(evt);
+            }
+        });
         jPanel10.add(lbImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 430));
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -84,6 +91,49 @@ public class frmAcercaDeNos extends javax.swing.JDialog {
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         dispose();
     }//GEN-LAST:event_btnAceptarMouseClicked
+
+    private void lbImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbImagenMouseClicked
+        if ((!aburrido) && evt.getClickCount() == 42) {
+            // aburrido
+            // muy aburrido
+            int rango = 300;
+            int xInicial = this.getX();
+            int yInicial = this.getY();
+
+            for (int i = 0; i < 3; i++) {
+                for (int x = this.getX(); x < xInicial + rango; x++) {
+                    this.setLocation(x, yInicial);
+                }
+                for (int x = this.getX(); x > xInicial - rango; x--) {
+                    this.setLocation(x, yInicial);
+                }
+                for (int x = this.getX(); x < xInicial; x++) {
+                    this.setLocation(x, yInicial);
+                }
+            }
+            aburrido = true;
+        }else if (aburrido && evt.getClickCount() == 42) {
+            int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+                    null,
+                    "¿En serio estás tan aburrido?",
+                    "¿Aburrido?",
+                    javax.swing.JOptionPane.YES_OPTION,
+                    javax.swing.JOptionPane.QUESTION_MESSAGE
+            );
+            if (respuesta == javax.swing.JOptionPane.YES_OPTION){
+                javax.swing.JOptionPane.showMessageDialog(null, 
+                    "Se nota...",
+                    "La verdad...",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }else if (respuesta == javax.swing.JOptionPane.NO_OPTION){
+                javax.swing.JOptionPane.showMessageDialog(null,
+                    "Pues no parece...",
+                    "¿Ah no?",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            dispose();
+        }
+    }//GEN-LAST:event_lbImagenMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

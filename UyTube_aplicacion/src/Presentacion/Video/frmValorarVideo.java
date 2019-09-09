@@ -61,6 +61,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Valorar video");
+        setResizable(false);
 
         jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

@@ -101,6 +101,7 @@ public class frmQuitarVideoDeListaDeReproduccion extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quitar video de lista de reproduccion");
+        setResizable(false);
 
         jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

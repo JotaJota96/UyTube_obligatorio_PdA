@@ -56,6 +56,7 @@ public class frmDejarDeSeguirUsuario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dejar de seguir usuario");
+        setResizable(false);
 
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

@@ -95,6 +95,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar usuario");
+        setResizable(false);
 
         lbMes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
