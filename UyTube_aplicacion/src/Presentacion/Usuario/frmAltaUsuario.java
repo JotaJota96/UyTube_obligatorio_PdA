@@ -543,6 +543,16 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             lbMsjFecha.setOpaque(true);
             lbMsjFecha.setForeground(Color.WHITE);
             lbMsjFecha.setBackground(colorError);
+        }else {
+            java.util.Date hoy = new java.util.Date();
+            if (hoy.compareTo(fecha) <= 0){
+                jDateChooser1.setBorder(BorderFactory.createLineBorder(colorError, 1));
+                lbMsjFecha.setText(" La fecha es posterior a la actual");
+                lbMsjFecha.setOpaque(true);
+                lbMsjFecha.setForeground(Color.WHITE);
+                lbMsjFecha.setBackground(colorError);
+                return;
+            }
         }
         if(v5[0]==0 || v5[1]==0 || v5[2]==0 || v5[3]==0){
             return;            
@@ -555,7 +565,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         
         try {    
             DtUsuario dtUsuario = new DtUsuario(nickname, nickname, nombre, apellido, email, fecha, ruta, 0);
-            DtCanal dtCanal = new DtCanal(Canal.getNuevoId(), nombre, descripcion, privacidad);
+            DtCanal dtCanal = new DtCanal(0, nombreCanal, descripcion, privacidad);
             sys.altaUsuarioCanal(dtUsuario, dtCanal);
             JOptionPane.showMessageDialog(null, "Se ha creado el usuario "+nickname, "Alta de usuario", JOptionPane.INFORMATION_MESSAGE);
             limpiarCampos();

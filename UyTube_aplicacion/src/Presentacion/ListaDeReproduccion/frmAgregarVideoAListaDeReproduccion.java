@@ -282,7 +282,6 @@ if (evt.getValueIsAdjusting()) return;
         try {
             String nick = lstUsuariosL.getSelectedValue();
             DtUsuario dtu = sys.seleccionarUsuarioActual(nick);
-            DtCanal dtc = sys.obtenerCanalDeUsuario();
             
             listaDeListasRep = sys.listarListasDeReproduccionDeUsuario(nick);
             listarListassRep(listaDeListasRep);

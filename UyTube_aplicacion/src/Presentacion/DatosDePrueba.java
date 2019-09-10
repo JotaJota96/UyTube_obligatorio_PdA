@@ -31,6 +31,10 @@ public class DatosDePrueba {
         agregarVideosAListasDeReproduccion();
         agregarComentarios();
         mostrarDatos();
+        sys.liberarMemoriaListaDeReproduccion();
+        sys.liberarMemoriaVideo();
+        sys.liberarMemoriaUsuarioActual();
+        sys.liberarMemoriaUsuario();
     }
     
     private static void cargarCategorias(){

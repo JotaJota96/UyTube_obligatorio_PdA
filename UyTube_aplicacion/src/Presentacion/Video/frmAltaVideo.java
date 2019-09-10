@@ -382,7 +382,7 @@ public class frmAltaVideo extends javax.swing.JDialog {
             return;            
         }        
         try {
-            DtVideo dtVideo = new DtVideo(Video.getNuevoId(), nombre, descripcion, duracion, fecha, url, Privacidad.PRIVADO, categoria, 0, 0);
+            DtVideo dtVideo = new DtVideo(0, nombre, descripcion, duracion, fecha, url, Privacidad.PRIVADO, categoria, 0, 0);
             int opcion=JOptionPane.showConfirmDialog(null, 
                         "¿Desea guardar el video \""+nombre+"\"?"
                         , "Confirmar alta de Video", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);

@@ -436,14 +436,14 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                         if (txtApellido.getText().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "El campo apellido no puede quedar vacío", "Error", JOptionPane.WARNING_MESSAGE);
                         } else {
-                            txtApellido.setText(txtNombre.getText().trim());
+                            txtApellido.setText(txtApellido.getText().trim());
                             if (!validarNombres(txtApellido.getText())) {
                                 JOptionPane.showMessageDialog(null, "El apellido tiene caracteres no válidos", "Error", JOptionPane.WARNING_MESSAGE);
                             } else {
                                 if (txtNombreCanal.getText().isEmpty()) {
                                     JOptionPane.showMessageDialog(null, "El campo nombre de canal no puede quedar vacío", "Error", JOptionPane.WARNING_MESSAGE);
                                 } else {
-                                    txtNombreCanal.setText(txtNombre.getText().trim());
+                                    txtNombreCanal.setText(txtNombreCanal.getText().trim());
                                     String pass = user.getContrasenia();
                                     if (chkCambiarContra.isSelected()) {
 
