@@ -10,16 +10,46 @@ import Logica.Enumerados.TipoListaDeReproduccion;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "canal")
 public class Canal {
-
     private static int contadorCanal = 1;
+    
+    @Id
+    @Column(name = "id")
     private int id;
+    
+    @Column(name = "nombre")
     private String nombre;
+    
+    @Column(name = "descripcion")
     private String descripcion;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "privacidad")
     private Privacidad privacidad;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_canal")
     private Map<Integer, ListaDeReproduccion> misListas;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_canal")
     private Map<Integer, Video> misVideos;
+
+    //-------------------------------------------------------------------------------------
+    public Canal() {
+    }
 
     public Canal(int id, String nombre, String descripcion, Privacidad privacidad) {
         if (nombre.equals("")){

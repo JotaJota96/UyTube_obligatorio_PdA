@@ -8,6 +8,9 @@ import Logica.Enumerados.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 /**
  * Esta clase fue hecha para cargar datos de prueba en el sistema
  * @author Juan
@@ -23,6 +26,22 @@ public class DatosDePrueba {
         sys = f.getIAdmin();
         // ahora se puede interactuar con el sistema invocando sus funciones mediante sys
         
+        
+        EntityManagerFactory factory = null;
+        EntityManager manager = null;
+        
+        try {
+            factory = Persistence.createEntityManagerFactory("UyTubePU");
+            manager = factory.createEntityManager();
+        } catch (Exception e) {
+            System.out.println("//////////////////////////");
+            System.out.println(e.getMessage());
+            System.out.println("//////////////////////////");
+        }
+        
+        System.exit(0);
+        
+        /*
         cargarCategorias();
         cargarUsuariosYCanales();
         cargarSeguidores();
@@ -35,6 +54,7 @@ public class DatosDePrueba {
         sys.liberarMemoriaVideo();
         sys.liberarMemoriaUsuarioActual();
         sys.liberarMemoriaUsuario();
+        */
     }
     
     private static void cargarCategorias(){

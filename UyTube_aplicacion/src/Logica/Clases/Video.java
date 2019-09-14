@@ -7,24 +7,71 @@ import java.sql.Date;
 import Logica.Enumerados.Privacidad;
 import Logica.Enumerados.TipoValoracion;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-public class Video {    
-    private int id;
-    private String nombre;
-    private String descripcion;
-    private Time duracion;
-    private Date fechaPublicacion;
-    private String urlVideoOriginal;
-    private Privacidad privacidad = Privacidad.PRIVADO;
-    private String categoria;
-    private int cantLikes = 0;
-    private int cantDisLikes = 0;
-    private ArrayList<Valoracion> valoraciones;
-    private Map<Integer, Comentario> comentarios;
+@Entity
+@Table(name = "video")
+public class Video {
     private static int idActual = 1;
     
+    @Id
+    @Column(name = "id")
+    private int id;
+    
+    @Column(name = "nombre")
+    private String nombre;
+    
+    @Column(name = "descripcion")
+    private String descripcion;
+    
+    @Basic
+    @Column(name = "duracion")
+    private Time duracion;
+    
+    @Basic
+    @Column(name = "fecha_publicacion")
+    private Date fechaPublicacion;
+    
+    
+    @Column(name = "url")
+    private String urlVideoOriginal;
+    
+    @Enumerated(EnumType.STRING)
+    private Privacidad privacidad = Privacidad.PRIVADO;
+    
+    
+    @Column(name = "categoria")
+    private String categoria;
+    
+    
+    @Column(name = "cant_likes")
+    private int cantLikes = 0;
+    
+    
+    @Column(name = "cant_dislikes")
+    private int cantDisLikes = 0;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_video")
+    private List<Valoracion> valoraciones;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_video")
+    private Map<Integer, Comentario> comentarios;
+    
+    //------------------------------------------------------------------------
     public Video(){
         
     }

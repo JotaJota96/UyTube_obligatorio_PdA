@@ -1,12 +1,26 @@
 package Logica.Clases;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="administrador")
 public class Administrador extends Persona{
-    private int idAdmin;
     private static int contadorAdministrador = 1;
-            
+    
+    @Id
+    private int id;
+    
+    //-------------------------------------------------------------------------
+
+    public Administrador() {
+        super();
+    }
+    
     public Administrador(int id, String contrasenia, String nombre, String apellido){
         super(nombre,apellido,contrasenia);
-        idAdmin = id;
+        this.id = id;
     }
     
     public static int getNuevoID(){
@@ -14,9 +28,7 @@ public class Administrador extends Persona{
     }
 
     public int getIdAdmin() {
-        return idAdmin;
+        return id;
     }
-    
-    
     
 }

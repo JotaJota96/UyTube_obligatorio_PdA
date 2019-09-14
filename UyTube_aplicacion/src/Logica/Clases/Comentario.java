@@ -3,17 +3,47 @@ package Logica.Clases;
 import Logica.DataType.DtComentario;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "comentario")
 public class Comentario {
-
     private static int contadorComentarios = 1;
 
+    @Id
+    @Column(name = "id")
     private int id;
+    
+    @Basic
+    @Column(name = "fecha")
     private Date fecha;
+    
+    @Column(name = "texto")
     private String texto;
+    
+    @Column(name = "nivel")
     private int nivelSubComentario;
+    
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "nick_usuario")
     private Usuario usr;
-    private ArrayList<Comentario> misComentario;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_com_padre")
+    private List<Comentario> misComentario;
+    
+    //---------------------------------------------------------------------------
+    public Comentario() {
+    }
 
     public Comentario(int id, Date fecha, String texto, int nivelSubComentario, Usuario usr) {
         if(usr==null){

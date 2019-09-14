@@ -2,11 +2,36 @@ package Logica.Clases;
 
 import Logica.DataType.DtValoracion;
 import Logica.Enumerados.TipoValoracion;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "valoracion")
 public class Valoracion {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
+    
+    @Enumerated(EnumType.STRING)
     private TipoValoracion val;
+    
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "nick_usuario")
     private Usuario usr;
- 
+    
+    //-----------------------------------------------------------------------
+    public Valoracion() {
+    }
+
     public Valoracion(TipoValoracion val, Usuario usr) {
         if(usr==null){
             throw new RuntimeException("Usuario No puede ser null");

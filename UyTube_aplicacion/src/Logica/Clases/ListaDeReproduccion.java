@@ -8,17 +8,50 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "lista_de_reproduccion")
 public class ListaDeReproduccion {
     private static int contadorListasDeReproduccion = 1;
     private static ArrayList<String> nombresListasPorDefecto = new ArrayList(Arrays.asList("Ver mas tarde"));
     
+    @Id
+    @Column(name = "id")
     private int id;
+    
+    @Column(name = "nombre")
     private String nombre;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "privacidad")
     private Privacidad privacidad;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
     private TipoListaDeReproduccion tipo;
+    
+    @Column(name = "categoria")
     private String categoria;
+    
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "videos_en_listas",
+            joinColumns = @JoinColumn(name = "id_lista"),
+            inverseJoinColumns = @JoinColumn(name = "id_video"))
     private Map<Integer, Video> misVideos;
+    
+    //-----------------------------------------------------------------------------
+    public ListaDeReproduccion() {
+    }
 
     public ListaDeReproduccion(int id, String nombre, Privacidad privacidad, TipoListaDeReproduccion tipo, String categoria) {
         if (nombre.equals("")){

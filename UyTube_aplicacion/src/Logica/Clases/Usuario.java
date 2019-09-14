@@ -4,20 +4,59 @@ import Logica.DataType.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="usuario")
 public class Usuario extends Persona{
+    @Id
+    @Column(name = "nickname")
+    private String id;
     
-    private String nickname;
+    @Column(name = "correo")
     private String correo;
+    
+    @Basic
+    @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
+    
+    @Column(name = "imagen")
     private String imagen;
+    
+    @Column(name = "seguidores")
     private int seguidores;
+    
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_canal")
     private Canal MiCanal;
+    
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "usuarios_seguidores",
+            joinColumns = @JoinColumn(name = "nick_seguido"),
+            inverseJoinColumns = @JoinColumn(name = "nick_seguidor"))
     private Map<String, Usuario> misSeguidores;
+    
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "usuarios_seguidos",
+            joinColumns = @JoinColumn(name = "nick_seguidor"),
+            inverseJoinColumns = @JoinColumn(name = "nick_seguido"))
     private Map<String, Usuario> seguidos;
     
+    //----------------------------------------------------------------------------------
+    public Usuario() {
+        super();
+    }
 
-    public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido ,DtCanal DTC) {
+    public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido, DtCanal DTC) {
         super(nombre,apellido,contrasenia);
         
         if(fechaNacimiento == null){
@@ -34,7 +73,7 @@ public class Usuario extends Persona{
             throw new RuntimeException("El correo no puede ser Vacio");
         }
         
-        this.nickname = nickname;
+        this.id = nickname;
         this.correo = correo;
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
@@ -45,7 +84,7 @@ public class Usuario extends Persona{
     }
 
     public String getNickname() {
-        return nickname;
+        return id;
     }
     
     public String getCorreo() {
@@ -65,7 +104,7 @@ public class Usuario extends Persona{
     }
 
     public DtUsuario getDT(){
-        return new DtUsuario(this.nickname, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
+        return new DtUsuario(this.id, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
     }
     
     public void actualizarListasPorDefecto(){
@@ -136,7 +175,7 @@ public class Usuario extends Persona{
             throw new RuntimeException("El usuario no puede ser null");
         }
         
-        if (this.misSeguidores.containsKey(Usu.nickname)){
+        if (this.misSeguidores.containsKey(Usu.id)){
             this.misSeguidores.remove(Usu.getNickname());
             this.seguidores--;
         }else{
@@ -219,7 +258,7 @@ public class Usuario extends Persona{
         if(DtCanal == null){
             throw new RuntimeException("El canal no puede ser null");
         }
-        if (this.nickname != DtUsu.getNickname()){
+        if (this.id != DtUsu.getNickname()){
             throw new RuntimeException("El nickname no puede ser modificado");
         }
         if (this.correo != DtUsu.getCorreo()){
