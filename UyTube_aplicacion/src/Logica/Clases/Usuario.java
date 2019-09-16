@@ -56,7 +56,7 @@ public class Usuario extends Persona{
         super();
     }
 
-    public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido, DtCanal DTC) {
+    public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido, DtCanal DTC, ArrayList<String> listas) {
         super(nombre,apellido,contrasenia);
         
         if(fechaNacimiento == null){
@@ -78,7 +78,7 @@ public class Usuario extends Persona{
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
         this.seguidores = 0;
-        this.MiCanal = new Canal(Canal.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());
+        this.MiCanal = new Canal(Canal.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad(), listas);
         this.misSeguidores = new TreeMap();
         this.seguidos = new TreeMap();
     }
@@ -107,8 +107,8 @@ public class Usuario extends Persona{
         return new DtUsuario(this.id, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
     }
     
-    public void actualizarListasPorDefecto(){
-        this.MiCanal.actualizarListasPorDefecto();
+    public void actualizarListasPorDefecto(ArrayList<String> listas){
+        this.MiCanal.actualizarListasPorDefecto(listas);
     }
     
     public void agregarComentarioAVideo(int idVideo, DtComentario DtComentario, Usuario Usu){

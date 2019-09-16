@@ -23,7 +23,6 @@ import javax.persistence.Table;
 @Table(name = "lista_de_reproduccion")
 public class ListaDeReproduccion {
     private static int contadorListasDeReproduccion = 1;
-    private static ArrayList<String> nombresListasPorDefecto = new ArrayList(Arrays.asList("Ver mas tarde"));
     
     @Id
     @Column(name = "id")
@@ -76,17 +75,6 @@ public class ListaDeReproduccion {
 
     public static int getNuevoId() {
         return contadorListasDeReproduccion++;
-    }
-    public static void agregarListaPorDefecto(String cat) {
-        if (cat.equals("")){
-            throw new RuntimeException("No se puede agregar una categoria vacia");
-        }
-        nombresListasPorDefecto.add(cat);
-    }
-    
-    public static ArrayList<String> listarNombresDeListasPorDefecto() {
-        ArrayList<String> ret = new ArrayList(nombresListasPorDefecto);
-        return ret;
     }
     
     public int getId() {

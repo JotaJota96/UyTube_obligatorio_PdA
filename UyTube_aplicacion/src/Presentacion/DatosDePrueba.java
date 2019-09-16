@@ -43,6 +43,7 @@ public class DatosDePrueba {
         
         /*
         cargarCategorias();
+        sys.altaListaDeReproduccionPorDefecto(new DtListaDeReproduccion(0, "Ver mas tarde", Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));
         cargarUsuariosYCanales();
         cargarSeguidores();
         cargarVideosAUsuarios();

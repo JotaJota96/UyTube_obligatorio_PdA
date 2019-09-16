@@ -51,7 +51,7 @@ public class Canal {
     public Canal() {
     }
 
-    public Canal(int id, String nombre, String descripcion, Privacidad privacidad) {
+    public Canal(int id, String nombre, String descripcion, Privacidad privacidad, ArrayList<String> listas) {
         if (nombre.equals("")){
             throw new RuntimeException("El nombre del canal no puede ser vacio");
         }
@@ -62,12 +62,7 @@ public class Canal {
         this.privacidad = privacidad;
         this.misListas = new TreeMap();
         this.misVideos = new TreeMap();
-        
-        ArrayList<String> listas = ListaDeReproduccion.listarNombresDeListasPorDefecto();
-        for (String lista : listas) {
-            int nuevoID = ListaDeReproduccion.getNuevoId();
-            this.misListas.put(nuevoID, new ListaDeReproduccion(nuevoID, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));
-        }
+        this.actualizarListasPorDefecto(listas);
     }
 
     public int getId() {
@@ -115,15 +110,14 @@ public class Canal {
     }
 
     //-----------------------------------------------------------------------------
-    public void actualizarListasPorDefecto() {
-        ArrayList<String> listas = ListaDeReproduccion.listarNombresDeListasPorDefecto();
-        
+    public void actualizarListasPorDefecto(ArrayList<String> listas) {
+        // descarta las listas que ya estan agregadas
         for (Map.Entry<Integer, ListaDeReproduccion> l : misListas.entrySet()) {
             if (l.getValue().getTipo() == TipoListaDeReproduccion.POR_DEFECTO) {
                 listas.remove(l.getValue().getNombre());
             }
         }
-
+        // agrega las que pasaron el filtro anterior
         for (String lista : listas) {
             int nuevoID = ListaDeReproduccion.getNuevoId();
             this.misListas.put(nuevoID, new ListaDeReproduccion(nuevoID, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));

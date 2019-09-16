@@ -9,6 +9,7 @@ import Logica.Clases.Administrador;
 import Logica.Clases.Usuario;
 import Logica.Clases.Categoria;
 import Logica.Clases.ListaDeReproduccion;
+import Logica.Clases.ListaPorDefecto;
 // Colecciones
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,6 +22,7 @@ public class CAdmin implements IAdmin{
     private Map<String, Usuario> usuarios;
     private Map<Integer, Administrador> administradores;
     private Map<String, Categoria> categorias;
+    private Map<String, ListaPorDefecto> listasPorDefecto;
     private Usuario usuarioActual;
     private Usuario usuarioSeleccionado;
     private int idListaSeleccionada;
@@ -31,6 +33,7 @@ public class CAdmin implements IAdmin{
         this.usuarios = new TreeMap(String.CASE_INSENSITIVE_ORDER);
         this.administradores = new TreeMap();
         this.categorias = new TreeMap();
+        this.listasPorDefecto = new TreeMap();
         this.usuarioActual = null;
         this.usuarioSeleccionado = null;
         this.idListaSeleccionada = 0;
@@ -150,13 +153,14 @@ public class CAdmin implements IAdmin{
         if (lista.getNombre().equals("")){
             throw new RuntimeException("El nombre de la nueva lista de reproduccion por defecto no puede ser vacio");
         }
-        if (ListaDeReproduccion.listarNombresDeListasPorDefecto().contains(lista.getNombre())){
+        if (listasPorDefecto.containsKey(lista.getNombre())){
             throw new RuntimeException("El sistema ya posee una lista de reproduccion por defecto con ese nombre");
         }
-        ListaDeReproduccion.agregarListaPorDefecto(lista.getNombre());
-        
+        listasPorDefecto.put(lista.getNombre(), new ListaPorDefecto(lista.getNombre()));
+        ArrayList<String> nuevaLista = new ArrayList();
+        nuevaLista.add(lista.getNombre());
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
-            u.getValue().actualizarListasPorDefecto();
+            u.getValue().actualizarListasPorDefecto(nuevaLista);
         }
     }
     
@@ -177,6 +181,11 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El sistema ya tiene un usuario con ese correo");
         }
         
+        ArrayList<String> listasDefault = new ArrayList();
+        for (Map.Entry<String, ListaPorDefecto> lpd : listasPorDefecto.entrySet()) {
+            listasDefault.add(lpd.getKey());
+        }
+        
         Usuario nuevoUsuario = new Usuario(
                 usr.getNickname(), 
                 usr.getCorreo(), 
@@ -185,7 +194,9 @@ public class CAdmin implements IAdmin{
                 usr.getContrasenia(), 
                 usr.getNombre(), 
                 usr.getApellido(), 
-                canal);
+                canal,
+                listasDefault
+        );
         usuarios.put(nuevoUsuario.getNickname(), nuevoUsuario);
     }
     
@@ -676,11 +687,8 @@ public class CAdmin implements IAdmin{
         if (this.usuarioSeleccionado == null){
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
-        ArrayList<String> l = ListaDeReproduccion.listarNombresDeListasPorDefecto();
-        for (int i = 0; i < l.size(); i++){
-            if (l.get(i).equals(nombre)){
-                return false;
-            }
+        if (listasPorDefecto.containsKey(nombre)) {
+            return false;
         }
         return usuarioSeleccionado.validarListaParticular(nombre);
     }
@@ -691,11 +699,8 @@ public class CAdmin implements IAdmin{
          * lista de reproduccion con ese nombre
          */
         
-        ArrayList<String> l = ListaDeReproduccion.listarNombresDeListasPorDefecto();
-        for (int i = 0; i < l.size(); i++){
-            if (l.get(i).equals(nombre)){
-                return false;
-            }
+        if (listasPorDefecto.containsKey(nombre)) {
+            return false;
         }
         for (Map.Entry<String, Usuario> u : this.usuarios.entrySet()){
             if ( ! u.getValue().validarListaParticular(nombre)){
