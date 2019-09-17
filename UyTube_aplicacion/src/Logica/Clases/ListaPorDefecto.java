@@ -1,5 +1,6 @@
 package Logica.Clases;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "lista_por_defecto")
-public class ListaPorDefecto {
+public class ListaPorDefecto implements Serializable {
 
     @Id
     @Column(name = "nombre")

@@ -6,6 +6,7 @@ import java.sql.Time;
 import java.sql.Date;
 import Logica.Enumerados.Privacidad;
 import Logica.Enumerados.TipoValoracion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "video")
-public class Video {
+public class Video implements Serializable {
     private static int idActual = 1;
     
     @Id

@@ -7,6 +7,7 @@ import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import Logica.DataType.DtCanal;
 import Logica.Enumerados.TipoListaDeReproduccion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "canal")
-public class Canal {
+public class Canal implements Serializable {
     private static int contadorCanal = 1;
     
     @Id

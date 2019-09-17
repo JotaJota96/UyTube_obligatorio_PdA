@@ -2,6 +2,7 @@ package Logica.Clases;
 
 import Logica.DataType.DtValoracion;
 import Logica.Enumerados.TipoValoracion;
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,13 +16,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "valoracion")
-public class Valoracion {
+public class Valoracion implements Serializable {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @JoinColumn(name = "id")
     private int id;
     
     @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "valoracion")
     private TipoValoracion val;
     
     @OneToOne(cascade = CascadeType.PERSIST)
@@ -38,6 +41,11 @@ public class Valoracion {
         }
         this.val = val;
         this.usr = usr;
+    }
+
+    //-----------------------------------------------------------------------
+    public int getId() {
+        return id;
     }
 
     public TipoValoracion getVal() {

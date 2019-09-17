@@ -4,8 +4,8 @@ import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Enumerados.TipoListaDeReproduccion;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.persistence.CascadeType;
@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "lista_de_reproduccion")
-public class ListaDeReproduccion {
+public class ListaDeReproduccion implements Serializable {
     private static int contadorListasDeReproduccion = 1;
     
     @Id

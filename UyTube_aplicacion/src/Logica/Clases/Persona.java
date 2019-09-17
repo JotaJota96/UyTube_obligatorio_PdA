@@ -1,5 +1,6 @@
 package Logica.Clases;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,7 +9,7 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class Persona {
+public abstract class Persona implements Serializable {
     @Id
     private int id;
     
@@ -26,7 +27,6 @@ public abstract class Persona {
     public Persona() {
     }
     
-    
     public Persona(String nombre, String apellido, String contrasenia) {
         if(contrasenia.equals("")){
                 throw new RuntimeException("La contraseña no puede ser Vacio");
@@ -36,6 +36,10 @@ public abstract class Persona {
         this.contrasenia = contrasenia;
     }
 
+    public int getId() {
+        return id;
+    }
+    
     public String getNombre() {
         return nombre;
     }

@@ -1,12 +1,13 @@
 package Logica.Clases;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="administrador")
-public class Administrador extends Persona{
+public class Administrador extends Persona implements Serializable{
     private static int contadorAdministrador = 1;
     
     @Id

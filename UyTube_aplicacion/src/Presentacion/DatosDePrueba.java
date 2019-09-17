@@ -18,6 +18,10 @@ import javax.persistence.Persistence;
 public class DatosDePrueba {
     private static IAdmin sys = null;
     
+    public static void main(String[] args) {
+        cargarDatos();
+    }
+    
     // Esta funcion no la toquen
     public static void cargarDatos(){
         // Se obtiene la instancia de la fabrica

@@ -1,6 +1,7 @@
 package Logica.Clases;
 
 import Logica.DataType.DtComentario;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "comentario")
-public class Comentario {
+public class Comentario implements Serializable {
     private static int contadorComentarios = 1;
 
     @Id
