@@ -13,18 +13,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "lista_de_reproduccion")
 public class ListaDeReproduccion implements Serializable {
-    private static int contadorListasDeReproduccion = 1;
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -51,6 +52,9 @@ public class ListaDeReproduccion implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_video"))
     private Map<Integer, Video> misVideos;
     
+    @Column(name = "eliminado")
+    private boolean eliminado;
+    
     //-----------------------------------------------------------------------------
     public ListaDeReproduccion() {
     }
@@ -74,12 +78,9 @@ public class ListaDeReproduccion implements Serializable {
         this.tipo = tipo;
         this.categoria = categoria;
         this.misVideos = new TreeMap();
+        this.eliminado = false;
     }
 
-    public static int getNuevoId() {
-        return contadorListasDeReproduccion++;
-    }
-    
     public int getId() {
         return id;
     }

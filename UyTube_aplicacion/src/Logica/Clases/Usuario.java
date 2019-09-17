@@ -8,9 +8,11 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,6 +36,14 @@ public class Usuario extends Persona{
     
     @Column(name = "seguidores")
     private int seguidores;
+    
+    @Column(name = "eliminado")
+    private boolean eliminado;
+    
+    @Basic
+    @Column(name = "fecha_eliminado")
+    private Date fechaEliminado;
+    
     
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_canal")
@@ -78,9 +88,11 @@ public class Usuario extends Persona{
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
         this.seguidores = 0;
-        this.MiCanal = new Canal(Canal.getNuevoId(),DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad(), listas);
+        this.MiCanal = new Canal(0,DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad(), listas);
         this.misSeguidores = new TreeMap();
         this.seguidos = new TreeMap();
+        this.eliminado = false;
+        this.fechaEliminado = null;
     }
 
     public String getNickname() {

@@ -17,17 +17,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "video")
 public class Video implements Serializable {
-    private static int idActual = 1;
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -75,15 +76,15 @@ public class Video implements Serializable {
     @JoinColumn(name = "id_video")
     private Map<Integer, Comentario> comentarios;
     
+    @Column(name = "eliminado")
+    private boolean eliminado;
+    
     //------------------------------------------------------------------------
     public Video(){
         
     }
     /********************** Constructor *********************/
     public Video(int _id, String _nombre, String _descripcion,Time _duracion, Date _fechaPublicacion,String _urlVideoOriginal,String _categoria ){
-        if (_id < 0) {
-            throw new RuntimeException("Error, el id del video es un negativo o cero.");
-        }
         if (_nombre == "") {
             throw new RuntimeException("Error, el nombre del video está vacío");
         }
@@ -108,7 +109,8 @@ public class Video implements Serializable {
         this.urlVideoOriginal = _urlVideoOriginal;    
         this.categoria = _categoria;
         this.valoraciones = new ArrayList<Valoracion>();
-        this.comentarios = new TreeMap<Integer, Comentario>();        
+        this.comentarios = new TreeMap<Integer, Comentario>();
+        this.eliminado = false;
     }
     
     /** Agregar un nuevo comentario **/
@@ -120,9 +122,8 @@ public class Video implements Serializable {
             throw new RuntimeException("El usuario es null");
         }
         
-        int nuevoId = Comentario.getNuevoID();
-        Comentario nuevoComentario = new Comentario(nuevoId, dtComentario.getFecha(), dtComentario.getTexto(), 0, usuario);
-        comentarios.put(nuevoId, nuevoComentario);
+        Comentario nuevoComentario = new Comentario(0, dtComentario.getFecha(), dtComentario.getTexto(), 0, usuario);
+        comentarios.put(nuevoComentario.getId(), nuevoComentario);
     }
     
     /*  Agregar un subcomentario a un comentario existente  */
@@ -283,11 +284,6 @@ public class Video implements Serializable {
         }
     }
     
-    
-    public static int getNuevoId(){
-        int nuevoId = idActual ++;
-        return nuevoId;        
-    }
     
 //============================  Get and Set ================================
     public int getId() {

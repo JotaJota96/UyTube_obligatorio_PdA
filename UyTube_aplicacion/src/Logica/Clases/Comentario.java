@@ -9,6 +9,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,8 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "comentario")
 public class Comentario implements Serializable {
-    private static int contadorComentarios = 1;
-
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
@@ -41,7 +41,9 @@ public class Comentario implements Serializable {
     @JoinColumn(name = "nick_usuario")
     private Usuario usr;
     
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, 
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "id_com_padre")
     private List<Comentario> misComentario;
     
@@ -62,10 +64,6 @@ public class Comentario implements Serializable {
         this.nivelSubComentario = nivelSubComentario;
         this.usr = usr;
         this.misComentario = new ArrayList();
-    }
-
-    public static int getNuevoID() {
-        return contadorComentarios++;
     }
 
     public int getId() {
@@ -99,7 +97,7 @@ public class Comentario implements Serializable {
             throw new RuntimeException("Usuario No puede ser null");
         }
         if (this.id == idComPadre) {
-            Comentario com = new Comentario(Comentario.getNuevoID(),
+            Comentario com = new Comentario(0,
                     dtC.getFecha(),
                     dtC.getTexto(),
                     this.nivelSubComentario + 1,

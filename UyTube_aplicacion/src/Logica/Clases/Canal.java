@@ -16,17 +16,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "canal")
 public class Canal implements Serializable {
-    private static int contadorCanal = 1;
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -51,6 +52,9 @@ public class Canal implements Serializable {
     @JoinColumn(name = "id_canal")
     private Map<Integer, Video> misVideos;
 
+    @Column(name = "eliminado")
+    private boolean eliminado;
+    
     //-------------------------------------------------------------------------------------
     public Canal() {
     }
@@ -67,6 +71,7 @@ public class Canal implements Serializable {
         this.misListas = new TreeMap();
         this.misVideos = new TreeMap();
         this.actualizarListasPorDefecto(listas);
+        this.eliminado = false;
     }
 
     public int getId() {
@@ -109,10 +114,6 @@ public class Canal implements Serializable {
         this.privacidad = privacidad;
     }
 
-    public static int getNuevoId() {
-        return contadorCanal++;
-    }
-
     //-----------------------------------------------------------------------------
     public void actualizarListasPorDefecto(ArrayList<String> listas) {
         // descarta las listas que ya estan agregadas
@@ -123,8 +124,8 @@ public class Canal implements Serializable {
         }
         // agrega las que pasaron el filtro anterior
         for (String lista : listas) {
-            int nuevoID = ListaDeReproduccion.getNuevoId();
-            this.misListas.put(nuevoID, new ListaDeReproduccion(nuevoID, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));
+            ListaDeReproduccion nuevaLista = new ListaDeReproduccion(0, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED");
+            this.misListas.put(nuevaLista.getId(), nuevaLista);
         }
     }
 
@@ -145,7 +146,6 @@ public class Canal implements Serializable {
     }
 
     public void agregarListaParticular(DtListaDeReproduccion listaReproduccion) {
-        int idLdr = ListaDeReproduccion.getNuevoId();
         if (listaReproduccion == null){
             throw new RuntimeException("La lista de reprodccion es null");
         }
@@ -167,12 +167,12 @@ public class Canal implements Serializable {
          }
          
         ListaDeReproduccion ldr = new ListaDeReproduccion(
-                idLdr, 
+                0, 
                 listaReproduccion.getNombre(), 
                 listaReproduccion.getPrivacidad(), 
                 listaReproduccion.getTipo(), 
                 listaReproduccion.getCategoria());
-        this.misListas.put(idLdr, ldr);
+        this.misListas.put(ldr.getId(), ldr);
     }
 
     public void quitarValoracion(int idVideo, String nickname) {
@@ -220,8 +220,8 @@ public class Canal implements Serializable {
              }
          }
          
-        int idVideo = Video.getNuevoId();
-        Video vd = new Video(idVideo, 
+        Video vd = new Video(
+                0, 
                 video.getNombre(), 
                 video.getDescripcion(), 
                 video.getDuracion(), 
@@ -235,7 +235,7 @@ public class Canal implements Serializable {
              vd.setPrivacidad(Privacidad.PRIVADO);
          }
         
-        this.misVideos.put(idVideo, vd);
+        this.misVideos.put(vd.getId(), vd);
     }
 
     public void agregarVideoALista(int id, Video video) {
