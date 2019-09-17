@@ -3,15 +3,15 @@
   <persistence-unit name="UyTubePU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Logica.Clases.Administrador</class>
-    <class>Logica.Clases.Persona</class>
-    <class>Logica.Clases.Valoracion</class>
     <class>Logica.Clases.Canal</class>
     <class>Logica.Clases.Categoria</class>
     <class>Logica.Clases.Comentario</class>
     <class>Logica.Clases.ListaDeReproduccion</class>
-    <class>Logica.Clases.Usuario</class>
-    <class>Logica.Clases.Video</class>
     <class>Logica.Clases.ListaPorDefecto</class>
+    <class>Logica.Clases.Persona</class>
+    <class>Logica.Clases.Usuario</class>
+    <class>Logica.Clases.Valoracion</class>
+    <class>Logica.Clases.Video</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/UyTube"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

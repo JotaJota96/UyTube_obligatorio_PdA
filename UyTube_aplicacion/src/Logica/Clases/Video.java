@@ -17,12 +17,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,7 +32,7 @@ public class Video implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     
     @Column(name = "nombre")
     private String nombre;
@@ -68,16 +67,17 @@ public class Video implements Serializable {
     @Column(name = "cant_dislikes")
     private int cantDisLikes = 0;
     
+    @Column(name = "eliminado")
+    private boolean eliminado;
+    
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_video")
     private List<Valoracion> valoraciones;
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_video")
+    @MapKey(name = "id")
     private Map<Integer, Comentario> comentarios;
-    
-    @Column(name = "eliminado")
-    private boolean eliminado;
     
     //------------------------------------------------------------------------
     public Video(){

@@ -13,7 +13,7 @@ public class Administrador extends Persona implements Serializable{
     // No logre hacer que el id fuera auto-incremental, no se por que, probe de todo y no pude
     //@GeneratedValue(strategy=GenerationType.IDENTITY)
     //@Column(name = "id")
-    private int id;
+    private Integer id;
     
     //-------------------------------------------------------------------------
 

@@ -11,7 +11,7 @@ import javax.persistence.InheritanceType;
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Persona implements Serializable {
     @Id
-    private int id;
+    private Integer id;
     
     @Column(name = "nombre")
     private String nombre;

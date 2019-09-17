@@ -8,11 +8,10 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,7 +20,7 @@ import javax.persistence.Table;
 @Table(name="usuario")
 public class Usuario extends Persona{
     @Id
-    @Column(name = "nickname")
+    @Column(name = "id")
     private String id;
     
     @Column(name = "correo")
@@ -50,15 +49,19 @@ public class Usuario extends Persona{
     private Canal MiCanal;
     
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "usuarios_seguidores",
-            joinColumns = @JoinColumn(name = "nick_seguido"),
-            inverseJoinColumns = @JoinColumn(name = "nick_seguidor"))
+    @JoinTable(
+            name="usuarios_seguidores",
+            joinColumns={@JoinColumn(name="nick_seguido", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="nick_seguidor", referencedColumnName="id")})
+    @MapKey(name = "id")
     private Map<String, Usuario> misSeguidores;
     
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "usuarios_seguidos",
-            joinColumns = @JoinColumn(name = "nick_seguidor"),
-            inverseJoinColumns = @JoinColumn(name = "nick_seguido"))
+    @JoinTable(
+            name="usuarios_seguidos",
+            joinColumns={@JoinColumn(name="nick_seguidor", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="nick_seguido", referencedColumnName="id")})
+    @MapKey(name = "id")
     private Map<String, Usuario> seguidos;
     
     //----------------------------------------------------------------------------------

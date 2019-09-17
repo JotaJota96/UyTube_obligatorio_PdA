@@ -13,14 +13,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,7 +29,7 @@ public class ListaDeReproduccion implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     
     @Column(name = "nombre")
     private String nombre;
@@ -39,21 +38,23 @@ public class ListaDeReproduccion implements Serializable {
     @Column(name = "privacidad")
     private Privacidad privacidad;
     
+    @Column(name = "eliminado")
+    private boolean eliminado;
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
     private TipoListaDeReproduccion tipo;
     
     @Column(name = "categoria")
     private String categoria;
-    
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "videos_en_listas",
-            joinColumns = @JoinColumn(name = "id_lista"),
-            inverseJoinColumns = @JoinColumn(name = "id_video"))
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name="videos_en_listas",
+            joinColumns={@JoinColumn(name="id_lista", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="id_video", referencedColumnName="id")})
+    @MapKey(name = "id")
     private Map<Integer, Video> misVideos;
-    
-    @Column(name = "eliminado")
-    private boolean eliminado;
     
     //-----------------------------------------------------------------------------
     public ListaDeReproduccion() {

@@ -9,7 +9,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +24,7 @@ public class Comentario implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     
     @Basic
     @Column(name = "fecha")
@@ -42,8 +41,7 @@ public class Comentario implements Serializable {
     private Usuario usr;
     
     @OneToMany(cascade = CascadeType.ALL, 
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
+            orphanRemoval = true)
     @JoinColumn(name = "id_com_padre")
     private List<Comentario> misComentario;
     

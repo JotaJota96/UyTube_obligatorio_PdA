@@ -16,12 +16,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,7 +31,7 @@ public class Canal implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     
     @Column(name = "nombre")
     private String nombre;
@@ -46,10 +45,12 @@ public class Canal implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_canal")
+    @MapKey(name = "id")
     private Map<Integer, ListaDeReproduccion> misListas;
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_canal")
+    @MapKey(name = "id")
     private Map<Integer, Video> misVideos;
 
     @Column(name = "eliminado")

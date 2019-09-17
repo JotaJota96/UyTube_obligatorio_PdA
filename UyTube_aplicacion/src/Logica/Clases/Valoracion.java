@@ -22,7 +22,7 @@ public class Valoracion implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "valoracion")
