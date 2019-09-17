@@ -4,6 +4,7 @@ import Logica.DataType.DtValoracion;
 import Logica.Enumerados.TipoValoracion;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,7 +21,7 @@ public class Valoracion implements Serializable {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @JoinColumn(name = "id")
+    @Column(name = "id")
     private int id;
     
     @Enumerated(EnumType.STRING)
