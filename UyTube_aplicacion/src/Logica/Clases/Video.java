@@ -127,6 +127,12 @@ public class Video implements Serializable {
          // crea la tupla en la base de datos
          // asi se genera el ID y se puede agregar al Map
         new ComentarioJpaController().create(nuevoComentario);
+        /*nuevoComentario.setUsr(usuario);
+        try {
+            new ComentarioJpaController().edit(nuevoComentario);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }*/
         comentarios.put(nuevoComentario.getId(), nuevoComentario);
     }
     
@@ -140,7 +146,14 @@ public class Video implements Serializable {
         }
         
         for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {
-            if(coment.getValue().agregarSubComentario(idCom, dtComentario, usuario)){
+            if (coment.getValue().agregarSubComentario(idCom, dtComentario, usuario)) {
+                
+                try {
+                    new ComentarioJpaController().edit(coment.getValue());
+                } catch (Exception e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+                
                 break;
             }
         }

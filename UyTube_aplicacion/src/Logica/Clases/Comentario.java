@@ -1,5 +1,6 @@
 package Logica.Clases;
 
+import JPAControllerClasses.ComentarioJpaController;
 import Logica.DataType.DtComentario;
 import java.io.Serializable;
 import java.sql.Date;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -36,7 +38,7 @@ public class Comentario implements Serializable {
     @Column(name = "nivel")
     private int nivelSubComentario;
     
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne()
     @JoinColumn(name = "nick_usuario")
     private Usuario usr;
     
@@ -82,6 +84,10 @@ public class Comentario implements Serializable {
         return usr;
     }
 
+    public void setUsr(Usuario usr) {
+        this.usr = usr;
+    }
+    
     @Override
     public String toString() {
         return "Comentario{" + "id=" + id + ", fecha=" + fecha + ", texto=" + texto + ", nivelSubComentario=" + nivelSubComentario + '}';
@@ -100,6 +106,9 @@ public class Comentario implements Serializable {
                     dtC.getTexto(),
                     this.nivelSubComentario + 1,
                     usr);
+            // crea la tupla en la base de datos
+            // asi se genera el ID y se puede agregar al Map
+            new ComentarioJpaController().create(com);
             this.misComentario.add(com);
             return true;
         } else {

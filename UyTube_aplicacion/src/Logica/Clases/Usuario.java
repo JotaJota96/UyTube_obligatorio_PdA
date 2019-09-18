@@ -158,8 +158,12 @@ public class Usuario extends Persona{
         if(DtValoracion == null){
             throw new RuntimeException("La valoracion no puede ser null");
         }
-        
         this.MiCanal.agregarListaParticular(DtValoracion);
+        try {
+            new CanalJpaController().edit(this.MiCanal);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void agregarModificarValoracionDeVideo(int idVideo, DtValoracion DtValoracion, Usuario Usu){
@@ -209,8 +213,12 @@ public class Usuario extends Persona{
         if(DtVideo == null){
             throw new RuntimeException("El video no puede ser null");
         }
-        
         this.MiCanal.agregarVideo(DtVideo);
+        try {
+            new CanalJpaController().edit(this.MiCanal);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void agregarVideoALista(int idLista , int idVideo, Usuario Usu){
@@ -223,7 +231,6 @@ public class Usuario extends Persona{
         } catch (Exception e) {
             throw new RuntimeException("El video no pertenece al usuario: " + Usu.getNickname());
         }
-         
         this.MiCanal.agregarVideoALista(idLista, v);
     }
     

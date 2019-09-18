@@ -43,9 +43,24 @@ public class DatosDePrueba {
             System.out.println(e.getMessage());
             System.out.println("//////////////////////////");
         }
+        /*
+        for (DtUsuario u : sys.listarUsuarios()) {
+            System.out.println(u.toString());
+        }
+        
+        for (String c : sys.listarCategorias()) {
+            System.out.println(c);
+        }
+        */
         
         cargarCategorias();
-        sys.altaListaDeReproduccionPorDefecto(new DtListaDeReproduccion(0, "Ver mas tarde", Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));
+        try {
+            sys.altaListaDeReproduccionPorDefecto(new DtListaDeReproduccion(0, "Ver mas tarde", Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));
+        } catch (Exception e) {
+        }
+        if (sys.listarUsuarios().size() != 0){
+            return;
+        }
         cargarUsuariosYCanales();
         cargarSeguidores();
         cargarVideosAUsuarios();
@@ -57,13 +72,19 @@ public class DatosDePrueba {
         sys.liberarMemoriaVideo();
         sys.liberarMemoriaUsuarioActual();
         sys.liberarMemoriaUsuario();
-        
     }
     
     private static void cargarCategorias(){
-        sys.altaCategoria("MUSICA");
-        sys.altaCategoria("DEPORTE");
-        sys.altaCategoria("GAMING");
+        ArrayList<String> cats = new ArrayList();
+        cats.add("MUSICA");
+        cats.add("DEPORTE");
+        cats.add("GAMING");
+        
+        for (String c : cats){
+            if ( ! sys.existeCategoria(c)){
+                sys.altaCategoria(c);
+            }
+        }
     }
     
     private static void cargarUsuariosYCanales(){
@@ -295,7 +316,7 @@ public class DatosDePrueba {
 
     private static void agregarComentarios(){
         sys.seleccionarUsuario("JotaJota96");
-        sys.seleccionarVideo(1);
+        sys.seleccionarVideo(sys.listarVideosDeUsuario().get(0).getId());
         
         // 1
         sys.seleccionarUsuarioActual("LuC31G");
@@ -357,7 +378,8 @@ public class DatosDePrueba {
                boolean vacio = true;
                for (DtComentario c : sys.listarComentariosDeVideo()){
                    vacio = false;
-                   tab(tab+2); tab(c.getNivelSubComentario()); System.out.println(c.toString());
+                   tab(tab+2); tab(c.getNivelSubComentario()); 
+                   System.out.println(c.getId() + ". " + c.getNickname() + ": " + c.getTexto());
                 }
                if (vacio){
                    tab(tab+2);  System.out.println("No hay comentarios");

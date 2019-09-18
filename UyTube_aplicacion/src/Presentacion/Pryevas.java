@@ -1,6 +1,9 @@
 package Presentacion;
 
+import JPAControllerClasses.ComentarioJpaController;
+import JPAControllerClasses.VideoJpaController;
 import Logica.Clases.Canal;
+import Logica.Clases.Comentario;
 import Logica.Clases.Usuario;
 import Logica.Clases.Video;
 import Logica.DataType.DtCanal;
@@ -24,11 +27,30 @@ public class Pryevas {
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("UyTubePU");
             EntityManager manager = factory.createEntityManager();
             
+            
+            
+            /*
+            manager.getTransaction().begin();
+            Usuario usu = manager.find(Usuario.class, "camilillo15");
+            Video vid = manager.find(Video.class, 18);
+            manager.getTransaction().commit();
+            
+            vid.agregarComentario(
+                    new DtComentario(0, "", new Date(90, 5, 5), "texto", 0), 
+                    usu
+            );
+            new VideoJpaController().edit(vid);
+            
+            */
+            
+            
+            //Comentario c = new Comentario(0, new Date(90, 5, 5), "texto", 0, usu);
+            //new ComentarioJpaController().create(c);
+            
         } catch (Exception e) {
+            System.out.println("*************************************************");
             System.out.println(e.getMessage());
-            throw new RuntimeException(
-                    "Ocurrió un error al conectar con la base de datos" + "\n" +
-                    "Es posible que la información no haya sido almacenada");
+            System.out.println("*************************************************");
         }
 
     }

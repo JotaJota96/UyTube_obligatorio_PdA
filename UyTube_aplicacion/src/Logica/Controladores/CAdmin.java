@@ -1,6 +1,7 @@
 package Logica.Controladores;
 
 // Interfaz que se realizara
+import JPAControllerClasses.AdministradorJpaController;
 import JPAControllerClasses.CategoriaJpaController;
 import JPAControllerClasses.ListaPorDefectoJpaController;
 import JPAControllerClasses.UsuarioJpaController;
@@ -16,6 +17,7 @@ import Logica.Clases.ListaPorDefecto;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class CAdmin implements IAdmin{
@@ -40,12 +42,27 @@ public class CAdmin implements IAdmin{
         this.idListaSeleccionada = 0;
         this.idVideoSeleccionado = 0;
         
-        this.altaCategoria("UNDEFINED");
+        // si la categoria no esta en la BDD, la crea
+        if ( ! existeCategoria("UNDEFINED")){
+            this.altaCategoria("UNDEFINED");
+        }
         
-        // Administrador por defecto (temporal)
-        int id = 0;
-        Administrador root = new Administrador(id, "admin", "administrador", "root");
-        this.administradores.put(id, root);
+        sincronizarAdministradoresConBDD();
+        sincronizarCategoriasConBDD();
+        sincronizarListasPorDefectoConBDD();
+        sincronizarUsuariosConBDD();
+        
+        // si en la BDD no hay administrador, lo crea
+        if (this.administradores.isEmpty()) {
+            // Administrador por defecto (temporal)
+            Administrador root = new Administrador(0, "admin", "administrador", "root");
+            try {
+                new AdministradorJpaController().create(root);
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+            this.administradores.put(root.getId(), root);
+        }
     }
     
     public static CAdmin getInstancia(){
@@ -55,6 +72,67 @@ public class CAdmin implements IAdmin{
         return instancia;        
     }
     
+    private void sincronizarUsuariosConBDD(){
+        this.usuarios = new TreeMap(String.CASE_INSENSITIVE_ORDER);
+        try {
+            List<Usuario> usuariosEnBDD = new UsuarioJpaController().findUsuarioEntities();
+            for (Usuario u : usuariosEnBDD){
+                // si en BDD hay algo que no este en memoria
+                if ( ! this.usuarios.containsKey(u.getNickname())){
+                    this.usuarios.put(u.getNickname(), u);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    
+    private void sincronizarAdministradoresConBDD(){
+        this.administradores = new TreeMap();
+        try {
+            List<Administrador> administradoresEnBDD = new AdministradorJpaController().findAdministradorEntities();
+            for (Administrador a : administradoresEnBDD){
+                // si en BDD hay algo que no este en memoria
+                if ( ! this.administradores.containsKey(a.getId())){
+                    this.administradores.put(a.getId(), a);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    
+    private void sincronizarCategoriasConBDD(){
+        this.categorias = new TreeMap();
+        try {
+            List<Categoria> categoriasEnBDD = new CategoriaJpaController().findCategoriaEntities();
+            for (Categoria c : categoriasEnBDD){
+                // si en BDD hay algo que no este en memoria
+                if ( ! this.categorias.containsKey(c.getNombre())){
+                    this.categorias.put(c.getNombre(), c);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    
+    private void sincronizarListasPorDefectoConBDD(){
+        this.listasPorDefecto = new TreeMap();
+        try {
+            List<ListaPorDefecto> listasPorDefectoEnBDD = new ListaPorDefectoJpaController().findListaPorDefectoEntities();
+            for (ListaPorDefecto l : listasPorDefectoEnBDD){
+                // si en BDD hay algo que no este en memoria
+                if ( ! this.listasPorDefecto.containsKey(l.getNombre())){
+                    this.listasPorDefecto.put(l.getNombre(), l);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    
+    // ////////////////////////////////////////////////////////////////////////////////////////
     public void agregarVideoAListaDeReproduccion(int idLista){
         /**
          * Agrega el video idVideoSeleccionado a la lista idListaSeleccionada
@@ -72,11 +150,6 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El ID de la lista de reproduccion no es valido");
         }
         usuarioActual.agregarVideoALista(idLista, idVideoSeleccionado, usuarioSeleccionado);
-        try {
-            new UsuarioJpaController().edit(usuarioActual);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
     
     public void altaCategoria(String categoria){
@@ -115,11 +188,6 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
         usuarioSeleccionado.agregarComentarioAVideo(idVideoSeleccionado, dtCom, usuarioActual);
-        try {
-            new UsuarioJpaController().edit(usuarioSeleccionado);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
     
     public void altaComentario(DtComentario dtCom, int idComPadre){
@@ -139,11 +207,6 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
         usuarioSeleccionado.agregarComentarioAVideo(idVideoSeleccionado, idComPadre, dtCom, usuarioActual);
-        try {
-            new UsuarioJpaController().edit(usuarioSeleccionado);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
     
     public void altaListaDeReproduccionParticular(DtListaDeReproduccion lista) {
@@ -160,11 +223,6 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("La categoria no existe");
         }
         usuarioSeleccionado.agregarListaParticular(lista);
-        try {
-            new UsuarioJpaController().edit(usuarioSeleccionado);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
 
     public void altaListaDeReproduccionPorDefecto(DtListaDeReproduccion lista){
@@ -192,11 +250,6 @@ public class CAdmin implements IAdmin{
         nuevaLista.add(lista.getNombre());
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
             u.getValue().actualizarListasPorDefecto(nuevaLista);
-            try {
-                new UsuarioJpaController().edit(u.getValue());
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
-            }
         }
     }
     
@@ -280,17 +333,13 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("La categoria no existe");
         }
         usuarioSeleccionado.agregarVideoACanal(video);
-        try {
-            new UsuarioJpaController().edit(usuarioSeleccionado);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
     
     public boolean existeCategoria(String cat){
         /**
          * Verifica si existe una categoria con el nombre recibido
          */
+        sincronizarCategoriasConBDD();
         return categorias.containsKey(cat);
     }
     
@@ -298,6 +347,7 @@ public class CAdmin implements IAdmin{
         /**
          * Verifica si existe un usuario con el mail recibido
          */
+        sincronizarUsuariosConBDD();
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
             if (u.getValue().getCorreo().equals(email)){
                 return true;
@@ -310,10 +360,12 @@ public class CAdmin implements IAdmin{
         /**
          * Verifica si existe un usuario con el nickname recibido
          */
+        sincronizarUsuariosConBDD();
         return usuarios.containsKey(nickname);
     }
     
     public boolean iniciarSesionAdministrador(int id, String pass){
+        sincronizarAdministradoresConBDD();
         Administrador a = administradores.get(id);
         if (a == null){
             return false;
@@ -322,6 +374,7 @@ public class CAdmin implements IAdmin{
     }
     
     public boolean iniciarSesionUsuario(String nickname, String pass){
+        sincronizarUsuariosConBDD();
         Usuario u = usuarios.get(nickname);
         if (u == null){
             return false;
@@ -353,6 +406,7 @@ public class CAdmin implements IAdmin{
         /**
          * Devuelve todas las categorias existentes en el sistema
          */
+        sincronizarCategoriasConBDD();
         ArrayList<String> ret = new ArrayList();
         for (Map.Entry<String, Categoria> c : categorias.entrySet()){
             ret.add(c.getValue().getNombre());
@@ -377,10 +431,11 @@ public class CAdmin implements IAdmin{
         /**
          * Devuelve todos las listas de reproduccion del sistema que pertenezcan a la categoria indicada
          */
-        
         if (cat.equals("")){
             throw new RuntimeException("La categoria no puede ser vacia");
         }
+        sincronizarUsuariosConBDD();
+        sincronizarCategoriasConBDD();
         ArrayList<DtListaDeReproduccion> ret = new ArrayList();
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
             ret.addAll(u.getValue().obtenerListasEnCategoria(cat));
@@ -478,6 +533,7 @@ public class CAdmin implements IAdmin{
         /**
          * Devuelve todos los datos de todos los usuarios
          */
+        sincronizarUsuariosConBDD();
         ArrayList<DtUsuario> ret = new ArrayList<>();
         for (Map.Entry<String, Usuario> usuario : usuarios.entrySet()) {
               ret.add(usuario.getValue().getDT());
@@ -492,6 +548,8 @@ public class CAdmin implements IAdmin{
         if (cat.equals("")){
             throw new RuntimeException("La categoria no puede ser vacia");
         }
+        sincronizarUsuariosConBDD();
+        sincronizarCategoriasConBDD();
         ArrayList<DtVideo> ret = new ArrayList();
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
             ret.addAll(u.getValue().obtenerVideosEnCategoria(cat));
@@ -613,6 +671,7 @@ public class CAdmin implements IAdmin{
     }
     
     public DtUsuario obtenerPropietarioDeVideo(int idVideo){
+        sincronizarUsuariosConBDD();
         // Esto es un parche, pero de los que nunca se despegan...
         // A tiempos desesperados, medidas desesperadas
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
@@ -693,6 +752,7 @@ public class CAdmin implements IAdmin{
 	*  El sistema recuerda un link al usuario como usuarioSeleccionado
 	*  Devuelve los datos de usuarioSeleccionado
         */
+        sincronizarUsuariosConBDD();
         usuarioSeleccionado = usuarios.get(nickname);
         if (usuarioSeleccionado == null){
             throw new RuntimeException("No se encontro ningun usuario con ese nickname");
@@ -705,6 +765,7 @@ public class CAdmin implements IAdmin{
         El sistema recuerda un link al usuario como usuarioActual
 	Devuelve los datos de usuarioActual
         * */
+        sincronizarUsuariosConBDD();
         usuarioActual = usuarios.get(nickname);
         if (usuarioActual == null){
             throw new RuntimeException("No se encontro ningun usuario con ese nickname");
@@ -765,6 +826,7 @@ public class CAdmin implements IAdmin{
         if (this.usuarioSeleccionado == null){
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
+        sincronizarListasPorDefectoConBDD();
         if (listasPorDefecto.containsKey(nombre)) {
             return false;
         }
@@ -776,7 +838,8 @@ public class CAdmin implements IAdmin{
          * Devuelve false si existe algun usuario en el sistema que posea una
          * lista de reproduccion con ese nombre
          */
-        
+        sincronizarListasPorDefectoConBDD();
+        sincronizarUsuariosConBDD();
         if (listasPorDefecto.containsKey(nombre)) {
             return false;
         }

@@ -137,6 +137,11 @@ public class Canal implements Serializable {
     public void agregarComentarioAVideo(int id, DtComentario comentario, Usuario usuario) {
         if (this.misVideos.containsKey(id)) {
             this.misVideos.get(id).agregarComentario(comentario, usuario);
+            try {
+                new VideoJpaController().edit(this.misVideos.get(id));
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
         } else {
             throw new RuntimeException("El video no pertenece al canal");
         }
@@ -251,6 +256,11 @@ public class Canal implements Serializable {
     public void agregarVideoALista(int id, Video video) {
         if (this.misListas.containsKey(id)) {
             this.misListas.get(id).agregarVideoA(video);
+            try {
+                new ListaDeReproduccionJpaController().edit(this.misListas.get(id));
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
         } else {
             throw new RuntimeException("La lista no pertenece al canal");
         }
