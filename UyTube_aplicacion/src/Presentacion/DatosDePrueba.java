@@ -20,6 +20,7 @@ public class DatosDePrueba {
     
     public static void main(String[] args) {
         cargarDatos();
+        System.exit(0);
     }
     
     // Esta funcion no la toquen
@@ -43,9 +44,6 @@ public class DatosDePrueba {
             System.out.println("//////////////////////////");
         }
         
-        System.exit(0);
-        
-        /*
         cargarCategorias();
         sys.altaListaDeReproduccionPorDefecto(new DtListaDeReproduccion(0, "Ver mas tarde", Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED"));
         cargarUsuariosYCanales();
@@ -59,7 +57,7 @@ public class DatosDePrueba {
         sys.liberarMemoriaVideo();
         sys.liberarMemoriaUsuarioActual();
         sys.liberarMemoriaUsuario();
-        */
+        
     }
     
     private static void cargarCategorias(){

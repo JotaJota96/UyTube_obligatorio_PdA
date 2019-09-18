@@ -28,7 +28,7 @@ public class Valoracion implements Serializable {
     @JoinColumn(name = "valoracion")
     private TipoValoracion val;
     
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "nick_usuario")
     private Usuario usr;
     

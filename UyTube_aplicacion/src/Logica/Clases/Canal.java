@@ -1,5 +1,7 @@
 package Logica.Clases;
 
+import JPAControllerClasses.ListaDeReproduccionJpaController;
+import JPAControllerClasses.VideoJpaController;
 import Logica.Enumerados.Privacidad;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtListaDeReproduccion;
@@ -60,7 +62,7 @@ public class Canal implements Serializable {
     public Canal() {
     }
 
-    public Canal(int id, String nombre, String descripcion, Privacidad privacidad, ArrayList<String> listas) {
+    public Canal(int id, String nombre, String descripcion, Privacidad privacidad) {
         if (nombre.equals("")){
             throw new RuntimeException("El nombre del canal no puede ser vacio");
         }
@@ -71,7 +73,6 @@ public class Canal implements Serializable {
         this.privacidad = privacidad;
         this.misListas = new TreeMap();
         this.misVideos = new TreeMap();
-        this.actualizarListasPorDefecto(listas);
         this.eliminado = false;
     }
 
@@ -126,6 +127,9 @@ public class Canal implements Serializable {
         // agrega las que pasaron el filtro anterior
         for (String lista : listas) {
             ListaDeReproduccion nuevaLista = new ListaDeReproduccion(0, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED");
+         // crea la tupla en la base de datos
+         // asi se genera el ID y se puede agregar al Map
+            new ListaDeReproduccionJpaController().create(nuevaLista);
             this.misListas.put(nuevaLista.getId(), nuevaLista);
         }
     }
@@ -173,6 +177,9 @@ public class Canal implements Serializable {
                 listaReproduccion.getPrivacidad(), 
                 listaReproduccion.getTipo(), 
                 listaReproduccion.getCategoria());
+         // crea la tupla en la base de datos
+         // asi se genera el ID y se puede agregar al Map
+        new ListaDeReproduccionJpaController().create(ldr);
         this.misListas.put(ldr.getId(), ldr);
     }
 
@@ -235,7 +242,9 @@ public class Canal implements Serializable {
          if (this.privacidad == Privacidad.PRIVADO){
              vd.setPrivacidad(Privacidad.PRIVADO);
          }
-        
+         // crea la tupla en la base de datos
+         // asi se genera el ID y se puede agregar al Map
+        new VideoJpaController().create(vd);
         this.misVideos.put(vd.getId(), vd);
     }
 

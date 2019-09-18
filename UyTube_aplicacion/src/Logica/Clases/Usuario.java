@@ -1,4 +1,5 @@
 package Logica.Clases;
+import JPAControllerClasses.CanalJpaController;
 import java.sql.Date;
 import Logica.DataType.*;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class Usuario extends Persona{
         super();
     }
 
-    public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido, DtCanal DTC, ArrayList<String> listas) {
+    public Usuario(String nickname, String correo, Date fechaNacimiento, String imagen, String contrasenia, String nombre, String apellido, DtCanal DTC) {
         super(nombre,apellido,contrasenia);
         
         if(fechaNacimiento == null){
@@ -91,7 +92,7 @@ public class Usuario extends Persona{
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
         this.seguidores = 0;
-        this.MiCanal = new Canal(0,DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad(), listas);
+        this.MiCanal = new Canal(0,DTC.getNombre(),DTC.getDescripcion(),DTC.getPrivacidad());
         this.misSeguidores = new TreeMap();
         this.seguidos = new TreeMap();
         this.eliminado = false;
@@ -124,6 +125,11 @@ public class Usuario extends Persona{
     
     public void actualizarListasPorDefecto(ArrayList<String> listas){
         this.MiCanal.actualizarListasPorDefecto(listas);
+        try {
+            new CanalJpaController().edit(this.MiCanal);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void agregarComentarioAVideo(int idVideo, DtComentario DtComentario, Usuario Usu){

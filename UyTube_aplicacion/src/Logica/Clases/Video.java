@@ -1,4 +1,5 @@
 package Logica.Clases;
+import JPAControllerClasses.ComentarioJpaController;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
@@ -123,6 +124,9 @@ public class Video implements Serializable {
         }
         
         Comentario nuevoComentario = new Comentario(0, dtComentario.getFecha(), dtComentario.getTexto(), 0, usuario);
+         // crea la tupla en la base de datos
+         // asi se genera el ID y se puede agregar al Map
+        new ComentarioJpaController().create(nuevoComentario);
         comentarios.put(nuevoComentario.getId(), nuevoComentario);
     }
     

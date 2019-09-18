@@ -36,7 +36,7 @@ public class Comentario implements Serializable {
     @Column(name = "nivel")
     private int nivelSubComentario;
     
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "nick_usuario")
     private Usuario usr;
     

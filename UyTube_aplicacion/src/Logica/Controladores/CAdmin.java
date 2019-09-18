@@ -1,6 +1,9 @@
 package Logica.Controladores;
 
 // Interfaz que se realizara
+import JPAControllerClasses.CategoriaJpaController;
+import JPAControllerClasses.ListaPorDefectoJpaController;
+import JPAControllerClasses.UsuarioJpaController;
 import Logica.Interfaces.IAdmin;
 // DataTypes
 import Logica.DataType.*;
@@ -8,13 +11,11 @@ import Logica.DataType.*;
 import Logica.Clases.Administrador;
 import Logica.Clases.Usuario;
 import Logica.Clases.Categoria;
-import Logica.Clases.ListaDeReproduccion;
 import Logica.Clases.ListaPorDefecto;
 // Colecciones
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class CAdmin implements IAdmin{
@@ -71,6 +72,11 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El ID de la lista de reproduccion no es valido");
         }
         usuarioActual.agregarVideoALista(idLista, idVideoSeleccionado, usuarioSeleccionado);
+        try {
+            new UsuarioJpaController().edit(usuarioActual);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void altaCategoria(String categoria){
@@ -83,7 +89,13 @@ public class CAdmin implements IAdmin{
         if (existeCategoria(categoria)){
             throw new RuntimeException("El sistema ya posee una categoria con ese nombre");
         }
-        categorias.put(categoria, new Categoria(categoria));
+        Categoria cat = new Categoria(categoria);
+        categorias.put(cat.getNombre(), cat);
+        try {
+            new CategoriaJpaController().create(cat);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void altaComentario(DtComentario dtCom){
@@ -103,7 +115,11 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
         usuarioSeleccionado.agregarComentarioAVideo(idVideoSeleccionado, dtCom, usuarioActual);
-        
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void altaComentario(DtComentario dtCom, int idComPadre){
@@ -123,25 +139,34 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
         usuarioSeleccionado.agregarComentarioAVideo(idVideoSeleccionado, idComPadre, dtCom, usuarioActual);
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
-    public void altaListaDeReproduccionParticular(DtListaDeReproduccion lista){
+    public void altaListaDeReproduccionParticular(DtListaDeReproduccion lista) {
         /**
          * Crea la lista de reproduccion para usuarioSeleccionado
          */
-        if (usuarioSeleccionado == null){
+        if (usuarioSeleccionado == null) {
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
-        if (lista == null){
+        if (lista == null) {
             throw new RuntimeException("El DataType recibido es null");
         }
-        if ( ! existeCategoria(lista.getCategoria())){
+        if (!existeCategoria(lista.getCategoria())) {
             throw new RuntimeException("La categoria no existe");
         }
         usuarioSeleccionado.agregarListaParticular(lista);
-      
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
-    
+
     public void altaListaDeReproduccionPorDefecto(DtListaDeReproduccion lista){
         /**
          * Crea la lista de reproduccion para todos los usuarios del sistema y 
@@ -156,11 +181,22 @@ public class CAdmin implements IAdmin{
         if (listasPorDefecto.containsKey(lista.getNombre())){
             throw new RuntimeException("El sistema ya posee una lista de reproduccion por defecto con ese nombre");
         }
-        listasPorDefecto.put(lista.getNombre(), new ListaPorDefecto(lista.getNombre()));
+        ListaPorDefecto lpd = new ListaPorDefecto(lista.getNombre());
+        try {
+            new ListaPorDefectoJpaController().create(lpd);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        listasPorDefecto.put(lista.getNombre(), lpd);
         ArrayList<String> nuevaLista = new ArrayList();
         nuevaLista.add(lista.getNombre());
         for (Map.Entry<String, Usuario> u : usuarios.entrySet()){
             u.getValue().actualizarListasPorDefecto(nuevaLista);
+            try {
+                new UsuarioJpaController().edit(u.getValue());
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
         }
     }
     
@@ -194,9 +230,14 @@ public class CAdmin implements IAdmin{
                 usr.getContrasenia(), 
                 usr.getNombre(), 
                 usr.getApellido(), 
-                canal,
-                listasDefault
+                canal
         );
+        try {
+            new UsuarioJpaController().create(nuevoUsuario);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        nuevoUsuario.actualizarListasPorDefecto(listasDefault);
         usuarios.put(nuevoUsuario.getNickname(), nuevoUsuario);
     }
     
@@ -218,6 +259,11 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
         usuarioSeleccionado.agregarModificarValoracionDeVideo(idVideoSeleccionado, val, usuarioActual);
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void altaVideo(DtVideo video){
@@ -234,6 +280,11 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("La categoria no existe");
         }
         usuarioSeleccionado.agregarVideoACanal(video);
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public boolean existeCategoria(String cat){
@@ -261,6 +312,7 @@ public class CAdmin implements IAdmin{
          */
         return usuarios.containsKey(nickname);
     }
+    
     public boolean iniciarSesionAdministrador(int id, String pass){
         Administrador a = administradores.get(id);
         if (a == null){
@@ -495,6 +547,11 @@ public class CAdmin implements IAdmin{
                 lista.getTipo(), 
                 lista.getCategoria());
         usuarioSeleccionado.modificarListaDeReproduccionDeCanal(dtl);
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void modificarUsuarioYCanal(DtUsuario usr,DtCanal canal){
@@ -511,6 +568,11 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El DataType canal no puede ser null");
         }
         usuarioSeleccionado.modificar(usr, canal);
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void modificarVideo(DtVideo video){
@@ -543,6 +605,11 @@ public class CAdmin implements IAdmin{
                 0, 0);
         
         usuarioSeleccionado.modificarVideoDeCanal(dtv);
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public DtUsuario obtenerPropietarioDeVideo(int idVideo){
@@ -614,6 +681,11 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El ID de video no es valido");
         }
         usuarioSeleccionado.quitarVideoDeListaDeReproduccion(idListaSeleccionada, idVideo);
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public DtUsuario seleccionarUsuario(String nickname){
@@ -678,6 +750,12 @@ public class CAdmin implements IAdmin{
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
         usuarioActual.agregarOQuitarSeguido(usuarioSeleccionado);
+        try {
+            new UsuarioJpaController().edit(usuarioSeleccionado);
+            new UsuarioJpaController().edit(usuarioActual);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public boolean validarNuevaListaParticular(String nombre){
