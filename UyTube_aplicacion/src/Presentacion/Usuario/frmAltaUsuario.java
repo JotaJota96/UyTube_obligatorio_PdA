@@ -1,6 +1,5 @@
 package Presentacion.Usuario;
 
-import Logica.Clases.Canal;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtUsuario;
 import Logica.Enumerados.Privacidad;
@@ -45,7 +44,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     String nombreCanal = new String();
     String descripcion = new String();
     Privacidad privacidad = Privacidad.PRIVADO;
-    String ruta;
+    String ruta = "";
     
     java.sql.Date fecha = null;
     

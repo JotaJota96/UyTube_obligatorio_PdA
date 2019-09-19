@@ -202,7 +202,7 @@ public class frmModificarVideo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickname) {
+    public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickname) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -311,7 +311,7 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
                             if (txtURL.getText().isEmpty()) {
                                 JOptionPane.showMessageDialog(null, "La URL del video no puede ser vacía", "Error", JOptionPane.WARNING_MESSAGE);
                             } else {
-                                if (! validarFormatoURL(txtURL.getText())){
+                                if (!validarFormatoURL(txtURL.getText())) {
                                     JOptionPane.showMessageDialog(null, "La URL del video no es válida", "Error", JOptionPane.WARNING_MESSAGE);
                                 } else {
                                     if (dcFechaPublicacion.getDate() == null) {
@@ -334,6 +334,7 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
                                             priv = Privacidad.PUBLICO;
                                         } else {
                                             JOptionPane.showMessageDialog(null, "Seleccione privacidad del video", "Error", JOptionPane.WARNING_MESSAGE);
+                                            return;
                                         }
                                         java.sql.Date fecha = null;
                                         if (dcFechaPublicacion.getDate() != null) {
@@ -343,6 +344,7 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
                                         DtVideo video = new DtVideo(WIDTH, txtNombre.getText(), txtDescripcion.getText(), new Time(hora, minuto, segundo), fecha, txtURL.getText(), priv, lstCategorias.getSelectedValue(), ALLBITS, PROPERTIES);
                                         if (sys.obtenerCanalDeUsuario().getPrivacidad() == Privacidad.PRIVADO && rbPublico.isSelected()) {
                                             JOptionPane.showMessageDialog(null, "No es posible hacer público un video si su canal es privado", "Error", JOptionPane.WARNING_MESSAGE);
+                                            return;
                                         }
                                         sys.modificarVideo(video);
 
@@ -425,15 +427,15 @@ public frmModificarVideo(javax.swing.JDialog parent, boolean modal, String nickn
         }
     }//GEN-LAST:event_lstVideoUsuarioValueChanged
 
-    private boolean validarFormatoURL(String _url){
-       Pattern patronURL = Pattern.compile("^((((https?|ftps?|gopher|telnet|nntp)://)|(mailto:|news:))(%[0-9A-Fa-f]{2}|[-()_.!~*’;/?:@&=+$, A-Za-z0-9])+)([).!’;/?:, ][[:blank:]])?$");
-        Matcher mather = patronURL.matcher(_url); 
+    private boolean validarFormatoURL(String _url) {
+        Pattern patronURL = Pattern.compile("^((((https?|ftps?|gopher|telnet|nntp)://)|(mailto:|news:))(%[0-9A-Fa-f]{2}|[-()_.!~*’;/?:@&=+$, A-Za-z0-9])+)([).!’;/?:, ][[:blank:]])?$");
+        Matcher mather = patronURL.matcher(_url);
         if (mather.find() == true) {
             return true;
-        } 
-        return false;        
+        }
+        return false;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;

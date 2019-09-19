@@ -58,6 +58,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
         rbNoMeGusta = new javax.swing.JRadioButton();
         btnValorar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        rbQuitar = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Valorar video");
@@ -115,7 +116,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
                 rbMeGustaActionPerformed(evt);
             }
         });
-        jPanel16.add(rbMeGusta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, -1, -1));
+        jPanel16.add(rbMeGusta, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, -1, -1));
 
         buttonGroup1.add(rbNoMeGusta);
         rbNoMeGusta.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -125,7 +126,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
                 rbNoMeGustaActionPerformed(evt);
             }
         });
-        jPanel16.add(rbNoMeGusta, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 390, -1, -1));
+        jPanel16.add(rbNoMeGusta, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, -1, -1));
 
         btnValorar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnValorar.setText("Valorar");
@@ -145,6 +146,17 @@ public class frmValorarVideo extends javax.swing.JDialog {
             }
         });
         jPanel16.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 200, 50));
+
+        buttonGroup1.add(rbQuitar);
+        rbQuitar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        rbQuitar.setText("Quitar");
+        rbQuitar.setEnabled(false);
+        rbQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbQuitarActionPerformed(evt);
+            }
+        });
+        jPanel16.add(rbQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 390, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,7 +277,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Debe seleccionar el usuario que realizará la valoración", "¡Atención!", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if ( ! (rbMeGusta.isSelected() || rbNoMeGusta.isSelected())) {
+        if ( ! (rbMeGusta.isSelected() || rbNoMeGusta.isSelected() || rbQuitar.isSelected())) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar la opcion de valoración", "¡Atención!", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -291,7 +303,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
             } else if (rbNoMeGusta.isSelected()) {
                 sys.altaValoracion(new DtValoracion(TipoValoracion.DISLIKE, "hola"));
             } else {
-                throw new RuntimeException("No se ha seleccionado la valoracion");
+                sys.altaValoracion(null);
             }
 
             sys.liberarMemoriaVideo();
@@ -311,6 +323,10 @@ public class frmValorarVideo extends javax.swing.JDialog {
     private void rbNoMeGustaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNoMeGustaActionPerformed
         btnValorar.setEnabled(true);
     }//GEN-LAST:event_rbNoMeGustaActionPerformed
+
+    private void rbQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbQuitarActionPerformed
+        btnValorar.setEnabled(true);
+    }//GEN-LAST:event_rbQuitarActionPerformed
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     private void mostrarListadoDeUsuarios(ArrayList<DtUsuario> l) {
@@ -341,6 +357,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
                 buttonGroup1.clearSelection();
                 rbMeGusta.setEnabled(false);
                 rbNoMeGusta.setEnabled(false);
+                rbQuitar.setEnabled(false);
                 btnValorar.setEnabled(false);
                 return;
             }
@@ -352,6 +369,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
             if (dtv == null) {
                 buttonGroup1.clearSelection();
                 btnValorar.setEnabled(false);
+                rbQuitar.setEnabled(false);
                 //rbMeGusta.setSelected(false);
                 //rbNoMeGusta.setSelected(false);
             } else {
@@ -362,6 +380,7 @@ public class frmValorarVideo extends javax.swing.JDialog {
                     rbMeGusta.setSelected(false);
                     rbNoMeGusta.setSelected(true);
                 }
+                rbQuitar.setEnabled(true);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -385,5 +404,6 @@ public class frmValorarVideo extends javax.swing.JDialog {
     private javax.swing.JList<String> lstVideoAValorar;
     private javax.swing.JRadioButton rbMeGusta;
     private javax.swing.JRadioButton rbNoMeGusta;
+    private javax.swing.JRadioButton rbQuitar;
     // End of variables declaration//GEN-END:variables
 }

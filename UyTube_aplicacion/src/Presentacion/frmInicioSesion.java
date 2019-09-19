@@ -3,6 +3,7 @@ package Presentacion;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -88,6 +89,9 @@ public class frmInicioSesion extends javax.swing.JDialog {
 
         txtContrasenia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtContrasenia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtContraseniaKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtContraseniaKeyReleased(evt);
             }
@@ -137,22 +141,7 @@ public class frmInicioSesion extends javax.swing.JDialog {
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         //Sesion->iniciarSecion->iniciar
-        try {
-            int nro = Integer.parseInt(txtNroEmpleado.getText());
-            String contrasenia = txtContrasenia.getText();
-            this.resultado = sys.iniciarSesionAdministrador(nro, contrasenia);
-
-            if (resultado) {
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "El número de empleado o la contraseña son incorrectos", "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
-                txtNroEmpleado.setText("");
-                txtContrasenia.setText("");
-                btnIniciar.setEnabled(false);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        btnIniciar();
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void txtNroEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroEmpleadoKeyTyped
@@ -170,6 +159,13 @@ public class frmInicioSesion extends javax.swing.JDialog {
         habilitarBotonIniciar();
     }//GEN-LAST:event_txtContraseniaKeyReleased
 
+    private void txtContraseniaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseniaKeyPressed
+        // AL pulsar un ENTER
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnIniciar();
+        }
+    }//GEN-LAST:event_txtContraseniaKeyPressed
+
     private void habilitarBotonIniciar(){
         // Hacer OR sin short circuit
         if (txtNroEmpleado.getText().isEmpty() || txtContrasenia.getText().isEmpty()) {
@@ -179,6 +175,25 @@ public class frmInicioSesion extends javax.swing.JDialog {
         }
     }
     
+    private void btnIniciar(){
+        
+        try {
+            int nro = Integer.parseInt(txtNroEmpleado.getText());
+            String contrasenia = txtContrasenia.getText();
+            this.resultado = sys.iniciarSesionAdministrador(nro, contrasenia);
+
+            if (resultado) {
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "El número de empleado o la contraseña son incorrectos", "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
+                txtNroEmpleado.setText("");
+                txtContrasenia.setText("");
+                btnIniciar.setEnabled(false);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
     public boolean seInicioLaSesion(){
         return resultado;

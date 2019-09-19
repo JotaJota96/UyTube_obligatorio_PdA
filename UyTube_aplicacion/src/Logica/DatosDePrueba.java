@@ -1,12 +1,9 @@
 package Logica;
 
-import Logica.Clases.Usuario;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import Logica.DataType.*;
 import Logica.Enumerados.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ public class DatosDePrueba {
     private static IAdmin sys = null;
     
     public static void main(String[] args) {
-        probar();
+        
         System.exit(0);
     }
     
@@ -32,20 +29,10 @@ public class DatosDePrueba {
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("UyTubePU");
             EntityManager manager = factory.createEntityManager();
             
-            sys.seleccionarUsuario("JotaJota96");
-            sys.seleccionarUsuarioActual("JotaJota96");
-            sys.seleccionarVideo(1);
-            sys.altaValoracion(new DtValoracion(TipoValoracion.DISLIKE, "++"));
-
-            // para hacer pausa
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println(">> Esperando...");
-            String entrada = br.readLine();
+            /**
+             *  Escriba aqui el codigo de la prueba que quiera realizar...
+             */
             
-            sys.seleccionarUsuario("JotaJota96");
-            sys.seleccionarUsuarioActual("JotaJota96");
-            sys.seleccionarVideo(1);
-            sys.altaValoracion(null);
             
         } catch (Exception e) {
             System.out.println("//////////////////////////");
@@ -387,7 +374,9 @@ public class DatosDePrueba {
                     // 12
                     sys.seleccionarUsuarioActual("jarrieta31");
                     sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Boo, que paso con Linux? hee??", 0), 11);
-
+                // 13
+                sys.seleccionarUsuarioActual("camilillo15");
+                    sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Yo que vos me compro una MAC...", 0), 10);
     }
     
     

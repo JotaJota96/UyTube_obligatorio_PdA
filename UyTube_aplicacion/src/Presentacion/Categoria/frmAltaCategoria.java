@@ -202,19 +202,19 @@ public class frmAltaCategoria extends javax.swing.JDialog {
     
     private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
         // Al presionar ENTER
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             //Si la categoria supera la validacion la ingresa
-        if (validarCategoria()) {
-            try {
-                sys.altaCategoria(nuevaCategoria);
-                txtNombre.setText("");
-                cambiarColoresOK();
-                nuevaCategoria = "";
-            } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            if (validarCategoria()) {
+                try {
+                    sys.altaCategoria(nuevaCategoria);
+                    txtNombre.setText("");
+                    cambiarColoresOK();
+                    nuevaCategoria = "";
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
-        }    
     }//GEN-LAST:event_txtNombreKeyPressed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
