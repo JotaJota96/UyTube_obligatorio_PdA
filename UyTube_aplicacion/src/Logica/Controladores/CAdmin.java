@@ -308,13 +308,14 @@ public class CAdmin implements IAdmin{
         if (usuarioActual == null){
             throw new RuntimeException("El sistema no tiene un usuario actual seleccionado");
         }
-        if (val == null){
-            throw new RuntimeException("El DataType Valoracion no puede ser null");
-        }
         if (idVideoSeleccionado == 0){
             throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
-        usuarioSeleccionado.agregarModificarValoracionDeVideo(idVideoSeleccionado, val, usuarioActual);
+        if (val == null){
+            usuarioSeleccionado.quitarValoracion(idVideoSeleccionado, usuarioActual.getNickname());
+        }else{
+            usuarioSeleccionado.agregarModificarValoracionDeVideo(idVideoSeleccionado, val, usuarioActual);
+        }
     }
     
     public void altaVideo(DtVideo video){

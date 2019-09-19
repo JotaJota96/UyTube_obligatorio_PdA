@@ -293,7 +293,12 @@ public class Video implements Serializable {
                 }
                 
                 // remueve de la coleccion
-                valoraciones.remove(i);
+                Valoracion borrada = valoraciones.remove(i);
+                try {
+                    new ValoracionJpaController().destroy(borrada.getId());
+                } catch (Exception e) {
+                    throw new RuntimeException(e.getMessage());
+                }
                 break;
             }
 
