@@ -1,20 +1,15 @@
 package Presentacion.Video;
 
-import Logica.DataType.DtCanal;
-import Logica.DataType.DtCategoria;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
-import Presentacion.DatosDePrueba;
-import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 

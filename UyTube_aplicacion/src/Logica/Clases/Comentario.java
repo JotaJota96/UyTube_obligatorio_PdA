@@ -112,9 +112,10 @@ public class Comentario implements Serializable {
             this.misComentario.add(com);
             return true;
         } else {
-
+            boolean comentarioComentado;
             for (int i = 0; i < misComentario.size(); i++) {
-                if (this.misComentario.get(i).agregarSubComentario(idComPadre, dtC, usr)) {
+                comentarioComentado = this.misComentario.get(i).agregarSubComentario(idComPadre, dtC, usr);
+                if (comentarioComentado) {
                     return true;
                 }
             }

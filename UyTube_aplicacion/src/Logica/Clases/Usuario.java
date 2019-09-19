@@ -299,6 +299,11 @@ public class Usuario extends Persona{
         this.imagen = DtUsu.getImagen();
         
         this.MiCanal.modificar(DtCanal);
+        try {
+            new CanalJpaController().edit(this.MiCanal);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
     
     public void modificarListaDeReproduccionDeCanal(DtListaDeReproduccion DtListaDeReproduccion){

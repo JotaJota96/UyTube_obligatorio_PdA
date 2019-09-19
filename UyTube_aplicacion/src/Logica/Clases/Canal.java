@@ -200,6 +200,11 @@ public class Canal implements Serializable {
     public void agregarModificarValoracion(int id, DtValoracion valoracion, Usuario usuario) {
         if (this.misVideos.containsKey(id)) {
             this.misVideos.get(id).agregarModificarValoracion(valoracion, usuario);
+            try {
+                new VideoJpaController().edit(this.misVideos.get(id));
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
         } else {
             throw new RuntimeException("El video no pertenece al canal");
         }
@@ -361,6 +366,11 @@ public class Canal implements Serializable {
             }
             
             this.misListas.get(ldr.getId()).modificar(ldr);
+            try {
+                new ListaDeReproduccionJpaController().edit(this.misListas.get(ldr.getId()));
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
         } else {
             throw new RuntimeException("La lista de reproduccion no pertenece al canal");
         }
@@ -386,6 +396,11 @@ public class Canal implements Serializable {
             }
             
             this.misVideos.get(video.getId()).modificar(video);
+            try {
+                new VideoJpaController().edit(this.misVideos.get(video.getId()));
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
         } else {
             throw new RuntimeException("El video no pertenece al canal");
         }
@@ -459,6 +474,11 @@ public class Canal implements Serializable {
     public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo) {
         if (this.misListas.containsKey(idLista)) {
             this.misListas.get(idLista).quitarVideo(idVideo);
+            try {
+                new ListaDeReproduccionJpaController().edit(this.misListas.get(idLista));
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
         } else {
             throw new RuntimeException("La lista de reproduccion no pertenece al canal");
         }

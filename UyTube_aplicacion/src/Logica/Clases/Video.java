@@ -1,5 +1,6 @@
 package Logica.Clases;
 import JPAControllerClasses.ComentarioJpaController;
+import JPAControllerClasses.ValoracionJpaController;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
@@ -127,12 +128,6 @@ public class Video implements Serializable {
          // crea la tupla en la base de datos
          // asi se genera el ID y se puede agregar al Map
         new ComentarioJpaController().create(nuevoComentario);
-        /*nuevoComentario.setUsr(usuario);
-        try {
-            new ComentarioJpaController().edit(nuevoComentario);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }*/
         comentarios.put(nuevoComentario.getId(), nuevoComentario);
     }
     
@@ -144,16 +139,15 @@ public class Video implements Serializable {
         if (usuario == null){
             throw new RuntimeException("El usuario es null");
         }
-        
+        boolean comentarioComentado;
         for (Map.Entry<Integer, Comentario> coment : comentarios.entrySet()) {
-            if (coment.getValue().agregarSubComentario(idCom, dtComentario, usuario)) {
-                
+            comentarioComentado = coment.getValue().agregarSubComentario(idCom, dtComentario, usuario);
+            if (comentarioComentado) {
                 try {
                     new ComentarioJpaController().edit(coment.getValue());
                 } catch (Exception e) {
                     throw new RuntimeException(e.getMessage());
                 }
-                
                 break;
             }
         }
@@ -189,11 +183,17 @@ public class Video implements Serializable {
             // usuario que quiere modificar su valoracion
             for (Valoracion val : valoraciones) {
                 if (val.modificar(dtValoracion, nickname)) {
+                    try {
+                        new ValoracionJpaController().edit(val);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
                     break;
                 }
             }
         } else {
             Valoracion nuevaValoracion = new Valoracion(dtValoracion.getVal(), usuario);
+            new ValoracionJpaController().create(nuevaValoracion);
             valoraciones.add(nuevaValoracion);
         }
 
@@ -203,7 +203,6 @@ public class Video implements Serializable {
         } else {
             cantDisLikes++;
         }
-
     }
 
     public DtVideo getDt(){
@@ -260,7 +259,7 @@ public class Video implements Serializable {
         this.fechaPublicacion = dtVideo.getFechaPublicacion();
         this.privacidad = dtVideo.getPrivacidad();
         this.categoria = dtVideo.getCategoria();
-        
+        this.urlVideoOriginal = dtVideo.getUrlVideoOriginal();
     }
     
     /*   Obtiene la valoracion que hizo un usuario */

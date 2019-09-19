@@ -1,4 +1,4 @@
-package Presentacion;
+package Logica;
 
 import Logica.Clases.Usuario;
 import Logica.Fabrica;

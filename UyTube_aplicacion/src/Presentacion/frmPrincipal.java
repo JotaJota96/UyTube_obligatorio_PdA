@@ -1,7 +1,5 @@
 package Presentacion;
 
-import Logica.Fabrica;
-import Logica.Interfaces.IAdmin;
 import Presentacion.Categoria.*;
 import Presentacion.ListaDeReproduccion.*;
 import Presentacion.Usuario.*;
@@ -33,9 +31,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         activarBarraDeMenu(false); // listo...
         sesionIniciada = false;
         mitCerrarSesion.setEnabled(false);
-        
-        // Carga los datos de prueba
-        DatosDePrueba.cargarDatos();
     }
 
     public Image getTconImage() {
