@@ -1,5 +1,6 @@
 package Logica;
 
+import JPAControllerClasses.UsuarioJpaController;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import Logica.DataType.*;
