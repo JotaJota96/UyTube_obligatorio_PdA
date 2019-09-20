@@ -45,7 +45,7 @@ public class Usuario extends Persona{
     private Date fechaEliminado;
     
     
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_canal")
     private Canal MiCanal;
     
@@ -238,8 +238,8 @@ public class Usuario extends Persona{
         return this.MiCanal.listarComentariosDeVideo(idVideo);
     }
     
-    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeCanal(boolean porDefecto){
-        return this.MiCanal.listarListasDeReproduccion(porDefecto);
+    public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeCanal(boolean soloParticulares){
+        return this.MiCanal.listarListasDeReproduccion(soloParticulares);
     }
     
     public ArrayList<DtUsuario> listarUsuariosSeguidos(){

@@ -1,6 +1,9 @@
 package Logica;
 
+import JPAControllerClasses.CanalJpaController;
 import JPAControllerClasses.UsuarioJpaController;
+import Logica.Clases.Usuario;
+import Logica.Controladores.CAdmin;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import Logica.DataType.*;
@@ -19,7 +22,7 @@ public class DatosDePrueba {
     private static IAdmin sys = null;
     
     public static void main(String[] args) {
-        
+        probar();
         System.exit(0);
     }
     
@@ -29,6 +32,11 @@ public class DatosDePrueba {
         try {
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("UyTubePU");
             EntityManager manager = factory.createEntityManager();
+            
+            CAdmin ca = CAdmin.getInstancia();
+            
+            ca.seleccionarUsuarioActual("jj");
+            ca.bajaUsuario();
             
             /**
              *  Escriba aqui el codigo de la prueba que quiera realizar...

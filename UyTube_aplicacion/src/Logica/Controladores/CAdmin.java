@@ -334,6 +334,74 @@ public class CAdmin implements IAdmin{
         usuarioSeleccionado.agregarVideoACanal(video);
     }
     
+    public void bajaUsuario(){
+        /**
+         * Elimina el usuario actual seleccionado
+         */
+        /**
+         * Este algoritmo debe:
+         * Quitar las relaciones con usuarios seguidos y de seguidores
+         * Quitar los videos del usuario a eliminar de las listas de otros usuarios.
+         * Quitar comentarios en los videos del usuario a eliminar
+         * Quitar valoraciones en los videos del usuario a eliminar
+         * Quitar las valoraciones dadas por el usuario de todos los videos del sistema
+         * Quitar los comentarios hechos por el usuario de todos los videos del sistema
+         * 
+         */
+        
+        Usuario elim = usuarioActual;
+
+        // * Quitar las relaciones con usuarios seguidos y de seguidores
+        // El usuario que se va a eliminar deja de seguir a todos los que sigue
+        ArrayList<DtUsuario> seguidos = elim.listarUsuariosSeguidos();
+        for (DtUsuario u : seguidos) {
+            this.seleccionarUsuario(u.getNickname());
+            this.seguirUsuario();
+        }
+        this.liberarMemoriaUsuario();
+        
+        // Todos los usuarios que siguen al que se va a eliminar, lo dejan de seguir
+        ArrayList<DtUsuario> seguidores = elim.listarUsuariosSeguidores();
+        this.seleccionarUsuario(elim.getNickname());
+        for (DtUsuario u : seguidores) {
+            this.seleccionarUsuarioActual(u.getNickname());
+            this.seguirUsuario();
+        }
+        this.liberarMemoriaUsuario();
+        this.liberarMemoriaUsuarioActual();
+         
+        // para cada usuario del sistema, recorro todas sus listas y en cada 
+        // una manda a quitar todoslos videos del usuario a eliminar
+        this.seleccionarUsuario(elim.getNickname());
+        ArrayList<DtVideo> videos = this.listarVideosDeUsuario();
+        for (Map.Entry<String, Usuario> it : usuarios.entrySet()){
+            Usuario u = it.getValue();
+            if (u.getNickname().equals(elim.getNickname())) continue;
+            
+            // * Quitar los videos del usuario a eliminar de las listas de otros usuarios.
+            ArrayList<DtListaDeReproduccion> listas = u.listarListasDeReproduccionDeCanal(false);
+            for (DtListaDeReproduccion l : listas){
+                for (DtVideo v : videos){
+                    u.quitarVideoDeListaDeReproduccion(l.getId(), v.getId());
+                }
+            }
+            
+            // * Quitar las valoraciones dadas por el usuario de todos los videos del sistema
+            for (DtVideo v : u.listarVideosDeCanal()){
+                u.quitarValoracion(v.getId(), elim.getNickname());
+            }
+                
+        }
+        
+        // * Quitar comentarios en los videos del usuario a eliminar
+        // * Quitar valoraciones en los videos del usuario a eliminar
+        // * Quitar los comentarios hechos por el usuario de todos los videos del sistema
+
+        this.liberarMemoriaUsuario();
+        this.liberarMemoriaUsuarioActual();
+    }
+    
+    
     public boolean existeCategoria(String cat){
         /**
          * Verifica si existe una categoria con el nombre recibido
