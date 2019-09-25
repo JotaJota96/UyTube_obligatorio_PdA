@@ -93,6 +93,24 @@ public class Comentario implements Serializable {
         return "Comentario{" + "id=" + id + ", fecha=" + fecha + ", texto=" + texto + ", nivelSubComentario=" + nivelSubComentario + '}';
     }
 
+    public void eliminarTodoRastroDelUsuario(String nickname) {
+        
+        for (int i = 0; i < this.misComentario.size(); i++){
+            if (this.misComentario.get(i).getUsr().getNickname().equals(nickname)){
+                this.misComentario.remove(i);
+                i--;
+            } else {
+                this.misComentario.get(i).eliminarTodoRastroDelUsuario(nickname);
+                try {
+                    new ComentarioJpaController().edit(this.misComentario.get(i));
+                } catch (Exception e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+            }
+        }
+    }
+
+    
     public boolean agregarSubComentario(int idComPadre, DtComentario dtC, Usuario usr) {
         if(dtC==null){
             throw new RuntimeException("DtComentario No puede ser null");

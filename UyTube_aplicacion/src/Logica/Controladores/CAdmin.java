@@ -353,7 +353,7 @@ public class CAdmin implements IAdmin{
 
         // * Quitar las relaciones con usuarios seguidos y de seguidores
         // El usuario que se va a eliminar deja de seguir a todos los que sigue
-        ArrayList<DtUsuario> seguidos = elim.listarUsuariosSeguidos();
+        ArrayList<DtUsuario> seguidos = usuarioActual.listarUsuariosSeguidos();
         for (DtUsuario u : seguidos) {
             this.seleccionarUsuario(u.getNickname());
             this.seguirUsuario();
@@ -361,44 +361,53 @@ public class CAdmin implements IAdmin{
         this.liberarMemoriaUsuario();
         
         // Todos los usuarios que siguen al que se va a eliminar, lo dejan de seguir
-        ArrayList<DtUsuario> seguidores = elim.listarUsuariosSeguidores();
-        this.seleccionarUsuario(elim.getNickname());
+        ArrayList<DtUsuario> seguidores = usuarioActual.listarUsuariosSeguidores();
+        this.seleccionarUsuario(usuarioActual.getNickname());
         for (DtUsuario u : seguidores) {
             this.seleccionarUsuarioActual(u.getNickname());
             this.seguirUsuario();
-        }
+       }
         this.liberarMemoriaUsuario();
-        this.liberarMemoriaUsuarioActual();
-         
+        this.seleccionarUsuarioActual(elim.getNickname());
+
         // para cada usuario del sistema, recorro todas sus listas y en cada 
         // una manda a quitar todoslos videos del usuario a eliminar
         this.seleccionarUsuario(elim.getNickname());
         ArrayList<DtVideo> videos = this.listarVideosDeUsuario();
         for (Map.Entry<String, Usuario> it : usuarios.entrySet()){
-            Usuario u = it.getValue();
-            if (u.getNickname().equals(elim.getNickname())) continue;
+            if (it.getValue().getNickname().equals(elim.getNickname())) continue;
             
             // * Quitar los videos del usuario a eliminar de las listas de otros usuarios.
-            ArrayList<DtListaDeReproduccion> listas = u.listarListasDeReproduccionDeCanal(false);
+            ArrayList<DtListaDeReproduccion> listas = it.getValue().listarListasDeReproduccionDeCanal(false);
             for (DtListaDeReproduccion l : listas){
                 for (DtVideo v : videos){
-                    u.quitarVideoDeListaDeReproduccion(l.getId(), v.getId());
+                    it.getValue().quitarVideoDeListaDeReproduccion(l.getId(), v.getId());
                 }
             }
             
             // * Quitar las valoraciones dadas por el usuario de todos los videos del sistema
-            for (DtVideo v : u.listarVideosDeCanal()){
-                u.quitarValoracion(v.getId(), elim.getNickname());
+            // * Quitar los comentarios hechos por el usuario de todos los videos del sistema
+            it.getValue().eliminarTodoRastroDelUsuario(elim.getNickname());
+            try {
+                new UsuarioJpaController().edit(it.getValue());
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
             }
-                
         }
         
+        // obtiene la fecha actual
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date hoy = new java.sql.Date(utilDate.getTime());
+
         // * Quitar comentarios en los videos del usuario a eliminar
         // * Quitar valoraciones en los videos del usuario a eliminar
-        // * Quitar los comentarios hechos por el usuario de todos los videos del sistema
-
-        this.liberarMemoriaUsuario();
-        this.liberarMemoriaUsuarioActual();
+        usuarioActual.eliminar(hoy);
+        try {
+            new UsuarioJpaController().edit(usuarioActual);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        this.usuarios.remove(elim.getNickname());
     }
     
     

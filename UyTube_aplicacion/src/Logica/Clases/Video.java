@@ -115,6 +115,37 @@ public class Video implements Serializable {
         this.eliminado = false;
     }
     
+    
+    public void eliminar(){
+        this.eliminado = true;
+        this.valoraciones = new ArrayList<Valoracion>();
+        this.comentarios = new TreeMap<Integer, Comentario>();
+    }
+    
+    public void eliminarTodoRastroDelUsuario(String nickname) {
+        // manda a quitar la valoracion del usuario (si no ha valorado no tiene efecto)
+        quitarValoracion(nickname);
+        ArrayList<Integer> idAEliminar = new ArrayList();
+        
+        for (Map.Entry<Integer, Comentario> it : this.comentarios.entrySet()){
+            if (it.getValue().getDT().getNickname().equals(nickname)){
+                idAEliminar.add(it.getKey());
+            } else {
+                it.getValue().eliminarTodoRastroDelUsuario(nickname);
+                try {
+                    new ComentarioJpaController().edit(it.getValue());
+                } catch (Exception e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+            }
+        }
+        for (Integer i : idAEliminar){
+            this.comentarios.remove(i);
+        }
+    }
+    
+    
+    
     /** Agregar un nuevo comentario **/
     public void agregarComentario(DtComentario dtComentario, Usuario usuario){
         if (dtComentario == null){

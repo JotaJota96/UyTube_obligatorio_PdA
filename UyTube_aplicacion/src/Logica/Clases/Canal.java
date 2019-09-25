@@ -116,6 +116,42 @@ public class Canal implements Serializable {
         this.privacidad = privacidad;
     }
 
+    
+    public void eliminar(){
+        this.eliminado = true;
+        // elimina logicamente cada lista de reproduccion del canal
+        for (Map.Entry<Integer, ListaDeReproduccion> it : this.misListas.entrySet()){
+            it.getValue().eliminar();
+            try {
+                new ListaDeReproduccionJpaController().edit(it.getValue());
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        
+        // elimina logicamente cada video del canal
+        // en el proceso se eliminan los comentarios, pero lo hace permanentemente
+        for (Map.Entry<Integer, Video> it : this.misVideos.entrySet()){
+            it.getValue().eliminar();
+            try {
+                new VideoJpaController().edit(it.getValue());
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+    }
+    
+    public void eliminarTodoRastroDelUsuario(String nickname) {
+        // recorre los videos del canal eliminando comentarios y valoraciones hechas por el usuario con ese nickname
+        for (Map.Entry<Integer, Video> it : this.misVideos.entrySet()){
+            it.getValue().eliminarTodoRastroDelUsuario(nickname);
+            try {
+                new VideoJpaController().edit(it.getValue());
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+    }
     //-----------------------------------------------------------------------------
     public void actualizarListasPorDefecto(ArrayList<String> listas) {
         // descarta las listas que ya estan agregadas

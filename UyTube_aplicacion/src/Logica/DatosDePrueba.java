@@ -1,6 +1,5 @@
 package Logica;
 
-import JPAControllerClasses.CanalJpaController;
 import JPAControllerClasses.UsuarioJpaController;
 import Logica.Clases.Usuario;
 import Logica.Controladores.CAdmin;
@@ -30,18 +29,19 @@ public class DatosDePrueba {
         Fabrica f = Fabrica.getInstancia();
         sys = f.getIAdmin();
         try {
+            
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("UyTubePU");
             EntityManager manager = factory.createEntityManager();
             
+            
             CAdmin ca = CAdmin.getInstancia();
             
-            ca.seleccionarUsuarioActual("jj");
+            ca.seleccionarUsuarioActual("MCBolso");
             ca.bajaUsuario();
             
             /**
              *  Escriba aqui el codigo de la prueba que quiera realizar...
              */
-            
             
         } catch (Exception e) {
             System.out.println("//////////////////////////");
@@ -96,6 +96,7 @@ public class DatosDePrueba {
         cargarListasDeReproduccionAUsuarios();
         agregarVideosAListasDeReproduccion();
         agregarComentarios();
+        agregarValoraciones();
         mostrarDatos();
         sys.liberarMemoriaListaDeReproduccion();
         sys.liberarMemoriaVideo();
@@ -342,10 +343,15 @@ public class DatosDePrueba {
         
     }
     
-
     private static void agregarComentarios(){
         sys.seleccionarUsuario("JotaJota96");
-        sys.seleccionarVideo(sys.listarVideosDeUsuario().get(0).getId());
+        int min = sys.listarVideosDeUsuario().get(0).getId();
+        for (DtVideo v : sys.listarVideosDeUsuario()){
+            if (v.getId() < min){
+                min = v.getId();
+            }
+        }
+        sys.seleccionarVideo(min);
         
         // 1
         sys.seleccionarUsuarioActual("LuC31G");
@@ -388,7 +394,53 @@ public class DatosDePrueba {
                     sys.altaComentario(new DtComentario(0, "", new Date(119, 7, 1), "Yo que vos me compro una MAC...", 0), 10);
     }
     
-    
+    private static void agregarValoraciones() {
+        // JotaJota96 LuC31G MCBolso camilillo15 jarrieta31
+        int min;
+        
+        sys.seleccionarUsuario("JotaJota96");
+        min = sys.listarVideosDeUsuario().get(0).getId();
+        for (DtVideo v : sys.listarVideosDeUsuario()){
+            if (v.getId() < min){
+                min = v.getId();
+            }
+        }
+        sys.seleccionarVideo(min);
+        sys.seleccionarUsuarioActual("LuC31G");
+        sys.altaValoracion(new DtValoracion(TipoValoracion.LIKE, ""));
+        sys.seleccionarUsuarioActual("MCBolso");
+        sys.altaValoracion(new DtValoracion(TipoValoracion.LIKE, ""));
+        sys.seleccionarUsuarioActual("camilillo15");
+        sys.altaValoracion(new DtValoracion(TipoValoracion.DISLIKE, ""));
+        sys.seleccionarUsuarioActual("jarrieta31");
+        sys.altaValoracion(new DtValoracion(TipoValoracion.DISLIKE, ""));
+
+        sys.seleccionarUsuario("LuC31G");
+        min = sys.listarVideosDeUsuario().get(0).getId();
+        for (DtVideo v : sys.listarVideosDeUsuario()){
+            if (v.getId() < min){
+                min = v.getId();
+            }
+        }
+        sys.seleccionarVideo(min);
+        sys.seleccionarUsuarioActual("JotaJota96");
+        sys.altaValoracion(new DtValoracion(TipoValoracion.LIKE, ""));
+        sys.seleccionarUsuarioActual("jarrieta31");
+        sys.altaValoracion(new DtValoracion(TipoValoracion.DISLIKE, ""));
+
+        sys.seleccionarUsuario("jarrieta31");
+        min = sys.listarVideosDeUsuario().get(0).getId();
+        for (DtVideo v : sys.listarVideosDeUsuario()){
+            if (v.getId() < min){
+                min = v.getId();
+            }
+        }
+        sys.seleccionarVideo(min);
+        sys.seleccionarUsuarioActual("JotaJota96");
+        sys.altaValoracion(new DtValoracion(TipoValoracion.DISLIKE, ""));
+        sys.seleccionarUsuarioActual("MCBolso");
+        sys.altaValoracion(new DtValoracion(TipoValoracion.DISLIKE, ""));
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Esta tampoco la toquen
     private static void mostrarDatos(){

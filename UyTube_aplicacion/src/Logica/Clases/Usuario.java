@@ -123,6 +123,27 @@ public class Usuario extends Persona{
         return new DtUsuario(this.id, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
     }
     
+    public void eliminar(Date fecha) {
+        this.fechaEliminado = fecha;
+        this.eliminado = true;
+        this.MiCanal.eliminar();
+        try {
+            new CanalJpaController().edit(this.MiCanal);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    
+    public void eliminarTodoRastroDelUsuario(String nickname) {
+        // Esta funcion que estas leyendo NO se encarga de eliminar vinculos de seguimiento
+        this.MiCanal.eliminarTodoRastroDelUsuario(nickname);
+        try {
+            new CanalJpaController().edit(this.MiCanal);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    
     public void actualizarListasPorDefecto(ArrayList<String> listas){
         this.MiCanal.actualizarListasPorDefecto(listas);
         try {

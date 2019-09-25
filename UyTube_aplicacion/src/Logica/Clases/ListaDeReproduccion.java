@@ -111,6 +111,10 @@ public class ListaDeReproduccion implements Serializable {
         return "ListaDeReproduccion{" + "id=" + id + ", nombre=" + nombre + ", privacidad=" + privacidad + ", tipo=" + tipo + ", categoria=" + categoria + ", misVideos.size=" + misVideos.size() + '}';
     }
     
+    public void eliminar(){
+        this.eliminado = true;
+        
+    }
     /////////////////////////////////////////////////////////////////////////////////////////
 
     public void agregarVideoA(Video v){
