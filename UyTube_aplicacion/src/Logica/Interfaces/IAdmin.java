@@ -12,7 +12,8 @@ public interface IAdmin {
     public void altaListaDeReproduccionPorDefecto(DtListaDeReproduccion lista);
     public void altaUsuarioCanal(DtUsuario usr, DtCanal canal);
     public void altaValoracion(DtValoracion val);
-    public void altaVideo(DtVideo video); 
+    public void altaVideo(DtVideo video);
+    public void bajaUsuario();
     public boolean existeCategoria(String cat);
     public boolean existeEmail(String email);
     public boolean existeNickname(String nickname);

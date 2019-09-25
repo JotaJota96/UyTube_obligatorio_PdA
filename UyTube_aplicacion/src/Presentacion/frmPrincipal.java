@@ -66,6 +66,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         mitListarUsuarios = new javax.swing.JMenuItem();
         mitSeguirUsuario = new javax.swing.JMenuItem();
         mitSeguirUsuario1 = new javax.swing.JMenuItem();
+        mitSeguirUsuario2 = new javax.swing.JMenuItem();
         menuVideo = new javax.swing.JMenu();
         mitNuevoVideo = new javax.swing.JMenuItem();
         mitModificarVideo = new javax.swing.JMenuItem();
@@ -199,6 +200,15 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(mitSeguirUsuario1);
+
+        mitSeguirUsuario2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mitSeguirUsuario2.setText("Eliminar usuario");
+        mitSeguirUsuario2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitSeguirUsuario2ActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(mitSeguirUsuario2);
 
         barraDeMenu.add(menuUsuario);
 
@@ -509,6 +519,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void mitSeguirUsuario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitSeguirUsuario2ActionPerformed
+        // usuario -> eliminar usuario
+        new frmBajaUsuario(this, true).setVisible(true);
+    }//GEN-LAST:event_mitSeguirUsuario2ActionPerformed
+
     
     private void activarBarraDeMenu(boolean b){
         menuUsuario.setEnabled(b);
@@ -596,6 +611,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mitQuitarVideoDeListaDeReproduccion;
     private javax.swing.JMenuItem mitSeguirUsuario;
     private javax.swing.JMenuItem mitSeguirUsuario1;
+    private javax.swing.JMenuItem mitSeguirUsuario2;
     private javax.swing.JMenuItem mitValorarVideo;
     private javax.swing.JDesktopPane pnlFondo;
     public static javax.swing.ButtonGroup privacidad_NuevaLR;

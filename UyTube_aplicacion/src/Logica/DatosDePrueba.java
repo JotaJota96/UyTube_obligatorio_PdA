@@ -1,9 +1,6 @@
 package Logica;
 
-import JPAControllerClasses.UsuarioJpaController;
-import Logica.Clases.Usuario;
 import Logica.Controladores.CAdmin;
-import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import Logica.DataType.*;
 import Logica.Enumerados.*;
@@ -34,10 +31,8 @@ public class DatosDePrueba {
             EntityManager manager = factory.createEntityManager();
             
             
-            CAdmin ca = CAdmin.getInstancia();
+            //CAdmin ca = CAdmin.getInstancia();
             
-            ca.seleccionarUsuarioActual("MCBolso");
-            ca.bajaUsuario();
             
             /**
              *  Escriba aqui el codigo de la prueba que quiera realizar...

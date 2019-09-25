@@ -110,9 +110,8 @@ public class UsuarioJpaController implements Serializable {
     private List<Usuario> findUsuarioEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Usuario.class));
-            Query q = em.createQuery(cq);
+            Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.eliminado = ?1");
+            q.setParameter(1, false);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -123,6 +122,18 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    public List<Usuario> findUsuarioEliminadoEntities() {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.eliminado = ?1");
+            q.setParameter(1, true);
+            List<Usuario> usuarios = (List<Usuario>) q.getResultList();
+            return usuarios;
+        } finally {
+            em.close();
+        }
+    }
+    
     public Usuario findUsuario(String id) {
         EntityManager em = getEntityManager();
         try {
