@@ -120,7 +120,7 @@ public class Usuario extends Persona{
     }
 
     public DtUsuario getDT(){
-        return new DtUsuario(this.id, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.imagen, this.seguidores);
+        return new DtUsuario(this.id, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.fechaEliminado, this.imagen, this.seguidores);
     }
     
     public void eliminar(Date fecha) {

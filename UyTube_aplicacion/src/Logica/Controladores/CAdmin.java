@@ -617,6 +617,18 @@ public class CAdmin implements IAdmin{
         return ret;
     }
     
+    public ArrayList<DtUsuario> listarUsuariosEliminados(){
+        ArrayList<DtUsuario> ret = new ArrayList();
+        try {
+            for (Usuario u : new UsuarioJpaController().findUsuarioEliminadoEntities()){
+                ret.add(u.getDT());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return ret;
+    }
+    
     public ArrayList<DtVideo> listarVideosEnCategoria(String cat){
         /**
          * Devuelve todos los videos del sistema que pertenezcan a la categoria indicada
@@ -815,6 +827,18 @@ public class CAdmin implements IAdmin{
         */
         sincronizarUsuariosConBDD();
         usuarioSeleccionado = usuarios.get(nickname);
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+        }
+        return usuarioSeleccionado.getDT();
+    }
+    
+    public DtUsuario seleccionarUsuarioEliminado(String nickname){
+        try {
+            usuarioSeleccionado = new UsuarioJpaController().findUsuario(nickname);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
         if (usuarioSeleccionado == null){
             throw new RuntimeException("No se encontro ningun usuario con ese nickname");
         }

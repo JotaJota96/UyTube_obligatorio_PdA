@@ -32,6 +32,7 @@ public interface IAdmin {
     public ArrayList<DtUsuario> listarUsuarioNoSeguidos();
     public ArrayList<DtUsuario> listarUsuarioSeguidos();
     public ArrayList<DtUsuario> listarUsuarios();
+    public ArrayList<DtUsuario> listarUsuariosEliminados();
     public ArrayList<DtVideo> listarVideosEnCategoria(String cat);
     public ArrayList<DtVideo> listarVideosDeUsuario();
     public ArrayList<DtVideo> listarVideosDeListaDeReproduccion();
@@ -45,6 +46,7 @@ public interface IAdmin {
     public void quitarVideoDeListaDeReproduccion(int idVideo);
     public DtUsuario seleccionarUsuario(String nickname);
     public DtUsuario seleccionarUsuarioActual(String nickname);
+    public DtUsuario seleccionarUsuarioEliminado(String nickname);
     public DtVideo seleccionarVideo(int idVideo);
     public DtListaDeReproduccion seleccionarListaDeReproduccion(int idLista);
     public void seguirUsuario();

@@ -28,7 +28,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         lbFondo.setIcon(img4);
         
         //#######  Descomentar la siguiente linea ###### //
-        activarBarraDeMenu(false); // listo...
+        //activarBarraDeMenu(false);
         sesionIniciada = false;
         mitCerrarSesion.setEnabled(false);
     }
@@ -66,7 +66,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         mitListarUsuarios = new javax.swing.JMenuItem();
         mitSeguirUsuario = new javax.swing.JMenuItem();
         mitSeguirUsuario1 = new javax.swing.JMenuItem();
-        mitSeguirUsuario2 = new javax.swing.JMenuItem();
+        mitEliminarUsuario = new javax.swing.JMenuItem();
+        mitConsultaUsuarioEliminado = new javax.swing.JMenuItem();
         menuVideo = new javax.swing.JMenu();
         mitNuevoVideo = new javax.swing.JMenuItem();
         mitModificarVideo = new javax.swing.JMenuItem();
@@ -201,14 +202,23 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         menuUsuario.add(mitSeguirUsuario1);
 
-        mitSeguirUsuario2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mitSeguirUsuario2.setText("Eliminar usuario");
-        mitSeguirUsuario2.addActionListener(new java.awt.event.ActionListener() {
+        mitEliminarUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mitEliminarUsuario.setText("Eliminar usuario");
+        mitEliminarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mitSeguirUsuario2ActionPerformed(evt);
+                mitEliminarUsuarioActionPerformed(evt);
             }
         });
-        menuUsuario.add(mitSeguirUsuario2);
+        menuUsuario.add(mitEliminarUsuario);
+
+        mitConsultaUsuarioEliminado.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mitConsultaUsuarioEliminado.setText("Consultar Usuario eliminado");
+        mitConsultaUsuarioEliminado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitConsultaUsuarioEliminadoActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(mitConsultaUsuarioEliminado);
 
         barraDeMenu.add(menuUsuario);
 
@@ -519,10 +529,15 @@ public class frmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
-    private void mitSeguirUsuario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitSeguirUsuario2ActionPerformed
+    private void mitEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEliminarUsuarioActionPerformed
         // usuario -> eliminar usuario
         new frmBajaUsuario(this, true).setVisible(true);
-    }//GEN-LAST:event_mitSeguirUsuario2ActionPerformed
+    }//GEN-LAST:event_mitEliminarUsuarioActionPerformed
+
+    private void mitConsultaUsuarioEliminadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitConsultaUsuarioEliminadoActionPerformed
+        // usuario -> Consultar usuario eliminado
+        new frmConsultaUsuarioEliminado(this, true).setVisible(true);
+    }//GEN-LAST:event_mitConsultaUsuarioEliminadoActionPerformed
 
     
     private void activarBarraDeMenu(boolean b){
@@ -595,9 +610,11 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mitCerrarSesion;
     private javax.swing.JMenuItem mitComentarVideo;
     private javax.swing.JMenuItem mitConsultaUsuario;
+    private javax.swing.JMenuItem mitConsultaUsuarioEliminado;
     private javax.swing.JMenuItem mitConsultarCategoria;
     private javax.swing.JMenuItem mitConsultarListaDeReproduccion;
     private javax.swing.JMenuItem mitConsultarVideo;
+    private javax.swing.JMenuItem mitEliminarUsuario;
     private javax.swing.JMenuItem mitIniciarSesion;
     private javax.swing.JMenuItem mitListarCategorias;
     private javax.swing.JMenuItem mitListarUsuarios;
@@ -611,7 +628,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mitQuitarVideoDeListaDeReproduccion;
     private javax.swing.JMenuItem mitSeguirUsuario;
     private javax.swing.JMenuItem mitSeguirUsuario1;
-    private javax.swing.JMenuItem mitSeguirUsuario2;
     private javax.swing.JMenuItem mitValorarVideo;
     private javax.swing.JDesktopPane pnlFondo;
     public static javax.swing.ButtonGroup privacidad_NuevaLR;
