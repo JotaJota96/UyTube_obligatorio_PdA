@@ -429,6 +429,11 @@ public class CAdmin implements IAdmin{
                 return true;
             }
         }
+        for (DtUsuario dtu : this.listarUsuariosEliminados()){
+            if (dtu.getCorreo().equals(email)){
+                return true;
+            }
+        }
         return false;
     }
     
@@ -437,7 +442,15 @@ public class CAdmin implements IAdmin{
          * Verifica si existe un usuario con el nickname recibido
          */
         sincronizarUsuariosConBDD();
-        return usuarios.containsKey(nickname);
+        if (usuarios.containsKey(nickname)){
+            return true;
+        }
+        for (DtUsuario dtu : this.listarUsuariosEliminados()){
+            if (dtu.getNickname().equals(nickname)){
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean iniciarSesionAdministrador(int id, String pass){
