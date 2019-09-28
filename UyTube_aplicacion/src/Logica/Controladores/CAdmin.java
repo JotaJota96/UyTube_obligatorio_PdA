@@ -374,6 +374,18 @@ public class CAdmin implements IAdmin{
         // una manda a quitar todoslos videos del usuario a eliminar
         this.seleccionarUsuario(elim.getNickname());
         ArrayList<DtVideo> videos = this.listarVideosDeUsuario();
+        // Para facilitar el algoritmo, agrego a la coleccion (de manera provisoria) los usuarios eliminados
+        // ¡Recuerdo los nicknames para sacarlos despues!
+        ArrayList<String> nicksProvisorios = new ArrayList();
+        try {
+            for (Usuario u : new UsuarioJpaController().findUsuarioEliminadoEntities()){
+                nicksProvisorios.add(u.getNickname());
+                this.usuarios.put(u.getNickname(), u);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        
         for (Map.Entry<String, Usuario> it : usuarios.entrySet()){
             if (it.getValue().getNickname().equals(elim.getNickname())) continue;
             
@@ -393,6 +405,11 @@ public class CAdmin implements IAdmin{
             } catch (Exception e) {
                 throw new RuntimeException(e.getMessage());
             }
+        }
+        
+        // quito de la coleccion los usuarios que estaban eliminados y agregue provisoriamente antes del for
+        for (String s : nicksProvisorios){
+            this.usuarios.remove(s);
         }
         
         // obtiene la fecha actual
