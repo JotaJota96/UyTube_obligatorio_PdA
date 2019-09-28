@@ -471,6 +471,10 @@ public class CAdmin implements IAdmin{
     }
     
     public boolean iniciarSesionAdministrador(int id, String pass){
+        /**
+         * Verifica la contrasenia para el administrador con esa ID y devuelve true si es correcta
+         * En cualquier otro caso devuelve false
+         */
         sincronizarAdministradoresConBDD();
         Administrador a = administradores.get(id);
         if (a == null){
@@ -648,6 +652,9 @@ public class CAdmin implements IAdmin{
     }
     
     public ArrayList<DtUsuario> listarUsuariosEliminados(){
+        /**
+         * Devuelve todos los datos de todos los usuarios eliminados
+         */
         ArrayList<DtUsuario> ret = new ArrayList();
         try {
             for (Usuario u : new UsuarioJpaController().findUsuarioEliminadoEntities()){
@@ -779,6 +786,10 @@ public class CAdmin implements IAdmin{
     }
     
     public DtUsuario obtenerPropietarioDeVideo(int idVideo){
+        /**
+         * Busca entre todos los usuarios al propietario del video con ese ID
+         */
+        
         sincronizarUsuariosConBDD();
         // Esto es un parche, pero de los que nunca se despegan...
         // A tiempos desesperados, medidas desesperadas
@@ -864,6 +875,10 @@ public class CAdmin implements IAdmin{
     }
     
     public DtUsuario seleccionarUsuarioEliminado(String nickname){
+        /**
+         * El sistema recuerda un link al usuario eliminado como usuarioActual Devuelve
+         * los datos de usuarioActual
+         */
         try {
             usuarioSeleccionado = new UsuarioJpaController().findUsuario(nickname);
         } catch (Exception e) {
@@ -877,9 +892,9 @@ public class CAdmin implements IAdmin{
     
     public DtUsuario seleccionarUsuarioActual(String nickname){
         /**
-        El sistema recuerda un link al usuario como usuarioActual
-	Devuelve los datos de usuarioActual
-        * */
+         * El sistema recuerda un link al usuario como usuarioActual Devuelve
+         * los datos de usuarioActual
+         */
         sincronizarUsuariosConBDD();
         usuarioActual = usuarios.get(nickname);
         if (usuarioActual == null){
@@ -890,9 +905,9 @@ public class CAdmin implements IAdmin{
     
     public DtVideo seleccionarVideo(int idVideo){
 	/**
-        El sistema recuerda el ID del video como idVideoSeleccionado
-	Devuelve los datos del video seleccionado
-        */
+        El sistema recuerda el ID del video como idVideoSeleccionado Devuelve
+         * los datos del video seleccionado
+         */
         if (this.usuarioSeleccionado == null){
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
