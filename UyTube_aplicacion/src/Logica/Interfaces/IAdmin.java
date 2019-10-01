@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public interface IAdmin {
 
     /**
-     * Agrega el video idVideoSeleccionado a la lista idListaSeleccionada
+     * Agrega el video idVideoSeleccionado a la lista indicada
      *
-     * @param idLista ID del video
+     * @param idLista ID de la lista a la cual se agrega el video
      */
     public void agregarVideoAListaDeReproduccion(int idLista);
 
@@ -179,7 +179,7 @@ public interface IAdmin {
     public ArrayList<DtUsuario> listarUsuarioSeguidores();
 
     /**
-     * Devuelve todos los usuarios a quienes sigue usuarioSeleccionado
+     * Devuelve todos los usuarios a quienes NO sigue usuarioSeleccionado
      *
      * @return Conjunto de usuarios
      */
@@ -282,7 +282,7 @@ public interface IAdmin {
     public DtValoracion obtenerValoracionDada();
 
     /**
-     *
+     * Quita el video idVideoSeleccionado de la lista idListaSeleccionada
      * @param idVideo ID del video
      */
     public void quitarVideoDeListaDeReproduccion(int idVideo);
@@ -305,7 +305,7 @@ public interface IAdmin {
     public DtUsuario seleccionarUsuarioActual(String nickname);
 
     /**
-     * El sistema recuerda un link al usuario eliminado como usuarioActual
+     * El sistema recuerda un link al usuario eliminado como usuarioSeleccionado
      * Devuelve los datos de usuarioActual
      *
      * @param nickname Nickname del usuario
