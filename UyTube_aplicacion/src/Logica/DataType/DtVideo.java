@@ -15,6 +15,7 @@ public class DtVideo {
     private String categoria;
     private int cantLikes;
     private int cantDisLikes;
+    private String nombreDuenio;
 
     public DtVideo(int id, String nombre, String descripcion, Time duracion, Date fechaPublicacion, String urlVideoOriginal, Privacidad privacidad, String categoria, int cantLikes, int cantDisLikes) {
         this.id = id;
@@ -29,6 +30,20 @@ public class DtVideo {
         this.cantDisLikes = cantDisLikes;
     }
 
+    public DtVideo(int id, String nombre, String descripcion, Time duracion, Date fechaPublicacion, String urlVideoOriginal, Privacidad privacidad, String categoria, int cantLikes, int cantDisLikes, String nombreDuenio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.fechaPublicacion = fechaPublicacion;
+        this.urlVideoOriginal = urlVideoOriginal;
+        this.privacidad = privacidad;
+        this.categoria = categoria;
+        this.cantLikes = cantLikes;
+        this.cantDisLikes = cantDisLikes;
+        this.nombreDuenio = nombreDuenio;
+    }
+    
     public int getId() {
         return id;
     }

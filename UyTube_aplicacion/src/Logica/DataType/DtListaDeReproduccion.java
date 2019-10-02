@@ -9,7 +9,8 @@ public class DtListaDeReproduccion {
     private Privacidad privacidad;
     private TipoListaDeReproduccion tipo;
     private String categoria;
-
+    private String nombreDuenio;
+    
     public DtListaDeReproduccion(int id, String nombre, Privacidad privacidad, TipoListaDeReproduccion tipo, String categoria) {
         this.id = id;
         this.nombre = nombre;
@@ -18,6 +19,15 @@ public class DtListaDeReproduccion {
         this.categoria = categoria;
     }
 
+    public DtListaDeReproduccion(int id, String nombre, Privacidad privacidad, TipoListaDeReproduccion tipo, String categoria, String nombreDuenio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.privacidad = privacidad;
+        this.tipo = tipo;
+        this.categoria = categoria;
+        this.nombreDuenio = nombreDuenio;
+    }
+    
     public int getId() {
         return id;
     }
