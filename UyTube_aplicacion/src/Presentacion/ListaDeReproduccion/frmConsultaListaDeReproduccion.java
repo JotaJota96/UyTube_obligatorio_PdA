@@ -32,7 +32,8 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
             lstUsuarios.setModel(modeloUsuario);
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
         }
     }
     
@@ -247,7 +248,8 @@ public class frmConsultaListaDeReproduccion extends javax.swing.JDialog {
             lstVideos.setModel(modelo);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
         }
     }//GEN-LAST:event_lstListasRepValueChanged
 
