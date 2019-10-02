@@ -7,6 +7,10 @@ import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
+import Presentacion.ListaDeReproduccion.frmConsultaListaDeReproduccion;
+import Presentacion.ListaDeReproduccion.frmConsultaListaDeReproduccionEliminada;
+import Presentacion.Video.frmConsultaVideo;
+import Presentacion.Video.frmConsultaVideoEliminado;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -235,7 +239,6 @@ public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
             listarVideos(listaDeVideos);
             listaDeListasRep = sys.listarListasDeReproduccionDeUsuario(nick);
             listarListassRep(listaDeListasRep);
-            sys.liberarMemoriaUsuario();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -251,9 +254,23 @@ public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void lstVideosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstVideosMouseClicked
+        // Doble clic en la lista de videos
+        if (evt.getClickCount() != 2) return;
+        if (lstVideos.getSelectedIndex()<0) return;
+
+        int indexSeleccionado = lstVideos.getSelectedIndex();
+        int idVideo = listaDeVideos.get(indexSeleccionado).getId();
+        new frmConsultaVideoEliminado(this, true, idVideo).setVisible(true);
     }//GEN-LAST:event_lstVideosMouseClicked
 
     private void lstListaReproduccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstListaReproduccionMouseClicked
+        // Doble clic en la lista de Listas de reproduccion
+        if (evt.getClickCount() != 2) return;
+        if (lstListaReproduccion.getSelectedIndex()<0) return;
+
+        int indexSeleccionado = lstListaReproduccion.getSelectedIndex();
+        int idLista = listaDeListasRep.get(indexSeleccionado).getId();
+        new frmConsultaListaDeReproduccionEliminada(this, true, idLista).setVisible(true);
     }//GEN-LAST:event_lstListaReproduccionMouseClicked
 
     
