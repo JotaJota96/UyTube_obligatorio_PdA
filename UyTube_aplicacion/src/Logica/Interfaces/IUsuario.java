@@ -41,6 +41,7 @@ public interface IUsuario {
 
     /**
      * Da de alta un usuario y su canal a partir de los datos recibidos
+     * Luego de darlo de alta, el usuario queda con la sesión iniciada
      *
      * @param usr Datos del usuario a dar de alta
      * @param canal Datos del canal del usuario
@@ -56,6 +57,7 @@ public interface IUsuario {
 
     /**
      * Da de baja al usuarioActual
+     * En el proceso se cierra la sesion
      */
     public void bajaUsuario();
 
@@ -115,6 +117,21 @@ public interface IUsuario {
      * contrasenia es correcta
      */
     public boolean iniciarSesionUsuario(String nickOEmail, String contrasenia);
+
+    /**
+     * Libera memoria de la lista de reproduccion seleccionada
+     */
+    public void liberarMemoriaListaDeReproduccion();
+
+    /**
+     * Libera memoria del usuario seleccionado
+     */
+    public void liberarMemoriaUsuario();
+
+    /**
+     * Libera memoria del video seleccionado
+     */
+    public void liberarMemoriaVideo();
 
     /**
      * Devuelve todas las categorias existentes en el sistema

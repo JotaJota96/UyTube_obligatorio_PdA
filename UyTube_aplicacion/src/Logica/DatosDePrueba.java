@@ -1,12 +1,16 @@
 package Logica;
 
+import Logica.Clases.Usuario;
 import Logica.Controladores.CAdmin;
+import Logica.Controladores.CUsuario;
 import Logica.Interfaces.IAdmin;
 import Logica.DataType.*;
 import Logica.Enumerados.*;
+import Logica.Interfaces.IUsuario;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,6 +20,7 @@ import javax.persistence.Persistence;
  */
 public class DatosDePrueba {
     private static IAdmin sys = null;
+    private static IUsuario sis = null;
     
     public static void main(String[] args) {
         probar();
@@ -24,14 +29,13 @@ public class DatosDePrueba {
     
     private static void probar(){
         Fabrica f = Fabrica.getInstancia();
-        sys = f.getIAdmin();
+        sis = f.getIUsuario();
+        CUsuario su = CUsuario.getInstancia();
         try {
-            
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("UyTubePU");
             EntityManager manager = factory.createEntityManager();
             
             
-            //CAdmin ca = CAdmin.getInstancia();
             
             
             /**
