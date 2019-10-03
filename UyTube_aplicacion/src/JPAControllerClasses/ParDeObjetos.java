@@ -1,5 +1,7 @@
 package JPAControllerClasses;
 
+import java.util.ArrayList;
+
 public class ParDeObjetos {
     private Object element;
     private Object orderField;
@@ -25,6 +27,14 @@ public class ParDeObjetos {
         this.orderField = orderField;
     }
     
+    
+    public static ArrayList<Object> extraerElementos(ArrayList<ParDeObjetos> lista){
+        ArrayList<Object> ret = new ArrayList();
+        for (ParDeObjetos par : lista){
+            ret.add(par.getElement());
+        }
+        return ret;
+    }
     
     
 }

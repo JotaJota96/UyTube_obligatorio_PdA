@@ -23,11 +23,16 @@ public class BusquedaEnBDD implements Serializable {
     public BusquedaEnBDD(EntityManagerFactory emf) {
         this.emf = emf;
     }
-
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
+    
+    /**
+     * Devuelve un listado de Video y ListaDeReproduccion que pertenezcan ala
+     * categoria indicada, ordenado por fecha de actividasd reciente
+     * @param cat Categoria a buscar
+     * @return Lista ordenada Video y ListaDeReproduccion
+     */
     public List<Object> buscarPorCategoria(String cat) {
         EntityManager em = getEntityManager();
         List<Object> ret = new ArrayList();
@@ -42,7 +47,13 @@ public class BusquedaEnBDD implements Serializable {
             q.setParameter(1, cat);
             ret.addAll(q.getResultList());
             
-            return ret;
+            return ParDeObjetos.extraerElementos(
+                    ordenar(
+                            fecharElementos(
+                                    (ArrayList<Object>) ret
+                            )
+                    )
+            );
         } finally {
             em.close();
         }
@@ -95,6 +106,49 @@ public class BusquedaEnBDD implements Serializable {
             ret = v.getFechaPublicacion();
         }
         return ret;
+    }
+    
+    /**
+     * Ordena la lista de pares recibida
+     * @param lista Lista a ordenar
+     * @return Lista ordenada
+     */
+    public ArrayList<ParDeObjetos> ordenar(ArrayList<ParDeObjetos> lista){
+        if (lista == null || lista.isEmpty()){
+            return new ArrayList();
+        }
+        
+        ParDeObjetos par = lista.remove(0);
+        ArrayList<ParDeObjetos> listaOrdenada = ordenar(lista);
+        
+        int i = 0;
+        for (; i < listaOrdenada.size(); i++){
+            ParDeObjetos p = listaOrdenada.get(i);
+            if (comparar(p, par) < 0){
+                break;
+            }
+        }
+        listaOrdenada.add(i, par);
+        return listaOrdenada;
+    }
+    
+    /**
+     * Compara dos pares de objetos
+     * @param a Primer par a comparar
+     * @param b Segundo par a comparar
+     * @return 0 si (a == b), -1 si (a < b), 1 si (a > b)
+     */
+    private int comparar(ParDeObjetos a, ParDeObjetos b){
+        if (a.getOrderField().getClass() == String.class){
+            String str1 = (String) a.getOrderField();
+            String str2 = (String) b.getOrderField();
+            return str1.compareToIgnoreCase(str2);
+        }else if (a.getOrderField().getClass() == java.sql.Date.class){
+            java.sql.Date date1 = (java.sql.Date) a.getOrderField();
+            java.sql.Date date2 = (java.sql.Date) b.getOrderField();
+            return date1.compareTo(date2);
+        }
+        return 0;
     }
     
 }

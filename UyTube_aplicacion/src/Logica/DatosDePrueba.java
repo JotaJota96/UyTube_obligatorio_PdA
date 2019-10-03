@@ -1,14 +1,11 @@
 package Logica;
 
 import JPAControllerClasses.BusquedaEnBDD;
-import JPAControllerClasses.ParDeObjetos;
-import Logica.Clases.Categoria;
 import Logica.Clases.ListaDeReproduccion;
 import Logica.Clases.Video;
 import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
 import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -47,20 +44,21 @@ public class DatosDePrueba {
             }
             */
             
-            for (ParDeObjetos pdo : new BusquedaEnBDD().fecharElementos((ArrayList<Object>) new BusquedaEnBDD().buscarPorCategoria("MUSICA"))){
-                System.out.print(pdo.getOrderField());
-                System.out.print(" >> ");
-                Object o = pdo.getElement();
+            
+            
+            
+            
+            for (Object o : new BusquedaEnBDD().buscarPorCategoria("MUSICA")){
                 if (o.getClass() == Video.class){
                     Video i = (Video) o;
-                System.out.print(i.getFechaPublicacion());
-                System.out.print(" >> ");
                     System.out.println(i.getNombre());
                 }else if (o.getClass() == ListaDeReproduccion.class){
                     ListaDeReproduccion i = (ListaDeReproduccion) o;
                     System.out.println(i.getNombre());
                 }
             }
+            
+            
             
         } catch (Exception e) {
             System.out.println("//////////////////////////");
