@@ -1,7 +1,9 @@
 package Logica;
 
 import Logica.Controladores.CAdmin;
+import Logica.Controladores.CUsuario;
 import Logica.Interfaces.IAdmin;
+import Logica.Interfaces.IUsuario;
 
 
 /* Clase Singleton */
@@ -22,5 +24,10 @@ public class Fabrica {
     /* Crea una unicia instancia del controlador CAdmin */
     public IAdmin getIAdmin(){
         return CAdmin.getInstancia();
+    }
+    
+    /* Crea una unicia instancia del controlador CUsuario */
+    public IUsuario getIUsuario(){
+        return CUsuario.getInstancia();
     }
 }
