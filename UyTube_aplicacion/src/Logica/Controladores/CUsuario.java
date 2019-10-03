@@ -6,6 +6,7 @@ import JPAControllerClasses.UsuarioJpaController;
 import Logica.Clases.Categoria;
 import Logica.Clases.ListaPorDefecto;
 import Logica.Clases.Usuario;
+import Logica.Clases.Video;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtListaDeReproduccion;
@@ -157,7 +158,7 @@ public class CUsuario implements IUsuario {
         if (lista == null) {
             throw new RuntimeException("El DataType recibido es null");
         }
-        if ( ! this.obtenerCategorias().containsKey(lista.getCategoria())) {
+        if ( ! this.obtenerCategorias().containsValue(lista.getCategoria())) {
             throw new RuntimeException("La categoria no existe");
         }
         usuarioActual.agregarListaParticular(lista);
@@ -385,22 +386,87 @@ public class CUsuario implements IUsuario {
 
     @Override
     public void modificarListaDeReproduccion(DtListaDeReproduccion lista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         /**
+         * Se modifican los datos de la lista idListaSeleccionada
+         */
+        if (this.usuarioActual == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idListaSeleccionada == 0){
+            throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
+        }
+        if (lista == null){
+            throw new RuntimeException("El DataType recibido es null");
+        }
+        if (!this.obtenerCategorias().containsValue(lista.getCategoria())) {
+            throw new RuntimeException("La categoria no existe");
+        }
+        // no confio en que el DataType recibido venga con el id del video correcto,
+        // asi que creo otro y con el idVideoSeleccionado por las dudas
+        DtListaDeReproduccion dtl = new DtListaDeReproduccion(
+                idListaSeleccionada, 
+                lista.getNombre(), 
+                lista.getPrivacidad(), 
+                lista.getTipo(), 
+                lista.getCategoria());
+        
+        usuarioActual.modificarListaDeReproduccionDeCanal(dtl);
     }
 
     @Override
     public void modificarUsuarioYCanal(DtUsuario usr, DtCanal canal) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (usr == null) {
+            throw new RuntimeException("Todos los datos del Usuario no pueden ser vacios");
+        }
+        if (canal == null) {
+            throw new RuntimeException("Todos los datos del Canal no pueden ser vacios");
+        }
+        usuarioActual.modificar(usr, canal);
+        
+        try {
+            new UsuarioJpaController().edit(usuarioActual);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override
     public void modificarVideo(DtVideo video) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (video == null) {
+            throw new RuntimeException("Todos los datos del video no pueden ser vacios");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        if (!this.obtenerCategorias().containsValue(video.getCategoria())) {
+            throw new RuntimeException("La categoria no existe");
+        }
+         
+        DtVideo dtv = new DtVideo(
+                idVideoSeleccionado, 
+                video.getNombre(), 
+                video.getDescripcion(), 
+                video.getDuracion(), 
+                video.getFechaPublicacion(), 
+                video.getUrlVideoOriginal(), 
+                video.getPrivacidad(), 
+                video.getCategoria(), 
+                0, 0);
+        usuarioActual.modificarVideoDeCanal(dtv);
     }
 
     @Override
     public DtCanal obtenerCanalDeUsuario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        return usuarioActual.obtenerCanal();
     }
 
     @Override
@@ -435,17 +501,27 @@ public class CUsuario implements IUsuario {
 
     @Override
     public DtValoracion obtenerValoracionDada() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (usuarioSeleccionado == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        return usuarioSeleccionado.obtenerValoracion(idVideoSeleccionado, usuarioActual.getNickname());
     }
 
     @Override
     public ArrayList<DtValoracion> obtenerValoracionesDeVideo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(usuarioSeleccionado == null){
+             throw new RuntimeException("No se a iniciado la sesión");
+        }
+        return usuarioSeleccionado.listarValoracionesDeVideo(idVideoSeleccionado);
     }
 
     @Override
     public void quitarVideoDeListaDeReproduccion(int idVideo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(usuarioActual == null){
+             throw new RuntimeException("No se a iniciado la sesión");
+        }
+        usuarioActual.quitarVideoDeListaDeReproduccion(idListaSeleccionada,idVideo);
+     
     }
 
     @Override
