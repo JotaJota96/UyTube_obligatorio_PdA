@@ -1,5 +1,8 @@
 package Logica.Controladores;
 
+import JPAControllerClasses.CategoriaJpaController;
+import JPAControllerClasses.ListaPorDefectoJpaController;
+import JPAControllerClasses.UsuarioJpaController;
 import Logica.Clases.Categoria;
 import Logica.Clases.ListaPorDefecto;
 import Logica.Clases.Usuario;
@@ -13,10 +16,12 @@ import Logica.Enumerados.Filtrado;
 import Logica.Enumerados.Ordenacion;
 import Logica.Interfaces.IUsuario;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class CUsuario implements IUsuario {
+
     private static CUsuario instancia = null;
     private Usuario usuarioActual;
     private Usuario usuarioSeleccionado;
@@ -29,29 +34,54 @@ public class CUsuario implements IUsuario {
         this.idListaSeleccionada = 0;
         this.idVideoSeleccionado = 0;
     }
-    
-    public static CUsuario getInstancia(){
-        if( instancia == null ){
+
+    public static CUsuario getInstancia() {
+        if (instancia == null) {
             instancia = new CUsuario();
         }
-        return instancia;        
+        return instancia;
     }
-    
-    
-    //***************** Traer datos de la base de datos *******************
-    private Map<String, Usuario> obtenerUsuarios(){
+
+    //** Traer datos de la base de datos **
+    private Map<String, Usuario> obtenerUsuarios() {
         Map<String, Usuario> usuarios = new TreeMap();
+        try {
+            List<Usuario> usuariosEnBDD = new UsuarioJpaController().findUsuarioEntities();
+            for (Usuario u : usuariosEnBDD) {
+                usuarios.put(u.getNickname(), u);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
         return usuarios;
     }
-    private Map<String, Categoria> obtenerCategorias(){
+
+    private Map<String, Categoria> obtenerCategorias() {
         Map<String, Categoria> categorias = new TreeMap();
+        try {
+            List<Categoria> categoriasEnBDD = new CategoriaJpaController().findCategoriaEntities();
+            for (Categoria c : categoriasEnBDD) {
+                categorias.put(c.getNombre(), c);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
         return categorias;
     }
-    private Map<String, ListaPorDefecto> obtenerListasPorDefecto(){
+
+    private Map<String, ListaPorDefecto> obtenerListasPorDefecto() {
         Map<String, ListaPorDefecto> ListasPorDefecto = new TreeMap();
+        try {
+            List<ListaPorDefecto> listasPorDefectoEnBDD = new ListaPorDefectoJpaController().findListaPorDefectoEntities();
+            for (ListaPorDefecto l : listasPorDefectoEnBDD) {
+                ListasPorDefecto.put(l.getNombre(), l);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
         return ListasPorDefecto;
     }
-    
+
     //******************** Funciones de la interfaz ************************
     @Override
     public void agregarVideoAListaDeReproduccion(int idLista) {
@@ -80,7 +110,17 @@ public class CUsuario implements IUsuario {
 
     @Override
     public void altaVideo(DtVideo video) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (video == null) {
+            throw new RuntimeException("El video no puede ser null");
+        }
+        if(!obtenerCategorias().containsKey(video.getCategoria())){
+            throw new RuntimeException("La categoria no existe");
+        }
+        if(usuarioActual == null){
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        
+        usuarioActual.agregarVideoACanal(video);
     }
 
     @Override
@@ -100,22 +140,55 @@ public class CUsuario implements IUsuario {
 
     @Override
     public void cerrarSesion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(usuarioActual == null){
+            throw new RuntimeException("No puedes cerrar sesión sin haberla iniciado");
+        }
+        usuarioActual = null;
     }
 
     @Override
     public boolean existeEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (email.equals("")){
+            return false;
+        }
+        Map<String, Usuario> Usuarios = obtenerUsuarios();
+       
+        for (Map.Entry<String, Usuario> u : Usuarios.entrySet()) {
+            if (u.getValue().getCorreo().equals(email)) {
+                return true;
+            }
+        }
+        
+        for (Usuario u : new UsuarioJpaController().findUsuarioEliminadoEntities()) {
+            if (u.getCorreo().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean existeNickname(String nickname) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (nickname.equals("")){
+            return false;
+        }
+        Map<String, Usuario> Usuarios = obtenerUsuarios();
+        if (Usuarios.containsKey(nickname)) {
+            return true;
+        }
+
+        for (Usuario u : new UsuarioJpaController().findUsuarioEliminadoEntities()) {
+            if (u.getNickname().equals(nickname)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean iniciarSesionUsuario(String nickOEmail, String contrasenia) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
 
     @Override
@@ -237,5 +310,5 @@ public class CUsuario implements IUsuario {
     public void valorarVideo(DtValoracion val) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
