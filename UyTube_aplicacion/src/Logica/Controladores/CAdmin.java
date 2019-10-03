@@ -69,8 +69,6 @@ public class CAdmin implements IAdmin{
     public static CAdmin getInstancia(){
         if( instancia == null ){
             instancia = new CAdmin();
-            // Carga los datos de prueba
-            DatosDePrueba.cargarDatos();
         }
         return instancia;        
     }
