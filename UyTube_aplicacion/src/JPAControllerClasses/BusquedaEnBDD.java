@@ -57,7 +57,7 @@ public class BusquedaEnBDD implements Serializable {
                 if (busqueda == null || busqueda.equals("")){
                    q = em.createQuery("SELECT e FROM Canal e");
                 }else{
-                   q = em.createQuery("SELECT e FROM Canal e WHERE e.nombre LIKE ?1 OR e.descripcion LIKE ?1");
+                   q = em.createQuery("SELECT e FROM Canal e WHERE (UPPER(e.nombre)) LIKE (UPPER(?1)) OR (UPPER(e.descripcion)) LIKE (UPPER(?1))");
                     q.setParameter(1, busqueda);
                 }
                 ret.addAll(q.getResultList());
@@ -68,7 +68,7 @@ public class BusquedaEnBDD implements Serializable {
                    q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ?1");
                     q.setParameter(1, TipoListaDeReproduccion.PARTICULAR);
                 }else{
-                   q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ?1 AND e.nombre LIKE ?2");
+                   q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ?1 AND (UPPER(e.nombre)) LIKE (UPPER(?2)) ");
                     q.setParameter(1, TipoListaDeReproduccion.PARTICULAR);
                     q.setParameter(2, busqueda);
                 }
@@ -79,7 +79,7 @@ public class BusquedaEnBDD implements Serializable {
                 if (busqueda == null || busqueda.equals("")){
                    q = em.createQuery("SELECT e FROM Video e");
                 }else{
-                   q = em.createQuery("SELECT e FROM Video e WHERE e.nombre LIKE ?1 OR e.descripcion LIKE ?1");
+                   q = em.createQuery("SELECT e FROM Video e WHERE (UPPER(e.nombre)) LIKE (UPPER(?1)) OR (UPPER(e.descripcion)) LIKE (UPPER(?1))");
                     q.setParameter(1, busqueda);
                 }
                 ret.addAll(q.getResultList());

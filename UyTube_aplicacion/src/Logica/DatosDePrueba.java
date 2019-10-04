@@ -48,7 +48,7 @@ public class DatosDePrueba {
             */
             
             
-            for (Object o : new BusquedaEnBDD().buscar("", Filtrado.TODO, Ordenacion.ALFABETICA_ASCENDENTE)){
+            for (Object o : new BusquedaEnBDD().buscar("no", Filtrado.TODO, Ordenacion.ALFABETICA_ASCENDENTE)){
                 if (o.getClass() == Video.class){
                     Video i = (Video) o;
                     System.out.println(i.getNombre());
