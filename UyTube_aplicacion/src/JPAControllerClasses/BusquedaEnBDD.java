@@ -88,6 +88,7 @@ public class BusquedaEnBDD implements Serializable {
             // En este punto ret contiene todos los contenidos que contienen la busqueda en su nombre o descripcion
             ArrayList<ParDeObjetos> pares = null;
             ArrayList<ParDeObjetos> paresOrdenados;
+            // Asocia los elementos a su nombre o su fecha (segun como se desee ordenar)
             switch (orden){
                 case ALFABETICA_ASCENDENTE:
                     pares = nombrarElementos((ArrayList<Object>) ret);
@@ -96,8 +97,16 @@ public class BusquedaEnBDD implements Serializable {
                     pares = fecharElementos((ArrayList<Object>) ret);
                     break;
             }
-            return ParDeObjetos.extraerElementos(
-                    ordenar(pares)
+            
+            // Leido de adentro hacia afuera:
+            // se ordena por fecha
+            // Se desarma el par de objetos
+            // se convierte cada objeto a su DataType
+            // retorna el resultado
+            return convertirClaseADatatype(
+                    ParDeObjetos.extraerElementos(
+                            ordenar(pares)
+                    )
             );
         } finally {
             em.close();
@@ -124,10 +133,18 @@ public class BusquedaEnBDD implements Serializable {
             q.setParameter(1, cat);
             ret.addAll(q.getResultList());
             
-            return ParDeObjetos.extraerElementos(
-                    ordenar(
-                            fecharElementos(
-                                    (ArrayList<Object>) ret
+            // Leido de adentro hacia afuera:
+            // Asocia los elementos a una fecha
+            // se ordena por fecha
+            // Se desarma el par de objetos
+            // se convierte cada objeto a su DataType
+            // retorna el resultado
+            return convertirClaseADatatype(
+                    ParDeObjetos.extraerElementos(
+                            ordenar(
+                                    fecharElementos(
+                                            (ArrayList<Object>) ret
+                                    )
                             )
                     )
             );
@@ -146,6 +163,7 @@ public class BusquedaEnBDD implements Serializable {
      */
     public ArrayList<ParDeObjetos> fecharElementos(ArrayList<Object> lista){
         ArrayList<ParDeObjetos> ret = new ArrayList();
+        // Asocia cada elemento del array recibido con su fecha
         for (Object o : lista){
             ret.add(new ParDeObjetos(o, ultimaActividad(o)));
         }
@@ -162,6 +180,7 @@ public class BusquedaEnBDD implements Serializable {
      */
     public ArrayList<ParDeObjetos> nombrarElementos(ArrayList<Object> lista){
         ArrayList<ParDeObjetos> ret = new ArrayList();
+        // Asocia cada elemento del array recibido con su nombre
         for (Object o : lista){
             ret.add(new ParDeObjetos(o, nombreParaOrdenar(o)));
         }
@@ -178,15 +197,13 @@ public class BusquedaEnBDD implements Serializable {
      */
     private String nombreParaOrdenar(Object o){
         java.sql.Date ret = null;
+        // Devuelve el nombre del objeto
         if (o.getClass() == Canal.class){
-            Canal c = (Canal) o;
-            return c.getNombre();
+            return ((Canal) o).getNombre();
         }else if (o.getClass() == ListaDeReproduccion.class){
-            ListaDeReproduccion l = (ListaDeReproduccion) o;
-            return l.getNombre();
+            return ((ListaDeReproduccion) o).getNombre();
         }else if (o.getClass() == Video.class){
-            Video v = (Video) o;
-            return v.getNombre();
+            return ((Video) o).getNombre();
         }
         return "";
     }
@@ -202,24 +219,27 @@ public class BusquedaEnBDD implements Serializable {
     private java.sql.Date ultimaActividad(Object o){
         java.sql.Date ret = null;
         if (o.getClass() == Canal.class){
-            Canal c = (Canal) o;
-            ArrayList<DtVideo> videos = c.listarVideos();
+           // si el objeto es un Canal
+           // busca la fecha de publicacion mas reciente entre los videos del canal
+            ArrayList<DtVideo> videos = ((Canal) o).listarVideos();
             for (DtVideo dtv : videos){
                 if (ret == null || dtv.getFechaPublicacion().compareTo(ret) > 0){
                     ret = dtv.getFechaPublicacion();
                 }
             }
         }else if (o.getClass() == ListaDeReproduccion.class){
-            ListaDeReproduccion l = (ListaDeReproduccion) o;
-            ArrayList<DtVideo> videos = l.listarVideos();
+           // si el objeto es una ListaDeReproduccion
+           // busca la fecha de publicacion mas reciente entre los videos de la lista
+            ArrayList<DtVideo> videos = ((ListaDeReproduccion) o).listarVideos();
             for (DtVideo dtv : videos){
                 if (ret == null || dtv.getFechaPublicacion().compareTo(ret) > 0){
                     ret = dtv.getFechaPublicacion();
                 }
             }
         }else if (o.getClass() == Video.class){
-            Video v = (Video) o;
-            ret = v.getFechaPublicacion();
+           // si el objeto es un Video
+           // Devuelve su fecha
+            ret = ((Video) o).getFechaPublicacion();
         }
         return ret;
     }
@@ -230,13 +250,18 @@ public class BusquedaEnBDD implements Serializable {
      * @return Lista ordenada
      */
     public ArrayList<ParDeObjetos> ordenar(ArrayList<ParDeObjetos> lista){
+        // Caso base, no hay lista o es vacia
         if (lista == null || lista.isEmpty()){
             return new ArrayList();
         }
         
+        // Extrae el primer elemento de la lista
         ParDeObjetos par = lista.remove(0);
+        // llama a la recursividad
         ArrayList<ParDeObjetos> listaOrdenada = ordenar(lista);
         
+        // Recore la lista ya ordenada por la llamada recursiva 
+        // compara cada elemento y para cuando encuentra su lugar
         int i = 0;
         for (; i < listaOrdenada.size(); i++){
             ParDeObjetos p = listaOrdenada.get(i);
@@ -244,17 +269,20 @@ public class BusquedaEnBDD implements Serializable {
                 break;
             }
         }
+        // Agrega el elemento al resultado
         listaOrdenada.add(i, par);
         return listaOrdenada;
     }
     
     /**
      * Compara dos pares de objetos
+     * Se soportan String o java.sql.Date
      * @param a Primer par a comparar
      * @param b Segundo par a comparar
      * @return 0 si (a == b), -1 si (a < b), 1 si (a > b)
      */
     private int comparar(ParDeObjetos a, ParDeObjetos b){
+        // Realiza la comparacion dependiendo del tipo de objeto para comparar
         if (a.getOrderField().getClass() == String.class){
             String str1 = (String) a.getOrderField();
             String str2 = (String) b.getOrderField();
@@ -267,4 +295,25 @@ public class BusquedaEnBDD implements Serializable {
         return 0;
     }
     
+    /**
+     * Reemplaza los objetos de la lista por sus DataType
+     * @param lst Lista con clases Canal, ListaDeReproduccion o Video
+     * @return Lista de DtCanal, DtListaDeReproduccion o DtVideo
+     */
+    private ArrayList<Object> convertirClaseADatatype(ArrayList<Object> lst){
+        Object o;
+        // Recorre todo el array
+        for (int i = 0; i < lst.size(); i++) {
+            o = lst.get(i);
+            // Castea el objeto para llamar a la funcion .getDT()
+            if (o.getClass() == Canal.class) {
+                lst.set(i, ((Canal)o).getDT());
+            } else if (o.getClass() == ListaDeReproduccion.class) {
+                lst.set(i, ((ListaDeReproduccion)o).getDt());
+            } else if (o.getClass() == Video.class) {
+                lst.set(i, ((Video)o).getDt());
+            }
+        }
+        return lst;
+    }
 }

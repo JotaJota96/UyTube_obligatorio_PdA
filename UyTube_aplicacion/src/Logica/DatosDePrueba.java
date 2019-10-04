@@ -4,6 +4,9 @@ import JPAControllerClasses.BusquedaEnBDD;
 import Logica.Clases.Canal;
 import Logica.Clases.ListaDeReproduccion;
 import Logica.Clases.Video;
+import Logica.DataType.DtCanal;
+import Logica.DataType.DtListaDeReproduccion;
+import Logica.DataType.DtVideo;
 import Logica.Enumerados.Filtrado;
 import Logica.Enumerados.Ordenacion;
 import Logica.Interfaces.IAdmin;
@@ -12,10 +15,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-/**
- * Esta clase fue hecha para cargar datos de prueba en el sistema
- * @author Juan
- */
+
 public class DatosDePrueba {
     private static IAdmin adminSys = null;
     private static IUsuario usuSys = null;
@@ -33,34 +33,30 @@ public class DatosDePrueba {
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("UyTubePU");
             EntityManager manager = factory.createEntityManager();
             /*
-            for (Object o : new BusquedaEnBDD().buscarPorCategoria("MUSICA")){
-                if (o.getClass() == Video.class){
-                    Video i = (Video) o;
-                    System.out.println(i.getNombre());
-                }else if (o.getClass() == ListaDeReproduccion.class){
-                    ListaDeReproduccion i = (ListaDeReproduccion) o;
-                    System.out.println(i.getNombre());
+            // Prueba de búsqueda por categoría
+            for (Object o : new BusquedaEnBDD().buscarPorCategoria("GAMING")){
+                if (o.getClass() == DtVideo.class){
+                    System.out.println(((DtVideo) o).toString());
+                }else if (o.getClass() == DtListaDeReproduccion.class){
+                    System.out.println(((DtListaDeReproduccion) o).toString());
+                }else if (o.getClass() == DtCanal.class){
+                    System.out.println(((DtCanal) o).toString());
                 }
-                
-                
-                
             }
             */
             
-            
-            for (Object o : new BusquedaEnBDD().buscar("no", Filtrado.TODO, Ordenacion.ALFABETICA_ASCENDENTE)){
-                if (o.getClass() == Video.class){
-                    Video i = (Video) o;
-                    System.out.println(i.getNombre());
-                }else if (o.getClass() == ListaDeReproduccion.class){
-                    ListaDeReproduccion i = (ListaDeReproduccion) o;
-                    System.out.println(i.getNombre());
-                }else if (o.getClass() == Canal.class){
-                    Canal i = (Canal) o;
-                    System.out.println(i.getNombre());
+            /*
+            // Prueba de búsqueda general
+            for (Object o : new BusquedaEnBDD().buscar("", Filtrado.CANALES, Ordenacion.ALFABETICA_ASCENDENTE)){
+                if (o.getClass() == DtVideo.class){
+                    System.out.println(((DtVideo) o).toString());
+                }else if (o.getClass() == DtListaDeReproduccion.class){
+                    System.out.println(((DtListaDeReproduccion) o).toString());
+                }else if (o.getClass() == DtCanal.class){
+                    System.out.println(((DtCanal) o).toString());
                 }
             }
-            
+            */
             
             
         } catch (Exception e) {
@@ -69,22 +65,5 @@ public class DatosDePrueba {
             System.out.println("//////////////////////////");
         }
     }
-    
-    
-    
-    /**
-     * Busca contenido por coincidencia de texto en nombre o descripcion de los
-     * contenidos del sistema que pertenezcan a la categoria indicada
-     *
-     * @param categoria Nombre de la categoria a buscar
-     * @return Resultado de la busqueda. Puede contener DtVideo y
-     * DtListaDeReproduccion. (para usar los elementos devueltos hay que
-     * castearlos)
-     */
-    public static ArrayList<Object> buscar(String categoria){
-        return null;
-    }
-    
-    
     
 }
