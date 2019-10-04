@@ -1,8 +1,11 @@
 package Logica;
 
 import JPAControllerClasses.BusquedaEnBDD;
+import Logica.Clases.Canal;
 import Logica.Clases.ListaDeReproduccion;
 import Logica.Clases.Video;
+import Logica.Enumerados.Filtrado;
+import Logica.Enumerados.Ordenacion;
 import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
 import java.util.ArrayList;
@@ -45,15 +48,15 @@ public class DatosDePrueba {
             */
             
             
-            
-            
-            
-            for (Object o : new BusquedaEnBDD().buscarPorCategoria("MUSICA")){
+            for (Object o : new BusquedaEnBDD().buscar("", Filtrado.TODO, Ordenacion.ALFABETICA_ASCENDENTE)){
                 if (o.getClass() == Video.class){
                     Video i = (Video) o;
                     System.out.println(i.getNombre());
                 }else if (o.getClass() == ListaDeReproduccion.class){
                     ListaDeReproduccion i = (ListaDeReproduccion) o;
+                    System.out.println(i.getNombre());
+                }else if (o.getClass() == Canal.class){
+                    Canal i = (Canal) o;
                     System.out.println(i.getNombre());
                 }
             }

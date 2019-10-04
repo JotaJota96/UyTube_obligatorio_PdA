@@ -76,8 +76,9 @@ public interface IUsuario {
     public ArrayList<Object> buscar(String busqueda, Filtrado filtro, Ordenacion orden);
 
     /**
-     * Busca contenido por coincidencia de texto en nombre o descripcion de los
-     * contenidos del sistema que pertenezcan a la categoria indicada
+     * Busca contenido que pertenezcan a la categoria indicada El Resultado
+     * contendrá todos los contenidos publicos, y los contenidos privados del
+     * usuarioActual
      *
      * @param categoria Nombre de la categoria a buscar
      * @return Resultado de la busqueda. Puede contener DtVideo y
