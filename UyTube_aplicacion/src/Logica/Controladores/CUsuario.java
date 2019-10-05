@@ -1,11 +1,13 @@
 package Logica.Controladores;
 
+import JPAControllerClasses.BusquedaEnBDD;
 import JPAControllerClasses.CategoriaJpaController;
 import JPAControllerClasses.ListaPorDefectoJpaController;
 import JPAControllerClasses.UsuarioJpaController;
 import Logica.Clases.Categoria;
 import Logica.Clases.ListaPorDefecto;
 import Logica.Clases.Usuario;
+import Logica.Clases.Video;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtListaDeReproduccion;
@@ -14,6 +16,8 @@ import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.Filtrado;
 import Logica.Enumerados.Ordenacion;
+import Logica.Enumerados.Privacidad;
+import Logica.Enumerados.TipoListaDeReproduccion;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
@@ -35,15 +39,13 @@ public class CUsuario implements IUsuario {
         this.idListaSeleccionada = 0;
         this.idVideoSeleccionado = 0;
     }
-    
-    public static CUsuario getInstancia(){
-        if( instancia == null ){
+    public static CUsuario getInstancia() {
+        if (instancia == null) {
             instancia = new CUsuario();
         }
-        return instancia;        
+        return instancia;
     }
-    
-    
+  
     //***************** Traer datos de la base de datos *******************
     /**
      * Lista los usuarios no eliminados desde la base de datos
@@ -95,7 +97,7 @@ public class CUsuario implements IUsuario {
         }
         return ListasPorDefecto;
     }
-    
+
     //******************** Funciones de la interfaz ************************
     @Override
     public void agregarVideoAListaDeReproduccion(int idLista) {
@@ -207,7 +209,16 @@ public class CUsuario implements IUsuario {
 
     @Override
     public void altaVideo(DtVideo video) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(usuarioActual == null){
+            throw new RuntimeException("No se a iniciado sesión");
+        }
+        if (video == null) {
+            throw new RuntimeException("El video no puede ser null");
+        }
+        if(!obtenerCategorias().containsKey(video.getCategoria())){
+            throw new RuntimeException("La categoria no existe");
+        }
+        usuarioActual.agregarVideoACanal(video);
     }
 
     @Override
@@ -222,27 +233,135 @@ public class CUsuario implements IUsuario {
 
     @Override
     public ArrayList<Object> buscar(String busqueda, Filtrado filtro, Ordenacion orden) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado sesión");
+        }
+        if (this.usuarioSeleccionado == null) {
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        //Cambiar la linea de abajo cuando se implemente la funcion de juan
+        // hecho
+        ArrayList<Object> ret = new BusquedaEnBDD().buscar(busqueda, filtro, orden);
+
+        for (int i = 0; i < ret.size(); i++) {
+            
+            if (ret.get(i) == DtVideo.class) {
+                DtVideo vid = (DtVideo) ret.get(i);
+                if (vid.getPrivacidad() == Privacidad.PRIVADO) {
+                    try {
+                        this.usuarioActual.obtenerVideo(vid.getId());
+                    } catch (Exception e) {
+                        ret.remove(i);
+                        i--;
+                    }
+                }
+            } else if (ret.get(i) == DtListaDeReproduccion.class) {
+                DtListaDeReproduccion list = (DtListaDeReproduccion) ret.get(i);
+                if (list.getPrivacidad() == Privacidad.PRIVADO) {
+                    try {
+                        this.usuarioActual.obtenerListaDeReproduccion(list.getId());
+                    } catch (Exception e) {
+                        ret.remove(i);
+                        i--;
+                    }
+                } 
+            } else if (ret.get(i) == DtCanal.class) {
+                DtCanal canal = (DtCanal) ret.get(i);
+                if (canal.getPrivacidad() == Privacidad.PRIVADO) {
+                    if(this.usuarioActual.obtenerCanal().getId() != canal.getId()){
+                        ret.remove(i);
+                        i--;
+                    }
+                }
+            }
+        }
+        return ret;
     }
 
     @Override
     public ArrayList<Object> buscar(String categoria) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (this.usuarioSeleccionado == null) {
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        //Cambiar la linea de abajo cuando se implemente la funcion de juan
+        // hecho
+        ArrayList<Object> ret = new BusquedaEnBDD().buscarPorCategoria(categoria);
+
+        for (int i = 0; i < ret.size(); i++) {
+            
+            if (ret.get(i) == DtVideo.class) {
+                DtVideo vid = (DtVideo) ret.get(i);
+                if (vid.getPrivacidad() == Privacidad.PRIVADO) {
+                    try {
+                        this.usuarioActual.obtenerVideo(vid.getId());
+                    } catch (Exception e) {
+                        ret.remove(i);
+                        i--;
+                    }
+                }
+            } else if (ret.get(i) == DtListaDeReproduccion.class) {
+                DtListaDeReproduccion list = (DtListaDeReproduccion) ret.get(i);
+                if (list.getPrivacidad() == Privacidad.PRIVADO) {
+                    try {
+                        this.usuarioActual.obtenerListaDeReproduccion(list.getId());
+                    } catch (Exception e) {
+                        ret.remove(i);
+                        i--;
+                    }
+                }
+            }
+        }
+        return ret;
     }
 
     @Override
     public void cerrarSesion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(usuarioActual == null){
+            throw new RuntimeException("No puedes cerrar sesión sin haberla iniciado");
+        }
+        usuarioActual = null;
     }
 
     @Override
     public boolean existeEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (email.equals("")){
+            return false;
+        }
+        Map<String, Usuario> Usuarios = obtenerUsuarios();
+       
+        for (Map.Entry<String, Usuario> u : Usuarios.entrySet()) {
+            if (u.getValue().getCorreo().equals(email)) {
+                return true;
+            }
+        }
+        
+        for (Usuario u : new UsuarioJpaController().findUsuarioEliminadoEntities()) {
+            if (u.getCorreo().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean existeNickname(String nickname) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (nickname.equals("")){
+            return false;
+        }
+        Map<String, Usuario> Usuarios = obtenerUsuarios();
+        if (Usuarios.containsKey(nickname)) {
+            return true;
+        }
+
+        for (Usuario u : new UsuarioJpaController().findUsuarioEliminadoEntities()) {
+            if (u.getNickname().equals(nickname)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -292,17 +411,62 @@ public class CUsuario implements IUsuario {
     
     @Override
     public ArrayList<String> listarCategorias() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Map<String, Categoria> categorias = obtenerCategorias();
+       ArrayList<String> ret = new ArrayList<>();
+       
+        for (Map.Entry<String, Categoria> entry : categorias.entrySet()) {
+           ret.add(entry.getKey());
+        }
+        return ret;
     }
 
     @Override
     public ArrayList<DtComentario> listarComentariosDeVideo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (this.usuarioSeleccionado == null) {
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        return usuarioSeleccionado.listarComentariosDeVideo(idVideoSeleccionado);
     }
 
     @Override
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeUsuario(boolean incluirListasPorDefecto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (this.usuarioSeleccionado == null) {
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        
+       ArrayList<DtListaDeReproduccion> ret = usuarioSeleccionado.listarListasDeReproduccionDeCanal(false);
+       
+        if (this.usuarioActual == this.usuarioSeleccionado) {
+            // Se incluyen las privadas pero se quitan las POR_DEFECTO segun el parametro recibido
+            if (incluirListasPorDefecto) {
+                // se retorna todo
+                return ret;
+            } else {
+                // Se quitan las listas POR_DEFECTO
+                for (int i = 0; i < ret.size(); i++) {
+                    if (ret.get(i).getTipo() == TipoListaDeReproduccion.POR_DEFECTO) {
+                        ret.remove(i);
+                        i--;
+                    }
+                }
+                return ret;
+            }
+        } else {
+            // Solo se incluyen las listas Publicas, osea que se quitan todas las Privadas
+            for (int i = 0; i < ret.size(); i++) {
+                if (ret.get(i).getPrivacidad() == Privacidad.PUBLICO) {
+                    ret.remove(i);
+                    i--;
+                }
+            }
+            return ret;
+        }
     }
 
     @Override
@@ -332,32 +496,146 @@ public class CUsuario implements IUsuario {
 
     @Override
     public ArrayList<DtVideo> listarVideosDeListaDeReproduccion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (this.usuarioSeleccionado == null) {
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        ArrayList<DtVideo> ret = this.usuarioSeleccionado.listarVideosDeListaDeReproduccion(idListaSeleccionada);
+        if (this.usuarioActual != this.usuarioSeleccionado) {
+            // Se devuelven solo los videos Publicos
+            for (int i = 0; i < ret.size(); i++) {
+                if (ret.get(i).getPrivacidad() == Privacidad.PRIVADO) {
+                    ret.remove(i);
+                    i--;
+                }
+            }
+            return ret;
+        } else {
+            // incluye los videos privados si y solo si son del usuario actual
+            // dicho de otra manera: quita los videos privados que no son del usuarioActual
+            for (int i = 0; i < ret.size(); i++) {
+                if (ret.get(i).getPrivacidad() == Privacidad.PRIVADO) {
+                    try {
+                        this.usuarioActual.obtenerVideo(ret.get(i).getId());
+                    } catch (Exception e) {
+                        ret.remove(i);
+                        i--;
+                    }
+                }
+            }
+            return ret;
+        }
     }
 
     @Override
     public ArrayList<DtVideo> listarVideosDeUsuario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.usuarioActual == null){
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        
+        if(this.usuarioActual == this.usuarioSeleccionado){
+            // se incluyen todos los videos
+            return usuarioSeleccionado.listarVideosDeCanal();
+        }else{
+            // Se quitan los videos privados
+            ArrayList<DtVideo> ret = this.usuarioSeleccionado.listarVideosDeCanal();
+            for (int i = 0 ; i < ret.size(); i++) {
+                if(ret.get(i).getPrivacidad() == Privacidad.PRIVADO){
+                    ret.remove(i);
+                    i--;
+                }
+            }
+            return ret;
+        }
     }
 
     @Override
     public void modificarListaDeReproduccion(DtListaDeReproduccion lista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         /**
+         * Se modifican los datos de la lista idListaSeleccionada
+         */
+        if (this.usuarioActual == null){
+            throw new RuntimeException("No se ha iniciado sesión");
+        }
+        if (idListaSeleccionada == 0){
+            throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionado");
+        }
+        if (lista == null){
+            throw new RuntimeException("El DataType recibido es null");
+        }
+        if (!this.obtenerCategorias().containsKey(lista.getCategoria())) {
+            throw new RuntimeException("La categoria no existe");
+        }
+        // no confio en que el DataType recibido venga con el id del video correcto,
+        // asi que creo otro y con el idVideoSeleccionado por las dudas
+        DtListaDeReproduccion dtl = new DtListaDeReproduccion(
+                idListaSeleccionada, 
+                lista.getNombre(), 
+                lista.getPrivacidad(), 
+                lista.getTipo(), 
+                lista.getCategoria());
+        usuarioActual.modificarListaDeReproduccionDeCanal(dtl);
     }
 
     @Override
     public void modificarUsuarioYCanal(DtUsuario usr, DtCanal canal) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (usr == null) {
+            throw new RuntimeException("Todos los datos del Usuario no pueden ser vacios");
+        }
+        if (canal == null) {
+            throw new RuntimeException("Todos los datos del Canal no pueden ser vacios");
+        }
+        usuarioActual.modificar(usr, canal);
+        
+        try {
+            new UsuarioJpaController().edit(usuarioActual);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override
     public void modificarVideo(DtVideo video) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (video == null) {
+            throw new RuntimeException("Todos los datos del video no pueden ser vacios");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        if (!this.obtenerCategorias().containsKey(video.getCategoria())) {
+            throw new RuntimeException("La categoria no existe");
+        }
+         
+        DtVideo dtv = new DtVideo(
+                idVideoSeleccionado, 
+                video.getNombre(), 
+                video.getDescripcion(), 
+                video.getDuracion(), 
+                video.getFechaPublicacion(), 
+                video.getUrlVideoOriginal(), 
+                video.getPrivacidad(), 
+                video.getCategoria(), 
+                0, 0);
+        usuarioActual.modificarVideoDeCanal(dtv);
     }
 
     @Override
     public DtCanal obtenerCanalDeUsuario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (usuarioActual == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        return usuarioActual.obtenerCanal();
     }
 
     @Override
@@ -392,17 +670,27 @@ public class CUsuario implements IUsuario {
 
     @Override
     public DtValoracion obtenerValoracionDada() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (usuarioSeleccionado == null) {
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        return usuarioSeleccionado.obtenerValoracion(idVideoSeleccionado, usuarioActual.getNickname());
     }
 
     @Override
     public ArrayList<DtValoracion> obtenerValoracionesDeVideo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        return usuarioSeleccionado.listarValoracionesDeVideo(idVideoSeleccionado);
     }
 
     @Override
     public void quitarVideoDeListaDeReproduccion(int idVideo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(usuarioActual == null){
+             throw new RuntimeException("No se a iniciado la sesión");
+        }
+        usuarioActual.quitarVideoDeListaDeReproduccion(idListaSeleccionada,idVideo);
+     
     }
 
     @Override
@@ -454,6 +742,11 @@ public class CUsuario implements IUsuario {
     }
 
     @Override
+    public boolean sesionIniciada(){
+        return (usuarioActual != null);
+    }
+    
+    @Override
     public boolean validarNuevaListaParticular(String nombre) {
         if (this.usuarioActual == null){
             throw new RuntimeException("No se ha iniciado sesión");
@@ -499,5 +792,5 @@ public class CUsuario implements IUsuario {
             usuarioSeleccionado.agregarModificarValoracionDeVideo(idVideoSeleccionado, val, usuarioActual);
         }
     }
-    
+
 }

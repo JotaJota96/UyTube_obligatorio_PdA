@@ -310,6 +310,12 @@ public interface IUsuario {
     public DtVideo seleccionarVideo(int idVideo);
 
     /**
+     * Permite saber si hay una sesion iniciada
+     * @return true si hay una sesion iniciada
+     */
+    public boolean sesionIniciada();
+    
+    /**
      * Verifica si el usuarioActual puede agregar una lista de reproduccion con
      * el nombre indicado (Si hay una idListaSeleccionada y su nombre coincide
      * con el nombre a verificar, retorna true)

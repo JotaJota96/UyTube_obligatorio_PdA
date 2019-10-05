@@ -119,7 +119,7 @@ public class BusquedaEnBDD implements Serializable {
      * @param cat Categoria a buscar
      * @return Lista ordenada Video y ListaDeReproduccion
      */
-    public List<Object> buscarPorCategoria(String cat) {
+    public ArrayList<Object> buscarPorCategoria(String cat) {
         EntityManager em = getEntityManager();
         List<Object> ret = new ArrayList();
         try {
