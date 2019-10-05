@@ -198,11 +198,11 @@ public class BusquedaEnBDD implements Serializable {
     private String nombreParaOrdenar(Object o){
         java.sql.Date ret = null;
         // Devuelve el nombre del objeto
-        if (o.getClass() == Canal.class){
+        if (o instanceof Canal){
             return ((Canal) o).getNombre();
-        }else if (o.getClass() == ListaDeReproduccion.class){
+        }else if (o instanceof ListaDeReproduccion){
             return ((ListaDeReproduccion) o).getNombre();
-        }else if (o.getClass() == Video.class){
+        }else if (o instanceof Video){
             return ((Video) o).getNombre();
         }
         return "";
@@ -217,8 +217,11 @@ public class BusquedaEnBDD implements Serializable {
      * @return 
      */
     private java.sql.Date ultimaActividad(Object o){
-        java.sql.Date ret = null;
-        if (o.getClass() == Canal.class){
+        // Por si no se pude determinar la fecha, inicializo con una fecha bien vieja
+        java.sql.Date ret = new java.sql.Date(-1900, 0, 1);
+        // mas viejo que eso solo puede ser algun video de Mirta Legrant, y no creo que ella use UyTube...
+        
+        if (o instanceof Canal){
            // si el objeto es un Canal
            // busca la fecha de publicacion mas reciente entre los videos del canal
             ArrayList<DtVideo> videos = ((Canal) o).listarVideos();
@@ -227,7 +230,7 @@ public class BusquedaEnBDD implements Serializable {
                     ret = dtv.getFechaPublicacion();
                 }
             }
-        }else if (o.getClass() == ListaDeReproduccion.class){
+        }else if (o instanceof ListaDeReproduccion){
            // si el objeto es una ListaDeReproduccion
            // busca la fecha de publicacion mas reciente entre los videos de la lista
             ArrayList<DtVideo> videos = ((ListaDeReproduccion) o).listarVideos();
@@ -236,7 +239,7 @@ public class BusquedaEnBDD implements Serializable {
                     ret = dtv.getFechaPublicacion();
                 }
             }
-        }else if (o.getClass() == Video.class){
+        }else if (o instanceof Video){
            // si el objeto es un Video
            // Devuelve su fecha
             ret = ((Video) o).getFechaPublicacion();
@@ -283,11 +286,11 @@ public class BusquedaEnBDD implements Serializable {
      */
     private int comparar(ParDeObjetos a, ParDeObjetos b){
         // Realiza la comparacion dependiendo del tipo de objeto para comparar
-        if (a.getOrderField().getClass() == String.class){
+        if (a.getOrderField() instanceof String){
             String str1 = (String) a.getOrderField();
             String str2 = (String) b.getOrderField();
             return (str1.compareToIgnoreCase(str2)) * -1;
-        }else if (a.getOrderField().getClass() == java.sql.Date.class){
+        }else if (a.getOrderField() instanceof java.sql.Date){
             java.sql.Date date1 = (java.sql.Date) a.getOrderField();
             java.sql.Date date2 = (java.sql.Date) b.getOrderField();
             return date1.compareTo(date2);
@@ -306,11 +309,11 @@ public class BusquedaEnBDD implements Serializable {
         for (int i = 0; i < lst.size(); i++) {
             o = lst.get(i);
             // Castea el objeto para llamar a la funcion .getDT()
-            if (o.getClass() == Canal.class) {
+            if (o instanceof Canal) {
                 lst.set(i, ((Canal)o).getDT());
-            } else if (o.getClass() == ListaDeReproduccion.class) {
+            } else if (o instanceof ListaDeReproduccion) {
                 lst.set(i, ((ListaDeReproduccion)o).getDt());
-            } else if (o.getClass() == Video.class) {
+            } else if (o instanceof Video) {
                 lst.set(i, ((Video)o).getDt());
             }
         }

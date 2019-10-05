@@ -32,32 +32,6 @@ public class DatosDePrueba {
         try {
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("UyTubePU");
             EntityManager manager = factory.createEntityManager();
-            /*
-            // Prueba de búsqueda por categoría
-            for (Object o : new BusquedaEnBDD().buscarPorCategoria("GAMING")){
-                if (o.getClass() == DtVideo.class){
-                    System.out.println(((DtVideo) o).toString());
-                }else if (o.getClass() == DtListaDeReproduccion.class){
-                    System.out.println(((DtListaDeReproduccion) o).toString());
-                }else if (o.getClass() == DtCanal.class){
-                    System.out.println(((DtCanal) o).toString());
-                }
-            }
-            */
-            
-            /*
-            // Prueba de búsqueda general
-            for (Object o : new BusquedaEnBDD().buscar("", Filtrado.CANALES, Ordenacion.ALFABETICA_ASCENDENTE)){
-                if (o.getClass() == DtVideo.class){
-                    System.out.println(((DtVideo) o).toString());
-                }else if (o.getClass() == DtListaDeReproduccion.class){
-                    System.out.println(((DtListaDeReproduccion) o).toString());
-                }else if (o.getClass() == DtCanal.class){
-                    System.out.println(((DtCanal) o).toString());
-                }
-            }
-            */
-            
             
         } catch (Exception e) {
             System.out.println("//////////////////////////");
@@ -65,5 +39,10 @@ public class DatosDePrueba {
             System.out.println("//////////////////////////");
         }
     }
-    
+    private static void mostrarLista(ArrayList<Object> lst){
+        // Prueba de búsqueda por categoría
+        for (Object o : lst){
+            System.out.println("> " + o.toString());
+        }
+    }
 }

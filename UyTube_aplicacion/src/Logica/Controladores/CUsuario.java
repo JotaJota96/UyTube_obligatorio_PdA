@@ -245,7 +245,7 @@ public class CUsuario implements IUsuario {
 
         for (int i = 0; i < ret.size(); i++) {
             
-            if (ret.get(i) == DtVideo.class) {
+            if (ret.get(i) instanceof DtVideo) {
                 DtVideo vid = (DtVideo) ret.get(i);
                 if (vid.getPrivacidad() == Privacidad.PRIVADO) {
                     try {
@@ -255,7 +255,7 @@ public class CUsuario implements IUsuario {
                         i--;
                     }
                 }
-            } else if (ret.get(i) == DtListaDeReproduccion.class) {
+            } else if (ret.get(i) instanceof DtListaDeReproduccion) {
                 DtListaDeReproduccion list = (DtListaDeReproduccion) ret.get(i);
                 if (list.getPrivacidad() == Privacidad.PRIVADO) {
                     try {
@@ -265,7 +265,7 @@ public class CUsuario implements IUsuario {
                         i--;
                     }
                 } 
-            } else if (ret.get(i) == DtCanal.class) {
+            } else if (ret.get(i) instanceof DtCanal) {
                 DtCanal canal = (DtCanal) ret.get(i);
                 if (canal.getPrivacidad() == Privacidad.PRIVADO) {
                     if(this.usuarioActual.obtenerCanal().getId() != canal.getId()){
@@ -292,7 +292,7 @@ public class CUsuario implements IUsuario {
 
         for (int i = 0; i < ret.size(); i++) {
             
-            if (ret.get(i) == DtVideo.class) {
+            if (ret.get(i) instanceof DtVideo) {
                 DtVideo vid = (DtVideo) ret.get(i);
                 if (vid.getPrivacidad() == Privacidad.PRIVADO) {
                     try {
@@ -302,7 +302,7 @@ public class CUsuario implements IUsuario {
                         i--;
                     }
                 }
-            } else if (ret.get(i) == DtListaDeReproduccion.class) {
+            } else if (ret.get(i) instanceof DtListaDeReproduccion) {
                 DtListaDeReproduccion list = (DtListaDeReproduccion) ret.get(i);
                 if (list.getPrivacidad() == Privacidad.PRIVADO) {
                     try {
