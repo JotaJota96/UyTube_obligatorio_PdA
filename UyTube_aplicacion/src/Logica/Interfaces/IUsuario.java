@@ -65,7 +65,8 @@ public interface IUsuario {
      * Busca contenido por coincidencia de texto en nombre o descripcion de los
      * contenidos del sistema En el resultado se incluirán (si corresponde segun
      * el filtrado) los videos privados del usuarioActual
-     *
+     * Si no se ha iniciado sesión, se muestran sólo los contenidos públicos
+     * 
      * @param busqueda Texto a buscar (si es vacío incluye todo el contenido)
      * @param filtro Tipo de contenido en el cual se realizará la búsqueda
      * @param orden Manera de ordenar el resultado de la búsqueda
@@ -79,7 +80,8 @@ public interface IUsuario {
      * Busca contenido que pertenezcan a la categoria indicada El Resultado
      * contendrá todos los contenidos publicos, y los contenidos privados del
      * usuarioActual
-     *
+     * Si no se ha iniciado sesión, se muestran sólo los contenidos públicos
+     * 
      * @param categoria Nombre de la categoria a buscar
      * @return Resultado de la busqueda. Puede contener DtVideo y
      * DtListaDeReproduccion. (para usar los elementos devueltos hay que
@@ -189,7 +191,8 @@ public interface IUsuario {
      * Lista los videos contenidos en la lista idListaSeleccionada perteneciente
      * al usuarioSeleccionado Si la lista contiene video privado que no
      * pertenezca a usuarioActual, estos no se incluiran en el resultado
-     *
+     * Si no se ha iniciado sesion solo lista los videos publicos
+     * 
      * @return Conjunto de videos
      */
     public ArrayList<DtVideo> listarVideosDeListaDeReproduccion();

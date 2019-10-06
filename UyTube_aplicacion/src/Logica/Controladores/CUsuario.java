@@ -223,6 +223,9 @@ public class CUsuario implements IUsuario {
 
     @Override
     public void bajaUsuario() {
+        if(usuarioActual == null){
+            throw new RuntimeException("No se a iniciado sesión");
+        }
         // Bienvenido al parche
         // La verdad no sabia bien como implementar esta funcion, asi que mejor no reinventar la rueda, uso la que ya existe  aunque implique llamar al otro controlador...
         IAdmin ca = Fabrica.getInstancia().getIAdmin();
@@ -233,22 +236,17 @@ public class CUsuario implements IUsuario {
 
     @Override
     public ArrayList<Object> buscar(String busqueda, Filtrado filtro, Ordenacion orden) {
-        if (this.usuarioActual == null) {
-            throw new RuntimeException("No se a iniciado sesión");
-        }
-        if (this.usuarioSeleccionado == null) {
-            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
-        }
         //Cambiar la linea de abajo cuando se implemente la funcion de juan
         // hecho
         ArrayList<Object> ret = new BusquedaEnBDD().buscar(busqueda, filtro, orden);
 
         for (int i = 0; i < ret.size(); i++) {
-            
+
             if (ret.get(i) instanceof DtVideo) {
                 DtVideo vid = (DtVideo) ret.get(i);
                 if (vid.getPrivacidad() == Privacidad.PRIVADO) {
                     try {
+                        // Si el usuarioActual es null, o no posee un video con ese ID, se quita el elemento de la lista
                         this.usuarioActual.obtenerVideo(vid.getId());
                     } catch (Exception e) {
                         ret.remove(i);
@@ -259,16 +257,23 @@ public class CUsuario implements IUsuario {
                 DtListaDeReproduccion list = (DtListaDeReproduccion) ret.get(i);
                 if (list.getPrivacidad() == Privacidad.PRIVADO) {
                     try {
+                        // Si el usuarioActual es null, o no posee una lista con ese ID, se quita el elemento de la lista
                         this.usuarioActual.obtenerListaDeReproduccion(list.getId());
                     } catch (Exception e) {
                         ret.remove(i);
                         i--;
                     }
-                } 
+                }
             } else if (ret.get(i) instanceof DtCanal) {
                 DtCanal canal = (DtCanal) ret.get(i);
-                if (canal.getPrivacidad() == Privacidad.PRIVADO) {
-                    if(this.usuarioActual.obtenerCanal().getId() != canal.getId()){
+                if (canal.getPrivacidad() == Privacidad.PRIVADO) { // Si el canal es privado...
+                    if (sesionIniciada()) { // Si hay una sesion iniciada
+                        if (this.usuarioActual.obtenerCanal().getId() != canal.getId()) { // si el canal no es el propio, se remueve
+                            ret.remove(i);
+                            i--;
+                        }
+                        // si no entro al if, el canal esprivado pero es propio, entonces no se quita
+                    } else { // Si no hay una sesion iniciada, se quita el canal
                         ret.remove(i);
                         i--;
                     }
@@ -280,12 +285,6 @@ public class CUsuario implements IUsuario {
 
     @Override
     public ArrayList<Object> buscar(String categoria) {
-        if (this.usuarioActual == null) {
-            throw new RuntimeException("No se a iniciado la sesión");
-        }
-        if (this.usuarioSeleccionado == null) {
-            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
-        }
         //Cambiar la linea de abajo cuando se implemente la funcion de juan
         // hecho
         ArrayList<Object> ret = new BusquedaEnBDD().buscarPorCategoria(categoria);
@@ -296,6 +295,7 @@ public class CUsuario implements IUsuario {
                 DtVideo vid = (DtVideo) ret.get(i);
                 if (vid.getPrivacidad() == Privacidad.PRIVADO) {
                     try {
+                        // Si el usuarioActual es null, o no posee un video con ese ID, se quita el elemento de la lista
                         this.usuarioActual.obtenerVideo(vid.getId());
                     } catch (Exception e) {
                         ret.remove(i);
@@ -306,6 +306,7 @@ public class CUsuario implements IUsuario {
                 DtListaDeReproduccion list = (DtListaDeReproduccion) ret.get(i);
                 if (list.getPrivacidad() == Privacidad.PRIVADO) {
                     try {
+                        // Si el usuarioActual es null, o no posee una lista con ese ID, se quita el elemento de la lista
                         this.usuarioActual.obtenerListaDeReproduccion(list.getId());
                     } catch (Exception e) {
                         ret.remove(i);
@@ -371,16 +372,19 @@ public class CUsuario implements IUsuario {
         }
         Map<String, Usuario> usuarios = obtenerUsuarios();
         boolean usuarioEncontrado = false;
+        // Intenta obtener al usuario por nickname
         usuarioActual = usuarios.get(nickOEmail);
-        if (usuarioActual == null){
+        if (usuarioActual == null){ // si NO lo encuentra por nickname
+            // Recorre todos los usuarios buscandolo por su correo
             for (Map.Entry<String, Usuario> u : usuarios.entrySet()) {
+                // Si encuentra al usuario con ese correo
                 if (u.getValue().getCorreo().equals(nickOEmail)){
                     usuarioActual = u.getValue();
                     usuarioEncontrado = true;
                     break;
                 }
             }
-        }else{
+        }else{ // si lo encuentra por nickname
             usuarioEncontrado = true;
         }
         
@@ -422,20 +426,17 @@ public class CUsuario implements IUsuario {
 
     @Override
     public ArrayList<DtComentario> listarComentariosDeVideo() {
-        if (this.usuarioActual == null) {
-            throw new RuntimeException("No se a iniciado la sesión");
-        }
         if (this.usuarioSeleccionado == null) {
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
         return usuarioSeleccionado.listarComentariosDeVideo(idVideoSeleccionado);
     }
 
     @Override
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeUsuario(boolean incluirListasPorDefecto) {
-        if (this.usuarioActual == null) {
-            throw new RuntimeException("No se a iniciado la sesión");
-        }
         if (this.usuarioSeleccionado == null) {
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
@@ -458,9 +459,10 @@ public class CUsuario implements IUsuario {
                 return ret;
             }
         } else {
+            // si no se ha iniciado sesion, o si se inicio sesion pero el usuarioSeleccionado no es el usuarioActual
             // Solo se incluyen las listas Publicas, osea que se quitan todas las Privadas
             for (int i = 0; i < ret.size(); i++) {
-                if (ret.get(i).getPrivacidad() == Privacidad.PUBLICO) {
+                if (ret.get(i).getPrivacidad() == Privacidad.PRIVADO) {
                     ret.remove(i);
                     i--;
                 }
@@ -496,23 +498,11 @@ public class CUsuario implements IUsuario {
 
     @Override
     public ArrayList<DtVideo> listarVideosDeListaDeReproduccion() {
-        if (this.usuarioActual == null) {
-            throw new RuntimeException("No se a iniciado la sesión");
-        }
         if (this.usuarioSeleccionado == null) {
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
         ArrayList<DtVideo> ret = this.usuarioSeleccionado.listarVideosDeListaDeReproduccion(idListaSeleccionada);
-        if (this.usuarioActual != this.usuarioSeleccionado) {
-            // Se devuelven solo los videos Publicos
-            for (int i = 0; i < ret.size(); i++) {
-                if (ret.get(i).getPrivacidad() == Privacidad.PRIVADO) {
-                    ret.remove(i);
-                    i--;
-                }
-            }
-            return ret;
-        } else {
+        if (this.usuarioActual == this.usuarioSeleccionado) {
             // incluye los videos privados si y solo si son del usuario actual
             // dicho de otra manera: quita los videos privados que no son del usuarioActual
             for (int i = 0; i < ret.size(); i++) {
@@ -526,14 +516,20 @@ public class CUsuario implements IUsuario {
                 }
             }
             return ret;
+        } else {
+            // Se devuelven solo los videos Publicos
+            for (int i = 0; i < ret.size(); i++) {
+                if (ret.get(i).getPrivacidad() == Privacidad.PRIVADO) {
+                    ret.remove(i);
+                    i--;
+                }
+            }
+            return ret;
         }
     }
 
     @Override
     public ArrayList<DtVideo> listarVideosDeUsuario() {
-        if (this.usuarioActual == null){
-            throw new RuntimeException("No se a iniciado la sesión");
-        }
         if (this.usuarioSeleccionado == null){
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
@@ -632,10 +628,10 @@ public class CUsuario implements IUsuario {
 
     @Override
     public DtCanal obtenerCanalDeUsuario() {
-        if (usuarioActual == null) {
-            throw new RuntimeException("No se a iniciado la sesión");
+        if (this.usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
-        return usuarioActual.obtenerCanal();
+        return usuarioSeleccionado.obtenerCanal();
     }
 
     @Override
@@ -670,8 +666,14 @@ public class CUsuario implements IUsuario {
 
     @Override
     public DtValoracion obtenerValoracionDada() {
-        if (usuarioSeleccionado == null) {
+        if (usuarioActual == null) {
             throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if(usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
         return usuarioSeleccionado.obtenerValoracion(idVideoSeleccionado, usuarioActual.getNickname());
     }
@@ -681,6 +683,9 @@ public class CUsuario implements IUsuario {
         if(usuarioSeleccionado == null){
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
         return usuarioSeleccionado.listarValoracionesDeVideo(idVideoSeleccionado);
     }
 
@@ -688,6 +693,9 @@ public class CUsuario implements IUsuario {
     public void quitarVideoDeListaDeReproduccion(int idVideo) {
         if(usuarioActual == null){
              throw new RuntimeException("No se a iniciado la sesión");
+        }
+        if (idListaSeleccionada == 0){
+            throw new RuntimeException("El sistema no tiene una lista de reproduccion seleccionada");
         }
         usuarioActual.quitarVideoDeListaDeReproduccion(idListaSeleccionada,idVideo);
      
