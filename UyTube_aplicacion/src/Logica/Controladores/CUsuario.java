@@ -256,12 +256,17 @@ public class CUsuario implements IUsuario {
             } else if (ret.get(i) instanceof DtListaDeReproduccion) {
                 DtListaDeReproduccion list = (DtListaDeReproduccion) ret.get(i);
                 if (list.getPrivacidad() == Privacidad.PRIVADO) {
-                    try {
-                        // Si el usuarioActual es null, o no posee una lista con ese ID, se quita el elemento de la lista
-                        this.usuarioActual.obtenerListaDeReproduccion(list.getId());
-                    } catch (Exception e) {
+                    if (list.getTipo() == TipoListaDeReproduccion.POR_DEFECTO) {
                         ret.remove(i);
                         i--;
+                    } else {
+                        try {
+                            // Si el usuarioActual es null, o no posee una lista con ese ID, se quita el elemento de la lista
+                            this.usuarioActual.obtenerListaDeReproduccion(list.getId());
+                        } catch (Exception e) {
+                            ret.remove(i);
+                            i--;
+                        }
                     }
                 }
             } else if (ret.get(i) instanceof DtCanal) {
@@ -305,12 +310,17 @@ public class CUsuario implements IUsuario {
             } else if (ret.get(i) instanceof DtListaDeReproduccion) {
                 DtListaDeReproduccion list = (DtListaDeReproduccion) ret.get(i);
                 if (list.getPrivacidad() == Privacidad.PRIVADO) {
-                    try {
-                        // Si el usuarioActual es null, o no posee una lista con ese ID, se quita el elemento de la lista
-                        this.usuarioActual.obtenerListaDeReproduccion(list.getId());
-                    } catch (Exception e) {
+                    if (list.getTipo() == TipoListaDeReproduccion.POR_DEFECTO) {
                         ret.remove(i);
                         i--;
+                    } else {
+                        try {
+                            // Si el usuarioActual es null, o no posee una lista con ese ID, se quita el elemento de la lista
+                            this.usuarioActual.obtenerListaDeReproduccion(list.getId());
+                        } catch (Exception e) {
+                            ret.remove(i);
+                            i--;
+                        }
                     }
                 }
             }
@@ -326,6 +336,15 @@ public class CUsuario implements IUsuario {
         usuarioActual = null;
     }
 
+
+    @Override
+    public boolean elUsuarioSeleccionadoEsElUsuarioActual(){
+        if (usuarioActual == null || usuarioSeleccionado == null){
+            return false;
+        }
+        return usuarioActual.getNickname().equals(usuarioSeleccionado.getNickname());
+    }
+    
     @Override
     public boolean existeEmail(String email) {
         if (email.equals("")){
@@ -443,7 +462,7 @@ public class CUsuario implements IUsuario {
         
        ArrayList<DtListaDeReproduccion> ret = usuarioSeleccionado.listarListasDeReproduccionDeCanal(false);
        
-        if (this.usuarioActual == this.usuarioSeleccionado) {
+        if (elUsuarioSeleccionadoEsElUsuarioActual()) {
             // Se incluyen las privadas pero se quitan las POR_DEFECTO segun el parametro recibido
             if (incluirListasPorDefecto) {
                 // se retorna todo
@@ -502,7 +521,7 @@ public class CUsuario implements IUsuario {
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
         ArrayList<DtVideo> ret = this.usuarioSeleccionado.listarVideosDeListaDeReproduccion(idListaSeleccionada);
-        if (this.usuarioActual == this.usuarioSeleccionado) {
+        if (elUsuarioSeleccionadoEsElUsuarioActual()) {
             // incluye los videos privados si y solo si son del usuario actual
             // dicho de otra manera: quita los videos privados que no son del usuarioActual
             for (int i = 0; i < ret.size(); i++) {
@@ -534,7 +553,7 @@ public class CUsuario implements IUsuario {
             throw new RuntimeException("El sistema no tiene un usuario seleccionado");
         }
         
-        if(this.usuarioActual == this.usuarioSeleccionado){
+        if(elUsuarioSeleccionadoEsElUsuarioActual()){
             // se incluyen todos los videos
             return usuarioSeleccionado.listarVideosDeCanal();
         }else{

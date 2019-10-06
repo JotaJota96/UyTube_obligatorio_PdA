@@ -95,6 +95,15 @@ public interface IUsuario {
     public void cerrarSesion();
 
     /**
+     * Como el nombre de la funcion lo indica, es para saber si el usuario que
+     * se ha seleccionado, es el usuario que tiene la inicion sesiada
+     *
+     * @return true si el usuario seleccionado es el usuario que inicio la
+     * sesion
+     */
+    public boolean elUsuarioSeleccionadoEsElUsuarioActual();
+    
+    /**
      * Verifica si existe un usuario con el email indicado
      *
      * @param email Email a verificar

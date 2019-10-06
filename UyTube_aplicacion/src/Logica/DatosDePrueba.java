@@ -30,8 +30,6 @@ public class DatosDePrueba {
         usuSys = f.getIUsuario();
         //CUsuario su = CUsuario.getInstancia();
         try {
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("UyTubePU");
-            EntityManager manager = factory.createEntityManager();
             
         } catch (Exception e) {
             System.out.println("//////////////////////////");
@@ -39,9 +37,17 @@ public class DatosDePrueba {
             System.out.println("//////////////////////////");
         }
     }
+    /*
     private static void mostrarLista(ArrayList<Object> lst){
         // Prueba de búsqueda por categoría
         for (Object o : lst){
+            System.out.println("> " + o.toString());
+        }
+    }
+    */
+    private static void mostrarLista(Object lst){
+        // Prueba de búsqueda por categoría
+        for (Object o : (ArrayList<Object>)lst){
             System.out.println("> " + o.toString());
         }
     }

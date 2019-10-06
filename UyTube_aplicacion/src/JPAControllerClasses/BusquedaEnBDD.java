@@ -55,9 +55,9 @@ public class BusquedaEnBDD implements Serializable {
             // Busca los Canales
             if (filtro == Filtrado.TODO || filtro == Filtrado.CANALES){
                 if (busqueda == null || busqueda.equals("")){
-                   q = em.createQuery("SELECT e FROM Canal e");
+                   q = em.createQuery("SELECT e FROM Canal e WHERE NOT e.eliminado");
                 }else{
-                   q = em.createQuery("SELECT e FROM Canal e WHERE (UPPER(e.nombre)) LIKE (UPPER(?1)) OR (UPPER(e.descripcion)) LIKE (UPPER(?1))");
+                   q = em.createQuery("SELECT e FROM Canal e WHERE (UPPER(e.nombre)) LIKE (UPPER(?1)) OR (UPPER(e.descripcion)) LIKE (UPPER(?1)) AND NOT e.eliminado");
                     q.setParameter(1, busqueda);
                 }
                 ret.addAll(q.getResultList());
@@ -65,10 +65,10 @@ public class BusquedaEnBDD implements Serializable {
             // Busca los Listas de reproduccion
             if (filtro == Filtrado.TODO || filtro == Filtrado.LISTAS_DE_REPRODUCCION){
                 if (busqueda == null || busqueda.equals("")){
-                   q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ?1");
+                   q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ? AND NOT e.eliminado");
                     q.setParameter(1, TipoListaDeReproduccion.PARTICULAR);
                 }else{
-                   q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ?1 AND (UPPER(e.nombre)) LIKE (UPPER(?2)) ");
+                   q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ?1 AND (UPPER(e.nombre)) LIKE (UPPER(?2)) AND NOT e.eliminado");
                     q.setParameter(1, TipoListaDeReproduccion.PARTICULAR);
                     q.setParameter(2, busqueda);
                 }
@@ -77,9 +77,9 @@ public class BusquedaEnBDD implements Serializable {
             // Busca los Videos
             if (filtro == Filtrado.TODO || filtro == Filtrado.VIDEOS){
                 if (busqueda == null || busqueda.equals("")){
-                   q = em.createQuery("SELECT e FROM Video e");
+                   q = em.createQuery("SELECT e FROM Video e WHERE NOT e.eliminado");
                 }else{
-                   q = em.createQuery("SELECT e FROM Video e WHERE (UPPER(e.nombre)) LIKE (UPPER(?1)) OR (UPPER(e.descripcion)) LIKE (UPPER(?1))");
+                   q = em.createQuery("SELECT e FROM Video e WHERE (UPPER(e.nombre)) LIKE (UPPER(?1)) OR (UPPER(e.descripcion)) LIKE (UPPER(?1)) AND NOT e.eliminado");
                     q.setParameter(1, busqueda);
                 }
                 ret.addAll(q.getResultList());
@@ -125,11 +125,11 @@ public class BusquedaEnBDD implements Serializable {
         try {
             Query q;
             // Obtiene los videos en esa categoria
-            q = em.createQuery("SELECT v FROM Video v WHERE v.categoria = ?1");
+            q = em.createQuery("SELECT e FROM Video e WHERE e.categoria = ?1 AND NOT e.eliminado");
             q.setParameter(1, cat);
             ret.addAll(q.getResultList());
             // obtiene las listas de reproduccion en esa categoria
-            q = em.createQuery("SELECT l FROM ListaDeReproduccion l WHERE l.categoria = ?1");
+            q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.categoria = ?1 AND NOT e.eliminado");
             q.setParameter(1, cat);
             ret.addAll(q.getResultList());
             
