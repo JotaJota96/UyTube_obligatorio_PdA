@@ -47,7 +47,7 @@
                             <section class="contenido-flexible">							
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
-                                        <form class="form-signin" action="/usuario-agregar" >
+                                        <form class="form-signin" action="/uytube/usuario-agregar" method="post">
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
                                             <input class="form-control" type="text" name="nickname" placeholder="Nickname" id="input_Nickname" required><span id="msjNickname"></span> <br>
                                             <div class="row">

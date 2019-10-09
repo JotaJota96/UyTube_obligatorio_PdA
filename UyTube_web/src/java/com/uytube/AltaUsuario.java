@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-@WebServlet("/usuario-agregar")
+
 public class AltaUsuario extends HttpServlet {
 
     /**
@@ -88,15 +88,15 @@ public class AltaUsuario extends HttpServlet {
         String pPrivacidad = request.getParameter("privacidad");
         String pCanal = request.getParameter("canal");
         String pDescripcion = request.getParameter("descripcion");
-        System.out.println(request.getParameter("nickname: "+pNickname));
-        System.out.println(request.getParameter("nombre: "+pNombre));
-        System.out.println(request.getParameter("apellido: "+pApellido));
-        System.out.println(request.getParameter("email: "+pEmail));
-        System.out.println(request.getParameter("fecha: "+pFechaNa));
-        System.out.println(request.getParameter("password: "+pPassword));
-        System.out.println(request.getParameter("privacidad: "+pPrivacidad));
-        System.out.println(request.getParameter("canal: "+pCanal));
-        System.out.println(request.getParameter("descripcion: "+pDescripcion));
+        System.out.println("nickname: "+pNickname);
+        System.out.println("nombre: "+pNombre);
+        System.out.println("apellido: "+pApellido);
+        System.out.println("email: "+pEmail);
+        System.out.println("fecha: "+pFechaNa);
+        System.out.println("password: "+pPassword);
+        System.out.println("privacidad: "+pPrivacidad);
+        System.out.println("canal: "+pCanal);
+        System.out.println("descripcion: "+pDescripcion);
         
         RequestDispatcher rd; //objeto para despachar
         rd = request.getRequestDispatcher("/Presentacion.jsp");
