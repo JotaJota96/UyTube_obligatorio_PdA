@@ -8,5 +8,5 @@
 var btnIniciarSesion = document.getElementById("iniciar-sesion");
 //Redirecciona a la pagina para iniciar sesion
 btnIniciarSesion.addEventListener('click',function(){
-    window.location.href = "/uytube/iniciar-sesion";
+    window.location.href = "/uytube/inicio-sesion";
 });

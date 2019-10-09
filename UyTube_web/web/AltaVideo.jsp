@@ -43,7 +43,7 @@
                             <section class="contenido-flexible">
                                 <!--================== Aca va el contenido central para agregar ========================== -->					
                                 <h3>Alta de video</h3>			
-                                <form class="form-alta-video" action="alta-video" method="post" >
+                                <form class="form-alta-video" action="/video-agregar" method="post" >
                                     <div class="form-group row">
                                         <div class="form-group col-md-10">
                                             <label for="inputNombre">Nombre</label>

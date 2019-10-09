@@ -27,31 +27,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <header class="header">
-                        <nav>
-                            <div class="navbar-dark item-header item-header1" id="navLogo">
-                                <label class="icon-menu1"></label>
-                                <img class="fotoLogo" src="imagenes/logoChico.jpeg" alt="UyTube">					
-                            </div>	
-                            <div class="navbar-dark item-header item-header2">					  
-                                <div id="navbarSupportedContent">		
-                                    <form class="form-inline my-2 my-lg-0 formBuscar" id="formBuscar">
-                                        <input class=" mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                                        <button class="btn btn-primary" id="btnBuscar" type="submit">Buscar</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="perfil item-header item-header3">
-                                <!-- <div class="flex-row justify-content-lg-space-between alig-content-center m-1">
-                                        <p class="pr-2 pt-4" id="nombrePerfil">Homero Simpson</p>
-                                </div>					  
-                                <div>
-                                        <img id="fotoPerfil" src="imagenes/homero.jpg" alt="Perfil">
-                                </div> -->
-                                <button type="button" id="iniciar-sesion" class="btn btn-outline-primary"><span class="icon-user-tie"></span> INICIAR SESIÓN</button>
-                            </div>
-                        </nav>					
-                    </header>
+                    <%@ include file='include/header-usuario.html' %>
                 </div>
             </div>		
         </div>

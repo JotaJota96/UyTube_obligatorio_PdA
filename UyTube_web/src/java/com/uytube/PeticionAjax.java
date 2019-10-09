@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-public class Perfil extends HttpServlet {
+public class PeticionAjax extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class Perfil extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Perfil</title>");            
+            out.println("<title>Servlet PeticionAjax</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Perfil at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PeticionAjax at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,7 +56,21 @@ public class Perfil extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         /*
+         Aca debe recibir un parametor de nombre accion el cual define cual es la funcion
+         que se debe ejecutar
+        */
+        
+        String txtUsuario = request.getParameter("userdata"); // obtiene lo enviado por AJAX
+        response.setContentType("text/plain");  //Set content type of the response so that jQuery knows what it can expect.
+        response.setCharacterEncoding("UTF-8"); //You want world domination, huh?
+        String respuesta;
+        if(txtUsuario.equals("pedro")){
+            respuesta = "Pedro ya existe";
+        }else{
+            respuesta = "El usuario está disponible";
+        }
+        response.getWriter().write(respuesta);
     }
 
     /**

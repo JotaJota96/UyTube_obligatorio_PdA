@@ -4,7 +4,7 @@ $("#input_Nickname").keyup(function(){
     //Obtiene el valor ingresaro
     var valorIngresado = $("#input_Nickname").val();
     //Realiza la consulta utilizando AJAX al servidor
-    $.get("/uytube/validar-usuario",
+    $.get("/uytube/consulta",
         {
           userdata: valorIngresado          
         }, function(respuesta, status){

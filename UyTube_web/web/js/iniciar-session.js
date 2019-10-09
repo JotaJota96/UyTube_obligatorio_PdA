@@ -9,5 +9,5 @@
 var btnRegistrarse = document.getElementById("btnRegistrarse");
 //Redirecciona a la pagina para alta-usuario
 btnRegistrarse.addEventListener('click',function(){
-    window.location.href = "/uytube/alta-usuario";
+    window.location.href = "/uytube/usuario-agregar";
 });

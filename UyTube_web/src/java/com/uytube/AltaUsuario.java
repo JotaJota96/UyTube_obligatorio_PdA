@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
+@WebServlet("/usuario-agregar")
 public class AltaUsuario extends HttpServlet {
 
     /**
@@ -73,8 +75,40 @@ public class AltaUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        //Se guardan los datos del usuario en la base de datos
+        // Y se redigire por ahora al JSP presentacion
+        
+        String pNickname = request.getParameter("nickname");
+        String pNombre = request.getParameter("nombre");
+        String pApellido = request.getParameter("apellido");
+        String pEmail = request.getParameter("email");
+        String pFechaNa = request.getParameter("fechaNa");
+        String pPassword = request.getParameter("password");
+        String pPrivacidad = request.getParameter("privacidad");
+        String pCanal = request.getParameter("canal");
+        String pDescripcion = request.getParameter("descripcion");
+        System.out.println(request.getParameter("nickname: "+pNickname));
+        System.out.println(request.getParameter("nombre: "+pNombre));
+        System.out.println(request.getParameter("apellido: "+pApellido));
+        System.out.println(request.getParameter("email: "+pEmail));
+        System.out.println(request.getParameter("fecha: "+pFechaNa));
+        System.out.println(request.getParameter("password: "+pPassword));
+        System.out.println(request.getParameter("privacidad: "+pPrivacidad));
+        System.out.println(request.getParameter("canal: "+pCanal));
+        System.out.println(request.getParameter("descripcion: "+pDescripcion));
+        
+        RequestDispatcher rd; //objeto para despachar
+        rd = request.getRequestDispatcher("/Presentacion.jsp");
+        rd.forward(request, response);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doDelete(req, resp); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
     /**
      * Returns a short description of the servlet.

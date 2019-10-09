@@ -21,6 +21,13 @@
     flex-wrap: wrap;
     flex-grow: 0;
     flex-shrink: 0; }
+    .contenido .contenido-flexible h3 {
+      width: 100%;
+      margin: 0.625rem;
+      text-decoration: underline; }
+    .contenido .contenido-flexible .form-alta-video {
+      width: 100%;
+      padding: 16px; }
 
 @media (max-width: 340px) {
   .container-fluid {
@@ -390,4 +397,4 @@
     .widgets .widget-2 {
       width: 350px; } }
 
-/*# sourceMappingURL=contenido-index.css.map */
+/*# sourceMappingURL=contenido-alta-video.css.map */

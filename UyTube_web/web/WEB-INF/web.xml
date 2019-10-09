@@ -13,24 +13,8 @@
         <servlet-class>com.uytube.IniciarSesion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Perfil</servlet-name>
-        <servlet-class>com.uytube.Perfil</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Presentacion</servlet-name>
         <servlet-class>com.uytube.Presentacion</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ValidarLogin</servlet-name>
-        <servlet-class>com.uytube.ValidarLogin</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AltaVideo</servlet-name>
-        <servlet-class>com.uytube.AltaVideo</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AltaUsuario</servlet-name>
-        <servlet-class>com.uytube.AltaUsuario</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ConsultaUsuario</servlet-name>
@@ -41,49 +25,48 @@
         <servlet-class>com.uytube.CerrarSesion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ValidarUsuario</servlet-name>
-        <servlet-class>com.uytube.ValidarUsuario</servlet-class>
+        <servlet-name>AltaVideo</servlet-name>
+        <servlet-class>com.uytube.AltaVideo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PeticionAjax</servlet-name>
+        <servlet-class>com.uytube.PeticionAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AltaUsuario</servlet-name>
+        <servlet-class>com.uytube.AltaUsuario</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ConsultaListaReproducion</servlet-name>
-        <url-pattern>/consulta/lista-reproducion</url-pattern>
+        <url-pattern>/lista-consultar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ConsultaVideo</servlet-name>
-        <url-pattern>/consulta/video</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Perfil</servlet-name>
-        <url-pattern>/usuario/perfil</url-pattern>
+        <url-pattern>/video-consulta</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Presentacion</servlet-name>
         <url-pattern>/presentacion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>IniciarSesion</servlet-name>
-        <url-pattern>/iniciar-sesion</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>AltaUsuario</servlet-name>
-        <url-pattern>/alta-usuario</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ConsultaUsuario</servlet-name>
-        <url-pattern>/consulta-usuario</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>CerrarSesion</servlet-name>
         <url-pattern>/cerrar-sesion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ValidarUsuario</servlet-name>
-        <url-pattern>/validar-usuario</url-pattern>
+        <servlet-name>PeticionAjax</servlet-name>
+        <url-pattern>/consulta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultaUsuario</servlet-name>
+        <url-pattern>/usuario-consulta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IniciarSesion</servlet-name>
+        <url-pattern>/inicio-sesion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            2
         </session-timeout>
     </session-config>
 </web-app>

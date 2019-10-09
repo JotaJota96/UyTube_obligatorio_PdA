@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-@WebServlet("/alta-video")
+@WebServlet("/video-agregar")
 public class AltaVideo extends HttpServlet {
 
     /**
@@ -59,7 +59,6 @@ public class AltaVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         RequestDispatcher rd; //objeto para despachar
         rd = request.getRequestDispatcher("/AltaVideo.jsp");
         rd.forward(request, response);
@@ -76,17 +75,26 @@ public class AltaVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombre = request.getParameter("nombre");
-        String duracion = request.getParameter("duracion");
-        String url = request.getParameter("url");
-        String descripcion = request.getParameter("descripcion");
-        String fecha = request.getParameter("fecha");
-        String categoria = request.getParameter("categoria");
-        System.out.println(nombre +" " + duracion+" "+url+" categoria: "+ categoria);
+        //Se guardan los datos del usuario en la base de datos
+        // Y se redigire por ahora al JSP presentacion
         
+       
+        String pNombre = request.getParameter("nombre");
+        String pDuracion = request.getParameter("duracion");
+        String pUrl = request.getParameter("url");
+        String pFecha = request.getParameter("fecha");        
+        String pDescripcion = request.getParameter("descripcion");
+        String pCategoria = request.getParameter("categoria");
+        
+        System.out.println(request.getParameter("nombre: "+pNombre));
+        System.out.println(request.getParameter("duracion: "+pDuracion));
+        System.out.println(request.getParameter("url: "+pUrl));
+        System.out.println(request.getParameter("fecha: "+pFecha));
+        System.out.println(request.getParameter("descripcion: "+pDescripcion));
+        System.out.println(request.getParameter("categoria: "+pCategoria));
         
         RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/AltaVideo.jsp");
+        rd = request.getRequestDispatcher("/Presentacion.jsp");
         rd.forward(request, response);
     }
 

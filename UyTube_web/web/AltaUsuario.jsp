@@ -1,6 +1,6 @@
 <%-- 
     Document   : AltaUsuario
-    Created on : 06/10/2019, 11:40:19 PM
+    Created on : 09/10/2019, 10:15:12 AM
     Author     : administrador
 --%>
 
@@ -14,13 +14,12 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/body.css">
         <link rel="stylesheet" type="text/css" href="css/header.css">
-        <link rel="stylesheet" type="text/css" href="css/principal.css">
         <link rel="stylesheet" type="text/css" href="css/menu.css">
         <link rel="stylesheet" type="text/css" href="css/widget.css">
         <link rel="stylesheet" type="text/css" href="css/footer.css">
-        <link rel="stylesheet" type="text/css" href="css/contenido-alta-usuario.css">
+       	<link rel="stylesheet" type="text/css" href="css/contenido-alta-usuario.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
-        <link rel="icon" type="image/png" href="imagenes/icono.png" />
+        
         <title>UyTube</title>
     </head>
     <body>
@@ -28,31 +27,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <header class="header">
-                        <nav>
-                            <div class="navbar-dark item-header item-header1" id="navLogo">
-                                <label class="icon-menu1"></label>
-                                <img class="fotoLogo" src="imagenes/logoChico.jpeg" alt="UyTube">					
-                            </div>	
-                            <div class="navbar-dark item-header item-header2">					  
-                                <div id="navbarSupportedContent">		
-                                    <form class="form-inline my-2 my-lg-0 formBuscar" id="formBuscar">
-                                        <input class=" mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                                        <button class="btn btn-primary" id="btnBuscar" type="submit">Buscar</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="perfil item-header item-header3">
-                                <!-- <div class="flex-row justify-content-lg-space-between alig-content-center m-1">
-                                        <p class="pr-2 pt-4" id="nombrePerfil">Homero Simpson</p>
-                                </div>					  
-                                <div>
-                                        <img id="fotoPerfil" src="imagenes/homero.jpg" alt="Perfil">
-                                </div> -->
-                                <button type="button" id="iniciar-sesion" class="btn btn-outline-primary"><span class="icon-user-tie"></span> INICIAR SESIÓN</button>
-                            </div>
-                        </nav>					
-                    </header>
+                    <%@ include file='include/header-visitante.html' %>
                 </div>
             </div>		
         </div>
@@ -72,46 +47,43 @@
                             <section class="contenido-flexible">							
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
-                                        <form class="form-signin">
-
-                                            <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Complete el formulario por favor</h1><br>
-
-                                            <input class="form-control" type="text" placeholder="Nickname" id="input_Nickname" required><span id="msjNickname"></span> <br>
+                                        <form class="form-signin" action="/usuario-agregar" >
+                                            <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
+                                            <input class="form-control" type="text" name="nickname" placeholder="Nickname" id="input_Nickname" required><span id="msjNickname"></span> <br>
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
-                                                    <input type="text" class="form-control" id="input_Nombre" placeholder="Nombre" value="" required>
+                                                    <input type="text" class="form-control" name="nombre" id="input_Nombre" placeholder="Nombre" required>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
-                                                    <input type="text" class="form-control" id="input_Apellido" placeholder="Apellido" value="" required>
+                                                    <input type="text" class="form-control" name="apellido" id="input_Apellido" placeholder="Apellido" required>
                                                 </div>
                                             </div>
 
-
                                             <div class="mb-3">
-                                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                                             </div>
 
-                                            <input class="form-control" type="date" id="input_fecha" name="trip-start"><br>
+                                            <input class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start"><br>
                                             <input class="form-control" type="password" placeholder="Contraseña" id="input_Contraseña" required><br>
-                                            <input class="form-control" type="password" placeholder="Repetir contraseña" id="input_Repetir_contraseña" required>
+                                            <input class="form-control" name="password" type="password" placeholder="Repetir contraseña" id="input_Repetir_contraseña" required>
 
                                             <div class="d-block my-3">
                                                 <label for="cc-name">Privacidad del canal</label>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="publico" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                                                    <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked >
                                                     <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="privado" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                                    <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" >
                                                     <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
                                             </div>
                                             <hr class="mb-4">
 
-                                            <input class="form-control" type="text" placeholder="Nombre del Canal" id="input_Nombre_canal" required>
+                                            <input class="form-control" name="canal" type="text" placeholder="Nombre del Canal" id="input_Nombre_canal" required>
                                             <small class="text-muted">Opcional*</small><br><br>
 
-                                            <textarea class="form-control" id="input_descripcion" placeholder="Descripción del Canal" rows="3"></textarea>
+                                            <textarea class="form-control" name="descripcion" id="input_descripcion" placeholder="Descripción del Canal" rows="3"></textarea>
                                             <small class="text-muted">Opcional*</small><br><br>
 
                                             <div class="form-group">

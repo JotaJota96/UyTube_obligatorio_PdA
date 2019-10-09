@@ -13,12 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author administrador
  */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/iniciar-sesion"})
+@WebServlet("/inicio-sescion")
 public class IniciarSesion extends HttpServlet {
 
     /**
@@ -76,7 +77,30 @@ public class IniciarSesion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String user = "usuario";
+        String password = "123";
+        
+        String paramUser = request.getParameter("user");
+        String paramPassword = request.getParameter("password");
+        RequestDispatcher rd; //objeto para despachar
+        
+        System.out.println("user: "+paramUser);
+        System.out.println("password: "+paramPassword);
+        
+        HttpSession sesion = request.getSession();
+        //sesion.invalidate();
+        
+        //deberíamos buscar el usuario en la base de datos, pero dado que se escapa de este tema, ponemos un ejemplo en el mismo código
+        if(user.equals(paramUser) && password.equals(paramPassword) && sesion.getAttribute(paramUser) == null){
+            //si coincide usuario y password y además no hay sesión iniciada
+            sesion.setAttribute("usuario", paramUser);
+            //redirijo a página con información de login exitoso
+            rd = request.getRequestDispatcher("/Presentacion.jsp");
+        }else{
+            //lógica para login inválido
+            rd = request.getRequestDispatcher("/IniciarSesion.jsp");
+        }
+        rd.forward(request, response);
     }
 
     /**
