@@ -1,0 +1,56 @@
+.header {
+  z-index: 9;
+  position: fixed;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-left: auto;
+  margin-right: auto; }
+  .header nav {
+    background-color: #00001a;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.1rem 1rem; }
+    .header nav .item-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0rem 1rem; }
+      .header nav .item-header #nombrePerfil {
+        color: #fff; }
+      .header nav .item-header .fotoLogo {
+        height: 30px;
+        margin-bottom: 2px; }
+      .header nav .item-header #fotoPerfil {
+        height: 38px;
+        width: 38px;
+        margin-left: 15px;
+        border: 2px solid #007bff;
+        border-radius: 50%; }
+      .header nav .item-header .formBuscar {
+        display: flex;
+        width: 500px;
+        justify-content: center;
+        flex-wrap: nowrap; }
+        .header nav .item-header .formBuscar input {
+          height: 32px;
+          width: 400px;
+          border: 1px solid #ced4da;
+          border-radius: 0.25rem;
+          font-size: 1rem;
+          padding: 0.375rem 0.75rem; }
+      .header nav .item-header .icon-menu1 {
+        color: #fff;
+        margin-right: 2rem;
+        margin-top: 7px;
+        font-size: 1.62rem;
+        cursor: pointer; }
+    .header nav .btn {
+      height: 32px;
+      padding: 0px 10px; }
+
+/*# sourceMappingURL=header.css.map */

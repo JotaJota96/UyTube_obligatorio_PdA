@@ -1,0 +1,7 @@
+sass --watch \
+    body.sass:../css/body.css \
+    header.sass:../css/header.css \
+    contenido-index.sass:../css/contenido-index.css \
+    menu.sass:../css/menu.css \
+    widget.sass:../css/widget.css \
+    footer.sass:../css/footer.css ;

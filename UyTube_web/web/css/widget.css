@@ -1,0 +1,12 @@
+.widgets {
+  background-color: #f6f6f6;
+  margin-top: 0px;
+  display: flex;
+  border-bottom: 2px solid #5aa1e3; }
+  .widgets .img-widget {
+    height: 63px; }
+
+.widget-1, .widget-2 {
+  display: flex; }
+
+/*# sourceMappingURL=widget.css.map */

@@ -1,0 +1,3 @@
+sass --watch \
+    contenido-alta-video.sass:../css/contenido-alta-video.css \
+    mqueries-alta-video.sass:../css/mqueries-alta-video.css;

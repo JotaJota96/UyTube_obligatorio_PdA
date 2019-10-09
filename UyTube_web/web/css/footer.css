@@ -1,0 +1,14 @@
+.footer {
+  grid-column: 1/1;
+  grid-row: 4/5;
+  background-color: #00001a;
+  border-bottom: 2px solid #5aa1e3;
+  padding: 1rem;
+  margin-bottom: 2px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start; }
+
+/*# sourceMappingURL=footer.css.map */
