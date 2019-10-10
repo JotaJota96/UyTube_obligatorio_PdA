@@ -51,15 +51,10 @@ public class ConsultaUsuario extends HttpServlet {
             ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(false);
             boolean sesionIniciada = sys.sesionIniciada();
             
-            // <parche> aqui viene el parche...
             boolean usuarioPropietario = false;
-            ArrayList<DtListaDeReproduccion> lst = sys.listarListasDeReproduccionDeUsuario(true);
-            for (DtListaDeReproduccion l : lst){
-                if (l.getTipo() == TipoListaDeReproduccion.POR_DEFECTO || l.getPrivacidad() == Privacidad.PRIVADO){
-                    usuarioPropietario = true;
-                }
+            if (sesionIniciada){
+                usuarioPropietario = sys.obtenerUsuarioActual().getNickname().equals(nick);
             }
-            // fin del parche </parche>
             
             request.setAttribute("usuario", usuario);
             request.setAttribute("canal", canal);

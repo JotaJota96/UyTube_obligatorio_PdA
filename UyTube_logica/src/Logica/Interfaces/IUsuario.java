@@ -262,6 +262,12 @@ public interface IUsuario {
     public DtUsuario obtenerPropietarioDeListaDeReproduccion(int idLista);
     
     /**
+     * Devuelve los datos del usuario que inició sesión
+     * @return Datos del usuario actual
+     */
+    public DtUsuario obtenerUsuarioActual();
+    
+    /**
      * Devuelve la valoracion dada por usuarioActual al video
      * idVideoSeleccionado perteneciente al usuarioSeleccionado
      *

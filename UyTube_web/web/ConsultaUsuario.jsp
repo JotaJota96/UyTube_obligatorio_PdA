@@ -87,20 +87,20 @@
                                         <div class="p-4 flex-fill bd-highlight">
                                             <div class="d-flex justify-content-center">
                                                 <%
-                                                    String rutaImagenPerfil;
                                                     String textoAlternativo;
+                                                    String rutaDeImagenDePerfil;
                                                     if (usuario.getImagen() == null || usuario.getImagen().equals("")) {
-                                                        rutaImagenPerfil = "imagenes/ukp.png";
+                                                        rutaDeImagenDePerfil = "imagenes/ukp.png";
                                                         textoAlternativo = "Imagen de perfil por defecto";
                                                     } else {
-                                                        rutaImagenPerfil = usuario.getImagen();
+                                                        rutaDeImagenDePerfil = usuario.getImagen();
                                                         textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
                                                         //char contrabarra = 92;
                                                         //char barra = 47;
                                                         //rutaImagenPerfil = rutaImagenPerfil = rutaImagenPerfil.replace(contrabarra, barra);
                                                     }
                                                 %>
-                                                <img src="<%=rutaImagenPerfil%>" class="rounded-circle" alt="<%=textoAlternativo%>" width="180" height="180"> 
+                                                <img src="<%=rutaDeImagenDePerfil%>" class="rounded-circle" alt="<%=textoAlternativo%>" width="180" height="180"> 
                                             </div>
                                         </div>
                                         <div class="p-1 flex-fill bd-highlight ">

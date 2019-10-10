@@ -31,11 +31,11 @@ INSERT INTO public.canal (descripcion,eliminado,nombre,privacidad) VALUES
 
 -- Usuarios
 INSERT INTO public.usuario (id,apellido,contrasenia,correo,eliminado,fecha_eliminado,fecha_nacimiento,imagen,nombre,seguidores,id_canal) VALUES 
-('JotaJota96','Alvarez','12345678','jjap96@gmail.com',false,NULL,'1996-10-09','Imagenes\perfiles\JotaJota96.jpg','Juan',3,1)
-,('LuC31G','Garrido','12345678','LuC31@gmail.com',false,NULL,'1998-12-31','Imagenes\perfiles\LuC31G.jpg','Lucas',2,2)
-,('MCBolso','Castro','12345678','mcbolso96@gmail.com',false,NULL,'1999-08-04','Imagenes\perfiles\MCBolso.jpg','Mariano',0,3)
-,('camilillo15','Camilo','12345678','facu_camilo2@hotmail.com',false,NULL,'1999-07-13','Imagenes\perfiles\camilillo15.jpg','Facundo',1,4)
-,('jarrieta31','Arrieta','jarrieta31','julioarrieta23@gmail.com',false,NULL,'1976-03-02','Imagenes\perfiles\jarrieta31.jpg','Julio',4,5)
+('JotaJota96','Alvarez','12345678','jjap96@gmail.com',false,NULL,'1996-10-09','imagenes\perfiles\JotaJota96.jpg','Juan',3,1)
+,('LuC31G','Garrido','12345678','LuC31@gmail.com',false,NULL,'1998-12-31','imagenes\perfiles\LuC31G.jpg','Lucas',2,2)
+,('MCBolso','Castro','12345678','mcbolso96@gmail.com',false,NULL,'1999-08-04','imagenes\perfiles\MCBolso.jpg','Mariano',0,3)
+,('camilillo15','Camilo','12345678','facu_camilo2@hotmail.com',false,NULL,'1999-07-13','imagenes\perfiles\camilillo15.jpg','Facundo',1,4)
+,('jarrieta31','Arrieta','jarrieta31','julioarrieta23@gmail.com',false,NULL,'1976-03-02','imagenes\perfiles\jarrieta31.jpg','Julio',4,5)
 ,('terraplanista1','Ibañez','terraplanista1','olivertierraplana@gmail.com',false,NULL,'2019-10-03','','Oliver',0,6)
 ,('apmi','Pastores','apmi','apmi@hotmail.com',false,NULL,'2019-10-03','','Alerta',1,7)
 ;

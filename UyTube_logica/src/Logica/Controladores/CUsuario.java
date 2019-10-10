@@ -682,7 +682,14 @@ public class CUsuario implements IUsuario {
         }
         throw new RuntimeException("El iID de video no crresponde a ningun usuario");
     }
-
+    @Override
+    public DtUsuario obtenerUsuarioActual(){
+        if (usuarioActual == null){
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        return usuarioActual.getDT();
+    }
+    
     @Override
     public DtValoracion obtenerValoracionDada() {
         if (usuarioActual == null) {

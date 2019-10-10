@@ -5,6 +5,8 @@
  */
 package com.uytube;
 
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -77,23 +79,19 @@ public class IniciarSesion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = "usuario";
-        String password = "123";
+        IUsuario sys = Fabrica.getInstancia().getIUsuario();
         
         String paramUser = request.getParameter("user");
         String paramPassword = request.getParameter("password");
         RequestDispatcher rd; //objeto para despachar
         
-        System.out.println("user: "+paramUser);
-        System.out.println("password: "+paramPassword);
-        
         HttpSession sesion = request.getSession();
         //sesion.invalidate();
         
-        //deberíamos buscar el usuario en la base de datos, pero dado que se escapa de este tema, ponemos un ejemplo en el mismo código
-        if(user.equals(paramUser) && password.equals(paramPassword) && sesion.getAttribute(paramUser) == null){
+        if(sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute(paramUser) == null){
+            String nick = sys.obtenerUsuarioActual().getNickname();
             //si coincide usuario y password y además no hay sesión iniciada
-            sesion.setAttribute("usuario", paramUser);
+            sesion.setAttribute("usuario", nick);
             //redirijo a página con información de login exitoso
             rd = request.getRequestDispatcher("/Presentacion.jsp");
         }else{
