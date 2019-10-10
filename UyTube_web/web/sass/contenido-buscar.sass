@@ -17,7 +17,7 @@
     height: 100%
     .contenido-flexible
         background-color: $colorGrisClaro
-        margin-bottom: 16px
+        margin-bottom: 10px
         display: flex
         flex-direction: row
         justify-content: center
@@ -27,48 +27,29 @@
         .video, .canal, .lista
             display: flex
             padding: 0px
-            justify-content: space-between
-            align-content: center
-            width: 862px
-            height: 152px
-            background-color: $amarillo
+            //background-color: $amarillo
+        //Estilos del contenedor para las imagenes
         .caja-imagen
             display: flex
-            justify-content: center
-            align-items: center
-            width: 246px
-            height: 152px
-            
-        //Imagen del video
-        .video img
-            width: 246px
-            height: 138px
-        //Imagen del canal
-        .canal img
-            width: 138px
-            height: 138px
         //Texto de los items
         .caja-texto
             //overflow: hidden
             font-size: 0.8rem
             padding: 15px 10px 10px 10px
-            background-color: orange
+            //background-color: orange
             display: flex
-            flex-direction: column
-            justify-content: center
-            align-items: center
-            width: 600px
-            height: 152px
+        //Estilos generales para el texto de los items    
         .caja-texto p
-            background-color: $colorCelesteClaro
-            height: 70%
-            overflow: auto
-            
-        .caja-texto h5 
-            background-color: $colorPrimary
-            min-height: 20px
+            //background-color: $colorCelesteClaro
             overflow: auto
             overflow-wrap: break-word
+            padding-right: 10px
+        .caja-texto h5 
+            min-height: 20px
+            //background-color: $colorPrimary
+            overflow: auto
+            overflow-wrap: break-word
+        
             
 
            
@@ -116,6 +97,46 @@
         .contenido-flexible
             width: 100%
             justify-content: center
+            //Estilos para los items
+            .video, .canal, .lista                
+                flex-direction: column
+                justify-content: space-between
+                align-content: center
+                width: 100%
+                height: 250px  
+                //background-color: $violeta
+            .caja-imagen
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 150px 
+                ///background-color: $grisVCodeBarra           
+            //Imagen del video
+            .video img
+                width: 200px
+                height: 150px
+            //Imagen del canal
+            .canal img
+                width: 138px
+                height: 138px
+            //Texto de los items
+            .caja-texto
+                padding: 5px
+                overflow: auto
+                flex-direction: column
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 100px
+                //Estilos para los textos de los items
+                .caja-texto p
+                    max-height: 50px
+                    overflow: auto            
+                .caja-texto h5
+                    height: 30% 
+                    min-height: 20px
+                    overflow: auto
+                    
     .widgets
         height: 170px
         padding-top: 5px
@@ -176,6 +197,46 @@
         .contenido-flexible
             width: 100%
             justify-content: center
+            //Estilos para los items
+            .video, .canal, .lista                
+                flex-direction: column
+                justify-content: space-between
+                align-content: center
+                width: 100%
+                height: 250px  
+                //background-color: $violeta
+            .caja-imagen
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 150px 
+                //background-color: $grisVCodeBarra           
+            //Imagen del video
+            .video img
+                width: 200px
+                height: 150px
+            //Imagen del canal
+            .canal img
+                width: 138px
+                height: 138px
+            //Texto de los items
+            .caja-texto
+                padding: 5px
+                overflow: auto
+                flex-direction: column
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 100px
+                //Estilos para los textos de los items
+                .caja-texto p
+                    max-height: 50px
+                    overflow: auto            
+                .caja-texto h5
+                    height: 30% 
+                    min-height: 20px
+                    overflow: auto
+                    
     .widgets
         height: 170px
         padding-top: 5px
@@ -237,8 +298,49 @@
         .contenido-flexible
             width: 100%
             justify-content: center
+            //Estilos para los items
+            .video, .canal, .lista                
+                flex-direction: column
+                justify-content: space-between
+                align-content: center
+                width: 100%
+                height: 250px  
+                //background-color: $violeta
+            .caja-imagen
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 150px 
+                //background-color: $grisVCodeBarra           
+            //Imagen del video
+            .video img
+                width: 200px
+                height: 150px
+            //Imagen del canal
+            .canal img
+                width: 138px
+                height: 138px
+            //Texto de los items
+            .caja-texto
+                padding: 5px
+                overflow: auto
+                flex-direction: column
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 100px
+                //Estilos para los textos de los items
+                .caja-texto p
+                    max-height: 50px
+                    overflow: auto  
+                            
+                .caja-texto h5
+                    height: 30% 
+                    min-height: 20px
+                    overflow: auto
         .h3
             width: 90%
+        
     .widgets
         height: 180px
         padding-top: 10px
@@ -301,6 +403,45 @@
             width: 100%
             justify-content: center
             align-items: flex-start
+            //Estilos para los items
+            .video, .canal, .lista                
+                flex-direction: row
+                justify-content: space-between
+                align-content: center
+                width: 100%
+                height: 150px  
+                //background-color: $violeta
+            .caja-imagen
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 150px 
+                //background-color: $grisVCodeBarra           
+            //Imagen del video
+            .video img
+                width: 200px
+                height: 150px
+            //Imagen del canal
+            .canal img
+                width: 138px
+                height: 138px
+            //Texto de los items
+            .caja-texto
+                padding: 5px
+                overflow: auto
+                flex-direction: column
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 150px
+                //Estilos para los textos de los items
+                .caja-texto p
+                    max-height: 50px
+                    overflow: auto            
+                .caja-texto h5
+                    height: 30% 
+                    min-height: 20px
+                    overflow: auto
         
     .widgets
         height: 180px
@@ -356,6 +497,46 @@
         .contenido-flexible
             width: 100%
             justify-content: center
+            //Estilos para los items
+            .video, .canal, .lista                
+                flex-direction: row
+                justify-content: space-between
+                align-content: center
+                width: 100%
+                height: 150px  
+                //background-color: $violeta
+            .caja-imagen
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 150px 
+                //background-color: $grisVCodeBarra           
+            //Imagen del video
+            .video img
+                width: 200px
+                height: 150px
+            //Imagen del canal
+            .canal img
+                width: 138px
+                height: 138px
+            //Texto de los items
+            .caja-texto
+                padding: 5px
+                overflow: auto
+                flex-direction: column
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 150px
+                //Estilos para los textos de los items
+                .caja-texto p
+                    max-height: 50px
+                    overflow: auto            
+                .caja-texto h5
+                    height: 30% 
+                    min-height: 20px
+                    overflow: auto
+            
     .widgets
         height: 160px
         flex-direction: column
@@ -409,6 +590,47 @@
         .contenido-flexible
             width: 100%
             justify-content: center
+            //Estilos para los items
+            .video, .canal, .lista                
+                flex-direction: row
+                justify-content: space-between
+                align-content: center
+                width: 100%
+                height: 150px  
+                //background-color: $violeta
+            .caja-imagen
+                justify-content: center
+                align-items: center
+                width: 200px
+                min-width: 200px
+                height: 150px 
+                //background-color: $grisVCodeBarra           
+            //Imagen del video
+            .video img
+                width: 200px
+                height: 150px
+            //Imagen del canal
+            .canal img
+                width: 138px
+                height: 138px
+            //Texto de los items
+            .caja-texto
+                padding: 5px
+                overflow: auto
+                flex-direction: column
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 150px
+                //Estilos para los textos de los items
+                .caja-texto p
+                    max-height: 50px
+                    overflow: auto            
+                .caja-texto h5
+                    height: 30% 
+                    min-height: 20px
+                    overflow: auto
+            
     .widgets
         height: 100px
         width: 100%
@@ -444,6 +666,41 @@
     //Estilos del contenido principal
     .contenido
         width: 70%
+        .video, .canal, .lista
+            justify-content: space-between
+            align-content: center
+            width: 862px
+            height: 152px  
+        .caja-imagen
+            justify-content: center
+            align-items: center
+            width: 246px
+            height: 152px            
+        //Imagen del video
+        .video img
+            width: 246px
+            height: 138px
+        //Imagen del canal
+        .canal img
+            width: 138px
+            height: 138px
+        //Texto de los items
+        .caja-texto
+            //overflow: hidden
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            width: 600px
+            height: 152px
+        //Estilos para los textos de los items
+        .caja-texto p
+            height: 70%
+            overflow: auto            
+        .caja-texto h5 
+            min-height: 20px
+            overflow: auto
+            
+        
     .widgets
         height: 123px
         //height: 223px

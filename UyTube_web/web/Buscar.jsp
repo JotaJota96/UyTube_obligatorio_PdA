@@ -52,7 +52,7 @@
 
                                     <!-- BOTONES DESPLEGABLES-->
 
-                                    <div class="d-flex bd-highlight ">
+                                    <div class="bd-highlight filtro">
                                         <div class="p-2 bd-highlight ">
                                             <h4>Tipo de contenido</h4>
                                         </div>
@@ -109,14 +109,14 @@
                                             </div>
                                         </div><br>
 
-                                        <div class="video">
+                                        <div class="video bd-highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight">
                                                     <a href="/uytube/video-consulta&id=1234"><img src="https://i.ytimg.com/vi/OVjbqdm_JVI/hqdefault.jpg"></a>
                                                 </div>
                                             </div>
                                             <div class="bd-highlight caja-texto">
-                                                <div class="bg-light" >
+                                                <div class="overflow-auto bg-light" >
                                                     <h5 class="mt-0">Titulo del video</h5>
                                                     <p>Descripcion del video: EMI Music Publishing, Warner Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
                                                 </div>
