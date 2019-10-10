@@ -52,40 +52,32 @@
 
                                     <!-- BOTONES DESPLEGABLES-->
 
-                                    <div class="bd-highlight filtro">
-                                        <div class="p-2 bd-highlight ">
-                                            <h4>Tipo de contenido</h4>
-                                        </div>
-                                        <div class="p-1 bd-highlight ">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary mr-5 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Seleccionar
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">TODO</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">CANALES</a>
-                                                    <a class="dropdown-item" href="#">VIDEO</a>
-                                                    <a class="dropdown-item" href="#">LISTAS</a>
-                                                </div>
+                                    <form>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                            <label for="inputState">Filtrar por</label>
+                                            <select id="inputState" class="form-control" name="filtro" form="formBuscar">
+                                                <option selected>TODO</option>
+                                                <option>CANALES</option>
+                                                <option>VIDEOS</option>
+                                                <option>LISTAS DE REPRODUCCION</option>
+                                            </select>
                                             </div>
+                                          <div class="form-group col-md-3">
+                                            <label for="inputState">Ordenar por</label>
+                                            <select id="inputState" class="form-control" name="orden" form="formBuscar" >
+                                              <option selected>ALAFABETICO</option>
+                                              <option>FECHA</option>
+                                            </select>
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                            
+                                          </div>
                                         </div>
                                         
-                                        <div class="p-2 bd-highlight ">
-                                            <h4>Oredenado por</h4>
-                                        </div>
-                                        <div class="p-1 bd-highlight ">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Seleccionar
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">ALFABETO</a>
-                                                    <a class="dropdown-item" href="#">FECHA</a>
-                                                </div>
-                                            </div>
-                                        </div>	
-                                    </div>
+                                        
+                                      </form>
 
                                     <!--FIN DE LOS BOTONES-->
 

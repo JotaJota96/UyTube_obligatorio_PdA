@@ -582,6 +582,10 @@
   .relleno-header {
     height: 56px; }
 
+  .filtos {
+    display: flex;
+    flex-direction: row; }
+
   .contenido {
     width: 70%; }
     .contenido .video, .contenido .canal, .contenido .lista {
