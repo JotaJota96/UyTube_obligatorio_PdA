@@ -52,32 +52,7 @@
 
                                     <!-- BOTONES DESPLEGABLES-->
 
-                                    <form>
-                                        
-                                        <div class="form-row">
-                                            <div class="form-group col-md-3">
-                                            <label for="inputState">Filtrar por</label>
-                                            <select id="inputState" class="form-control" name="filtro" form="formBuscar">
-                                                <option selected>TODO</option>
-                                                <option>CANALES</option>
-                                                <option>VIDEOS</option>
-                                                <option>LISTAS DE REPRODUCCION</option>
-                                            </select>
-                                            </div>
-                                          <div class="form-group col-md-3">
-                                            <label for="inputState">Ordenar por</label>
-                                            <select id="inputState" class="form-control" name="orden" form="formBuscar" >
-                                              <option selected>ALAFABETICO</option>
-                                              <option>FECHA</option>
-                                            </select>
-                                          </div>
-                                          <div class="form-group col-md-6">
-                                            
-                                          </div>
-                                        </div>
-                                        
-                                        
-                                      </form>
+                                    <%@ include file='include/filtro-visible.html' %>
 
                                     <!--FIN DE LOS BOTONES-->
 

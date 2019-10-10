@@ -45,7 +45,8 @@
                         <%@ include file='include/menu-usuario.html' %>
 
                         <div class="contenido">
-                            <section class="contenido-flexible">								
+                            <section class="contenido-flexible">
+                                <%@ include file='include/filtro-invisible.html' %>
                                 <div class="container">
 
 

@@ -7,6 +7,7 @@ package com.uytube;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +57,19 @@ public class Buscar extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //Se guardan los datos del usuario en la base de datos
+        // Y se redigire por ahora al JSP presentacion
+        String texto = request.getParameter("texto");
+        String filtro = request.getParameter("filtro");
+        String orden = request.getParameter("orden");
+        
+        System.out.println("texto: "+ filtro);
+        System.out.println("filtro: "+ filtro);
+        System.out.println("orden: "+ orden);
+        
+        RequestDispatcher rd; //objeto para despachar
+        rd = request.getRequestDispatcher("/Buscar.jsp");
+        rd.forward(request, response);
     }
 
     /**
