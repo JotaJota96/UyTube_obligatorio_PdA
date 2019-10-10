@@ -90,8 +90,10 @@ public class IniciarSesion extends HttpServlet {
         
         if(sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute(paramUser) == null){
             String nick = sys.obtenerUsuarioActual().getNickname();
+            String img = sys.obtenerUsuarioActual().getImagen();
             //si coincide usuario y password y además no hay sesión iniciada
             sesion.setAttribute("usuario", nick);
+            sesion.setAttribute("imgen", img);
             //redirijo a página con información de login exitoso
             rd = request.getRequestDispatcher("/Presentacion.jsp");
         }else{
