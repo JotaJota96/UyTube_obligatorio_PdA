@@ -44,7 +44,7 @@
                             <section class="contenido-flexible">
                                 <!--================== Aca va el contenido central para agregar ========================== -->					
                                 <h3>Lo nuevo</h3>
-                                <%@ include file='include/filtro-invisible.html' %>
+
                                 <div class="card" >
                                     <a href="/uytube/video-consulta&id=1234">
                                         <img src="https://i.ytimg.com/vi/MiiK2JB6FHo/hqdefault.jpg" class="card-img-top" alt="Nombre del video">

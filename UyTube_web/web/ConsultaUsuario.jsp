@@ -46,9 +46,8 @@
 
                         <div class="contenido">
                             <section class="contenido-flexible">
-                                <%@ include file='include/filtro-invisible.html' %>
+                                
                                 <div class="container">
-
 
                                     <div class="d-flex bd-highlight ">
                                         <div class="p-4 flex-fill bd-highlight">

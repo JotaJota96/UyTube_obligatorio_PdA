@@ -42,7 +42,6 @@
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <!--================== Aca va el contenido central para agregar ========================== -->					
-                                <%@ include file='include/filtro-invisible.html' %>
                                 <h3>Alta de video</h3>			
                                 <form class="form-alta-video" action="/uytube/video-agregar" method="post" >
                                     <div class="form-group row">
