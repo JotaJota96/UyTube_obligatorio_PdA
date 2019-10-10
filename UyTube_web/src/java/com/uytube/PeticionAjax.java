@@ -60,8 +60,8 @@ public class PeticionAjax extends HttpServlet {
          Aca debe recibir un parametor de nombre accion el cual define cual es la funcion
          que se debe ejecutar
         */
-        
-        String txtUsuario = request.getParameter("userdata"); // obtiene lo enviado por AJAX
+        String accion = request.getParameter("accion"); // obtiene lo enviado por AJAX
+        String txtUsuario = request.getParameter("nombre"); // obtiene lo enviado por AJAX
         response.setContentType("text/plain");  //Set content type of the response so that jQuery knows what it can expect.
         response.setCharacterEncoding("UTF-8"); //You want world domination, huh?
         String respuesta;
