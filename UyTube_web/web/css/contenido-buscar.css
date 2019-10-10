@@ -27,7 +27,8 @@
       justify-content: space-between;
       align-content: center;
       width: 862px;
-      height: 152px; }
+      height: 152px;
+      background-color: #f8ff00; }
     .contenido .contenido-flexible .caja-imagen {
       display: flex;
       justify-content: center;
@@ -42,12 +43,23 @@
       height: 138px; }
     .contenido .contenido-flexible .caja-texto {
       font-size: 0.8rem;
-      padding: 5px;
+      padding: 15px 10px 10px 10px;
+      background-color: orange;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       width: 600px;
       height: 152px; }
+    .contenido .contenido-flexible .caja-texto p {
+      background-color: #5aa1e3;
+      height: 70%;
+      overflow: auto; }
+    .contenido .contenido-flexible .caja-texto h5 {
+      background-color: #007bff;
+      min-height: 20px;
+      overflow: auto;
+      overflow-wrap: break-word; }
 
 @media (max-width: 340px) {
   .container-fluid {

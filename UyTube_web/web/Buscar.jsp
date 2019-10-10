@@ -104,7 +104,7 @@
                                             <div class=" bd-highlight caja-texto">
                                                 <div class="overflow-auto bg-light" >
                                                     <h5 class="mt-0">Titulo de la Lista</h5>
-                                                    <p>Descripcion de la lista: EMI Music Publishing, Warner Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
+                                                    <p>Descripcion de la lista: EMI Music Publish molestias nesciunt quisquam non et. Esse dolor natus nostrum eveniet eos. Eius facilis beatae dignissimos voluptate culpa placeat debitis est fuga! obcaecati molestias itaque tempora excepturi est minima provident qui, sit atque iusto. eaque officiis libero laborum accusamus quia praesentium porro architecto corrupti! Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
                                                 </div>
                                             </div>
                                         </div><br>
@@ -131,7 +131,7 @@
                                             </div>
                                             <div class="bd-highlight caja-texto">
                                                 <div class="overflow-auto bg-light">
-                                                    <h5 class="mt-0">Nombre del canal</h5>
+                                                    <h5 class="mt-0">Nombre del canal Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, voluptate quis dolor sunt ea vero illo repellendus. Hic, ex quidem.</h5>
                                                     <p>Descripcion del canal: EMI Music Publishing, Warner Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
                                                 </div>
                                             </div>
