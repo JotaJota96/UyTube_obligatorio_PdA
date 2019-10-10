@@ -652,7 +652,17 @@ public class CUsuario implements IUsuario {
         }
         return usuarioSeleccionado.obtenerCanal();
     }
-
+    
+    @Override
+    public DtUsuario obtenerPropietarioDeCanal(int idCanal){
+        for (Map.Entry<String, Usuario> u : this.obtenerUsuarios().entrySet()){
+            if (u.getValue().obtenerCanal().getId() == idCanal){
+                return u.getValue().getDT();
+            }
+        }
+        throw new RuntimeException("El iID de canal no crresponde a ningun usuario");
+    }
+    
     @Override
     public DtUsuario obtenerPropietarioDeVideo(int idVideo) {
         // Esto es un parche, pero de los que nunca se despegan...
@@ -682,7 +692,14 @@ public class CUsuario implements IUsuario {
         }
         throw new RuntimeException("El iID de video no crresponde a ningun usuario");
     }
-
+    @Override
+    public DtUsuario obtenerUsuarioActual(){
+        if (usuarioActual == null){
+            throw new RuntimeException("No se a iniciado la sesión");
+        }
+        return usuarioActual.getDT();
+    }
+    
     @Override
     public DtValoracion obtenerValoracionDada() {
         if (usuarioActual == null) {

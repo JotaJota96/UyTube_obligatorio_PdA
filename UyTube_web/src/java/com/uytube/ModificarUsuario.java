@@ -7,9 +7,7 @@ package com.uytube;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-
-public class AltaVideo extends HttpServlet {
+public class ModificarUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +35,10 @@ public class AltaVideo extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AltaVideo</title>");            
+            out.println("<title>Servlet ModificarUsuario</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AltaVideo at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ModificarUsuario at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,9 +56,7 @@ public class AltaVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/AltaVideo.jsp");
-        rd.forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -75,27 +70,7 @@ public class AltaVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Se guardan los datos del usuario en la base de datos
-        // Y se redigire por ahora al JSP presentacion
-        
-       
-        String pNombre = request.getParameter("nombre");
-        String pDuracion = request.getParameter("duracion");
-        String pUrl = request.getParameter("url");
-        String pFecha = request.getParameter("fecha");        
-        String pDescripcion = request.getParameter("descripcion");
-        String pCategoria = request.getParameter("categoria");
-        
-        System.out.println("nombre: "+pNombre);
-        System.out.println("duracion: "+pDuracion);
-        System.out.println("url: "+pUrl);
-        System.out.println("fecha: "+pFecha);
-        System.out.println("descripcion: "+pDescripcion);
-        System.out.println("categoria: "+pCategoria);
-        
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/Presentacion.jsp");
-        rd.forward(request, response);
+        processRequest(request, response);
     }
 
     /**

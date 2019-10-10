@@ -246,6 +246,14 @@ public interface IUsuario {
     public DtCanal obtenerCanalDeUsuario();
     
     /**
+     * Busca entre todos los usuarios al propietario del canal con el ID indicado
+     *
+     * @param idCanal ID del canal
+     * @return Datos del usuario
+     */
+    public DtUsuario obtenerPropietarioDeCanal(int idCanal);
+    
+    /**
      * Busca entre todos los usuarios al propietario del video con el ID indicado
      *
      * @param idVideo ID del video
@@ -260,6 +268,12 @@ public interface IUsuario {
      * @return Datos del usuario
      */
     public DtUsuario obtenerPropietarioDeListaDeReproduccion(int idLista);
+    
+    /**
+     * Devuelve los datos del usuario que inició sesión
+     * @return Datos del usuario actual
+     */
+    public DtUsuario obtenerUsuarioActual();
     
     /**
      * Devuelve la valoracion dada por usuarioActual al video

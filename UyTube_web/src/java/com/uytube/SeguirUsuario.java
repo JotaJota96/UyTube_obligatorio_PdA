@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-public class Perfil extends HttpServlet {
+public class SeguirUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class Perfil extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Perfil</title>");            
+            out.println("<title>Servlet SeguirUsuario</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Perfil at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SeguirUsuario at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

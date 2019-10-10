@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-public class ValidarUsuario extends HttpServlet {
+public class ListarUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class ValidarUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ValidarUsuario</title>");            
+            out.println("<title>Servlet ListarUsuario</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ValidarUsuario at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListarUsuario at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,16 +56,7 @@ public class ValidarUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String txtUsuario = request.getParameter("userdata"); // obtiene lo enviado por AJAX
-            response.setContentType("text/plain");  //Set content type of the response so that jQuery knows what it can expect.
-            response.setCharacterEncoding("UTF-8"); //You want world domination, huh?
-            String respuesta;
-            if(txtUsuario.equals("pedro")){
-                respuesta = "Pedro ya existe";
-            }else{
-                respuesta = "El usuario está disponible";
-            }
-            response.getWriter().write(respuesta);
+        processRequest(request, response);
     }
 
     /**

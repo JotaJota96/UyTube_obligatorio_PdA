@@ -5,6 +5,8 @@
  */
 package com.uytube;
 
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -13,12 +15,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author administrador
  */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/iniciar-sesion"})
+@WebServlet("/inicio-sescion")
 public class IniciarSesion extends HttpServlet {
 
     /**
@@ -76,7 +79,26 @@ public class IniciarSesion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        IUsuario sys = Fabrica.getInstancia().getIUsuario();
+        
+        String paramUser = request.getParameter("user");
+        String paramPassword = request.getParameter("password");
+        RequestDispatcher rd; //objeto para despachar
+        
+        HttpSession sesion = request.getSession();
+        //sesion.invalidate();
+        
+        if(sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute(paramUser) == null){
+            String nick = sys.obtenerUsuarioActual().getNickname();
+            //si coincide usuario y password y además no hay sesión iniciada
+            sesion.setAttribute("usuario", nick);
+            //redirijo a página con información de login exitoso
+            rd = request.getRequestDispatcher("/Presentacion.jsp");
+        }else{
+            //lógica para login inválido
+            rd = request.getRequestDispatcher("/IniciarSesion.jsp");
+        }
+        rd.forward(request, response);
     }
 
     /**

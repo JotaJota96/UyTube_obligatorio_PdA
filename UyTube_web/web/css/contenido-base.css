@@ -2,8 +2,7 @@
   background-color: #f6f6f6;
   min-height: 800px;
   border-bottom: 2px solid #5aa1e3;
-  border-top: 2px solid #5aa1e3;
-  width: 100%; }
+  border-top: 2px solid #5aa1e3; }
 
 .contenido {
   background-color: #f6f6f6;
@@ -11,22 +10,17 @@
   padding: 16px;
   margin-left: auto;
   margin-right: auto;
-  width: 1070px;
+  width: 70%;
   height: 100%; }
   .contenido .contenido-flexible {
     background-color: #f6f6f6;
     margin-bottom: 16px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
     flex-grow: 0;
     flex-shrink: 0; }
-    .contenido .contenido-flexible h3 {
-      width: 100%; }
-    .contenido .contenido-flexible .card {
-      width: 210px;
-      margin: 0px; }
 
 @media (max-width: 340px) {
   .container-fluid {
@@ -378,7 +372,7 @@
     height: 56px; }
 
   .contenido {
-    width: 1070px; }
+    width: 70%; }
 
   .widgets {
     height: 123px;
@@ -396,4 +390,4 @@
     .widgets .widget-2 {
       width: 350px; } }
 
-/*# sourceMappingURL=contenido-index.css.map */
+/*# sourceMappingURL=contenido-base.css.map */

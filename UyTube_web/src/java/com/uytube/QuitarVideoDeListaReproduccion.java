@@ -7,20 +7,16 @@ package com.uytube;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author administrador
  */
-@WebServlet("/validar-login")
-public class ValidarLogin extends HttpServlet {
+public class QuitarVideoDeListaReproduccion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +35,10 @@ public class ValidarLogin extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ValidarLogin</title>");            
+            out.println("<title>Servlet QuitarVideoDeListaReproduccion</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ValidarLogin at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet QuitarVideoDeListaReproduccion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,34 +70,8 @@ public class ValidarLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = "usuario";
-        String password = "123";
-        
-        String paramUser = request.getParameter("user");
-        String paramPassword = request.getParameter("password");
-        RequestDispatcher rd; //objeto para despachar
-        
-        System.out.println("user: "+paramUser);
-        System.out.println("password: "+paramPassword);
-        
-        HttpSession sesion = request.getSession();
-        //sesion.invalidate();
-        
-        //deberíamos buscar el usuario en la base de datos, pero dado que se escapa de este tema, ponemos un ejemplo en el mismo código
-        if(user.equals(paramUser) && password.equals(paramPassword) && sesion.getAttribute(paramUser) == null){
-            //si coincide usuario y password y además no hay sesión iniciada
-            sesion.setAttribute("usuario", paramUser);
-            //redirijo a página con información de login exitoso
-            rd = request.getRequestDispatcher("/Presentacion.jsp");
-        }else{
-            //lógica para login inválido
-            rd = request.getRequestDispatcher("/IniciarSesion.jsp");
-        }
-        rd.forward(request, response);
+        processRequest(request, response);
     }
-        
-        
-    
 
     /**
      * Returns a short description of the servlet.
