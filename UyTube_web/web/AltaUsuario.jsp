@@ -86,15 +86,6 @@
                                             <textarea class="form-control" name="descripcion" id="input_descripcion" placeholder="Descripción del Canal" rows="3"></textarea>
                                             <small class="text-muted">Opcional*</small><br><br>
 
-                                            <div class="form-group">
-                                                <select class="custom-select d-block w-100" id="categoria" required>
-                                                    <option value="">Categoria</option>
-                                                    <option>Musica</option>
-                                                    <option>Deportes</option>
-                                                    <option>Entretenimiento</option>
-                                                </select>
-                                                <small class="text-muted" >Opcional*</small><br>
-                                            </div>
 
                                             <label id="label_email">Imagen de perfil</label>	
                                             <div class="form-group">
@@ -120,7 +111,6 @@
                                 </div>									
                             </section>
                         </div>
-
                     </section>	
                 </div>
             </div>
