@@ -20,6 +20,9 @@ public class Funciones {
         }
         i++;
         for (; i < urlDT.length(); i++) {
+            if (urlDT.charAt(i)=='&') {
+                return idYoutube;
+            }
             idYoutube += urlDT.charAt(i);
         }
         return idYoutube;

@@ -95,7 +95,7 @@ public class IniciarSesion extends HttpServlet {
             sesion.setAttribute("usuario", nick);
             sesion.setAttribute("imgen", img);
             //redirijo a página con información de login exitoso
-            rd = request.getRequestDispatcher("/Presentacion.jsp");
+            rd = request.getRequestDispatcher("/");
         }else{
             //lógica para login inválido
             rd = request.getRequestDispatcher("/IniciarSesion.jsp");

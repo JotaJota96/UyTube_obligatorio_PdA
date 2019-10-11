@@ -69,7 +69,6 @@
                                 <h3>Lo nuevo</h3>
                                 <%
                                     for (Object elem : video) {
-                                        
                                         DtVideo vid = (DtVideo) elem;
                                         String idV = Funciones.Funciones.extraerIDYoutube(vid.getUrlVideoOriginal());
                                         String Imagen = Funciones.Funciones.obtenerImagenDeVideo(idV, 4);
