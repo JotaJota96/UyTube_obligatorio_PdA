@@ -127,7 +127,7 @@
                                                         <%
                                                             if (sesionIniciada && propietario) {
                                                         %>
-                                                        <a href="/usuario-modificar?id=<%= usuario.getNickname()%>">
+                                                        <a href="usuario-modificar?id=<%= usuario.getNickname()%>">
                                                             <button class="btn btn-primary" id="btnBuscar" type="submit">
                                                                 Modificar
                                                             </button>

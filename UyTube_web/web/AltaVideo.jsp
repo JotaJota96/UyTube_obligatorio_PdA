@@ -3,10 +3,16 @@
     Created on : 06/10/2019, 06:14:18 PM
     Author     : administrador
 --%>
-
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+
+    <%
+        ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
+        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+    %>
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +30,17 @@
     </head>
     <body>
 
+        <%
+            if (sesionIniciada) {
+        %>
         <%@ include file='include/header-usuario.html' %>
+        <%
+        } else {
+        %>
+        <%@ include file='include/header-visitante.html' %>
+        <%
+            }
+        %>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -36,8 +52,18 @@
             <div class="row">
                 <div class="col-12">
                     <section class="principal">	
-                        
+
+                        <%
+                            if (sesionIniciada) {
+                        %>
                         <%@ include file='include/menu-usuario.html' %>
+                        <%
+                        } else {
+                        %>
+                        <%@ include file='include/menu-visitante.html' %>
+                        <%
+                            }
+                        %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">
@@ -51,7 +77,7 @@
                                         </div>
                                         <div class="form-group col-md-2">
                                             <label for="inputDuracion">Duración</label>
-                                            <input type="time" class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
+                                            <input type="time" step='1'  class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -69,15 +95,33 @@
                                     <div class="form-group row">
                                         <div class="form-group col-md-4">
                                             <label for="inputFecha">Fecha</label>
-                                            <input type="datetime-local" name="fecha" class="form-control"  id="inputFecha">
+                                            <input type="date" name="fecha" class="form-control"  id="inputFecha">
                                         </div>
-                                        <div class="form-group col-md-8">
+
+                                        <div class="form-group col-md-4">
+
+                                            <label  for="cc-name">Privacidad del video</label>
+                                            <div class="custom-control custom-radio">
+                                                <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
+                                                <label class="custom-control-label" for="publico">Publico</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
+                                                <label class="custom-control-label" for="privado">Privado</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
                                             <label for="inputCategoria">Categoría</label>
                                             <select id="inputCategoria" name="categoria" class="form-control">
-                                                <option selected>Undefain</option>
-                                                <option>Musica</option>
-                                                <option>Deportes</option>
-                                                <option>Informática</option>
+                                                <%
+                                                    for (String l : Categorias) {
+                                                %> 
+                                                <option> <%= l%>  </option>  
+                                                <%
+                                                    }
+                                                %>
+
                                             </select>
                                         </div>												
                                     </div>
@@ -87,7 +131,6 @@
                                 <!-- Fin del contenido central -->
                             </section>
                         </div>
-
                     </section>	
                 </div>
             </div>
@@ -95,7 +138,7 @@
 
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
-        
+
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/bootstrap.min.js"></script>

@@ -5,8 +5,24 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtCanal;
+import Logica.DataType.DtUsuario;
+import Logica.DataType.DtVideo;
+import Logica.Enumerados.Privacidad;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.input.DataFormat;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +34,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-
 public class AltaVideo extends HttpServlet {
 
     /**
@@ -38,7 +53,7 @@ public class AltaVideo extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AltaVideo</title>");            
+            out.println("<title>Servlet AltaVideo</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AltaVideo at " + request.getContextPath() + "</h1>");
@@ -59,9 +74,23 @@ public class AltaVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/AltaVideo.jsp");
-        rd.forward(request, response);
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            boolean sesionIniciada = sys.sesionIniciada();
+            ArrayList<String> cate = sys.listarCategorias();
+
+            request.setAttribute("Categorias", cate);
+            request.setAttribute("sesionIniciada", sesionIniciada);
+
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/AltaVideo.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);
+        }
+
     }
 
     /**
@@ -75,27 +104,51 @@ public class AltaVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Se guardan los datos del usuario en la base de datos
-        // Y se redigire por ahora al JSP presentacion
-        
-       
-        String pNombre = request.getParameter("nombre");
-        String pDuracion = request.getParameter("duracion");
-        String pUrl = request.getParameter("url");
-        String pFecha = request.getParameter("fecha");        
-        String pDescripcion = request.getParameter("descripcion");
-        String pCategoria = request.getParameter("categoria");
-        
-        System.out.println("nombre: "+pNombre);
-        System.out.println("duracion: "+pDuracion);
-        System.out.println("url: "+pUrl);
-        System.out.println("fecha: "+pFecha);
-        System.out.println("descripcion: "+pDescripcion);
-        System.out.println("categoria: "+pCategoria);
-        
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/Presentacion.jsp");
-        rd.forward(request, response);
+
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            String pNombre = request.getParameter("nombre");
+            String pDuracion = request.getParameter("duracion");
+            String pUrl = request.getParameter("url");
+            String pFecha = request.getParameter("fecha");
+            String pDescripcion = request.getParameter("descripcion");
+            String pPrivacidad = request.getParameter("privacidad");
+            String pCategoria = request.getParameter("categoria");
+
+            Privacidad Priv = Privacidad.PRIVADO;
+            if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
+                Priv = Privacidad.PUBLICO;
+            }
+            //============ Casteo de string a date =================================
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
+            Date fechaDate = null;
+            try {
+                fechaDate = formato.parse(pFecha);
+            } catch (ParseException ex) {
+                RequestDispatcher rd; //objeto para despachar
+                rd = request.getRequestDispatcher("/");
+                rd.forward(request, response);
+            }
+            java.sql.Date data = new java.sql.Date(fechaDate.getTime());
+            //======================================================================
+            //============= Casteo de string a Time ================================
+            Time duracion = java.sql.Time.valueOf(pDuracion);
+
+            //======================================================================
+            DtVideo vid = new DtVideo(0, pNombre, pDescripcion,duracion, data, pUrl, Priv, pCategoria, 0, 0);
+
+            sys.altaVideo(vid);
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/IniciarSesion.jsp");
+            rd.forward(request, response);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/Presentacion.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     /**

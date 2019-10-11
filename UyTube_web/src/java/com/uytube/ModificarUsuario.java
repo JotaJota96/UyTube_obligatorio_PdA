@@ -127,6 +127,7 @@ public class ModificarUsuario extends HttpServlet {
                 rd = request.getRequestDispatcher("/");
                 rd.forward(request, response);
             }
+            
             java.sql.Date data = new java.sql.Date(fechaDate.getTime());
             
             DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, data, pImaguen, 0);
