@@ -128,7 +128,6 @@ public class ModificarUsuario extends HttpServlet {
             }
             java.sql.Date fecha_Nac = new java.sql.Date(fechaDate.getTime());
              
-           
             
             Privacidad Priv = Privacidad.PRIVADO;
             if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
@@ -141,7 +140,6 @@ public class ModificarUsuario extends HttpServlet {
             DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, fecha_Nac, pImaguen, 0);
             
             sys.modificarUsuarioYCanal(Usu, CanUsu);
-            
             
             response.sendRedirect("/uytube/usuario-consultar?id="+Usu.getNickname());
            

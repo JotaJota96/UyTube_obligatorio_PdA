@@ -4,9 +4,15 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.DataType.DtVideo"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+    <%
+        ArrayList<Object> video = (ArrayList) request.getAttribute("videos");
+        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,8 +29,17 @@
         <title>UyTube</title>
     </head>
     <body>
-
-        <%@include file='include/header-usuario.html' %>
+        <%
+            if (sesionIniciada) {
+        %>
+        <%@ include file='include/header-usuario.html' %>
+        <%
+        } else {
+        %>
+        <%@ include file='include/header-visitante.html' %>
+        <%
+            }
+        %>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -36,88 +51,38 @@
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						
+
+                        <%
+                            if (sesionIniciada) {
+                        %>
                         <%@ include file='include/menu-usuario.html' %>
+                        <%
+                        } else {
+                        %>
+                        <%@ include file='include/menu-visitante.html' %>
+                        <%
+                            }
+                        %>
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <!--================== Aca va el contenido central para agregar ========================== -->					
                                 <h3>Lo nuevo</h3>
-
+                                <%
+                                    for (Object elem : video) {
+                                        
+                                        DtVideo vid = (DtVideo) elem;
+                                        String idV = Funciones.Funciones.extraerIDYoutube(vid.getUrlVideoOriginal());
+                                        String Imagen = Funciones.Funciones.obtenerImagenDeVideo(idV, 4);
+                                %> 
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
-                                        <img src="https://i.ytimg.com/vi/MiiK2JB6FHo/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
-                                    </a>
-
+                                    <a href="/uytube/video-consulta&id=<%= vid.getId()%>"><img src="<%= Imagen%>" class="card-img-top" alt="Nombre del video"></a>										
                                     <div class="card-body">
-                                        <h5 class="card-title">Titulo del video</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
+                                        <h6 class="card-title"><%= vid.getNombre()%></h6>
                                     </div>
-                                </div>
-
-                                <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234"><img src="https://i.ytimg.com/vi/OVjbqdm_JVI/hqdefault.jpg" class="card-img-top" alt="Nombre del video"></a>										
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo del video</h5>
-                                        <p class="card-text">Some quick example text to buile and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                                <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
-                                        <img src="https://i.ytimg.com/vi/Yq-Kfc81h5s/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo del video</h5>
-                                        <p class="card-text">Some quick example text e and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                                <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
-                                        <img src="https://i.ytimg.com/vi/MiiK2JB6FHo/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo del video</h5>
-                                        <p class="card-text">Some quiard title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                                <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
-                                        <img src="https://i.ytimg.com/vi/MiiK2JB6FHo/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
-                                    </a>
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo del video</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
-                                    </div>
-                                </div>
-
-                                <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234"><img src="https://i.ytimg.com/vi/OVjbqdm_JVI/hqdefault.jpg" class="card-img-top" alt="Nombre del video"></a>										
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo del video</h5>
-                                        <p class="card-text">Some quick example text to buile and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                                <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
-                                        <img src="https://i.ytimg.com/vi/Yq-Kfc81h5s/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo del video</h5>
-                                        <p class="card-text">Some quick example text e and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                                <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
-                                        <img src="https://i.ytimg.com/vi/MiiK2JB6FHo/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo del video</h5>
-                                        <p class="card-text">Some quiard title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>  
-                                <!-- Fin del contenido central -->
-                            </section>
+                                </div>   
+                                <%
+                                    }
+                                %>
                         </div>
 
                     </section>	
