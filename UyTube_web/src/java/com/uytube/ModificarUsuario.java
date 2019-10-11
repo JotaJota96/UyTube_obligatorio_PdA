@@ -110,16 +110,15 @@ public class ModificarUsuario extends HttpServlet {
             String pEmail = request.getParameter("email");
             String pFechaNa = request.getParameter("fechaNa");
             String pPassword = request.getParameter("password");
-            String pImaguen = request.getParameter("img");
             String pPrivacidad = request.getParameter("privacidad");
             String pCanal = request.getParameter("canal");
             String pDescripcion = request.getParameter("descripcion");
-
+            String pImaguen = request.getParameter("img");
+            
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
             Date fechaDate = null;
-            
             try {
                 fechaDate = formato.parse(pFechaNa);
             } catch (ParseException ex) {
@@ -127,21 +126,27 @@ public class ModificarUsuario extends HttpServlet {
                 rd = request.getRequestDispatcher("/");
                 rd.forward(request, response);
             }
-            
-            java.sql.Date data = new java.sql.Date(fechaDate.getTime());
-            
-            DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, data, pImaguen, 0);
+            java.sql.Date fecha_Nac = new java.sql.Date(fechaDate.getTime());
+             
+           
             
             Privacidad Priv = Privacidad.PRIVADO;
             if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
                 Priv = Privacidad.PUBLICO;
             }
             
+            System.out.println(pNickname);
+            
             DtCanal CanUsu = new DtCanal(0, pCanal, pDescripcion, Priv);
+            DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, fecha_Nac, pImaguen, 0);
+            
             sys.modificarUsuarioYCanal(Usu, CanUsu);
+            
+            
             response.sendRedirect("/uytube/usuario-consultar?id="+Usu.getNickname());
            
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/");
             rd.forward(request, response);

@@ -4,6 +4,8 @@
     Author     : administrador
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <%@page import="Logica.Clases.Categoria"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Logica.Enumerados.Privacidad"%>
@@ -79,8 +81,9 @@
                             <section class="contenido-flexible">							
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
-                                        <form class="form-signin" action="/uytube/usuario-agregar" method="post">
+                                        <form class="form-signin" action="/uytube/usuario-modificar" method="post">
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
+                                            <input value="<%= usuario.getNickname()%>" class="form-control" type="text" name="nickname" readonly="readonly" placeholder="Nickname" id="input_Nickname" required><br>
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <input value="<%= usuario.getNombre()%>"  type="text" class="form-control" name="nombre" id="input_Nombre" placeholder="Nombre" required>
@@ -89,7 +92,15 @@
                                                     <input value="<%= usuario.getApellido()%>" type="text" class="form-control" name="apellido" id="input_Apellido" placeholder="Apellido" required>
                                                 </div>
                                             </div>
-
+                                            <div class="mb-3">
+                                                <input value="<%= usuario.getCorreo()%>" type="email" class="form-control" name="email" readonly="readonly" id="email" placeholder="Email" required>
+                                            </div>
+                                            <%
+                                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                                                String fecha = df.format(usuario.getFechaNacimiento());
+                                            %>
+                                            <input  value="<%= fecha %>" class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start" readonly="readonly"><br>
+                                                
                                             <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" placeholder="Contraseña" id="input_Contraseña" required><br>
                                             <input value="<%= usuario.getContrasenia()%>" class="form-control" name="password" type="password" placeholder="Repetir contraseña" id="input_Repetir_contraseña" required>
                                             <%
@@ -130,6 +141,8 @@
                                                 }
                                             %>
                                             
+                                            <input value="<%= canal.getNombre() %>" class="form-control" name="canal" type="text" placeholder="Nombre del Canal" readonly="readonly" id="input_Nombre_canal" required><br>
+
                                             <textarea class="form-control" name="descripcion" id="input_descripcion" placeholder="Descripción del Canal" rows="3"> <%=canal.getDescripcion()%> </textarea>
 
                                             <br>   
@@ -146,7 +159,7 @@
                                                     <button class="btn btn-lg btn-primary btn-block" type="reset" id="btn_Limpiar">Limpiar</button>
                                                 </div>
                                                 <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn_Registrarme">Registrarme</button>
+                                                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn_Registrarme">Modificar usuario</button>
                                                 </div>
                                             </div>
 
