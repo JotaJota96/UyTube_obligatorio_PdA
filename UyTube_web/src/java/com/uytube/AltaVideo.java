@@ -138,9 +138,7 @@ public class AltaVideo extends HttpServlet {
             DtVideo vid = new DtVideo(0, pNombre, pDescripcion,duracion, data, pUrl, Priv, pCategoria, 0, 0);
 
             sys.altaVideo(vid);
-            RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/IniciarSesion.jsp");
-            rd.forward(request, response);
+            response.sendRedirect("/uytube/buscar?texto="+vid.getNombre());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

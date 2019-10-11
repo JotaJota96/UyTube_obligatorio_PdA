@@ -64,20 +64,19 @@
                         <%
                             }
                         %>
-
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <!--================== Aca va el contenido central para agregar ========================== -->					
                                 <h3>Alta de video</h3>			
                                 <form class="form-alta-video" action="/uytube/video-agregar" method="post" >
                                     <div class="form-group row">
-                                        <div class="form-group col-md-10">
+                                        <div class="form-group col-md-9">
                                             <label for="inputNombre">Nombre</label>
                                             <input type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
                                         </div>
-                                        <div class="form-group col-md-2">
+                                        <div class="form-group col-md-3">
                                             <label for="inputDuracion">Duración</label>
-                                            <input type="time" step='1'  class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
+                                            <input type="time" step='1'class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
                                         </div>
                                     </div>
                                     <div class="form-group row">
