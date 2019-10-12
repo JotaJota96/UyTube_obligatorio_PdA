@@ -16,12 +16,11 @@ public class Funciones {
         String idYoutube = "";
         String urlDT = URLYoutube;
         int i = 0;
-        for (; i < urlDT.length() && urlDT.charAt(i) != '='; i++) {
-        }
-        i++;
+        i = URLYoutube.indexOf("v=") +2;
+        
         for (; i < urlDT.length(); i++) {
             if (urlDT.charAt(i)=='&') {
-                return idYoutube;
+                break;
             }
             idYoutube += urlDT.charAt(i);
         }

@@ -4,13 +4,16 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.Enumerados.Ordenacion"%>
+<%@page import="Logica.Enumerados.Filtrado"%>
+<%@page import="Logica.Fabrica"%>
 <%@page import="Logica.DataType.DtVideo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
     <%
-        ArrayList<Object> video = (ArrayList) request.getAttribute("videos");
+        ArrayList<Object> video = (ArrayList) Fabrica.getInstancia().getIUsuario().buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
         boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
     %>
     <head>
@@ -71,19 +74,23 @@
                                     for (Object elem : video) {
                                         DtVideo vid = (DtVideo) elem;
                                         String idV = Funciones.Funciones.extraerIDYoutube(vid.getUrlVideoOriginal());
-                                        String Imagen = Funciones.Funciones.obtenerImagenDeVideo(idV, 4);
+                                        String Imagen = Funciones.Funciones.obtenerImagenDeVideo(idV, 2);
                                 %> 
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=<%= vid.getId()%>"><img src="<%= Imagen%>" class="card-img-top" alt="Nombre del video"></a>										
-                                    <div class="card-body">
-                                        <h6 class="card-title"><%= vid.getNombre()%></h6>
-                                    </div>
-                                </div>   
+                                    <a href="/uytube/video-consultar?id=<%= vid.getId()%>">
+                                        <img src="<%= Imagen%>" class="card-img-top" alt="Nombre del video">
+                                    </a>
+                                        <div class="card-body">
+                                            <a href="/uytube/video-consultar?id=<%= vid.getId()%>">
+                                                <h6 class="card-title"><%= vid.getNombre()%></h6>
+                                            </a>
+                                        </div>
+                                </div>
                                 <%
                                     }
                                 %>
                         </div>
-
+                        
                     </section>	
                 </div>
             </div>
