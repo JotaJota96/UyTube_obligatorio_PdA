@@ -46,7 +46,7 @@ public class ConsultaVideo extends HttpServlet {
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
             if (sesionIniciada) {
-                propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
+                propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual);
             }
 
             request.setAttribute("usuario", usuario);
