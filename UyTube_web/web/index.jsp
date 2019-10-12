@@ -24,7 +24,7 @@
     </head>
     <body>
 
-        <%@ include file='include/header-visitante.html' %>
+        <%@ include file='include/header-visitante.jsp' %>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">

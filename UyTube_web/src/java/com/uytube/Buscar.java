@@ -74,6 +74,8 @@ public class Buscar extends HttpServlet {
                 
                 Ret = sys.buscar(Texto, Fil, ord);
                 
+               
+                
             } else {
                 Ret = sys.buscar(Categoria);
             }

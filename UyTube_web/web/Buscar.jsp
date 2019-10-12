@@ -37,11 +37,11 @@
                     <%
                         if (false){
                     %>
-                    <%@ include file='include/header-usuario.html' %>
+                    <%@ include file='include/header-usuario.jsp' %>
                     <%
                         }else{
                     %>
-                    <%@ include file='include/header-visitante.html' %>
+                    <%@ include file='include/header-visitante.jsp' %>
                     <%
                         }
                     %>
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						
-                        <%@ include file='include/menu-usuario.html' %>
+                        <%@ include file='include/menu-usuario.jsp' %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">								

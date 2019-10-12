@@ -7,6 +7,7 @@ package com.uytube;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +57,15 @@ public class ModificarListaReproduccion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            try {
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/ModificarListaReproduccion.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**

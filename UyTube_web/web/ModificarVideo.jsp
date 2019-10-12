@@ -37,11 +37,11 @@
         <%
             if (sesionIniciada) {
         %>
-        <%@ include file='include/header-usuario.html' %>
+        <%@ include file='include/header-usuario.jsp' %>
         <%
         } else {
         %>
-        <%@ include file='include/header-visitante.html' %>
+        <%@ include file='include/header-visitante.jsp' %>
         <%
             }
         %>
@@ -60,11 +60,11 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.html' %>
+                        <%@ include file='include/menu-usuario.jsp' %>
                         <%
                         } else {
                         %>
-                        <%@ include file='include/menu-visitante.html' %>
+                        <%@ include file='include/menu-visitante.jsp' %>
                         <%
                             }
                         %>

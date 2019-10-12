@@ -39,6 +39,10 @@ public class ConsultaUsuario extends HttpServlet {
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String nick = request.getParameter("id");
+            String ps = request.getParameter("ps");
+            if(ps == null || ps.equals("")){
+                ps = "VIDEOS";
+            }
             
             DtUsuario usuario = sys.seleccionarUsuario(nick);
             DtCanal canal = sys.obtenerCanalDeUsuario();
@@ -53,6 +57,7 @@ public class ConsultaUsuario extends HttpServlet {
                 usuarioPropietario = sys.obtenerUsuarioActual().getNickname().equals(nick);
             }
             
+            request.setAttribute("ps", ps);
             request.setAttribute("usuario", usuario);
             request.setAttribute("canal", canal);
             request.setAttribute("seguidos", seguidos);

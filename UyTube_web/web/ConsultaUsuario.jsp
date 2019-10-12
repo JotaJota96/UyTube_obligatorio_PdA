@@ -21,6 +21,7 @@
         ArrayList<DtUsuario> seguidores = (ArrayList) request.getAttribute("seguidores");
         ArrayList<DtVideo> videos = (ArrayList) request.getAttribute("videos");
         ArrayList<DtListaDeReproduccion> listasRep = (ArrayList) request.getAttribute("listasRep");
+        String ps = (String) request.getAttribute("ps");
     %>
     <head>
         <meta charset="UTF-8">
@@ -46,11 +47,11 @@
                     <%
                         if (sesionIniciada){
                     %>
-                    <%@ include file='include/header-usuario.html' %>
+                    <%@ include file='include/header-usuario.jsp' %>
                     <%
                         }else{
                     %>
-                    <%@ include file='include/header-visitante.html' %>
+                    <%@ include file='include/header-visitante.jsp' %>
                     <%
                         }
                     %>
@@ -72,11 +73,11 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.html' %>
+                        <%@ include file='include/menu-usuario.jsp' %>
                         <%
                         } else {
                         %>
-                        <%@ include file='include/menu-visitante.html' %>
+                        <%@ include file='include/menu-visitante.jsp' %>
                         <%
                             }
                         %>
@@ -153,8 +154,30 @@
                                     <div class="bd-example bd-example-tabs">
                                         <nav class="">
                                             <div class="nav nav-tabs " id="nav-tab" role="tablist">
+                                            <%
+                                            if (ps.equals("VIDEOS")) {
+                                            %>    
+
                                                 <a class="nav-item nav-link active" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS</a>
+                                            <%
+                                            } else {
+                                            %> 
+                                                <a class="nav-item nav-link" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS</a>
+                                            <%
+                                            }
+                                            %>
+                                            
+                                            <%
+                                            if (ps.equals("LISTAS")) {
+                                            %>    
+                                                <a class="nav-item nav-link active" id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS</a>
+                                            <%
+                                            } else {
+                                            %> 
                                                 <a class="nav-item nav-link " id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS</a>
+                                            <%
+                                            }
+                                            %> 
                                                 <a class="nav-item nav-link " id="refSeguidores" data-toggle="tab" href="#seguidores" role="tab" aria-controls="nav-SEGUIDORES" aria-selected="false">SEGUIDORES</a>
                                                 <a class="nav-item nav-link " id="refSeguidos" data-toggle="tab" href="#seguidos" role="tab" aria-controls="nav-SEGUIDOS" aria-selected="false">SEGUIDOS</a>
                                             </div>
@@ -163,8 +186,21 @@
 
                                     <div class="tab-content" id="nav-tabContent">
                                         <!-- Pestaña de videos -->
-                                        <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
-                                            <br>
+                                        <%
+                                            if (ps.equals("VIDEOS")) {
+                                        %>    
+
+                                                <div class="tab-pane fade show active" id="videos" role="tabpanel"  aria-labelledby="nav-VIDEO-tab">
+                                                <br>
+                                        <%
+                                            } else {
+                                            %> 
+                                                <div class="tab-pane fade show" id="videos" role="tabpanel"  aria-labelledby="nav-VIDEO-tab">
+                                                <br>
+                                            <%
+                                            }
+                                        %>   
+
                                             <%
                                                 for (DtVideo v : videos) {
                                                     String urlEmbebida = Funciones.Funciones.obtenerEnlaceEmbebido(
@@ -202,8 +238,21 @@
                                         </div>
 
                                         <!-- Pestaña de listas de reproduccion -->
-                                        <div class="tab-pane fade show" id="listas" role="tabpanel" aria-labelledby="nav-LISTAS-tab">
+                                        
+                                        <%
+                                            if (ps.equals("LISTAS")) {
+                                        %>    
+
+                                                <div class="tab-pane fade show active" id="listas" role="tabpanel" aria-labelledby="nav-LISTAS-tab">
                                             <br><ul class="list-group">
+                                        <%
+                                            } else {
+                                            %> 
+                                                <div class="tab-pane fade show" id="listas" role="tabpanel" aria-labelledby="nav-LISTAS-tab">
+                                                <br><ul class="list-group">
+                                            <%
+                                            }
+                                        %>   
                                                 <%
                                                     for (DtListaDeReproduccion l : listasRep) {
                                                 %>

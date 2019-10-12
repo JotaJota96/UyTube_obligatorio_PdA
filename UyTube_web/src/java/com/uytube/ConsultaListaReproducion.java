@@ -57,9 +57,9 @@ public class ConsultaListaReproducion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        
         RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
+        rd = request.getRequestDispatcher("/ConsultarListaReproduccion.jsp");
         rd.forward(request, response);
     }
 

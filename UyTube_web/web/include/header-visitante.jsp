@@ -10,7 +10,7 @@ Header para el visitante
                 <nav>
                     <div class="navbar-dark item-header item-header1" id="navLogo">
                         <label class="icon-menu1"></label>
-                        <img class="fotoLogo" src="imagenes/logoChico.jpeg" alt="UyTube">					
+                        <a href="/uytube/presentacion"><img class="fotoLogo" src="imagenes/logoChico.jpeg" alt="UyTube"></a>					
                     </div>	
                     <div class="navbar-dark item-header item-header2">					  
                         <div id="navbarSupportedContent">		
