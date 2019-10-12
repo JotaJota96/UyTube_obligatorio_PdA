@@ -180,7 +180,7 @@
                                                 </div>
                                                 <div class="p-1 flex-shrink-1 bd-highlight ">
                                                     <div class="overflow-auto p-1 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 530px; max-height: 170px;">
-                                                        <a href="/video-consultar?id=<%= v.getId()%>">
+                                                        <a href="video-consultar?id=<%= v.getId()%>">
                                                             <h5 class="mt-0"><%= v.getNombre()%></h5>
                                                         </a>
                                                         <p><%= v.getDescripcion()%></p>
@@ -208,7 +208,7 @@
                                                     for (DtListaDeReproduccion l : listasRep) {
                                                 %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="/lista-consultar?id=<%= l.getId()%>">
+                                                    <a href="lista-consultar?id=<%= l.getId()%>">
                                                         <%= l.getNombre()%>
                                                     </a>
                                                 </li>

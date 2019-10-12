@@ -26,7 +26,7 @@
         <link rel="stylesheet" type="text/css" href="css/contenido-alta-video.css">	
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube</title>
+        <title>UyTube - Agregar video</title>
     </head>
     <body>
 
