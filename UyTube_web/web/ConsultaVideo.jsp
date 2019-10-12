@@ -4,6 +4,8 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.Enumerados.TipoValoracion"%>
+<%@page import="Logica.DataType.DtValoracion"%>
 <%@page import="org.eclipse.persistence.jpa.jpql.tools.model.query.DerivedPathVariableDeclarationStateObject"%>
 <%@page import="java.util.TreeMap"%>
 <%@page import="javax.swing.text.Document"%>
@@ -26,6 +28,7 @@
         DtCanal canal = (DtCanal) request.getAttribute("canal");
         DtVideo video = (DtVideo) request.getAttribute("video");
         String htmlComentarios = (String) request.getAttribute("comentarios");
+        DtValoracion valoracionDada = (DtValoracion) request.getAttribute("valoracionDada");
     %>
     <head>
         <meta charset="UTF-8">
@@ -122,13 +125,43 @@
                                             </button>
                                         </div>
                                         <div class="p-2 btn-group mr-2" role="group" aria-label="Third group">
+                                            <%                
+                                                if (valoracionDada == null){
+                                            %>
                                             <button type="button" id="btnLike" class="btn btn-success">
-                                                ME GUSTÓ <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
+                                                <span id="txtMeGusta">ME GUSTA</span>
+                                                <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
                                             </button>
                                             <button type="button" id="btnDisLike" class="btn btn-danger">
-                                                NO ME GUSTÓ <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
+                                                <span id="txtNoMeGusta">NO ME GUSTA</span>
+                                                <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
                                             </button>
-                                        </div>  
+                                            <%
+                                                }else if (valoracionDada.getVal() == TipoValoracion.LIKE){
+                                            %>
+                                            <button disabled="true" type="button" id="btnLike" class="btn btn-success">
+                                                <span id="txtMeGusta">TE GUSTA</span>
+                                                <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
+                                            </button>
+                                            <button type="button" id="btnDisLike" class="btn btn-danger">
+                                                <span id="txtNoMeGusta">NO ME GUSTA</span>
+                                                <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
+                                            </button>
+                                            <%
+                                                }else if (valoracionDada.getVal() == TipoValoracion.DISLIKE){
+                                            %>
+                                            <button type="button" id="btnLike" class="btn btn-success">
+                                                <span id="txtMeGusta">ME GUSTA</span>
+                                                <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
+                                            </button>
+                                            <button disabled="true" type="button" id="btnDisLike" class="btn btn-danger">
+                                                <span id="txtNoMeGusta">NO TE GUSTA</span>
+                                                <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
+                                            </button>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
                                     </div>
                                     <%
                                         }

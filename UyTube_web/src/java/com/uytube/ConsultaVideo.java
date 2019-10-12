@@ -41,11 +41,13 @@ public class ConsultaVideo extends HttpServlet {
             DtCanal canal = sys.obtenerCanalDeUsuario();
             DtVideo video = sys.seleccionarVideo(idVideo);
             ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
+            DtValoracion valoracionDada = null;
             
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
             if (sesionIniciada){
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
+                valoracionDada = sys.obtenerValoracionDada();
             }
             
             String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), sesionIniciada);
@@ -58,6 +60,7 @@ public class ConsultaVideo extends HttpServlet {
             request.setAttribute("comentarios", htmlComentarios);
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("propietarioDelVideo", propietarioDelVideo);
+            request.setAttribute("valoracionDada", valoracionDada);
             
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
@@ -90,9 +93,7 @@ public class ConsultaVideo extends HttpServlet {
             
             // ---- Acciones relacionadas a VALORAR VIDEO ----
             if (accion.equals("like")
-                    || accion.equals("disLike")
-                    || accion.equals("quitarLike")
-                    || accion.equals("quitarDisLike")) {
+                    || accion.equals("disLike")) {
                 
                 int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                 DtValoracion dtVal = null;
@@ -111,18 +112,11 @@ public class ConsultaVideo extends HttpServlet {
                 sys.seleccionarVideo(idVideo);
                 sys.valorarVideo(dtVal);
                 
-                switch (accion) {
-                    case "like":
-                    case "quitarLike":
-                        respuesta = String.valueOf(sys.seleccionarVideo(idVideo).getCantLikes());
-                        break;
-                    case "disLike":
-                    case "quitarDisLike":
-                        respuesta = String.valueOf(sys.seleccionarVideo(idVideo).getCantDisLikes());
-                        break;
-                    default:
-                        respuesta = "";
-                }
+                // obtiene las cantidades de valoraciones
+                String strCantLikes = String.valueOf(sys.seleccionarVideo(idVideo).getCantLikes());
+                String strCantDisLikes = String.valueOf(sys.seleccionarVideo(idVideo).getCantDisLikes());
+                // Las concatena para devolverlas
+                respuesta = strCantLikes + ":" + strCantDisLikes;
                 response.getWriter().write(respuesta);
                 
             // ---- Acciones relacionadas a COMENTAR VIDEO ----
