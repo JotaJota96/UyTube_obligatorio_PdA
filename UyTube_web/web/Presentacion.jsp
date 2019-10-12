@@ -41,9 +41,9 @@
                             <section class="contenido-flexible">
                                 <!--================== Aca va el contenido central para agregar ========================== -->					
                                 <h3>Lo nuevo</h3>
-                                
+
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
+                                    <a href="/uytube/video-consultar?id=1">
                                         <img src="https://i.ytimg.com/vi/MiiK2JB6FHo/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
                                     </a>
 
@@ -55,14 +55,14 @@
                                 </div>
 
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234"><img src="https://i.ytimg.com/vi/OVjbqdm_JVI/hqdefault.jpg" class="card-img-top" alt="Nombre del video"></a>										
+                                    <a href="/uytube/video-consulta&idr?id=2"><img src="https://i.ytimg.com/vi/OVjbqdm_JVI/hqdefault.jpg" class="card-img-top" alt="Nombre del video"></a>										
                                     <div class="card-body">
                                         <h5 class="card-title">Titulo del video</h5>
                                         <p class="card-text">Some quick example text to buile and make up the bulk of the card's content.</p>
                                     </div>
                                 </div>
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
+                                    <a href="/uytube/video-consultar?id=3">
                                         <img src="https://i.ytimg.com/vi/Yq-Kfc81h5s/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
                                     </a>
                                     <div class="card-body">
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
+                                    <a href="/uytube/video-consultar?id=4">
                                         <img src="https://i.ytimg.com/vi/MiiK2JB6FHo/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
                                     </a>
                                     <div class="card-body">
@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
+                                    <a href="/uytube/video-consultar?id=5">
                                         <img src="https://i.ytimg.com/vi/MiiK2JB6FHo/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
                                     </a>
 
@@ -92,14 +92,14 @@
                                 </div>
 
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234"><img src="https://i.ytimg.com/vi/OVjbqdm_JVI/hqdefault.jpg" class="card-img-top" alt="Nombre del video"></a>										
+                                    <a href="/uytube/video-consultar?id=6"><img src="https://i.ytimg.com/vi/OVjbqdm_JVI/hqdefault.jpg" class="card-img-top" alt="Nombre del video"></a>										
                                     <div class="card-body">
                                         <h5 class="card-title">Titulo del video</h5>
                                         <p class="card-text">Some quick example text to buile and make up the bulk of the card's content.</p>
                                     </div>
                                 </div>
                                 <div class="card" >
-                                    <a href="/uytube/video-consulta&id=1234">
+                                    <a href="/uytube/video-consultar?id=7">
                                         <img src="https://i.ytimg.com/vi/Yq-Kfc81h5s/hqdefault.jpg" class="card-img-top" alt="Nombre del video">
                                     </a>
                                     <div class="card-body">
