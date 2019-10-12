@@ -7,11 +7,9 @@ package com.uytube;
 
 import Logica.Enumerados.Filtrado;
 import Logica.Enumerados.Ordenacion;
-import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

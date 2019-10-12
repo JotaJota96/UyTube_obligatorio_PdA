@@ -69,40 +69,7 @@
 
                                     <!-- BOTONES DESPLEGABLES-->
 
-                                    <div class="d-flex bd-highlight ">
-                                        <div class="p-2 bd-highlight ">
-                                            <h4>Tipo de contenido</h4>
-                                        </div>
-                                        <div class="p-1 bd-highlight ">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary mr-5 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Seleccionar
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">TODO</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">CANALES</a>
-                                                    <a class="dropdown-item" href="#">VIDEO</a>
-                                                    <a class="dropdown-item" href="#">LISTAS</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="p-2 bd-highlight ">
-                                            <h4>Oredenado por</h4>
-                                        </div>
-                                        <div class="p-1 bd-highlight ">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Seleccionar
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">ALFABETO</a>
-                                                    <a class="dropdown-item" href="#">FECHA</a>
-                                                </div>
-                                            </div>
-                                        </div>	
-                                    </div>
+                                    <%@ include file='include/filtro-visible.html' %>
 
                                     <!--FIN DE LOS BOTONES-->
 

@@ -64,5 +64,10 @@ public class Funciones {
         }
         return "https://i.ytimg.com/vi/" + idYoutube + strTamanio;
     }
-    
+
+    public static java.sql.Date fechaActual() {
+        java.util.Date today = new java.util.Date();
+        java.sql.Date ret = new java.sql.Date(today.getTime());
+        return ret;
+    }
 }
