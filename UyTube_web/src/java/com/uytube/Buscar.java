@@ -64,12 +64,16 @@ public class Buscar extends HttpServlet {
                 
                 String comilla = "" + (char) 34;
                 String vacio = "";
-                Texto = Texto.replaceAll(comilla, vacio);
+                if (Texto == null){
+                    Texto = "";
+                }else{
+                    Texto = Texto.replaceAll(comilla, vacio);
+                }
                 
                 if (Texto.equals("")){
                     Texto = " ";
                 }
-                
+                System.out.println("Todo bien hasta aqui");
                 Ret = sys.buscar(Texto, Fil, ord);
                 
             } else {
@@ -83,6 +87,7 @@ public class Buscar extends HttpServlet {
             rd.forward(request, response);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/");
             rd.forward(request, response);

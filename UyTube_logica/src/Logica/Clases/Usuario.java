@@ -307,12 +307,6 @@ public class Usuario extends Persona{
         if(DtCanal == null){
             throw new RuntimeException("El canal no puede ser null");
         }
-        if (this.id != DtUsu.getNickname()){
-            throw new RuntimeException("El nickname no puede ser modificado");
-        }
-        if (this.correo != DtUsu.getCorreo()){
-            throw new RuntimeException("El correo no puede ser modificado");
-        }
         super.setNombre(DtUsu.getNombre());
         super.setApellido(DtUsu.getApellido());
         super.setContrasenia(DtUsu.getContrasenia());

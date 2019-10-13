@@ -88,7 +88,7 @@
                                                             2
                                                     );
                                         %>
-                                        <div class="video">
+                                        <div class="video -highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight">
                                                     <a href="video-consultar?id=<%= e.getId() %>">
@@ -96,8 +96,8 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="bd-highlight caja-texto justify-content-start">
-                                                <div class="bg-light" >
+                                            <div class="bd-highlight caja-texto">
+                                                <div class="overflow-auto bg-light" >
                                                     <h5 class="mt-0">
                                                         <a href="video-consultar?id=<%= e.getId() %>">
                                                             <%= e.getNombre() %>
@@ -112,7 +112,7 @@
                                                 }else if (o instanceof DtListaDeReproduccion){
                                                     DtListaDeReproduccion e = (DtListaDeReproduccion) o;
                                         %>
-                                        <br><div class="lista bd-highlight">
+                                        <div class="lista bd-highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight ">
                                                     <a href="lista-consultar?id=<%= e.getId()%>">
@@ -121,7 +121,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class=" bd-highlight caja-texto justify-content-start">
+                                            <div class=" bd-highlight caja-texto">
                                                 <div class="overflow-auto bg-light" >
                                                     <h5 class="mt-0">
                                                         <a href="lista-consultar?id=<%= e.getId() %>">
@@ -153,7 +153,7 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="bd-highlight caja-texto justify-content-start">
+                                            <div class="bd-highlight caja-texto">
                                                 <div class="overflow-auto bg-light">
                                                     <h5 class="mt-0">
                                                         <a href="usuario-consultar?id=<%= usu.getNickname() %>">
@@ -169,14 +169,9 @@
                                                 }
                                             }
                                         %>
-
-
-                                        
-                                        
                                     </div>
 
                                     <!--FIN de LISTA DE CONTENIDO-->
-
                                 </div>							
                             </section>
                         </div> 

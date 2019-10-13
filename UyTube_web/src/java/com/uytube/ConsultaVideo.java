@@ -154,13 +154,14 @@ public class ConsultaVideo extends HttpServlet {
                 
             // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
             } else if (accion.equals("agregarALista")) {
+                /*
                 int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                 int idLista = Integer.valueOf(request.getParameter("idLista"));
                 
                 sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
                 sys.agregarVideoAListaDeReproduccion(idLista);
-                
-                respuesta = "El video ha sido agregado a su lista de reproducción";
+                */
+                respuesta = "Esta funcionalidad no ha sido implementada aun...";
                 response.getWriter().write(respuesta);
             }
             

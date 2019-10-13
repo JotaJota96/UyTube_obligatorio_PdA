@@ -5,8 +5,18 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtCanal;
+import Logica.DataType.DtUsuario;
+import Logica.Enumerados.Privacidad;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +66,30 @@ public class ModificarUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();    
+                
+            String nick = request.getParameter("id");
+            
+            DtUsuario usuario = sys.seleccionarUsuario(nick);
+            DtCanal canal = sys.obtenerCanalDeUsuario();
+            boolean sesionIniciada = sys.sesionIniciada();
+            
+            boolean usuarioPropietario = false;
+            if (sesionIniciada){
+                usuarioPropietario = sys.obtenerUsuarioActual().getNickname().equals(nick);
+            }
+            
+            request.setAttribute("sesionIniciada", sesionIniciada);
+            request.setAttribute("usuario", usuario);
+            request.setAttribute("canal", canal);
+            
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/ModificarUsuario.jsp");
+            rd.forward(request, response);
+            
+            
+            
+            
     }
 
     /**
@@ -70,7 +103,52 @@ public class ModificarUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+            String pNickname = request.getParameter("nickname");
+            String pNombre = request.getParameter("nombre");
+            String pApellido = request.getParameter("apellido");
+            String pEmail = request.getParameter("email");
+            String pFechaNa = request.getParameter("fechaNa");
+            String pPassword = request.getParameter("password");
+            String pPrivacidad = request.getParameter("privacidad");
+            String pCanal = request.getParameter("canal");
+            String pDescripcion = request.getParameter("descripcion");
+            String pImaguen = request.getParameter("img");
+            
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
+            Date fechaDate = null;
+            try {
+                fechaDate = formato.parse(pFechaNa);
+            } catch (ParseException ex) {
+                RequestDispatcher rd; //objeto para despachar
+                rd = request.getRequestDispatcher("/");
+                rd.forward(request, response);
+            }
+            java.sql.Date fecha_Nac = new java.sql.Date(fechaDate.getTime());
+             
+            
+            Privacidad Priv = Privacidad.PRIVADO;
+            if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
+                Priv = Privacidad.PUBLICO;
+            }
+            
+            System.out.println(pNickname);
+            
+            DtCanal CanUsu = new DtCanal(0, pCanal, pDescripcion, Priv);
+            DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, fecha_Nac, pImaguen, 0);
+            
+            sys.modificarUsuarioYCanal(Usu, CanUsu);
+            
+            response.sendRedirect("/uytube/usuario-consultar?id="+Usu.getNickname());
+           
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);
+        }
     }
 
     /**

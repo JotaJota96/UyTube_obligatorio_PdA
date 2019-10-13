@@ -3,10 +3,16 @@
     Created on : 06/10/2019, 06:14:18 PM
     Author     : administrador
 --%>
-
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+
+    <%
+        ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
+        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+    %>
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,11 +26,21 @@
         <link rel="stylesheet" type="text/css" href="css/contenido-alta-video.css">	
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube</title>
+        <title>UyTube - Agregar video</title>
     </head>
     <body>
 
+        <%
+            if (sesionIniciada) {
+        %>
         <%@ include file='include/header-usuario.html' %>
+        <%
+        } else {
+        %>
+        <%@ include file='include/header-visitante.html' %>
+        <%
+            }
+        %>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -36,22 +52,31 @@
             <div class="row">
                 <div class="col-12">
                     <section class="principal">	
-                        
-                        <%@ include file='include/menu-usuario.html' %>
 
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.html' %>
+                        <%
+                        } else {
+                        %>
+                        <%@ include file='include/menu-visitante.html' %>
+                        <%
+                            }
+                        %>
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <!--================== Aca va el contenido central para agregar ========================== -->					
                                 <h3>Alta de video</h3>			
                                 <form class="form-alta-video" action="/uytube/video-agregar" method="post" >
                                     <div class="form-group row">
-                                        <div class="form-group col-md-10">
+                                        <div class="form-group col-md-9">
                                             <label for="inputNombre">Nombre</label>
                                             <input type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
                                         </div>
-                                        <div class="form-group col-md-2">
+                                        <div class="form-group col-md-3">
                                             <label for="inputDuracion">Duración</label>
-                                            <input type="time" class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
+                                            <input type="time" step='1'class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -69,15 +94,33 @@
                                     <div class="form-group row">
                                         <div class="form-group col-md-4">
                                             <label for="inputFecha">Fecha</label>
-                                            <input type="datetime-local" name="fecha" class="form-control"  id="inputFecha">
+                                            <input type="date" name="fecha" class="form-control"  id="inputFecha">
                                         </div>
-                                        <div class="form-group col-md-8">
+
+                                        <div class="form-group col-md-4">
+
+                                            <label  for="cc-name">Privacidad del video</label>
+                                            <div class="custom-control custom-radio">
+                                                <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
+                                                <label class="custom-control-label" for="publico">Publico</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
+                                                <label class="custom-control-label" for="privado">Privado</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
                                             <label for="inputCategoria">Categoría</label>
                                             <select id="inputCategoria" name="categoria" class="form-control">
-                                                <option selected>Undefain</option>
-                                                <option>Musica</option>
-                                                <option>Deportes</option>
-                                                <option>Informática</option>
+                                                <%
+                                                    for (String l : Categorias) {
+                                                %> 
+                                                <option> <%= l%>  </option>  
+                                                <%
+                                                    }
+                                                %>
+
                                             </select>
                                         </div>												
                                     </div>
@@ -87,7 +130,6 @@
                                 <!-- Fin del contenido central -->
                             </section>
                         </div>
-
                     </section>	
                 </div>
             </div>
@@ -95,7 +137,7 @@
 
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
-        
+
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/bootstrap.min.js"></script>

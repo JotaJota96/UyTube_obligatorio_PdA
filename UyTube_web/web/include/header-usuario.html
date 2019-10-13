@@ -27,7 +27,7 @@ and open the template in the editor.
                              <%= session.getAttribute("usuario")%>
                         </div>					  
                         <div>
-                            <img id="fotoPerfil" src="imagenes/homero.jpg" alt="Perfil">
+                            <img id="fotoPerfil" src=<%= session.getAttribute("imgen") %> alt="Perfil">
                         </div>
 
                     </div>
