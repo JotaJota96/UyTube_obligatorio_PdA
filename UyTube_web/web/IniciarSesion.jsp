@@ -45,7 +45,8 @@
                         <%@ include file='include/menu-visitante.html' %>
 
                         <div class="contenido">
-                            <section class="contenido-flexible">									
+                            <section class="contenido-flexible">
+                                
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">	
                                         <form class="form-signin" action="/uytube/inicio-sesion" method="post">
