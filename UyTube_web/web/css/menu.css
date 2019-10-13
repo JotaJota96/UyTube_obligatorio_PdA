@@ -1,13 +1,14 @@
 .menu {
-  position: absolute;
+  position: fixed;
+  max-height: 450px;
   z-index: 10;
   width: 0px;
-  top: -60px;
+  top: 56px;
   left: 0px;
   padding-top: 20px;
   background-color: #00001a;
-  overflow: hidden;
-  transition: all 300ms; }
+  overflow: auto;
+  transition: all 400ms; }
   .menu ul {
     list-style: none;
     padding: 0px;

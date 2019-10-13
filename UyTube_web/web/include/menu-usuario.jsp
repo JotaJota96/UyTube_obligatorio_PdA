@@ -12,13 +12,7 @@ Menú para el usuario logueado
         DtUsuario usu = sys.obtenerUsuarioActual();
 
     %>
-    <ul>
-        <li>
-            <span>
-                <label class="icon-menu1"></label>
-                <img class="fotoLogo" src="imagenes/logoChico.jpeg" alt="UyTube">
-            </span>		
-        </li>		
+    <ul>	
         <li class="titulo"> Inicio </li>
         <li><a href="/uytube/presentacion"><span class="icon-home1"></span> Inicio</a></li>
         <li class="titulo"> <%= usu.getNickname()%> </li>

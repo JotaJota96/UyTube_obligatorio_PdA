@@ -44,7 +44,7 @@ public class CerrarSesion extends HttpServlet {
             if (sys.sesionIniciada()) {
                 sys.cerrarSesion();
             }
-            response.sendRedirect("");
+            response.sendRedirect("/uytube/");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar

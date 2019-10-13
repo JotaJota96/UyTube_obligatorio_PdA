@@ -38,7 +38,7 @@
     left: 0px;
     height: 175.112px; }
     .header nav {
-      height: 175.112px; }
+      height: 100%; }
     .header .item-header2 {
       order: 3;
       width: 100%; }
@@ -98,7 +98,7 @@
     height: 175.112px;
     left: 0px; }
     .header nav {
-      height: 175.112px; }
+      height: 100%; }
     .header .item-header2 {
       order: 3;
       width: 100%; }
@@ -155,7 +155,7 @@
     left: 0px;
     height: 127.176px; }
     .header nav {
-      height: 127.176px; }
+      height: 100%; }
     .header .item-header2 {
       order: 3;
       width: 100%; }
@@ -214,7 +214,7 @@
     left: 0px;
     height: 129.176px; }
     .header nav {
-      height: 129.176px; }
+      height: 100%; }
     .header .item-header2 {
       order: 3;
       width: 100%; }
@@ -272,8 +272,8 @@
     width: 100%;
     left: 0rem;
     height: 124.117px; }
-    .header .nav {
-      height: 124.117px; }
+    .header nav {
+      height: 100%; }
     .header .item-header2 {
       order: 3;
       width: 100%; }
@@ -372,7 +372,7 @@
     width: 98%;
     height: 56px; }
     .header nav {
-      height: 56px; }
+      height: 100%; }
 
   .relleno-header {
     height: 56px; }

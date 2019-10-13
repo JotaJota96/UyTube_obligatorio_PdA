@@ -5,15 +5,9 @@ Menú para el Visitante
 -->
 <aside class="menu" >							
     <ul>
-        <li>
-            <span>
-                <label class="icon-menu1"></label>
-                <img class="fotoLogo" src="imagenes/logoChico.jpeg" alt="UyTube">
-            </span>		
-         </li>		
         <li class="titulo"> Inicio </li>
         <li><a href="/uytube/presentacion"><span class="icon-home1"></span> Inicio</a></li>
-        
+
         <li class="titulo">Cuenta</li>
         <li><a href="/uytube/buscar"><span class="icon-magnifying-glass"></span> Buscar</a></li>
         <li class="titulo">Cuenta</li>
