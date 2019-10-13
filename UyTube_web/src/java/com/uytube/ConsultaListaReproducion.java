@@ -5,8 +5,13 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtListaDeReproduccion;
+import Logica.DataType.DtVideo;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +41,7 @@ public class ConsultaListaReproducion extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConsultaListaReproducion</title>");            
+            out.println("<title>Servlet ConsultaListaReproducion</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ConsultaListaReproducion at " + request.getContextPath() + "</h1>");
@@ -44,7 +49,7 @@ public class ConsultaListaReproducion extends HttpServlet {
             out.println("</html>");
         }
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -57,10 +62,43 @@ public class ConsultaListaReproducion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
-        rd.forward(request, response);
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            boolean sesionIniciada = sys.sesionIniciada();
+            String usuario = request.getParameter("idUsu");
+            String lista = request.getParameter("idList");
+            
+            sys.seleccionarUsuario(usuario);
+            int idLista = Integer.parseInt(lista);
+            sys.seleccionarListaDeReproduccion(idLista);
+            
+            DtListaDeReproduccion listas = sys.seleccionarListaDeReproduccion(idLista);
+            
+            ArrayList <DtVideo> videos = sys.listarVideosDeListaDeReproduccion();
+            
+            
+            boolean usuarioPropietario = false;
+            if (sesionIniciada) {
+                usuarioPropietario = sys.obtenerUsuarioActual().getNickname().equals(usuario);
+            }
+            
+            request.setAttribute("usuario", usuario);
+            request.setAttribute("propietario", usuarioPropietario);
+            request.setAttribute("videos", videos);
+            request.setAttribute("sesionIniciada", sesionIniciada);
+            request.setAttribute("listas", listas);
+          
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/ConsultarListaReproduccion.jsp");
+            rd.forward(request, response);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     /**

@@ -70,7 +70,7 @@ public class Presentacion extends HttpServlet {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             boolean sesionIniciada = sys.sesionIniciada();
             ArrayList<Object> videos = sys.buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
-                    
+
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("videos", videos);
 
@@ -79,6 +79,9 @@ public class Presentacion extends HttpServlet {
             rd.forward(request, response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
         }
 
     }

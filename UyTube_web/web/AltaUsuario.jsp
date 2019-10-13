@@ -27,7 +27,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <%@ include file='include/header-visitante.html' %>
+                    <%@ include file='include/header-visitante.jsp' %>
                 </div>
             </div>		
         </div>
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						
-                        <%@ include file='include/menu-visitante.html' %>
+                        <%@ include file='include/menu-visitante.jsp' %>
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <div class="principal d-flex flex-row justify-content-center">
@@ -70,11 +70,11 @@
                                             <div class="d-block my-3">
                                                 <label for="cc-name">Privacidad del canal</label>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked >
+                                                    <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked >
                                                     <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" >
+                                                    <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input" >
                                                     <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
                                             </div>
@@ -87,12 +87,12 @@
                                             <small class="text-muted">Opcional*</small><br><br>
 
 
-                                            <label id="label_email">Imagen de perfil</label>	
+                                            <label id="label_email">Imagen de perfil</label>
+                                            
                                             <div class="form-group">
-                                                <input id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
+                                                <input accept=".PNG,.JPG,.jpg,.png" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
                                                 <small class="text-muted">Opcional*</small>
                                             </div>
-
 
                                             <hr class="mb-4">
 

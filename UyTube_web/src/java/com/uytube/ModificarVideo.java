@@ -55,8 +55,9 @@ public class ModificarVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/ModificarVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }
@@ -105,7 +106,7 @@ public class ModificarVideo extends HttpServlet {
             DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl, Priv, pCategoria, 0, 0);
 
             sys.modificarVideo(vid);
-            response.sendRedirect("buscar?texto="+vid.getNombre());
+            response.sendRedirect("buscar?texto=" + vid.getNombre());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar

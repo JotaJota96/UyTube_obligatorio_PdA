@@ -45,7 +45,7 @@ public class ModificarUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ModificarUsuario</title>");            
+            out.println("<title>Servlet ModificarUsuario</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ModificarUsuario at " + request.getContextPath() + "</h1>");
@@ -66,30 +66,36 @@ public class ModificarUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();    
-                
+
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+
             String nick = request.getParameter("id");
-            
+
             DtUsuario usuario = sys.seleccionarUsuario(nick);
             DtCanal canal = sys.obtenerCanalDeUsuario();
             boolean sesionIniciada = sys.sesionIniciada();
-            
+
             boolean usuarioPropietario = false;
-            if (sesionIniciada){
+            if (sesionIniciada) {
                 usuarioPropietario = sys.obtenerUsuarioActual().getNickname().equals(nick);
             }
-            
+
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("usuario", usuario);
             request.setAttribute("canal", canal);
-            
+
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ModificarUsuario.jsp");
             rd.forward(request, response);
-            
-            
-            
-            
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     /**
@@ -103,7 +109,7 @@ public class ModificarUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         try {
+        try {
             String pNickname = request.getParameter("nickname");
             String pNombre = request.getParameter("nombre");
             String pApellido = request.getParameter("apellido");
@@ -113,10 +119,10 @@ public class ModificarUsuario extends HttpServlet {
             String pPrivacidad = request.getParameter("privacidad");
             String pCanal = request.getParameter("canal");
             String pDescripcion = request.getParameter("descripcion");
-            String pImaguen = request.getParameter("img");
-            
+            String pImaguen = request.getParameter("imagen");
+
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
-            
+
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
             Date fechaDate = null;
             try {
@@ -127,22 +133,21 @@ public class ModificarUsuario extends HttpServlet {
                 rd.forward(request, response);
             }
             java.sql.Date fecha_Nac = new java.sql.Date(fechaDate.getTime());
-             
-            
+
             Privacidad Priv = Privacidad.PRIVADO;
             if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
                 Priv = Privacidad.PUBLICO;
             }
-            
+
             System.out.println(pNickname);
-            
+
             DtCanal CanUsu = new DtCanal(0, pCanal, pDescripcion, Priv);
             DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, fecha_Nac, pImaguen, 0);
-            
+
             sys.modificarUsuarioYCanal(Usu, CanUsu);
-            
-            response.sendRedirect("/uytube/usuario-consultar?id="+Usu.getNickname());
-           
+
+            response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar

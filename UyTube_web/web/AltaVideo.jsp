@@ -33,11 +33,11 @@
         <%
             if (sesionIniciada) {
         %>
-        <%@ include file='include/header-usuario.html' %>
+        <%@ include file='include/header-usuario.jsp' %>
         <%
         } else {
         %>
-        <%@ include file='include/header-visitante.html' %>
+        <%@ include file='include/header-visitante.jsp' %>
         <%
             }
         %>
@@ -56,11 +56,11 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.html' %>
+                        <%@ include file='include/menu-usuario.jsp' %>
                         <%
                         } else {
                         %>
-                        <%@ include file='include/menu-visitante.html' %>
+                        <%@ include file='include/menu-visitante.jsp' %>
                         <%
                             }
                         %>
@@ -92,25 +92,12 @@
                                         </div>
                                     </div>										
                                     <div class="form-group row">
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-5">
                                             <label for="inputFecha">Fecha</label>
                                             <input type="date" name="fecha" class="form-control"  id="inputFecha">
                                         </div>
-
-                                        <div class="form-group col-md-4">
-
-                                            <label  for="cc-name">Privacidad del video</label>
-                                            <div class="custom-control custom-radio">
-                                                <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
-                                                <label class="custom-control-label" for="publico">Publico</label>
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
-                                                <label class="custom-control-label" for="privado">Privado</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-md-4">
+                                        
+                                        <div class="form-group col-md-7">
                                             <label for="inputCategoria">Categoría</label>
                                             <select id="inputCategoria" name="categoria" class="form-control">
                                                 <%

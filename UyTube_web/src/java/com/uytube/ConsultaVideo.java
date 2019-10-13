@@ -35,25 +35,24 @@ public class ConsultaVideo extends HttpServlet {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String strIDVideo = request.getParameter("id");
             int idVideo = Integer.valueOf(strIDVideo);
-            
+
             DtUsuario usuario = sys.obtenerPropietarioDeVideo(idVideo);
             sys.seleccionarUsuario(usuario.getNickname());
             DtCanal canal = sys.obtenerCanalDeUsuario();
             DtVideo video = sys.seleccionarVideo(idVideo);
             ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
             DtValoracion valoracionDada = null;
-            
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
-            if (sesionIniciada){
+            if (sesionIniciada) {
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
                 valoracionDada = sys.obtenerValoracionDada();
             }
+
             
             String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), sesionIniciada);
             // no se si la siguiente linea es necesaria, pero por las dudas la pongo, para no dejar incoherencias en la logica
             sys.seleccionarUsuario(usuario.getNickname());
-            
             request.setAttribute("usuario", usuario);
             request.setAttribute("canal", canal);
             request.setAttribute("video", video);
@@ -61,14 +60,13 @@ public class ConsultaVideo extends HttpServlet {
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("propietarioDelVideo", propietarioDelVideo);
             request.setAttribute("valoracionDada", valoracionDada);
-            
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }
@@ -92,80 +90,78 @@ public class ConsultaVideo extends HttpServlet {
             response.setCharacterEncoding("UTF-8"); // Tipo de Codificación de caracteres
             
             // ---- Acciones relacionadas a VALORAR VIDEO ----
-            if (accion.equals("like")
-                    || accion.equals("disLike")) {
-                
-                int idVideo = Integer.valueOf(request.getParameter("idVideo"));
-                DtValoracion dtVal = null;
-                
-                switch (accion) {
-                    case "like":
-                        dtVal = new DtValoracion(TipoValoracion.LIKE, "");
-                        break;
-                    case "disLike":
-                        dtVal = new DtValoracion(TipoValoracion.DISLIKE, "");
-                        break;
+            switch (accion) {
+                case "like":
+                case "disLike": {
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    DtValoracion dtVal = null;
+                    switch (accion) {
+                        case "like":
+                            dtVal = new DtValoracion(TipoValoracion.LIKE, "");
+                            break;
+                        case "disLike":
+                            dtVal = new DtValoracion(TipoValoracion.DISLIKE, "");
+                            break;
+                    }       // se seleccionan el usuario due;o del video y el video (por las dudas)
+                    DtUsuario usuarioDuenioDelVideo = sys.obtenerPropietarioDeVideo(idVideo);
+                    sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
+                    sys.seleccionarVideo(idVideo);
+                    sys.valorarVideo(dtVal);
+                    // obtiene las cantidades de valoraciones
+                    String strCantLikes = String.valueOf(sys.seleccionarVideo(idVideo).getCantLikes());
+                    String strCantDisLikes = String.valueOf(sys.seleccionarVideo(idVideo).getCantDisLikes());
+                    // Las concatena para devolverlas
+                    respuesta = strCantLikes + ":" + strCantDisLikes;
+                    response.getWriter().write(respuesta);
+
+                    // ---- Acciones relacionadas a COMENTAR VIDEO ----
+                    break;
                 }
-                // se seleccionan el usuario due;o del video y el video (por las dudas)
-                DtUsuario usuarioDuenioDelVideo = sys.obtenerPropietarioDeVideo(idVideo);
-                sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
-                sys.seleccionarVideo(idVideo);
-                sys.valorarVideo(dtVal);
-                
-                // obtiene las cantidades de valoraciones
-                String strCantLikes = String.valueOf(sys.seleccionarVideo(idVideo).getCantLikes());
-                String strCantDisLikes = String.valueOf(sys.seleccionarVideo(idVideo).getCantDisLikes());
-                // Las concatena para devolverlas
-                respuesta = strCantLikes + ":" + strCantDisLikes;
-                response.getWriter().write(respuesta);
-                
-            // ---- Acciones relacionadas a COMENTAR VIDEO ----
-            } else if (accion.equals("comentarVideo") || accion.equals("responderComentario")) {
-                // Se extraen los datos recibidos
-                String texto = request.getParameter("texto");
-                int idVideo = Integer.valueOf(request.getParameter("idVideo"));
-                int idComentario = -1;
-                if (request.getParameter("idComentario") != null){
-                    idComentario = Integer.valueOf(request.getParameter("idComentario"));
+                case "comentarVideo":
+                case "responderComentario": {
+                    // Se extraen los datos recibidos
+                    String texto = request.getParameter("texto");
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    int idComentario = -1;
+                    if (request.getParameter("idComentario") != null) {
+                        idComentario = Integer.valueOf(request.getParameter("idComentario"));
+                    }       // se seleccionan el usuario due;o del video y el video (por las dudas)
+                    DtUsuario usuarioDuenioDelVideo = sys.obtenerPropietarioDeVideo(idVideo);
+                    sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
+                    sys.seleccionarVideo(idVideo);
+                    // Crea el DT y lo manda al sistema
+                    DtComentario dtc = new DtComentario(0, "", Funciones.fechaActual(), texto, 0);
+                    if (idComentario <= 0) {
+                        sys.altaComentario(dtc);
+                    } else {
+                        sys.altaComentario(dtc, idComentario);
+                    }       // se obtienen los comentarios y se genera el HTML para actualizar la p'pagina
+                    ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
+                    String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), true);
+                    // la funcion 'obtenerImagenesDeUsuarios' selecciona usuarios asi que por las dudas lo vuelvo a seleccionar para que la logica quede coherente
+                    sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
+                    respuesta = htmlComentarios;
+                    response.getWriter().write(respuesta);
+
+                    // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
+                    break;
                 }
-                
-                // se seleccionan el usuario due;o del video y el video (por las dudas)
-                DtUsuario usuarioDuenioDelVideo = sys.obtenerPropietarioDeVideo(idVideo);
-                sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
-                sys.seleccionarVideo(idVideo);
-                // Crea el DT y lo manda al sistema
-                DtComentario dtc = new DtComentario(0, "", Funciones.fechaActual(), texto, 0);
-                
-                if (idComentario <= 0) {
-                    sys.altaComentario(dtc);
-                } else {
-                    sys.altaComentario(dtc, idComentario);
-                }
-                
-                // se obtienen los comentarios y se genera el HTML para actualizar la p'pagina
-                ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
-                String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), true);
-                
-                // la funcion 'obtenerImagenesDeUsuarios' selecciona usuarios asi que por las dudas lo vuelvo a seleccionar para que la logica quede coherente
-                sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
-                
-                respuesta = htmlComentarios;
-                response.getWriter().write(respuesta);
-                
-            // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
-            } else if (accion.equals("agregarALista")) {
-                /*
-                int idVideo = Integer.valueOf(request.getParameter("idVideo"));
-                int idLista = Integer.valueOf(request.getParameter("idLista"));
-                
-                sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
-                sys.agregarVideoAListaDeReproduccion(idLista);
-                */
-                respuesta = "Esta funcionalidad no ha sido implementada aun...";
-                response.getWriter().write(respuesta);
+                case "agregarALista":
+                    /*
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    int idLista = Integer.valueOf(request.getParameter("idLista"));
+                    
+                    sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                    sys.agregarVideoAListaDeReproduccion(idLista);
+                     */
+                    respuesta = "Esta funcionalidad no ha sido implementada aun...";
+                    response.getWriter().write(respuesta);
+                    break;
+                default:
+                    break;
             }
-            
-        } catch (Exception e) {
+
+        } catch (IOException | NumberFormatException e) {
             System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/");
@@ -194,7 +190,9 @@ public class ConsultaVideo extends HttpServlet {
     }
     
     private String htmlDeSeccionDeComentarios(ArrayList<DtComentario> comentarios, ArrayList<String> imagenes, boolean  mostrarBotonResponder){
-        if (comentarios == null || comentarios.isEmpty())   return "";
+        if (comentarios == null || comentarios.isEmpty()){
+            return "";
+        }
         
         String ret = "";
         DtComentario c = comentarios.remove(0);
@@ -217,19 +215,15 @@ public class ConsultaVideo extends HttpServlet {
         }
         ret += "            <br>";
         
-        if ( ! comentarios.isEmpty()){
-            if (comentarios.get(0).getNivelSubComentario() > c.getNivelSubComentario()){
+        if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() > c.getNivelSubComentario())){
                 ret += htmlDeSeccionDeComentarios(comentarios, imagenes, mostrarBotonResponder);
-            }
         }
         
         ret += "    </div>";
         ret += "</div>";
         
-        if ( ! comentarios.isEmpty()){
-            if (comentarios.get(0).getNivelSubComentario() == c.getNivelSubComentario()){
+        if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() == c.getNivelSubComentario())){
                 ret += htmlDeSeccionDeComentarios(comentarios, imagenes, mostrarBotonResponder);
-            }
         }
         return ret;
     }

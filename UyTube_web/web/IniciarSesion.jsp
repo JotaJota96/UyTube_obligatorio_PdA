@@ -27,7 +27,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <%@ include file='include/header-visitante.html' %>
+                    <%@ include file='include/header-visitante.jsp' %>
                 </div>
             </div>		
         </div>
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						
-                        <%@ include file='include/menu-visitante.html' %>
+                        <%@ include file='include/menu-visitante.jsp' %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">

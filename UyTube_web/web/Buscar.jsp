@@ -14,6 +14,10 @@
 <!DOCTYPE html>
 
 <html lang="es">
+    <%
+        ArrayList<Object> lista = (ArrayList) request.getAttribute("Lista");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,13 +39,13 @@
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
                     <%
-                        if (false){
+                        if (sesionIniciada){
                     %>
-                    <%@ include file='include/header-usuario.html' %>
+                    <%@ include file='include/header-usuario.jsp' %>
                     <%
                         }else{
                     %>
-                    <%@ include file='include/header-visitante.html' %>
+                    <%@ include file='include/header-visitante.jsp' %>
                     <%
                         }
                     %>
@@ -59,8 +63,20 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
-                        <%@ include file='include/menu-usuario.html' %>
+                    <section class="principal">
+                        
+
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%
+                            } else {
+                        %>
+                        <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">								
@@ -79,7 +95,6 @@
 
                                     <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
                                         <%
-                                            ArrayList<Object> lista = (ArrayList) request.getAttribute("Lista");
                                             for (Object o : lista){
                                                 if (o instanceof DtVideo){
                                                     DtVideo e = (DtVideo) o;

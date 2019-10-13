@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-
 public class AltaUsuario extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,7 +38,7 @@ public class AltaUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AltaUsuario</title>");            
+            out.println("<title>Servlet AltaUsuario</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AltaUsuario at " + request.getContextPath() + "</h1>");
@@ -59,9 +59,17 @@ public class AltaUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/AltaUsuario.jsp");
-        rd.forward(request, response);
+        try {
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/AltaUsuario.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     /**
@@ -82,16 +90,16 @@ public class AltaUsuario extends HttpServlet {
             String pEmail = request.getParameter("email");
             String pFechaNa = request.getParameter("fechaNa");
             String pPassword = request.getParameter("password");
-            String pImaguen = request.getParameter("img");
+            String pImaguen = request.getParameter("imagen");
             String pPrivacidad = request.getParameter("privacidad");
             String pCanal = request.getParameter("canal");
             String pDescripcion = request.getParameter("descripcion");
-
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
             
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
             Date fechaDate = null;
-            
+
             try {
                 fechaDate = formato.parse(pFechaNa);
             } catch (ParseException ex) {
@@ -100,30 +108,31 @@ public class AltaUsuario extends HttpServlet {
                 rd.forward(request, response);
             }
             java.sql.Date data = new java.sql.Date(fechaDate.getTime());
-            
+
             DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, data, pImaguen, 0);
-            
+
             Privacidad Priv = Privacidad.PRIVADO;
             if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
                 Priv = Privacidad.PUBLICO;
             }
-            
+
             DtCanal CanUsu = new DtCanal(0, pCanal, pDescripcion, Priv);
             sys.altaUsuarioCanal(Usu, CanUsu);
-            response.sendRedirect("/uytube/usuario-consultar?id="+Usu.getNickname());
-           
+            response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
+
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }
-    
+
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doDelete(req, resp); //To change body of generated methods, choose Tools | Templates.
     }
- 
+
     @Override
     public String getServletInfo() {
         return "Short description";
