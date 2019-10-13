@@ -57,10 +57,6 @@
                                             <label for="inputPassword" name="password" class="sr-only" id="label_contrasenia">Contraseña</label>
                                             <input type="password" name="password" id="input_contraseña" class="form-control mb-4" placeholder="Contraseña" required>
                                             <div class="checkbox mb-3">
-                                                <label>
-                                                    <input type="checkbox" value="remember-me" id="check_recuerdarme"> Recuerdarme
-                                                    <p id="mitexto"></p>
-                                                </label>
                                             </div>
                                             <button class="btn btn-lg btn-primary btn-block mb-4" type="submit" id="btn_Ingresar">Ingresar</button>
 
