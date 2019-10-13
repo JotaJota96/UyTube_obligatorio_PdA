@@ -14,6 +14,10 @@
 <!DOCTYPE html>
 
 <html lang="es">
+    <%
+        ArrayList<Object> lista = (ArrayList) request.getAttribute("Lista");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +39,7 @@
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
                     <%
-                        if (false){
+                        if (sesionIniciada){
                     %>
                     <%@ include file='include/header-usuario.jsp' %>
                     <%
@@ -59,8 +63,20 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
+                    <section class="principal">
+                        
+
+                        <%
+                            if (sesionIniciada) {
+                        %>
                         <%@ include file='include/menu-usuario.jsp' %>
+                        <%
+                            } else {
+                        %>
+                        <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">								
@@ -79,7 +95,6 @@
 
                                     <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
                                         <%
-                                            ArrayList<Object> lista = (ArrayList) request.getAttribute("Lista");
                                             for (Object o : lista){
                                                 if (o instanceof DtVideo){
                                                     DtVideo e = (DtVideo) o;
@@ -137,12 +152,12 @@
                                                 }else if (o instanceof DtCanal){
                                                     DtCanal e = (DtCanal) o;
                                                     // buena suerte entendiendo esto...
-                                                    DtUsuario usuImagen = Fabrica.getInstancia().getIUsuario().obtenerPropietarioDeCanal(e.getId());
+                                                    DtUsuario usu = Fabrica.getInstancia().getIUsuario().obtenerPropietarioDeCanal(e.getId());
                                                     String imagenCanal;
-                                                    if (usuImagen.getImagen() == null || usuImagen.getImagen().equals("")){
+                                                    if (usu.getImagen() == null || usu.getImagen().equals("")){
                                                         imagenCanal = "imagenes/ukp.png";
                                                     }else{
-                                                        imagenCanal = usuImagen.getImagen();
+                                                        imagenCanal = usu.getImagen();
                                                     }
                                         %>
                                         <div class="canal bd-highlight">
