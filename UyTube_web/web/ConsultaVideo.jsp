@@ -21,7 +21,7 @@
 
 <html lang="es">
     <%
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
         //sesionIniciada = true;
         boolean propietarioDelVideo = (boolean) request.getAttribute("propietarioDelVideo");
         DtUsuario usuario = (DtUsuario) request.getAttribute("usuario");
@@ -119,42 +119,38 @@
                                         if (sesionIniciada) {
                                     %>
                                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                                        <div class="p-2 btn-group mr-5" role="group" aria-label="Third group">
-                                            <button type="button" id="btnAgregarALista" class="btn btn-info">
-                                                + LISTA DE REPRODUCCIÓN
-                                            </button>
-                                        </div>
+                                        <!-- Botones Me gusta y no me gusta -->
                                         <div class="p-2 btn-group mr-2" role="group" aria-label="Third group">
                                             <%                
                                                 if (valoracionDada == null){
                                             %>
-                                            <button type="button" id="btnLike" class="btn btn-success">
+                                            <button type="button" id="btnLike" class="btn btn-success icon-thumbs-up">
                                                 <span id="txtMeGusta">ME GUSTA</span>
                                                 <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
                                             </button>
-                                            <button type="button" id="btnDisLike" class="btn btn-danger">
+                                            <button type="button" id="btnDisLike" class="btn btn-danger icon-thumbs-down">
                                                 <span id="txtNoMeGusta">NO ME GUSTA</span>
                                                 <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
                                             </button>
                                             <%
                                                 }else if (valoracionDada.getVal() == TipoValoracion.LIKE){
                                             %>
-                                            <button disabled="true" type="button" id="btnLike" class="btn btn-success">
+                                            <button disabled="true" type="button" id="btnLike" class="btn btn-success icon-thumbs-up">
                                                 <span id="txtMeGusta">TE GUSTA</span>
                                                 <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
                                             </button>
-                                            <button type="button" id="btnDisLike" class="btn btn-danger">
+                                            <button type="button" id="btnDisLike" class="btn btn-danger icon-thumbs-down">
                                                 <span id="txtNoMeGusta">NO ME GUSTA</span>
                                                 <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
                                             </button>
                                             <%
                                                 }else if (valoracionDada.getVal() == TipoValoracion.DISLIKE){
                                             %>
-                                            <button type="button" id="btnLike" class="btn btn-success">
+                                            <button type="button" id="btnLike" class="btn btn-success icon-thumbs-up">
                                                 <span id="txtMeGusta">ME GUSTA</span>
                                                 <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
                                             </button>
-                                            <button disabled="true" type="button" id="btnDisLike" class="btn btn-danger">
+                                            <button disabled="true" type="button" id="btnDisLike" class="btn btn-danger icon-thumbs-down">
                                                 <span id="txtNoMeGusta">NO TE GUSTA</span>
                                                 <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
                                             </button>
@@ -162,6 +158,29 @@
                                                 }
                                             %>
                                         </div>
+                                        
+                                        <!-- Boton agregar a lista de reproduccion -->
+                                        <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">
+                                            <button type="button" id="btnAgregarALista" class="btn btn-info icon-add-to-list">
+                                                LISTA DE REPRODUCCIÓN
+                                            </button>
+                                        </div>
+                                        
+                                        <%
+                                            if (propietarioDelVideo){
+                                        %>
+                                        <!-- Boton modificar video -->
+                                        <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">
+                                            <a href="video-modificar?id=<%= video.getId() %>">
+                                                <button type="button" id="btnModificarVideo" class="btn btn-primary icon-cog">
+                                                    MODIFICAR
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                        
                                     </div>
                                     <%
                                         }
