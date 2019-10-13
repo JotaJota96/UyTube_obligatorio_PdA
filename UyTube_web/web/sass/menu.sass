@@ -1,11 +1,11 @@
 @import _colores
+@import _alturas
 //Estilos del menu
 .menu
     position: fixed
     max-height: 450px
     z-index: 10
     width: 0px
-    top: 56px
     left: 0px
     padding-top: 20px
     background-color: $colorHeaderMenuFooter
@@ -61,3 +61,49 @@
 
 .abrir
     width: 17.625rem
+
+// Para un maximo de 340px ================================================================================  
+@media (max-width: 340px) 
+    .menu
+        top: $alturaHeader340
+        left: 0px
+// Para dispositivos mayores a 340 y menores a 388 ==============================================================
+@media (min-width: 341px) and (max-width: 387px)
+    .menu
+        top: $alturaHeader341
+        left: 0px
+
+// Para dispositivos mayores a 387 y menores a 500 ================================================================
+@media (min-width: 388px) and (max-width: 500px)
+    .menu
+        top: $alturaHeader388
+        left: 0px
+        
+// Extra small devices (portrait phones, less than 576px) =======================================================
+@media (min-width: 501px) and (max-width: 575.98px)
+    .menu
+        top: $alturaHeader501
+        left: 0px
+
+// Small devices (landscape phones, 576px and up) ================================================================
+@media (min-width: 576px) and (max-width: 767.98px)
+    .menu
+        top: $alturaHeader576
+        left: 0px
+      
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px)
+    .menu
+        top: $alturaHeader768
+        left: 0px
+        
+        
+
+// Large devices (desktops, 992px and up) =======================================================================
+@media (min-width: 992px)
+    .menu
+        top: $alturaHeader992
+        left: 0px
+      
+        

@@ -1,4 +1,5 @@
 @import _colores
+@import _alturas
 
 .header 
     z-index: 9
@@ -65,3 +66,214 @@
         .btn
             height: 32px
             padding: 0px 10px
+
+// Para un maximo de 340px ================================================================================  
+@media (max-width: 340px) 
+    .header
+        width: 100%
+        left: 0px
+        height: $alturaHeader340 
+        nav
+            height: 100%  
+        .item-header2
+            order: 3
+            width: 100%
+        //Espacio de relleno 
+    .relleno-header
+        height: $alturaHeader340
+    //Estilos del contenedor del logo 
+    #navLogo
+        justify-content: flex-start
+        .icon-menu1
+            margin-left: 0px
+            margin-right: 10px
+    //Genera el espacio para dar lugar a el formulario de buscar
+    #navbarSupportedContent
+        width: 100%
+    //Estilos de formulario buscar
+    #formBuscar
+        display: flex
+        justify-content: space-between        
+        width: 100%
+        input
+            width: 100%
+        //Oculta el boton buscar
+        #btnBuscar
+            display: none
+    
+// Para dispositivos mayores a 340 y menores a 388 ==============================================================
+@media (min-width: 341px) and (max-width: 387px)
+    //Estilos del header
+    .header
+        width: 100%
+        height: $alturaHeader341
+        left: 0px
+        nav
+            height: 100%       
+        .item-header2
+            order: 3
+            width: 100%
+    //Espacio de relleno 
+    .relleno-header
+        height: $alturaHeader341
+    //Estilos del contenedor del logo 
+    #navLogo
+        justify-content: flex-start
+        .icon-menu1
+            margin-left: 0px
+            margin-right: 10px
+    //Genera el espacio para dar lugar a el formulario de buscar
+    #navbarSupportedContent
+        width: 100%
+    //Estilos de formulario buscar
+    #formBuscar
+        display: flex
+        justify-content: space-between        
+        width: 100%
+        input
+            width: 100%
+        //Oculta el boton buscar
+        #btnBuscar
+            display: none
+
+// Para dispositivos mayores a 387 y menores a 500 ================================================================
+@media (min-width: 388px) and (max-width: 500px)
+    .header
+        width: 100%
+        left: 0px  
+        height: $alturaHeader388
+        nav
+            height: 100%     
+        .item-header2
+            order: 3
+            width: 100%
+    //Espacio de relleno 
+    .relleno-header
+        height: $alturaHeader388
+    //Espacio de relleno 
+    .relleno-header
+    //Estilos del contenedor del logo 
+    #navLogo
+        justify-content: flex-start
+        .icon-menu1
+            margin-left: 0px
+            margin-right: 10px
+    //Genera el espacio para dar lugar a el formulario de buscar
+    #navbarSupportedContent
+        width: 100%
+    //Estilos de formulario buscar
+    #formBuscar
+        display: flex
+        justify-content: space-between        
+        width: 100%
+        input
+            width: 100%
+        //Oculta el boton buscar
+        #btnBuscar
+            display: none
+        
+// Extra small devices (portrait phones, less than 576px) =======================================================
+@media (min-width: 501px) and (max-width: 575.98px)
+    //Estilos del header
+    .header
+        width: 100%
+        left: 0px
+        height: $alturaHeader501
+        nav
+            height: 100%  
+        .item-header2
+            order: 3
+            width: 100%
+    //Espacio de relleno 
+    .relleno-header
+        height: $alturaHeader501
+    //Estilos del contenedor del logo 
+    #navLogo
+        justify-content: flex-start
+        .icon-menu1
+            margin-left: 0px
+            margin-right: 10px
+    //Genera el espacio para dar lugar a el formulario de buscar
+    #navbarSupportedContent
+        width: 100%
+    //Estilos de formulario buscar
+    #formBuscar
+        display: flex
+        justify-content: space-between        
+        width: 100%
+        input
+            width: 100%
+        //Oculta el boton buscar
+        #btnBuscar
+            display: none
+
+
+// Small devices (landscape phones, 576px and up) ================================================================
+@media (min-width: 576px) and (max-width: 767.98px)
+    //Estilos del header
+    .header
+        width: 100%
+        left: 0rem
+        height: $alturaHeader576
+        nav
+            height: 100%
+        .item-header2
+            order: 3
+            width: 100%
+   
+    //Espacio de relleno 
+    .relleno-header
+        height: $alturaHeader576
+    //Estilos del contenedor del logo 
+    #navLogo
+        justify-content: flex-start
+    //Genera el espacio para el formulario de buscar
+    #navbarSupportedContent
+        width: 100%
+        #formBuscar
+            display: flex
+            justify-content: space-between
+            width: 100%
+            input
+                width: 87%
+    
+      
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px)
+    //Estilos del header
+    .header
+        width: 100%
+        left: 0rem
+        height: $alturaHeader768
+        nav 
+            height: 100%
+            justify-content: space-between
+            //Estilos del contenedor del logo 
+            #navLogo
+                justify-content: space-between
+            //Genera el espacio para el formulario de buscar
+            #navbarSupportedContent
+                width: 100%
+                #formBuscar
+                    display: flex
+                    justify-content: space-between
+                    width: 100%
+                    input
+                        width: 87%
+    //Espacio de relleno 
+    .relleno-header
+        height: $alturaHeader768
+        
+
+// Large devices (deskheights, 992px and up) =======================================================================
+@media (min-width: 992px)
+    //Estilos del header
+    .header
+        width: 98%
+        height: $alturaHeader992
+        nav
+            height: 100%
+    //Espacio de relleno 
+    .relleno-header
+        height: $alturaHeader992

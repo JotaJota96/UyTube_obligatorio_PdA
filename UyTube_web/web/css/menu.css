@@ -3,7 +3,6 @@
   max-height: 450px;
   z-index: 10;
   width: 0px;
-  top: 56px;
   left: 0px;
   padding-top: 20px;
   background-color: #00001a;
@@ -54,5 +53,34 @@
 
 .abrir {
   width: 17.625rem; }
+
+@media (max-width: 340px) {
+  .menu {
+    top: 175.112px;
+    left: 0px; } }
+@media (min-width: 341px) and (max-width: 387px) {
+  .menu {
+    top: 175.112px;
+    left: 0px; } }
+@media (min-width: 388px) and (max-width: 500px) {
+  .menu {
+    top: 127.176px;
+    left: 0px; } }
+@media (min-width: 501px) and (max-width: 575.98px) {
+  .menu {
+    top: 129.176px;
+    left: 0px; } }
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .menu {
+    top: 124.117px;
+    left: 0px; } }
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .menu {
+    top: 77.2px;
+    left: 0px; } }
+@media (min-width: 992px) {
+  .menu {
+    top: 56px;
+    left: 0px; } }
 
 /*# sourceMappingURL=menu.css.map */
