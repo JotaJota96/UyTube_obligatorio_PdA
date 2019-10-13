@@ -33,39 +33,38 @@ public class ConsultaVideo extends HttpServlet {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String strIDVideo = request.getParameter("id");
             int idVideo = Integer.valueOf(strIDVideo);
-            
+
             DtUsuario usuario = sys.obtenerPropietarioDeVideo(idVideo);
             sys.seleccionarUsuario(usuario.getNickname());
             DtCanal canal = sys.obtenerCanalDeUsuario();
             DtVideo video = sys.seleccionarVideo(idVideo);
             ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
-            
+
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
-            if (sesionIniciada){
+            if (sesionIniciada) {
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
             }
-            
+
             request.setAttribute("usuario", usuario);
             request.setAttribute("canal", canal);
             request.setAttribute("video", video);
             request.setAttribute("comentarios", comentarios);
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("propietarioDelVideo", propietarioDelVideo);
-            
+
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
-            
+
     }
 
-    
     /**
      * Returns a short description of the servlet.
      *

@@ -56,7 +56,7 @@
                     <section class="principal">						
 
                         <%
-                            if (sesionIniciada) {
+                        if (sesionIniciada) {
                         %>
                         <%@ include file='include/menu-usuario.jsp' %>
                         <%

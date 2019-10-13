@@ -7,9 +7,10 @@
 Menú para el usuario logueado
 -->
 <aside class="menu" >	
-    <% 
+    <%
         IUsuario sys = Fabrica.getInstancia().getIUsuario();
         DtUsuario usu = sys.obtenerUsuarioActual();
+
     %>
     <ul>
         <li>
@@ -20,7 +21,7 @@ Menú para el usuario logueado
         </li>		
         <li class="titulo"> Inicio </li>
         <li><a href="/uytube/presentacion"><span class="icon-home1"></span> Inicio</a></li>
-        <li class="titulo"> <%= usu.getNickname() %> </li>
+        <li class="titulo"> <%= usu.getNickname()%> </li>
         <li><a href="/uytube/usuario-consultar?id=<%= usu.getNickname()%>" ><span class="icon-user"></span> Mi perfil</a></li>
         <li><a href="usuario-consultar?id=<%= usu.getNickname()%>&ps=VIDEOS"><span class="icon-video-camera"></span> Mis videos</a></li> 
         <li><a href="usuario-consultar?id=<%= usu.getNickname()%>&ps=LISTAS"><span class="icon-list"></span> Mis listas</a></li> 

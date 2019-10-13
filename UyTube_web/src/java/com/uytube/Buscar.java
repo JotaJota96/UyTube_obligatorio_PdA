@@ -63,19 +63,17 @@ public class Buscar extends HttpServlet {
                 if (Orden != null && Orden.equals("ALFABETICO")) {
                     ord = Ordenacion.ALFABETICA_ASCENDENTE;
                 }
-                
+
                 String comilla = "" + (char) 34;
                 String vacio = "";
                 Texto = Texto.replaceAll(comilla, vacio);
-                
-                if (Texto.equals("")){
+
+                if (Texto.equals("")) {
                     Texto = " ";
                 }
-                
+
                 Ret = sys.buscar(Texto, Fil, ord);
-                
-               
-                
+
             } else {
                 Ret = sys.buscar(Categoria);
             }
@@ -87,8 +85,9 @@ public class Buscar extends HttpServlet {
             rd.forward(request, response);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }

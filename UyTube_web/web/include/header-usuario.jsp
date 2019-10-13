@@ -9,10 +9,10 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div class="container-fluid">
-    <% 
+    <%
         IUsuario sys = Fabrica.getInstancia().getIUsuario();
         DtUsuario usu = sys.obtenerUsuarioActual();
-    
+
     %>
     <div class="row">
         <div class="col-12">
@@ -32,10 +32,14 @@ and open the template in the editor.
                     </div>
                     <div class="perfil item-header item-header3 flex-row justify-content-lg-space-between">
                         <div class="flex-row justify-content-lg-space-between alig-content-center" id="nombrePerfil">
-                             <%= usu.getNickname() %>
+                            <a href="/uytube/usuario-consultar?id=<%= usu.getNickname()%>">
+                            <%= usu.getNickname()%>
+                            </a>
                         </div>					  
                         <div>
-                            <img id="fotoPerfil" src=<%= usu.getImagen() %> alt="Perfil">
+                            <a href="/uytube/usuario-consultar?id=<%= usu.getNickname()%>">
+                                <img id="fotoPerfil" src=<%= usu.getImagen()%> alt="Perfil">
+                            </a>
                         </div>
 
                     </div>

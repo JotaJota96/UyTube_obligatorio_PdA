@@ -40,10 +40,10 @@ public class ConsultaUsuario extends HttpServlet {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String nick = request.getParameter("id");
             String ps = request.getParameter("ps");
-            if(ps == null || ps.equals("")){
+            if (ps == null || ps.equals("")) {
                 ps = "VIDEOS";
             }
-            
+
             DtUsuario usuario = sys.seleccionarUsuario(nick);
             DtCanal canal = sys.obtenerCanalDeUsuario();
             ArrayList<DtUsuario> seguidos = sys.listarUsuarioSeguidos();
@@ -51,12 +51,12 @@ public class ConsultaUsuario extends HttpServlet {
             ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
             ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(false);
             boolean sesionIniciada = sys.sesionIniciada();
-            
+
             boolean usuarioPropietario = false;
-            if (sesionIniciada){
+            if (sesionIniciada) {
                 usuarioPropietario = sys.obtenerUsuarioActual().getNickname().equals(nick);
             }
-            
+
             request.setAttribute("ps", ps);
             request.setAttribute("usuario", usuario);
             request.setAttribute("canal", canal);
@@ -72,8 +72,9 @@ public class ConsultaUsuario extends HttpServlet {
             rd.forward(request, response);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }

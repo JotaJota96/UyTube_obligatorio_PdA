@@ -116,7 +116,8 @@
 
                                             %>
 
-                                            <%                                                if (video.getPrivacidad() == Privacidad.PUBLICO) {
+                                            <%
+                                                if (video.getPrivacidad() == Privacidad.PUBLICO) {
                                             %>
                                             <div class="custom-control custom-radio">
                                                 <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked>

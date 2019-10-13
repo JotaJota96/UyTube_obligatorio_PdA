@@ -170,12 +170,12 @@
                                                 }else if (o instanceof DtCanal){
                                                     DtCanal e = (DtCanal) o;
                                                     // buena suerte entendiendo esto...
-                                                    DtUsuario usu = Fabrica.getInstancia().getIUsuario().obtenerPropietarioDeCanal(e.getId());
+                                                    DtUsuario usuImagen = Fabrica.getInstancia().getIUsuario().obtenerPropietarioDeCanal(e.getId());
                                                     String imagenCanal;
-                                                    if (usu.getImagen() == null || usu.getImagen().equals("")){
+                                                    if (usuImagen.getImagen() == null || usuImagen.getImagen().equals("")){
                                                         imagenCanal = "imagenes/ukp.png";
                                                     }else{
-                                                        imagenCanal = usu.getImagen();
+                                                        imagenCanal = usuImagen.getImagen();
                                                     }
                                         %>
                                         <div class="canal bd-highlight">

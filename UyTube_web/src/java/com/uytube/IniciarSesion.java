@@ -41,7 +41,7 @@ public class IniciarSesion extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet IniciarSesion</title>");            
+            out.println("<title>Servlet IniciarSesion</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet IniciarSesion at " + request.getContextPath() + "</h1>");
@@ -63,9 +63,16 @@ public class IniciarSesion extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/IniciarSesion.jsp");
-        rd.forward(request, response);
+        try {
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/IniciarSesion.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**
@@ -80,15 +87,15 @@ public class IniciarSesion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         IUsuario sys = Fabrica.getInstancia().getIUsuario();
-        
+
         String paramUser = request.getParameter("user");
         String paramPassword = request.getParameter("password");
         RequestDispatcher rd; //objeto para despachar
-        
+
         HttpSession sesion = request.getSession();
         //sesion.invalidate();
-        
-        if(sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute(paramUser) == null){
+
+        if (sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute(paramUser) == null) {
             String nick = sys.obtenerUsuarioActual().getNickname();
             String img = sys.obtenerUsuarioActual().getImagen();
             //si coincide usuario y password y además no hay sesión iniciada
@@ -96,7 +103,7 @@ public class IniciarSesion extends HttpServlet {
             sesion.setAttribute("imgen", img);
             //redirijo a página con información de login exitoso
             rd = request.getRequestDispatcher("/");
-        }else{
+        } else {
             //lógica para login inválido
             rd = request.getRequestDispatcher("/IniciarSesion.jsp");
         }

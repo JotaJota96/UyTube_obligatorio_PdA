@@ -86,8 +86,9 @@ public class AltaVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/AltaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
 
@@ -135,10 +136,10 @@ public class AltaVideo extends HttpServlet {
             Time duracion = java.sql.Time.valueOf(pDuracion);
 
             //======================================================================
-            DtVideo vid = new DtVideo(0, pNombre, pDescripcion,duracion, data, pUrl, Priv, pCategoria, 0, 0);
+            DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl, Priv, pCategoria, 0, 0);
 
             sys.altaVideo(vid);
-            response.sendRedirect("/uytube/buscar?texto="+vid.getNombre());
+            response.sendRedirect("/uytube/buscar?texto=" + vid.getNombre());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

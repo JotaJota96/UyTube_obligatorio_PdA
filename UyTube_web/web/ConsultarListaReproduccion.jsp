@@ -4,10 +4,20 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.DataType.DtVideo"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Logica.DataType.DtListaDeReproduccion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <html lang="es">
+    <%
+        DtListaDeReproduccion listasRep = (DtListaDeReproduccion) request.getAttribute("listas");
+        String usuario = (String)request.getAttribute("usuario");
+        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean propietario = (boolean) request.getAttribute("propietario");
+        ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,9 +38,16 @@
             <div class="row">
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
-
+                    <%
+                        if (sesionIniciada) {
+                    %>
+                    <%@ include file='include/header-usuario.jsp' %>
+                    <%                    } else {
+                    %>
                     <%@ include file='include/header-visitante.jsp' %>
-
+                    <%
+                        }
+                    %>
 
 
                 </div>
@@ -48,8 +65,16 @@
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%                        } else {
+                        %>
                         <%@ include file='include/menu-visitante.jsp' %>
-
+                        <%
+                            }
+                        %>
                         <div class="contenido">
                             <section class="contenido-flexible">								
                                 <div class="container">
@@ -66,16 +91,28 @@
                                             <h5>Categoria:</h5>
                                         </div>
                                         <div class="p-2 bd-highlight">
-                                            <h5>Las_pindongas_playList</h5>
-                                            <h5>PARTICULAR</h5>
-                                            <h5>PÚBLICA</h5>
-                                            <h5>MUSICA</h5> 
+                                            <h5><%= listasRep.getNombre()%></h5>
+                                            <h5><%= listasRep.getTipo()%></h5>
+                                            <h5><%= listasRep.getPrivacidad()%></h5>
+                                            <h5><%= listasRep.getCategoria()%></h5> 
                                         </div>
-                                        <div class="p-2 d-flex align-items-end">
-                                            <button type="button" class="btn btn-primary">Modificar</button>
-                                        </div>
+
+                                            <%
+                                                if (sesionIniciada && propietario) {
+                                            %>
+                                                    <a href="lista-modificar?idUsu=<%= usuario %>&idList=<%= listasRep.getId()%>">
+                                                        <div class="p-2 d-flex align-items-end">
+                                                            <button type="button" class="btn btn-primary">Modificar</button>
+                                                        </div>
+                                                    </a>
+                                            <%
+                                                }
+                                            %>
+
+                                        
+                                        
                                     </div>
-                                    
+
                                     <!--FIN INFORMACION LISTA.REP-->
                                     <hr>
                                     <h3>VIDEOS:</h3>
@@ -85,53 +122,34 @@
 
                                     <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
                                         <!--PRIMER VIDEO-->
+                                        <%
+
+                                            for (DtVideo elem : videos) {
+                                                String id = Funciones.Funciones.extraerIDYoutube(elem.getUrlVideoOriginal());
+                                        %>
                                         <div class="video">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight">
-                                                    <a href="#">
-                                                        <img src="imagenes/ukp.jpg" width="246" height="138">
+                                                    <a href="video-consultar?id=<%=elem.getId()%>">
+                                                        <img src="<%= Funciones.Funciones.obtenerImagenDeVideo(id, 2)%>" width="246" height="138">
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="bd-highlight caja-texto justify-content-start">
                                                 <div class="bg-light" >
-                                                    <h5 class="mt-0">
-                                                        <a href="#">
-
-                                                        </a>
-                                                    </h5>
-                                                    <h4>Descripcion:</h4>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--SEGUNDO VIDEO-->
-                                        <div class="video">
-                                            <div class="bd-highlight caja-imagen">
-                                                <div class="bd-highlight">
-                                                    <a href="#">
-                                                        <img src="imagenes/ukp.jpg" width="246" height="138">
+                                                    <a href="video-consultar?id=<%=elem.getId()%>">
+                                                        <h5><%= elem.getNombre() %></h5>
                                                     </a>
-                                                </div>
-                                            </div>
-                                            <div class="bd-highlight caja-texto justify-content-start">
-                                                <div class="bg-light" >
-                                                    <h5 class="mt-0">
-                                                        <a href="#">
-
-                                                        </a>
-                                                    </h5>
-                                                    <h4>Descripcion:</h4>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                                    <p><%= elem.getDescripcion()%></p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <br>                 
-                                    </div>
+                                        <%
+                                            }
+                                        %>
 
-                                    <!--FIN de LISTA DE CONTENIDO-->
 
-                                </div>							
+                                    </div>							
                             </section>
                         </div> 
                     </section>	

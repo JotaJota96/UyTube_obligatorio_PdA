@@ -5,8 +5,15 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtListaDeReproduccion;
+import Logica.DataType.DtUsuario;
+import Logica.Enumerados.Privacidad;
+import Logica.Enumerados.TipoListaDeReproduccion;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +43,7 @@ public class ModificarListaReproduccion extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ModificarListaReproduccion</title>");            
+            out.println("<title>Servlet ModificarListaReproduccion</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ModificarListaReproduccion at " + request.getContextPath() + "</h1>");
@@ -54,14 +61,33 @@ public class ModificarListaReproduccion extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            try {
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            boolean sesionIniciada = sys.sesionIniciada();
+            ArrayList<String> cate = sys.listarCategorias();
+            String usuario = request.getParameter("idUsu");
+            String lista = request.getParameter("idList");
+            
+            sys.seleccionarUsuario(usuario);
+            int idLista = Integer.parseInt(lista);
+            
+            DtListaDeReproduccion listas = sys.seleccionarListaDeReproduccion(idLista);
+            
+            request.setAttribute("Categorias", cate);
+            request.setAttribute("sesionIniciada", sesionIniciada);
+            request.setAttribute("listas", listas);
+            
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ModificarListaReproduccion.jsp");
             rd.forward(request, response);
+            
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
@@ -79,7 +105,34 @@ public class ModificarListaReproduccion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+            
+            String pPrivacidad = request.getParameter("privacidad");
+            String pCategoria = request.getParameter("categoria");
+            String pNombre = request.getParameter("nombre");
+            
+
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            DtUsuario usu = sys.obtenerUsuarioActual();
+            
+            Privacidad priv = Privacidad.PRIVADO;
+            if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
+                priv = Privacidad.PUBLICO;
+            }
+            
+            DtListaDeReproduccion listRepo = new DtListaDeReproduccion(0, pNombre, priv, TipoListaDeReproduccion.PARTICULAR, pCategoria);
+            sys.modificarListaDeReproduccion(listRepo);
+            
+            response.sendRedirect("usuario-consultar?id="+ usu.getNickname()+"&ps=LISTAS");
+            
+        } catch (Exception e) {
+             System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+            
+        }
     }
 
     /**

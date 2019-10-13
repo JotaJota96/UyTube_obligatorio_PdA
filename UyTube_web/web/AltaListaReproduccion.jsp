@@ -4,9 +4,14 @@
     Author     : administrador
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+      <%
+        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
+       %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,7 +33,17 @@
             <div class="row">
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
+                    <%
+                        if (sesionIniciada){
+                    %>
+                    <%@ include file='include/header-usuario.jsp' %>
+                    <%
+                        }else{
+                    %>
                     <%@ include file='include/header-visitante.jsp' %>
+                    <%
+                        }
+                    %>
                 </div>
             </div>		
         </div>
@@ -44,14 +59,24 @@
                 <div class="col-12">
                     <section class="principal">	
                         <!-- Inclusion del menu lateral -->
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%
+                        } else {
+                        %>
                         <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
                         <div class="contenido">
                             <section class="contenido-flexible">								
                                 <div class="container">
 
                                     <!-- Agregar Listas-->
                                     <div class="d-flex flex-row justify-content-center">
-                                        <form class="form-signin" action="/uytube/usuario-agregar" method="post">
+                                        <form class="form-signin" action="/uytube/lista-agregar" method="post">
                                             <br>
                                             <br>
                                             <h1 class="h3 mb-4 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1>
@@ -62,7 +87,7 @@
 
                                             <div class="row">
                                                 <div class="col-md-5">
-                                                    <label class="">Privacidad </label>
+                                                    <label class="">Privacidad</label>
                                                 </div>
                                                 <div class="col-md-4 custom-control custom-radio">
                                                     <input id="publico_1" name="privacidad_1" type="radio" class="custom-control-input" checked >
@@ -73,17 +98,29 @@
                                                     <label class="custom-control-label" for="privado_1">Privado</label>
                                                 </div>
                                             </div>
-
+                                            <div class=" bd-light">
+                                                <select class="custom-select d-block w-100" name="categoria" id="categoria" required>
+                                                    <%
+                                                        for (String l : Categorias) {
+                                                    %>
+                                                    <option> <%= l%>  </option> 
+                                                    <%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
 
                                             <hr class="mb-4">
 
-                                            <div class="bd-light " >
+                                            <div class="bd-light">
                                                 <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
-                                                    <div class="p-2 btn-group mr-2" role="group" aria-label="Third group">
-                                                        <button type="button" class="btn btn-danger">CANCELAR</button>
+                                                    <div class=" btn-group mr-2" role="group" aria-label="Third group">
+                                                        <a href="/uytube/presentacion"> 
+                                                            <button type="button" class="btn btn-danger">CANCELAR</button>
+                                                        </a>
                                                     </div> 
-                                                    <div class="p-2 btn-group" role="group" aria-label="Third group">
-                                                        <button type="button" class="btn btn-primary">ACEPTAR</button>
+                                                    <div class=" btn-group" role="group" aria-label="Third group">
+                                                        <button type="submit" class="btn btn-primary">ACEPTAR</button>
                                                     </div>  
                                                 </div>
                                             </div>
