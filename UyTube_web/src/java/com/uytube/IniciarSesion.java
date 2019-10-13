@@ -5,6 +5,7 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtUsuario;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
@@ -25,33 +26,6 @@ import javax.servlet.http.HttpSession;
 public class IniciarSesion extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet IniciarSesion</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet IniciarSesion at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -62,8 +36,37 @@ public class IniciarSesion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+
+            DtUsuario usuario = (DtUsuario) request.getSession().getAttribute("usuario");
+            boolean sesReq = usuario != null;
+            boolean sesSys = sys.sesionIniciada();
+
+            System.out.println("Intento de carga de pagina /inicio-sesion");
+            System.out.println("Sesion en req: " + sesReq);
+            System.out.println("Sesion en sys: " + sesSys);
+
+            /**
+             * Descripción del siguiente IF sesReq sesSys accion a realizar 0 0
+             * Redirigir a iniciar-sesion 0 1 Cerrar la sesion en sys y
+             * redirigir a iniciar-sesion 1 0 Cerrar la sesion en req y
+             * redirigir a iniciar-sesion 1 1 Redirigir a la pagina de inicio
+             */
+            if (!sesReq && !sesSys) {
+                // no se hace nada
+                // Abajo se envia a iniciar-sesion
+            } else if (!sesReq && sesSys) {
+                sys.cerrarSesion();
+                // Abajo se envia a iniciar-sesion
+            } else if (sesReq && !sesSys) {
+                request.getSession().invalidate();
+                // Abajo se envia a iniciar-sesion
+            } else if (sesReq && sesSys) {
+                response.sendRedirect("");
+                return;
+            }
+
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/IniciarSesion.jsp");
             rd.forward(request, response);
@@ -86,28 +89,35 @@ public class IniciarSesion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        IUsuario sys = Fabrica.getInstancia().getIUsuario();
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
 
-        String paramUser = request.getParameter("user");
-        String paramPassword = request.getParameter("password");
-        RequestDispatcher rd; //objeto para despachar
+            String paramUser = request.getParameter("user");
+            String paramPassword = request.getParameter("password");
+            RequestDispatcher rd; //objeto para despachar
+            
+            HttpSession sesion = request.getSession();
+            //sesion.invalidate();
+            
+            if (sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute("usuario") == null) {
+                DtUsuario usuario = sys.obtenerUsuarioActual();
+                //si coincide usuario y password y además no hay sesión iniciada
+                sesion.setAttribute("usuario", usuario);
 
-        HttpSession sesion = request.getSession();
-        //sesion.invalidate();
-
-        if (sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute(paramUser) == null) {
-            String nick = sys.obtenerUsuarioActual().getNickname();
-            String img = sys.obtenerUsuarioActual().getImagen();
-            //si coincide usuario y password y además no hay sesión iniciada
-            sesion.setAttribute("usuario", nick);
-            sesion.setAttribute("imgen", img);
-            //redirijo a página con información de login exitoso
-            rd = request.getRequestDispatcher("/");
-        } else {
-            //lógica para login inválido
+                //redirijo a página con información de login exitoso
+                rd = request.getRequestDispatcher("/");
+            } else {
+                //lógica para login inválido
+                rd = request.getRequestDispatcher("/IniciarSesion.jsp");
+            }
+            rd.forward(request, response);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            response.sendRedirect("");
+            RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/IniciarSesion.jsp");
+            rd.forward(request, response);
         }
-        rd.forward(request, response);
     }
 
     /**

@@ -2,8 +2,6 @@ package JPAControllerClasses;
 
 import Logica.Clases.Canal;
 import Logica.Clases.ListaDeReproduccion;
-import Logica.Clases.ListaDeReproduccion;
-import Logica.Clases.Usuario;
 import Logica.Clases.Video;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.Filtrado;
@@ -65,7 +63,7 @@ public class BusquedaEnBDD implements Serializable {
             // Busca los Listas de reproduccion
             if (filtro == Filtrado.TODO || filtro == Filtrado.LISTAS_DE_REPRODUCCION){
                 if (busqueda == null || busqueda.equals("")){
-                   q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ? AND NOT e.eliminado");
+                   q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ?1 AND NOT e.eliminado");
                     q.setParameter(1, TipoListaDeReproduccion.PARTICULAR);
                 }else{
                    q = em.createQuery("SELECT e FROM ListaDeReproduccion e WHERE e.tipo = ?1 AND (UPPER(e.nombre)) LIKE (UPPER(?2)) AND NOT e.eliminado");
