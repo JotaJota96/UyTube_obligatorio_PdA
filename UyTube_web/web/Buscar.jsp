@@ -69,40 +69,7 @@
 
                                     <!-- BOTONES DESPLEGABLES-->
 
-                                    <div class="d-flex bd-highlight ">
-                                        <div class="p-2 bd-highlight ">
-                                            <h4>Tipo de contenido</h4>
-                                        </div>
-                                        <div class="p-1 bd-highlight ">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary mr-5 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Seleccionar
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">TODO</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">CANALES</a>
-                                                    <a class="dropdown-item" href="#">VIDEO</a>
-                                                    <a class="dropdown-item" href="#">LISTAS</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="p-2 bd-highlight ">
-                                            <h4>Oredenado por</h4>
-                                        </div>
-                                        <div class="p-1 bd-highlight ">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Seleccionar
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">ALFABETO</a>
-                                                    <a class="dropdown-item" href="#">FECHA</a>
-                                                </div>
-                                            </div>
-                                        </div>	
-                                    </div>
+                                    <%@ include file='include/filtro-visible.html' %>
 
                                     <!--FIN DE LOS BOTONES-->
 
@@ -121,7 +88,7 @@
                                                             2
                                                     );
                                         %>
-                                        <div class="video">
+                                        <div class="video -highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight">
                                                     <a href="video-consultar?id=<%= e.getId() %>">
@@ -129,8 +96,8 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="bd-highlight caja-texto justify-content-start">
-                                                <div class="bg-light" >
+                                            <div class="bd-highlight caja-texto">
+                                                <div class="overflow-auto bg-light" >
                                                     <h5 class="mt-0">
                                                         <a href="video-consultar?id=<%= e.getId() %>">
                                                             <%= e.getNombre() %>
@@ -145,7 +112,7 @@
                                                 }else if (o instanceof DtListaDeReproduccion){
                                                     DtListaDeReproduccion e = (DtListaDeReproduccion) o;
                                         %>
-                                        <br><div class="lista bd-highlight">
+                                        <div class="lista bd-highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight ">
                                                     <a href="lista-consultar?id=<%= e.getId()%>">
@@ -154,7 +121,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class=" bd-highlight caja-texto justify-content-start">
+                                            <div class=" bd-highlight caja-texto">
                                                 <div class="overflow-auto bg-light" >
                                                     <h5 class="mt-0">
                                                         <a href="lista-consultar?id=<%= e.getId() %>">
@@ -186,7 +153,7 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="bd-highlight caja-texto justify-content-start">
+                                            <div class="bd-highlight caja-texto">
                                                 <div class="overflow-auto bg-light">
                                                     <h5 class="mt-0">
                                                         <a href="usuario-consultar?id=<%= usu.getNickname() %>">
@@ -202,14 +169,9 @@
                                                 }
                                             }
                                         %>
-
-
-                                        
-                                        
                                     </div>
 
                                     <!--FIN de LISTA DE CONTENIDO-->
-
                                 </div>							
                             </section>
                         </div> 

@@ -82,7 +82,7 @@
                             }
                         %>
                         <div class="contenido">
-                            <section class="contenido-flexible">								
+                            <section class="contenido-flexible">
                                 <div class="container">
                                     <div class="d-flex bd-highlight ">
                                         <div class="p-4 flex-fill bd-highlight">

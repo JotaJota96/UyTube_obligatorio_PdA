@@ -34,7 +34,7 @@
         </div>
         
          <% response.sendRedirect("presentacion"); %>
-
+         
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 
