@@ -5,8 +5,14 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtVideo;
+import Logica.Enumerados.Filtrado;
+import Logica.Enumerados.Ordenacion;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +44,7 @@ public class Presentacion extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Presentacion</title>");            
+            out.println("<title>Servlet Presentacion</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Presentacion at " + request.getContextPath() + "</h1>");
@@ -59,10 +65,25 @@ public class Presentacion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/Presentacion.jsp");
-        rd.forward(request, response);
+
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            boolean sesionIniciada = sys.sesionIniciada();
+            ArrayList<Object> videos = sys.buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
+
+            request.setAttribute("sesionIniciada", sesionIniciada);
+            request.setAttribute("videos", videos);
+
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/Presentacion.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     /**

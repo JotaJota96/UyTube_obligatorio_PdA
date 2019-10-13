@@ -5,8 +5,18 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtCanal;
+import Logica.DataType.DtUsuario;
+import Logica.Enumerados.Filtrado;
+import Logica.Enumerados.Privacidad;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Formatter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,18 +28,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author administrador
  */
-
 public class AltaUsuario extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,7 +38,7 @@ public class AltaUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AltaUsuario</title>");            
+            out.println("<title>Servlet AltaUsuario</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AltaUsuario at " + request.getContextPath() + "</h1>");
@@ -59,9 +59,17 @@ public class AltaUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/AltaUsuario.jsp");
-        rd.forward(request, response);
+        try {
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/AltaUsuario.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     /**
@@ -75,46 +83,56 @@ public class AltaUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //Se guardan los datos del usuario en la base de datos
-        // Y se redigire por ahora al JSP presentacion
-        
-        String pNickname = request.getParameter("nickname");
-        String pNombre = request.getParameter("nombre");
-        String pApellido = request.getParameter("apellido");
-        String pEmail = request.getParameter("email");
-        String pFechaNa = request.getParameter("fechaNa");
-        String pPassword = request.getParameter("password");
-        String pPrivacidad = request.getParameter("privacidad");
-        String pCanal = request.getParameter("canal");
-        String pDescripcion = request.getParameter("descripcion");
-        System.out.println("nickname: "+pNickname);
-        System.out.println("nombre: "+pNombre);
-        System.out.println("apellido: "+pApellido);
-        System.out.println("email: "+pEmail);
-        System.out.println("fecha: "+pFechaNa);
-        System.out.println("password: "+pPassword);
-        System.out.println("privacidad: "+pPrivacidad);
-        System.out.println("canal: "+pCanal);
-        System.out.println("descripcion: "+pDescripcion);
-        
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/Presentacion.jsp");
-        rd.forward(request, response);
+        try {
+            String pNickname = request.getParameter("nickname");
+            String pNombre = request.getParameter("nombre");
+            String pApellido = request.getParameter("apellido");
+            String pEmail = request.getParameter("email");
+            String pFechaNa = request.getParameter("fechaNa");
+            String pPassword = request.getParameter("password");
+            String pImaguen = request.getParameter("imagen");
+            String pPrivacidad = request.getParameter("privacidad");
+            String pCanal = request.getParameter("canal");
+            String pDescripcion = request.getParameter("descripcion");
+            
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
+            Date fechaDate = null;
+
+            try {
+                fechaDate = formato.parse(pFechaNa);
+            } catch (ParseException ex) {
+                RequestDispatcher rd; //objeto para despachar
+                rd = request.getRequestDispatcher("/");
+                rd.forward(request, response);
+            }
+            java.sql.Date data = new java.sql.Date(fechaDate.getTime());
+
+            DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, data, pImaguen, 0);
+
+            Privacidad Priv = Privacidad.PRIVADO;
+            if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
+                Priv = Privacidad.PUBLICO;
+            }
+
+            DtCanal CanUsu = new DtCanal(0, pCanal, pDescripcion, Priv);
+            sys.altaUsuarioCanal(Usu, CanUsu);
+            response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doDelete(req, resp); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

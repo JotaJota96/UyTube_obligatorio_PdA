@@ -4,10 +4,20 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.DataType.DtUsuario"%>
+<%@page import="Logica.Fabrica"%>
+<%@page import="Logica.DataType.DtVideo"%>
+<%@page import="Logica.DataType.DtListaDeReproduccion"%>
+<%@page import="Logica.DataType.DtCanal"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <html lang="es">
+    <%
+        ArrayList<Object> lista = (ArrayList) request.getAttribute("Lista");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +37,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <%@ include file='include/header-usuario.html' %>
+                    <!-- Inclusion de la barra superior -->
+                    <%
+                        if (sesionIniciada){
+                    %>
+                    <%@ include file='include/header-usuario.jsp' %>
+                    <%
+                        }else{
+                    %>
+                    <%@ include file='include/header-visitante.jsp' %>
+                    <%
+                        }
+                    %>
                 </div>
             </div>		
         </div>
@@ -42,8 +63,20 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
-                        <%@ include file='include/menu-usuario.html' %>
+                    <section class="principal">
+                        
+
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%
+                            } else {
+                        %>
+                        <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">								
@@ -61,52 +94,99 @@
                                     <!--LISTA DE CONTENIDO-->
 
                                     <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
-
-                                        <br><div class="lista bd-highlight">
+                                        <%
+                                            for (Object o : lista){
+                                                if (o instanceof DtVideo){
+                                                    DtVideo e = (DtVideo) o;
+                                                    String miniatura = Funciones.Funciones.obtenerImagenDeVideo(
+                                                            Funciones.Funciones.extraerIDYoutube(e.getUrlVideoOriginal()),
+                                                            2
+                                                    );
+                                        %>
+                                        <div class="video -highlight">
+                                            <div class="bd-highlight caja-imagen">
+                                                <div class="bd-highlight">
+                                                    <a href="video-consultar?id=<%= e.getId() %>">
+                                                        <img src="<%= miniatura %>" width="246" height="138">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="bd-highlight caja-texto">
+                                                <div class="overflow-auto bg-light" >
+                                                    <h5 class="mt-0">
+                                                        <a href="video-consultar?id=<%= e.getId() %>">
+                                                            <%= e.getNombre() %>
+                                                        </a>
+                                                    </h5>
+                                                    <p><%= e.getDescripcion() %></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <%
+                                                }else if (o instanceof DtListaDeReproduccion){
+                                                    DtListaDeReproduccion e = (DtListaDeReproduccion) o;
+                                        %>
+                                        <div class="lista bd-highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight ">
-                                                    <img src="imagenes/lista.jpg" alt="lista">
+                                                    <a href="lista-consultar?id=<%= e.getId()%>">
+                                                        <img src="imagenes/lista.jpg" alt="lista" width="246" height="138">
+                                                    </a>
+
                                                 </div>
                                             </div>
                                             <div class=" bd-highlight caja-texto">
                                                 <div class="overflow-auto bg-light" >
-                                                    <h5 class="mt-0">Titulo de la Lista</h5>
-                                                    <p>Descripcion de la lista: EMI Music Publish molestias nesciunt quisquam non et. Esse dolor natus nostrum eveniet eos. Eius facilis beatae dignissimos voluptate culpa placeat debitis est fuga! obcaecati molestias itaque tempora excepturi est minima provident qui, sit atque iusto. eaque officiis libero laborum accusamus quia praesentium porro architecto corrupti! Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
+                                                    <h5 class="mt-0">
+                                                        <a href="lista-consultar?id=<%= e.getId() %>">
+                                                            <%= e.getNombre() %>
+                                                        </a>
+                                                    </h5>
+                                                    <p>Categoría: <%= e.getCategoria() %></p>
                                                 </div>
                                             </div>
-                                        </div><br>
-
-                                        <div class="video bd-highlight">
-                                            <div class="bd-highlight caja-imagen">
-                                                <div class="bd-highlight">
-                                                    <a href="/uytube/video-consulta&id=1234"><img src="https://i.ytimg.com/vi/OVjbqdm_JVI/hqdefault.jpg"></a>
-                                                </div>
-                                            </div>
-                                            <div class="bd-highlight caja-texto">
-                                                <div class="overflow-auto bg-light" >
-                                                    <h5 class="mt-0">Titulo del video</h5>
-                                                    <p>Descripcion del video: EMI Music Publishing, Warner Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
-                                                </div>
-                                            </div>
-                                        </div><br>
-
+                                        </div>
+                                        <br>
+                                        <%
+                                                }else if (o instanceof DtCanal){
+                                                    DtCanal e = (DtCanal) o;
+                                                    // buena suerte entendiendo esto...
+                                                    DtUsuario usu = Fabrica.getInstancia().getIUsuario().obtenerPropietarioDeCanal(e.getId());
+                                                    String imagenCanal;
+                                                    if (usu.getImagen() == null || usu.getImagen().equals("")){
+                                                        imagenCanal = "imagenes/ukp.png";
+                                                    }else{
+                                                        imagenCanal = usu.getImagen();
+                                                    }
+                                        %>
                                         <div class="canal bd-highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight">
-                                                    <img src="imagenes/mestruli.jpg" class="align-self-center rounded-circle" alt="Cinque Terre" >
+                                                    <a href="usuario-consultar?id=<%= usu.getNickname() %>">
+                                                       <img src="<%= imagenCanal %>" class="align-self-center rounded-circle" alt="Cinque Terre" >
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="bd-highlight caja-texto">
                                                 <div class="overflow-auto bg-light">
-                                                    <h5 class="mt-0">Nombre del canal Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, voluptate quis dolor sunt ea vero illo repellendus. Hic, ex quidem.</h5>
-                                                    <p>Descripcion del canal: EMI Music Publishing, Warner Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
+                                                    <h5 class="mt-0">
+                                                        <a href="usuario-consultar?id=<%= usu.getNickname() %>">
+                                                            <%= e.getNombre() %>
+                                                        </a>
+                                                    </h5>
+                                                    <p><%= e.getDescripcion() %></p>
                                                 </div>
                                             </div>
-                                        </div><br>  
+                                        </div>
+                                        <br> 
+                                        <%
+                                                }
+                                            }
+                                        %>
                                     </div>
 
                                     <!--FIN de LISTA DE CONTENIDO-->
-
                                 </div>							
                             </section>
                         </div> 

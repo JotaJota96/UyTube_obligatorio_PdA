@@ -5,8 +5,14 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtCanal;
+import Logica.DataType.DtListaDeReproduccion;
+import Logica.DataType.DtUsuario;
+import Logica.DataType.DtVideo;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,33 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ConsultaUsuario extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ConsultaUsuario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ConsultaUsuario at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -57,23 +36,47 @@ public class ConsultaUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd; //objeto para despachar
-        rd = request.getRequestDispatcher("/ConsultaUsuario.jsp");
-        rd.forward(request, response);
-    }
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            String nick = request.getParameter("id");
+            String ps = request.getParameter("ps");
+            if (ps == null || ps.equals("")) {
+                ps = "VIDEOS";
+            }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+            DtUsuario usuario = sys.seleccionarUsuario(nick);
+            DtCanal canal = sys.obtenerCanalDeUsuario();
+            ArrayList<DtUsuario> seguidos = sys.listarUsuarioSeguidos();
+            ArrayList<DtUsuario> seguidores = sys.listarUsuarioSeguidores();
+            ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
+            ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(false);
+            boolean sesionIniciada = sys.sesionIniciada();
+
+            boolean usuarioPropietario = false;
+            if (sesionIniciada) {
+                usuarioPropietario = sys.obtenerUsuarioActual().getNickname().equals(nick);
+            }
+
+            request.setAttribute("ps", ps);
+            request.setAttribute("usuario", usuario);
+            request.setAttribute("canal", canal);
+            request.setAttribute("seguidos", seguidos);
+            request.setAttribute("seguidores", seguidores);
+            request.setAttribute("videos", videos);
+            request.setAttribute("listasRep", listasRep);
+            request.setAttribute("propietario", usuarioPropietario);
+            request.setAttribute("sesionIniciada", sesionIniciada);
+
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/ConsultaUsuario.jsp");
+            rd.forward(request, response);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**

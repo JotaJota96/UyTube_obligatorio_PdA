@@ -4,9 +4,25 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.DataType.DtListaDeReproduccion"%>
+<%@page import="Logica.DataType.DtVideo"%>
+<%@page import="Logica.DataType.DtCanal"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Logica.DataType.DtUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+    <%
+        boolean propietario = (boolean) request.getAttribute("propietario");
+        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        DtUsuario usuario = (DtUsuario) request.getAttribute("usuario");
+        DtCanal canal = (DtCanal) request.getAttribute("canal");
+        ArrayList<DtUsuario> seguidos = (ArrayList) request.getAttribute("seguidos");
+        ArrayList<DtUsuario> seguidores = (ArrayList) request.getAttribute("seguidores");
+        ArrayList<DtVideo> videos = (ArrayList) request.getAttribute("videos");
+        ArrayList<DtListaDeReproduccion> listasRep = (ArrayList) request.getAttribute("listasRep");
+        String ps = (String) request.getAttribute("ps");
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,14 +36,25 @@
         <link rel="stylesheet" type="text/css" href="css/contenido-consulta-usuario.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube</title>
+        <title>UyTube - <%= usuario.getNickname()%></title>
     </head>
     <body>
 
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <%@ include file='include/header-usuario.html' %>
+                    <!-- Inclusion de la barra superior -->
+                    <%
+                        if (sesionIniciada){
+                    %>
+                    <%@ include file='include/header-usuario.jsp' %>
+                    <%
+                        }else{
+                    %>
+                    <%@ include file='include/header-visitante.jsp' %>
+                    <%
+                        }
+                    %>
                 </div>
             </div>		
         </div>
@@ -41,42 +68,83 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
-                        <%@ include file='include/menu-usuario.html' %>
-
+                    <section class="principal">	
+                        <!-- Inclusion del menu lateral -->
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%
+                        } else {
+                        %>
+                        <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
                         <div class="contenido">
                             <section class="contenido-flexible">
-                                
                                 <div class="container">
-
                                     <div class="d-flex bd-highlight ">
                                         <div class="p-4 flex-fill bd-highlight">
                                             <div class="d-flex justify-content-center">
-                                                <img src="imagenes/mestruli.jpg" class="rounded-circle" alt="Cinque Terre" width="180" height="180"> 
+                                                <%
+                                                    String textoAlternativo;
+                                                    String rutaDeImagenDePerfil;
+                                                    if (usuario.getImagen() == null || usuario.getImagen().equals("")) {
+                                                        rutaDeImagenDePerfil = "imagenes/ukp.png";
+                                                        textoAlternativo = "Imagen de perfil por defecto";
+                                                    } else {
+                                                        rutaDeImagenDePerfil = usuario.getImagen();
+                                                        textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
+                                                        //char contrabarra = 92;
+                                                        //char barra = 47;
+                                                        //rutaImagenPerfil = rutaImagenPerfil = rutaImagenPerfil.replace(contrabarra, barra);
+                                                    }
+                                                %>
+                                                <img src="<%=rutaDeImagenDePerfil%>" class="rounded-circle" alt="<%=textoAlternativo%>" width="180" height="180"> 
                                             </div>
                                         </div>
                                         <div class="p-1 flex-fill bd-highlight ">
                                             <div class="p-2 bd-highlight ">
-                                                <br><h3>Maestruli Garrido</h3>
+                                                <br><h3><%= usuario.getNombre() + " " + usuario.getApellido()%></h3>
                                                 <hr class="mb-1">
                                             </div>
                                             <div class="p-1 bd-highlight ">
                                                 <div class="d-flex bd-highlight ">
                                                     <div class="p-1 flex-fill bd-highlight ">
-                                                        <p class="text-info">El_Canal_ReLoco &#x2714</p>
+                                                        <p class="text-info"><%= canal.getNombre()%> &#x2714</p>
                                                     </div>
                                                     <div class="p-1 flex-fill bd-highlight ">
-                                                        <p>69,420,420.5 seguidores</p>
+                                                        <p><%= usuario.getCantSeguidores()%> seguidores</p>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="p-1 bd-highlight ">
                                                 <div class="d-flex bd-highlight ">
                                                     <div class="p-1 flex-fill bd-highlight ">
-                                                        <p>PRIVACIDAD: PUBLICO</p>
+                                                        <p>PRIVACIDAD: <%= canal.getPrivacidad()%></p>
                                                     </div>
                                                     <div class="p-1 flex-fill bd-highlight ">
-                                                        <p>CATEGORIA: HUMOR</p>
+                                                        <%
+                                                            if (sesionIniciada && propietario) {
+                                                        %>
+                                                        <a href="usuario-modificar?id=<%= usuario.getNickname()%>">
+                                                            <button class="btn btn-primary" id="btnBuscar" type="submit">
+                                                                Modificar
+                                                            </button>
+                                                        </a>
+                                                        <%
+                                                            }
+                                                        %>
+                                                        <%
+                                                            if (sesionIniciada && !propietario) {
+                                                        %>
+                                                        <button class="btn btn-primary" id="btnBuscar" type="submit">
+                                                            Seguir (IMPLENENTAR...)
+                                                        </button>
+                                                        <%
+                                                            }
+                                                        %>
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,8 +154,30 @@
                                     <div class="bd-example bd-example-tabs">
                                         <nav class="">
                                             <div class="nav nav-tabs " id="nav-tab" role="tablist">
+                                            <%
+                                            if (ps.equals("VIDEOS")) {
+                                            %>    
+
                                                 <a class="nav-item nav-link active" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS</a>
+                                            <%
+                                            } else {
+                                            %> 
+                                                <a class="nav-item nav-link" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS</a>
+                                            <%
+                                            }
+                                            %>
+                                            
+                                            <%
+                                            if (ps.equals("LISTAS")) {
+                                            %>    
+                                                <a class="nav-item nav-link active" id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS</a>
+                                            <%
+                                            } else {
+                                            %> 
                                                 <a class="nav-item nav-link " id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS</a>
+                                            <%
+                                            }
+                                            %> 
                                                 <a class="nav-item nav-link " id="refSeguidores" data-toggle="tab" href="#seguidores" role="tab" aria-controls="nav-SEGUIDORES" aria-selected="false">SEGUIDORES</a>
                                                 <a class="nav-item nav-link " id="refSeguidos" data-toggle="tab" href="#seguidos" role="tab" aria-controls="nav-SEGUIDOS" aria-selected="false">SEGUIDOS</a>
                                             </div>
@@ -95,133 +185,150 @@
                                     </div>
 
                                     <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
+                                        <!-- Pestaña de videos -->
+                                        <%
+                                            if (ps.equals("VIDEOS")) {
+                                        %>    
 
-                                            <br><div class="d-flex bd-highlight ">
-                                                <div class="p-1 flex-shrink-1 bd-highlight ">
-                                                    <div class="p-1 bd-highlight ">
-                                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fepmsnGBwJo" allowfullscreen></iframe>
-                                                    </div>
-                                                </div>
-                                                <div class="p-1 flex-shrink-1 bd-highlight ">
-                                                    <div class="overflow-auto p-1 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 530px; max-height: 170px;">
-                                                        <h5 class="mt-0">NTVG A las nueve Letra</h5>
-                                                        <p>DashGo/Audiobee, The Orchard Music (en nombre de Elefante Blanco); EMI Music Publishing, Warner Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
-                                                    </div>
-                                                </div>
-                                            </div><br>
+                                                <div class="tab-pane fade show active" id="videos" role="tabpanel"  aria-labelledby="nav-VIDEO-tab">
+                                                <br>
+                                        <%
+                                            } else {
+                                            %> 
+                                                <div class="tab-pane fade show" id="videos" role="tabpanel"  aria-labelledby="nav-VIDEO-tab">
+                                                <br>
+                                            <%
+                                            }
+                                        %>   
 
+                                            <%
+                                                for (DtVideo v : videos) {
+                                                    String urlEmbebida = Funciones.Funciones.obtenerEnlaceEmbebido(
+                                                            Funciones.Funciones.extraerIDYoutube(v.getUrlVideoOriginal())
+                                                    );
+                                            %>
+                                            <!-- Video individual en la lista -->
                                             <div class="d-flex bd-highlight ">
                                                 <div class="p-1 flex-shrink-1 bd-highlight ">
                                                     <div class="p-1 bd-highlight ">
-                                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/9Ni-Eea8n48" allowfullscreen></iframe>
+                                                        <iframe class="embed-responsive-item" src="<%= urlEmbebida%>" allowfullscreen></iframe>
                                                     </div>
                                                 </div>
                                                 <div class="p-1 flex-shrink-1 bd-highlight ">
                                                     <div class="overflow-auto p-1 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 530px; max-height: 170px;">
-                                                        <h5 class="mt-0">El maestruli 10 horas</h5>
-                                                        <p>DashGo/Audiobee, The Orchard Music (en nombre de Elefante Blanco); EMI Music Publishing, Warner Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
+                                                        <a href="video-consultar?id=<%= v.getId()%>">
+                                                            <h5 class="mt-0"><%= v.getNombre()%></h5>
+                                                        </a>
+                                                        <p><%= v.getDescripcion()%></p>
                                                     </div>
                                                 </div>
-                                            </div><br>
-
-                                            <div class="d-flex bd-highlight ">
-                                                <div class="p-1 flex-shrink-1 bd-highlight ">
-                                                    <div class="p-1 bd-highlight ">
-                                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v0YIROg_DSY" allowfullscreen></iframe>
-                                                    </div>
-                                                </div>
-                                                <div class="p-1 flex-shrink-1 bd-highlight ">
-                                                    <div class="overflow-auto p-1 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 530px; max-height: 170px;">
-                                                        <h5 class="mt-0">lamento boliviano-enanitos verdes (letra)</h5>
-                                                        <p>DashGo/Audiobee, The Orchard Music (en nombre de Elefante Blanco); EMI Music Publishing, Warner Chappell, UNIAO BRASILEIRA DE EDITORAS DE MUSICA - UBEM, LatinAutor, ASCAP, LatinAutor - SonyATV y 4 sociedades de derechos musicales</p>
-                                                    </div>
-                                                </div>
-                                            </div><br>
-
-
-
-
-
+                                            </div>
+                                            <%
+                                                }
+                                            %><%
+                                                if (videos.isEmpty()) {
+                                            %>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                El usuario no tiene videos
+                                            </li>
+                                            <%
+                                                }
+                                            %>
+                                            <br>
                                         </div>
 
-                                        <div class="tab-pane fade show" id="listas" role="tabpanel" aria-labelledby="nav-LISTAS-tab">
+                                        <!-- Pestaña de listas de reproduccion -->
+                                        
+                                        <%
+                                            if (ps.equals("LISTAS")) {
+                                        %>    
+
+                                                <div class="tab-pane fade show active" id="listas" role="tabpanel" aria-labelledby="nav-LISTAS-tab">
                                             <br><ul class="list-group">
+                                        <%
+                                            } else {
+                                            %> 
+                                                <div class="tab-pane fade show" id="listas" role="tabpanel" aria-labelledby="nav-LISTAS-tab">
+                                                <br><ul class="list-group">
+                                            <%
+                                            }
+                                        %>   
+                                                <%
+                                                    for (DtListaDeReproduccion l : listasRep) {
+                                                %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Ver mas tarde
-                                                    <span class="badge badge-primary badge-pill">14 videos</span>
+                                                    <a href="lista-consultar?idUsu=<%= usuario.getNickname() %>&idList=<%= l.getId() %>">
+                                                        <%= l.getNombre()%>
+                                                    </a>
                                                 </li>
+                                                <%
+                                                    }
+                                                %><%
+                                                    if (listasRep.isEmpty()) {
+                                                %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Faboritos
-                                                    <span class="badge badge-primary badge-pill">2 videos</span>
-                                                </li><br>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Maruja
-                                                    <span class="badge badge-primary badge-pill">5 videos</span>
+                                                    El usuario no tiene listas de reproducción
                                                 </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Maruja 2
-                                                    <span class="badge badge-primary badge-pill">2 videos</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Maruja 3
-                                                    <span class="badge badge-primary badge-pill">36 videos</span>
-                                                </li>
+                                                <%
+                                                    }
+                                                %>
                                             </ul>
                                         </div>
 
+                                        <!-- Pestaña de usuarios seguidores -->
                                         <div class="tab-pane fade show " id="seguidores" role="tabpanel" aria-labelledby="nav-SEGUIDORES-tab">
 
                                             <br><ul class="list-group">
+                                                <%
+                                                    for (DtUsuario u : seguidores) {
+                                                %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    El_mafuba@242
+                                                    <a href="usuario-consultar?id=<%= u.getNickname()%>">
+                                                        <%= u.getNickname()%>
+                                                    </a>
                                                 </li>
+                                                <%
+                                                    }
+                                                %><%
+                                                    if (seguidores.isEmpty()) {
+                                                %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Elsa_lame_23
+                                                    El usuario no tiene seguidores
                                                 </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Maruja_mela
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    profe_pol_vaso
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Maruja420
-                                                </li>
+                                                <%
+                                                    }
+                                                %>
                                             </ul>
                                         </div>
 
+                                        <!-- Pestaña de usuarios seguidos -->
                                         <div class="tab-pane fade show " id="seguidos" role="tabpanel" aria-labelledby="nav-SEGUIDOS-tab">
-
-
                                             <br><ul class="list-group">
+                                                <%
+                                                    for (DtUsuario u : seguidos) {
+                                                %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    TOTAL DE USUARIOS SEGUIDOS: 
-                                                    <span class="badge badge-primary badge-pill">5</span>
-                                                </li><br>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    El_mafuba@242
+                                                    <a href="usuario-consultar?id=<%= u.getNickname()%>">
+                                                        <%= u.getNickname()%>
+                                                    </a>
                                                 </li>
+                                                <%
+                                                    }
+                                                %><%
+                                                    if (seguidos.isEmpty()) {
+                                                %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Elsa_lame_23
+                                                    El usuario no sigue a nadie
                                                 </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Maruja_mela
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    profe_pol_vaso	
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Maruja420
-                                                </li>
+                                                <%
+                                                    }
+                                                %>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>							
                             </section>
                         </div> 
-
-
                     </section>	
                 </div>
             </div>
