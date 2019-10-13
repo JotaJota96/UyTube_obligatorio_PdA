@@ -86,6 +86,7 @@ public class Buscar extends HttpServlet {
                 Ret = sys.buscar(Texto, Fil, ord);
             } else {
                 System.out.println("Categoria a buscar: " + Categoria);
+                Categoria = Categoria.toUpperCase();
                 Ret = sys.buscar(Categoria);
             }
             System.out.println("Cantidad de resultados a devolver: " + Ret.size());
