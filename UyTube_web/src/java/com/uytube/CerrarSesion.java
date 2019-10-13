@@ -5,7 +5,6 @@
  */
 package com.uytube;
 
-import Logica.Enumerados.Filtrado;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
@@ -32,18 +31,23 @@ public class CerrarSesion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        IUsuario sys = Fabrica.getInstancia().getIUsuario();
-        
-        // cierra la sesion HTTP (si es que hay una iniciada)
-        HttpSession session = request.getSession(false);
-        if(session != null){
-            session.invalidate();
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+
+            // cierra la sesion HTTP (si es que hay una iniciada)
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            // Cierra la sesion en el sistema (si es que hay una iniciada)
+            if (sys.sesionIniciada()) {
+                sys.cerrarSesion();
+            }
+            response.sendRedirect("");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            response.sendRedirect("");
         }
-        // Cierra la sesion en el sistema (si es que hay una iniciada)
-        if (sys.sesionIniciada()){
-            sys.cerrarSesion();
-        }
-        request.getRequestDispatcher("/index.jsp").forward(request,response);
     }
     
     /**
