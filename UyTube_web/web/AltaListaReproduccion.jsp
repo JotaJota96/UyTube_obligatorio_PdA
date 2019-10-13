@@ -8,10 +8,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
-      <%
+    <%
         boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
-       %>
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,11 +34,10 @@
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
                     <%
-                        if (sesionIniciada){
+                        if (sesionIniciada) {
                     %>
                     <%@ include file='include/header-usuario.jsp' %>
-                    <%
-                        }else{
+                    <%                    } else {
                     %>
                     <%@ include file='include/header-visitante.jsp' %>
                     <%
@@ -63,8 +62,7 @@
                             if (sesionIniciada) {
                         %>
                         <%@ include file='include/menu-usuario.jsp' %>
-                        <%
-                        } else {
+                        <%                        } else {
                         %>
                         <%@ include file='include/menu-visitante.jsp' %>
                         <%
@@ -89,13 +87,13 @@
                                                 <div class="col-md-5">
                                                     <label class="">Privacidad</label>
                                                 </div>
-                                                <div class="col-md-4 custom-control custom-radio">
-                                                    <input id="publico_1" name="privacidad_1" type="radio" class="custom-control-input" checked >
-                                                    <label class="custom-control-label" for="publico_1">Publico</label>
+                                                <div class="custom-control custom-radio">
+                                                    <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked>
+                                                    <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
-                                                <div class="col-md-3 custom-control custom-radio">
-                                                    <input id="privado_1" name="privacidad_1" type="radio" class="custom-control-input" >
-                                                    <label class="custom-control-label" for="privado_1">Privado</label>
+                                                <div class="custom-control custom-radio">
+                                                    <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input">
+                                                    <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
                                             </div>
                                             <div class=" bd-light">

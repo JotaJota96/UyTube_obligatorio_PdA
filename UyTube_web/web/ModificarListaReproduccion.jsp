@@ -86,7 +86,7 @@
                                             <br>
                                             <%
                                             } else {
-                                                
+
                                             %>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 <div class="col-md-4">
@@ -99,11 +99,11 @@
                                                         if (listasRep.getPrivacidad() == Privacidad.PRIVADO) {
                                                     %>
                                                     <div class="custom-control custom-radio">
-                                                        <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
+                                                        <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" >
                                                         <label class="custom-control-label" for="publico">Publico</label>
                                                     </div>
                                                     <div class="custom-control custom-radio">
-                                                        <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
+                                                        <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input" checked>
                                                         <label class="custom-control-label" for="privado">Privado</label>
                                                     </div>
                                                     <%
@@ -114,11 +114,11 @@
                                                     <% if (listasRep.getPrivacidad() == Privacidad.PUBLICO) {
                                                     %>
                                                     <div class="custom-control custom-radio">
-                                                        <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked>
+                                                        <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked>
                                                         <label class="custom-control-label" for="publico">Publico</label>
                                                     </div>
                                                     <div class="custom-control custom-radio">
-                                                        <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input">
+                                                        <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input">
                                                         <label class="custom-control-label" for="privado">Privado</label>
                                                     </div>
                                                     <%
@@ -146,7 +146,7 @@
                                                     </select>
                                                 </div>
                                             </li>
-                                            <% 
+                                            <%
                                                 }
                                             %>
 

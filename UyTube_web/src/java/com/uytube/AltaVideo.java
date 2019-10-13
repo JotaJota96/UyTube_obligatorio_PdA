@@ -113,13 +113,8 @@ public class AltaVideo extends HttpServlet {
             String pUrl = request.getParameter("url");
             String pFecha = request.getParameter("fecha");
             String pDescripcion = request.getParameter("descripcion");
-            String pPrivacidad = request.getParameter("privacidad");
             String pCategoria = request.getParameter("categoria");
-
-            Privacidad Priv = Privacidad.PRIVADO;
-            if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
-                Priv = Privacidad.PUBLICO;
-            }
+            
             //============ Casteo de string a date =================================
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
             Date fechaDate = null;
@@ -132,11 +127,11 @@ public class AltaVideo extends HttpServlet {
             }
             java.sql.Date data = new java.sql.Date(fechaDate.getTime());
             //======================================================================
+            
             //============= Casteo de string a Time ================================
             Time duracion = java.sql.Time.valueOf(pDuracion);
-
             //======================================================================
-            DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl, Priv, pCategoria, 0, 0);
+            DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl,Privacidad.PRIVADO, pCategoria, 0, 0);
 
             sys.altaVideo(vid);
             response.sendRedirect("/uytube/buscar?texto=" + vid.getNombre());

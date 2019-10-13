@@ -90,11 +90,11 @@ public class AltaUsuario extends HttpServlet {
             String pEmail = request.getParameter("email");
             String pFechaNa = request.getParameter("fechaNa");
             String pPassword = request.getParameter("password");
-            String pImaguen = request.getParameter("img");
+            String pImaguen = request.getParameter("imagen");
             String pPrivacidad = request.getParameter("privacidad");
             String pCanal = request.getParameter("canal");
             String pDescripcion = request.getParameter("descripcion");
-
+            
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
 
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");

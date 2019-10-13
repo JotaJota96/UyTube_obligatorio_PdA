@@ -33,14 +33,25 @@ and open the template in the editor.
                     <div class="perfil item-header item-header3 flex-row justify-content-lg-space-between">
                         <div class="flex-row justify-content-lg-space-between alig-content-center" id="nombrePerfil">
                             <a href="/uytube/usuario-consultar?id=<%= usu.getNickname()%>">
-                            <%= usu.getNickname()%>
+                                <%= usu.getNickname()%>
                             </a>
-                        </div>					  
+                        </div>	
                         <div>
                             <a href="/uytube/usuario-consultar?id=<%= usu.getNickname()%>">
-                                <img id="fotoPerfil" src=<%= usu.getImagen()%> alt="Perfil">
+                                <%
+                                 if (usu.getImagen() == null || usu.getImagen().equals("")) {
+                                %>
+                                    <img id="fotoPerfil" src="imagenes/ukp.png" alt="Perfil">
+                                <%
+                                } else {
+                                %>
+                                    <img id="fotoPerfil" src=<%= usu.getImagen()%> alt="Perfil">
+                                <%
+                                    }
+                                %>
                             </a>
                         </div>
+
 
                     </div>
                 </nav>					

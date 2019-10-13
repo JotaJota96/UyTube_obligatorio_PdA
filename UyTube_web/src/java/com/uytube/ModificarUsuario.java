@@ -119,7 +119,7 @@ public class ModificarUsuario extends HttpServlet {
             String pPrivacidad = request.getParameter("privacidad");
             String pCanal = request.getParameter("canal");
             String pDescripcion = request.getParameter("descripcion");
-            String pImaguen = request.getParameter("img");
+            String pImaguen = request.getParameter("imagen");
 
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
 

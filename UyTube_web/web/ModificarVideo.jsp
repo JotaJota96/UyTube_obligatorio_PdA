@@ -101,30 +101,27 @@
 
                                             <label  for="cc-name">Privacidad del video</label>
                                             <%
-                                                if (video.getPrivacidad() == Privacidad.PRIVADO) {
+                                                if (video.getPrivacidad().equals(Privacidad.PRIVADO)) {
                                             %>
                                             <div class="custom-control custom-radio">
-                                                <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
+                                                <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" >
                                                 <label class="custom-control-label" for="publico">Publico</label>
                                             </div>
+                                            
                                             <div class="custom-control custom-radio">
-                                                <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
+                                                <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input" checked>
                                                 <label class="custom-control-label" for="privado">Privado</label>
                                             </div>
                                             <%
-                                                }
-
-                                            %>
-
-                                            <%
-                                                if (video.getPrivacidad() == Privacidad.PUBLICO) {
+                                                }else {
                                             %>
                                             <div class="custom-control custom-radio">
-                                                <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked>
+                                                <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked>
                                                 <label class="custom-control-label" for="publico">Publico</label>
                                             </div>
+                                            
                                             <div class="custom-control custom-radio">
-                                                <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input">
+                                                <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input">
                                                 <label class="custom-control-label" for="privado">Privado</label>
                                             </div>
                                             <%

@@ -41,11 +41,10 @@
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
                     <%
-                        if (sesionIniciada){
+                        if (sesionIniciada) {
                     %>
                     <%@ include file='include/header-usuario.jsp' %>
-                    <%
-                        }else{
+                    <%                    } else {
                     %>
                     <%@ include file='include/header-visitante.jsp' %>
                     <%
@@ -65,13 +64,12 @@
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						
-                         <!-- Inclusion del menu lateral -->
+                        <!-- Inclusion del menu lateral -->
                         <%
                             if (sesionIniciada) {
                         %>
                         <%@ include file='include/menu-usuario.jsp' %>
-                        <%
-                        } else {
+                        <%                        } else {
                         %>
                         <%@ include file='include/menu-visitante.jsp' %>
                         <%
@@ -99,8 +97,8 @@
                                                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                                                 String fecha = df.format(usuario.getFechaNacimiento());
                                             %>
-                                            <input  value="<%= fecha %>" class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start" readonly="readonly"><br>
-                                                
+                                            <input  value="<%= fecha%>" class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start" readonly="readonly"><br>
+
                                             <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" placeholder="Contraseña" id="input_Contraseña" required><br>
                                             <input value="<%= usuario.getContrasenia()%>" class="form-control" name="password" type="password" placeholder="Repetir contraseña" id="input_Repetir_contraseña" required>
                                             <%
@@ -109,11 +107,11 @@
                                             <div class="d-block my-3">
                                                 <label for="cc-name">Privacidad del canal</label>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked >
+                                                    <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked>
                                                     <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" >
+                                                    <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input">
                                                     <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
                                             </div>
@@ -128,11 +126,11 @@
                                             <div class="d-block my-3">
                                                 <label for="cc-name">Privacidad del canal</label>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
+                                                    <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" >
                                                     <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
+                                                    <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input" checked>
                                                     <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
                                             </div>
@@ -140,15 +138,15 @@
                                             <%
                                                 }
                                             %>
-                                            
-                                            <input value="<%= canal.getNombre() %>" class="form-control" name="canal" type="text" placeholder="Nombre del Canal" readonly="readonly" id="input_Nombre_canal" required><br>
+
+                                            <input value="<%= canal.getNombre()%>" class="form-control" name="canal" type="text" placeholder="Nombre del Canal" readonly="readonly" id="input_Nombre_canal" required><br>
 
                                             <textarea class="form-control" name="descripcion" id="input_descripcion" placeholder="Descripción del Canal" rows="3"> <%=canal.getDescripcion()%> </textarea>
 
                                             <br>   
                                             <label id="label_email">Imagen de perfil</label>	
                                             <div class="form-group">
-                                                <input value="<%= usuario.getImagen() %>" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
+                                                <input value="<%= usuario.getImagen()%>" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
                                             </div>
 
 
