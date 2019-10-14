@@ -102,8 +102,19 @@ public class AltaVideo extends HttpServlet {
             DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl,Privacidad.PRIVADO, pCategoria, 0, 0);
 
             sys.altaVideo(vid);
-            response.sendRedirect("/uytube/buscar?texto=" + vid.getNombre());
-
+            
+            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+            ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
+            
+            int idNuevoVideo = 0;
+            for (DtVideo v : videos){
+                if (v.getId() > idNuevoVideo){
+                    idNuevoVideo = v.getId();
+                }
+            }
+            
+            response.sendRedirect("/uytube/video-consultar?id=" + idNuevoVideo);
+            
         } catch (Exception e) {
             System.out.println("---- Exception ----");
             System.out.println(e.getMessage());

@@ -4,6 +4,7 @@
     Author     : administrador
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Logica.Enumerados.TipoValoracion"%>
 <%@page import="Logica.DataType.DtValoracion"%>
 <%@page import="org.eclipse.persistence.jpa.jpql.tools.model.query.DerivedPathVariableDeclarationStateObject"%>
@@ -213,6 +214,9 @@
                                     <br>
                                     
                                     <!-- DESCRIPCION DEL VIDEO -->
+                                    <div class="bd-highlight" >
+                                        <h5>Fecha de publicación: <%= new SimpleDateFormat("dd/MM/yyyy").format(video.getFechaPublicacion()) %></h5>
+                                    </div>
                                     <div class="bd-highlight" >
                                         <h3><small class="text-muted">DESCRIPCIÓN</small></h3>
                                     </div>

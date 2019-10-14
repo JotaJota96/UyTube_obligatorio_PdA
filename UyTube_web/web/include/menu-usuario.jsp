@@ -10,7 +10,7 @@ Menú para el usuario logueado
     <%
         IUsuario sys = Fabrica.getInstancia().getIUsuario();
         DtUsuario usu = sys.obtenerUsuarioActual();
-
+        ArrayList<String> cate = sys.listarCategorias();
     %>
     <ul>	
         <li class="titulo"> Inicio </li>
@@ -22,6 +22,17 @@ Menú para el usuario logueado
         <li class="titulo">Agregar</li>
         <li><a href="/uytube/video-agregar"><span class="icon-upload3"></span> Subir video</a></li>
         <li><a href="/uytube/lista-agregar"><span class="icon-add-to-list"></span> Crear lista</a></li>
+        <li class="titulo">Categoria</li>
+        <% 
+            for (String elem : cate) {
+                if(!elem.equals("UNDEFINED")){
+        %> 
+                <li><a href="/uytube/buscar?categoria=<%= elem %>"><span class="icon-tag"></span> <%= elem %></a></li>
+        <%
+                }
+            }
+        %>
+        <li class="titulo"> Salir </li>
         <li class="salir"><a href="/uytube/cerrar-sesion"><span class="icon-exit"></span> SALIR</a></li>
     </ul>					  
 </aside>

@@ -49,7 +49,7 @@ public class ConsultaUsuario extends HttpServlet {
             ArrayList<DtUsuario> seguidos = sys.listarUsuarioSeguidos();
             ArrayList<DtUsuario> seguidores = sys.listarUsuarioSeguidores();
             ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
-            ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(false);
+            ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(true);
             boolean sesionIniciada = sys.sesionIniciada();
 
             boolean usuarioPropietario = false;

@@ -101,7 +101,16 @@ public class ModificarListaReproduccion extends HttpServlet {
             DtListaDeReproduccion listRepo = new DtListaDeReproduccion(0, pNombre, priv, TipoListaDeReproduccion.PARTICULAR, pCategoria);
             sys.modificarListaDeReproduccion(listRepo);
             
-            response.sendRedirect("usuario-consultar?id="+ usu.getNickname()+"&ps=LISTAS");
+            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+            ArrayList<DtListaDeReproduccion> listas = sys.listarListasDeReproduccionDeUsuario(true);
+            
+            int idNuevaLista = 0;
+            for (DtListaDeReproduccion l : listas){
+                if (l.getNombre().equals(listRepo.getNombre())){
+                    idNuevaLista = l.getId();
+                }
+            }
+            response.sendRedirect("lista-consultar?id=" + idNuevaLista);
             
         } catch (Exception e) {
             System.out.println("---- Exception ----");
