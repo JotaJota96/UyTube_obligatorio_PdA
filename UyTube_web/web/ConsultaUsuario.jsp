@@ -296,7 +296,7 @@
                                                     for (DtListaDeReproduccion l : listasRep) {
                                                 %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="lista-consultar?idUsu=<%= usuario.getNickname() %>&idList=<%= l.getId() %>">
+                                                    <a href="lista-consultar?id=<%= l.getId() %>">
                                                         <%= l.getNombre()%>
                                                     </a>
                                                 </li>

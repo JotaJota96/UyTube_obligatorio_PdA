@@ -39,17 +39,14 @@ public class ConsultaListaReproducion extends HttpServlet {
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             boolean sesionIniciada = sys.sesionIniciada();
-            String usuario = request.getParameter("idUsu");
-            String lista = request.getParameter("idList");
+            String lista = request.getParameter("id");
+            int idLista = Integer.parseInt(lista);
+            String usuario = sys.obtenerPropietarioDeListaDeReproduccion(idLista).getNickname();
             
             sys.seleccionarUsuario(usuario);
-            int idLista = Integer.parseInt(lista);
-            sys.seleccionarListaDeReproduccion(idLista);
             
             DtListaDeReproduccion listas = sys.seleccionarListaDeReproduccion(idLista);
-            
             ArrayList <DtVideo> videos = sys.listarVideosDeListaDeReproduccion();
-            
             
             boolean usuarioPropietario = false;
             if (sesionIniciada) {

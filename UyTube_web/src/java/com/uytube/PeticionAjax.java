@@ -5,8 +5,11 @@
  */
 package com.uytube;
 
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,16 +40,35 @@ public class PeticionAjax extends HttpServlet {
          Aca debe recibir un parametor de nombre accion el cual define cual es la funcion
          que se debe ejecutar
              */
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            // datos recibidos
             String accion = request.getParameter("accion"); // obtiene lo enviado por AJAX
-            String txtUsuario = request.getParameter("nombre"); // obtiene lo enviado por AJAX
+            String dato = request.getParameter("dato"); // obtiene lo enviado por AJAX
+            
+            System.out.println("-- Peticion AJAX --");
+            System.out.println("accion: " + accion);
+            System.out.println("dato: " + dato);
+            
+            // prepara respuesta
             response.setContentType("text/plain");  //Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); //You want world domination, huh?
-            String respuesta;
-            if (txtUsuario.equals("pedro")) {
-                respuesta = "Pedro ya existe";
-            } else {
-                respuesta = "El usuario está disponible";
+            String respuesta = "";
+            
+            
+            switch (accion){
+                case "validarNickname":
+                    if (sys.existeNickname(dato)){
+                        respuesta = "Este nickname no está disponible";
+                    }
+                    break;
+                case "validarEmail":
+                    if (sys.existeEmail(dato)){
+                        respuesta = "Este email no está disponible";
+                    }
+                    break;
             }
+            System.out.println("Respuesta: " + respuesta);
             response.getWriter().write(respuesta);
         } catch (Exception e) {
             System.out.println("---- Exception ----");

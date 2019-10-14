@@ -168,7 +168,8 @@
                                             <br>   
                                             <label id="label_email">Imagen de perfil</label>	
                                             <div class="form-group">
-                                                <input value="<%= usuario.getImagen()%>" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
+                                                <input disabled="true" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
+                                                <span id='message'>(Funcionalidad no disponible)</span><br>
                                             </div>
 
 

@@ -10,7 +10,6 @@
     <%
         boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
-
     <script>
         var check = function () {
             if (document.getElementById('input_Contrasenia').value ==document.getElementById('input_Repetir_contraseña').value) {
@@ -90,7 +89,10 @@
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
                                         <form class="form-signin" action="/uytube/usuario-agregar" method="post">
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
-                                            <input class="form-control" type="text" name="nickname" placeholder="Nickname" id="input_Nickname" required><span id="msjNickname"></span> <br>
+                                            <input class="form-control" type="text" name="nickname" placeholder="Nickname" id="input_Nickname" required>
+                                            <span id="msjNickname"></span>
+                                            <br>
+                                            
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <input type="text" class="form-control" name="nombre" id="input_Nombre" placeholder="Nombre" required>
@@ -100,9 +102,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                                            </div>
+                                            <input class="form-control" type="email" name="email" placeholder="Email" id="email" required>
+                                            <span id="msjEmail"></span>
+                                            <br>
 
                                             <input class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start"><br>
                                             <input class="form-control" type="password" name="password" placeholder="Contraseña" id="input_Contrasenia" onkeyup="check()" required><br>
@@ -132,7 +134,8 @@
                                             <label id="label_email">Imagen de perfil</label>
 
                                             <div class="form-group">
-                                                <input accept=".PNG,.JPG,.jpg,.png" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
+                                                <input disabled="true" accept=".PNG,.JPG,.jpg,.png" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
+                                                <span id='message'>(Funcionalidad no disponible)</span><br>
                                                 <small class="text-muted">Opcional*</small>
                                             </div>
 
