@@ -56,12 +56,16 @@
                                             <input type="text"name="user" id="txtUsuario" class="form-control mb-4" placeholder="nickname/email" required autofocus>
                                             <label for="inputPassword" name="password" class="sr-only" id="label_contrasenia">Contraseña</label>
                                             <input type="password" name="password" id="input_contraseña" class="form-control mb-4" placeholder="Contraseña" required>
-                                            <div class="checkbox mb-3">
-                                                <label>
-                                                    <input type="checkbox" value="remember-me" id="check_recuerdarme"> Recuerdarme
-                                                    <p id="mitexto"></p>
-                                                </label>
-                                            </div>
+                                                <%
+                                                    boolean mostrarMsjError = (request.getAttribute("mostrarMsjError") != null);
+                                                    if (mostrarMsjError){
+                                                %>
+                                                <div class="mb-3">
+                                                    <span id="msjError" style="color: red">El usuario o la contraseña son incorrectos</span>
+                                                </div>
+                                                <%
+                                                    }
+                                                %>
                                             <button class="btn btn-lg btn-primary btn-block mb-4" type="submit" id="btn_Ingresar">Ingresar</button>
 
                                             <a href="/uytube/usuario-agregar" >Registrase</a>
