@@ -108,6 +108,7 @@ public class IniciarSesion extends HttpServlet {
                 rd = request.getRequestDispatcher("/");
             } else {
                 //lógica para login inválido
+                request.setAttribute("mostrarMsjError", true);
                 rd = request.getRequestDispatcher("/IniciarSesion.jsp");
             }
             rd.forward(request, response);

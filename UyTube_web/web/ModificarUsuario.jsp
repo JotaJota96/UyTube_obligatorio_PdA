@@ -17,11 +17,15 @@
     
     <script>
         var check = function() {
-          if (document.getElementById('input_Contrasenia').value ==
-            document.getElementById('input_Repetir_contraseña').value) {
+          if (document.getElementById('input_Contrasenia').value == document.getElementById('input_Repetir_contraseña').value) {
             document.getElementById('message').style.color = 'green';
             document.getElementById('message').innerHTML = 'Correcto';
             document.getElementById("btn_Registrarme").disabled = false;
+            if (document.getElementById('input_Contrasenia').value == ""){
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'Ingrese la contraseña';
+                document.getElementById("btn_Registrarme").disabled = true;
+            }
           } else {
             document.getElementById('message').style.color = 'red';
             document.getElementById('message').innerHTML = 'No son iguales';
