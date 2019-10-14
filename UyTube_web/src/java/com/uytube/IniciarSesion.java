@@ -105,6 +105,7 @@ public class IniciarSesion extends HttpServlet {
             if (sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute("usuario") == null) {
                 DtUsuario usuario = sys.obtenerUsuarioActual();
                 //si coincide usuario y password y además no hay sesión iniciada
+                sesion.setMaxInactiveInterval(14400);
                 sesion.setAttribute("usuario", usuario);
 
                 //redirijo a página con información de login exitoso

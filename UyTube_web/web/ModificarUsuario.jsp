@@ -117,7 +117,7 @@
                                                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                                                 String fecha = df.format(usuario.getFechaNacimiento());
                                             %>
-                                            <input  value="<%= fecha%>" class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start" readonly="readonly"><br>
+                                            <input  value="<%= fecha%>" class="form-control" name="fechaNa" type="date" id="input_fecha"><br>
                                             
 
                                             <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" name="password" placeholder="Contraseña" id="input_Contrasenia" onkeyup="check()" required><br>

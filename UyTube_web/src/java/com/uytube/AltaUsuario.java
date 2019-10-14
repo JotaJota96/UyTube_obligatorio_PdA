@@ -106,6 +106,7 @@ public class AltaUsuario extends HttpServlet {
             sys.altaUsuarioCanal(Usu, CanUsu);
             DtUsuario nuevoUsuario = sys.obtenerUsuarioActual();
             
+            request.getSession().setMaxInactiveInterval(14400);
             request.getSession().setAttribute("usuario", nuevoUsuario);
             response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
 
