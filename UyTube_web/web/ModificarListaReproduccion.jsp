@@ -12,7 +12,7 @@
 <html lang="es">
     <%
         DtListaDeReproduccion listasRep = (DtListaDeReproduccion) request.getAttribute("listas");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
     %>
     <head>

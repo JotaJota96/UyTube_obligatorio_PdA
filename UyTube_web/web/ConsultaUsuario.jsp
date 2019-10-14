@@ -14,7 +14,7 @@
 <html lang="es">
     <%
         boolean propietario = (boolean) request.getAttribute("propietario");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
         DtUsuario usuario = (DtUsuario) request.getAttribute("usuario");
         DtCanal canal = (DtCanal) request.getAttribute("canal");
         ArrayList<DtUsuario> seguidos = (ArrayList) request.getAttribute("seguidos");

@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube - 404</title>
+        <title>UyTube - 500</title>
         
     <style>
         *
@@ -111,7 +111,7 @@
             position: relative;
             top: 8%;
             color: white;
-            background: #1870FF;  /* fondo de los circulos*/
+            background: #9d24b6;  /* fondo de los circulos*/
             border-radius: 50%;
             display: inline-block;
             transform: skew(45deg);
@@ -253,28 +253,12 @@
         <div class="container-floud">
             <div class="col-xs-12 ground-color text-center">
                 <div class="container-error-404">
-                    <div class="clip"><div class="shadow"><span class="digit thirdDigit">4</span></div></div>
+                    <div class="clip"><div class="shadow"><span class="digit thirdDigit">5</span></div></div>
                     <div class="clip"><div class="shadow"><span class="digit secondDigit">0</span></div></div>
-                    <div class="clip"><div class="shadow"><span class="digit firstDigit">4</span></div></div>
+                    <div class="clip"><div class="shadow"><span class="digit firstDigit">0</span></div></div>
                     <div class="msg">Uy!<span class="triangle"></span></div>
                 </div>
-                <h2 class="h1">¡Uy!, no encontramos esta página</h2>
-                <%
-                    String mensajeError = (String) request.getAttribute("mensajeError");
-                    if (mensajeError != null){
-                        String msj = "";
-                        for (int idx = 0; idx < mensajeError.length(); idx++) {
-                            if (mensajeError.charAt(idx) == '\n'){
-                                break;
-                            }
-                            msj += mensajeError.charAt(idx);
-                        }
-                %>
-                <h2 class="h1" style="font-size: 20px;"><%= msj %></h2>
-                <%
-                    }
-                %>
-                
+                <h2 class="h1">¡Uy!, parece que se nos cayó yerba en el servidor</h2>
                 <h2 class="h1">
                     <a href="/uytube/">Ir al inicio</a>
                 </h2>

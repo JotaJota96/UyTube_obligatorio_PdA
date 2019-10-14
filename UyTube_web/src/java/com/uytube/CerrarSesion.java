@@ -46,8 +46,11 @@ public class CerrarSesion extends HttpServlet {
             }
             response.sendRedirect("");
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }

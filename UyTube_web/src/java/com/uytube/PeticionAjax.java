@@ -7,6 +7,7 @@ package com.uytube;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,32 +18,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author administrador
  */
 public class PeticionAjax extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PeticionAjax</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PeticionAjax at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -56,35 +31,32 @@ public class PeticionAjax extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         /*
+         
+        try {
+            /*
          Aca debe recibir un parametor de nombre accion el cual define cual es la funcion
          que se debe ejecutar
-        */
-        String accion = request.getParameter("accion"); // obtiene lo enviado por AJAX
-        String txtUsuario = request.getParameter("nombre"); // obtiene lo enviado por AJAX
-        response.setContentType("text/plain");  //Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); //You want world domination, huh?
-        String respuesta;
-        if(txtUsuario.equals("pedro")){
-            respuesta = "Pedro ya existe";
-        }else{
-            respuesta = "El usuario está disponible";
+             */
+            String accion = request.getParameter("accion"); // obtiene lo enviado por AJAX
+            String txtUsuario = request.getParameter("nombre"); // obtiene lo enviado por AJAX
+            response.setContentType("text/plain");  //Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); //You want world domination, huh?
+            String respuesta;
+            if (txtUsuario.equals("pedro")) {
+                respuesta = "Pedro ya existe";
+            } else {
+                respuesta = "El usuario está disponible";
+            }
+            response.getWriter().write(respuesta);
+        } catch (Exception e) {
+            System.out.println("---- Exception ----");
+            System.out.println(e.getMessage());
+            System.out.println("-------------------");
+            RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
         }
-        response.getWriter().write(respuesta);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

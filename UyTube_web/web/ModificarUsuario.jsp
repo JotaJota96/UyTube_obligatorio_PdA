@@ -37,7 +37,7 @@
     <%
         DtUsuario usuario = (DtUsuario) request.getAttribute("usuario");
         DtCanal canal = (DtCanal) request.getAttribute("canal");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
     <head>
         <meta charset="UTF-8">

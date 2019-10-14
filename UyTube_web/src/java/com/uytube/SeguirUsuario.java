@@ -47,8 +47,11 @@ public class SeguirUsuario extends HttpServlet {
             response.sendRedirect("/uytube/usuario-consultar?id=" + nick);
             
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }

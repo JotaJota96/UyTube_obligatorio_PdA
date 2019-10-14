@@ -7,6 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+    <%
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +30,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+                    <%
+                        if (sesionIniciada) {
+                    %>
+                    <%@ include file='include/header-usuario.jsp' %>
+                    <%                    } else {
+                    %>
                     <%@ include file='include/header-visitante.jsp' %>
+                    <%
+                        }
+                    %>
                 </div>
             </div>		
         </div>
@@ -41,8 +53,17 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
+                    <section class="principal">					
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%                        } else {
+                        %>
                         <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">

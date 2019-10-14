@@ -64,8 +64,11 @@ public class ConsultaVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
@@ -162,9 +165,12 @@ public class ConsultaVideo extends HttpServlet {
             }
 
         } catch (IOException | NumberFormatException e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }
