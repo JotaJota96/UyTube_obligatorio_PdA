@@ -9,7 +9,7 @@ INSERT INTO public.categoria (nombre) VALUES
 ('MUSICA')
 ,('DEPORTE')
 ,('GAMING')
---,('UNDEFINED')
+,('UNDEFINED')
 ;
 
 

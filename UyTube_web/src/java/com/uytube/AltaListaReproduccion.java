@@ -90,7 +90,17 @@ public class AltaListaReproduccion extends HttpServlet {
             DtListaDeReproduccion listRepo = new DtListaDeReproduccion(0, pNombreLista, priv, TipoListaDeReproduccion.PARTICULAR, pCategoria);
             sys.altaListaDeReproduccionParticular(listRepo);
             
-            response.sendRedirect("usuario-consultar?id="+ usu.getNickname() +"&ps=LISTAS");
+            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+            ArrayList<DtListaDeReproduccion> listas = sys.listarListasDeReproduccionDeUsuario(true);
+            
+            int idNuevaLista = 0;
+            for (DtListaDeReproduccion l : listas){
+                if (l.getId() > idNuevaLista){
+                    idNuevaLista = l.getId();
+                }
+            }
+            
+            response.sendRedirect("lista-consultar?id=" + idNuevaLista);
             
         } catch (Exception e) {
             System.out.println("---- Exception ----");

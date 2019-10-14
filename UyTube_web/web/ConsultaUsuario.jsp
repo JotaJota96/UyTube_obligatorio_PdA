@@ -196,11 +196,11 @@
                                             if (ps.equals("VIDEOS")) {
                                             %>    
 
-                                                <a class="nav-item nav-link active" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS</a>
+                                            <a class="nav-item nav-link active" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS (<%=videos.size()%>)</a>
                                             <%
                                             } else {
                                             %> 
-                                                <a class="nav-item nav-link" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS</a>
+                                                <a class="nav-item nav-link" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS (<%=videos.size()%>)</a>
                                             <%
                                             }
                                             %>
@@ -208,16 +208,16 @@
                                             <%
                                             if (ps.equals("LISTAS")) {
                                             %>    
-                                                <a class="nav-item nav-link active" id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS</a>
+                                                <a class="nav-item nav-link active" id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS (<%=listasRep.size()%>)</a>
                                             <%
                                             } else {
                                             %> 
-                                                <a class="nav-item nav-link " id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS</a>
+                                                <a class="nav-item nav-link " id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS (<%=listasRep.size()%>)</a>
                                             <%
                                             }
                                             %> 
-                                                <a class="nav-item nav-link " id="refSeguidores" data-toggle="tab" href="#seguidores" role="tab" aria-controls="nav-SEGUIDORES" aria-selected="false">SEGUIDORES</a>
-                                                <a class="nav-item nav-link " id="refSeguidos" data-toggle="tab" href="#seguidos" role="tab" aria-controls="nav-SEGUIDOS" aria-selected="false">SEGUIDOS</a>
+                                                <a class="nav-item nav-link " id="refSeguidores" data-toggle="tab" href="#seguidores" role="tab" aria-controls="nav-SEGUIDORES" aria-selected="false">SEGUIDORES (<%=seguidores.size()%>)</a>
+                                                <a class="nav-item nav-link " id="refSeguidos" data-toggle="tab" href="#seguidos" role="tab" aria-controls="nav-SEGUIDOS" aria-selected="false">SEGUIDOS (<%=seguidos.size()%>)</a>
                                             </div>
                                         </nav>
                                     </div>

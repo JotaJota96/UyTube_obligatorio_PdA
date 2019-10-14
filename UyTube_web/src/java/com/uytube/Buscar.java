@@ -60,13 +60,13 @@ public class Buscar extends HttpServlet {
                 if (Filtro != null && Filtro.equalsIgnoreCase("CANALES")) {
                     Fil = Filtrado.CANALES;
                 }
-                if (Filtro != null && (Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCION"))) {
+                if (Filtro != null && (Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCIóN") || Filtro.equalsIgnoreCase("LISTAS_DE_REPRODUCCIÓN"))) {
                     Fil = Filtrado.LISTAS_DE_REPRODUCCION;
                 }
                 if (Filtro != null && Filtro.equalsIgnoreCase("VIDEOS")) {
                     Fil = Filtrado.VIDEOS;
                 }
-                if (Orden != null && (Orden.equalsIgnoreCase("ALFABETICO") || Orden.equalsIgnoreCase("ALAFABETICO"))) {
+                if (Orden != null && Orden.equalsIgnoreCase("ALFABETICO")) {
                     ord = Ordenacion.ALFABETICA_ASCENDENTE;
                 }
 
