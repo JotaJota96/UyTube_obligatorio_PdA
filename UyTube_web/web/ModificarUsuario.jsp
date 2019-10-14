@@ -14,6 +14,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+    
+    <script>
+        var check = function() {
+          if (document.getElementById('input_Contrasenia').value ==
+            document.getElementById('input_Repetir_contraseña').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Correcto';
+            document.getElementById("btn_Registrarme").disabled = false;
+          } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'No son iguales';
+            document.getElementById("btn_Registrarme").disabled = true;
+          }
+        }
+    </script>
+    
     <%
         DtUsuario usuario = (DtUsuario) request.getAttribute("usuario");
         DtCanal canal = (DtCanal) request.getAttribute("canal");
@@ -98,9 +114,11 @@
                                                 String fecha = df.format(usuario.getFechaNacimiento());
                                             %>
                                             <input  value="<%= fecha%>" class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start" readonly="readonly"><br>
+                                            
 
-                                            <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" placeholder="Contraseña" id="input_Contraseña" required><br>
-                                            <input value="<%= usuario.getContrasenia()%>" class="form-control" name="password" type="password" placeholder="Repetir contraseña" id="input_Repetir_contraseña" required>
+                                            <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" name="password" placeholder="Contraseña" id="input_Contrasenia" onkeyup="check()" required><br>
+                                            <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" placeholder="Repita contraseña" id="input_Repetir_contraseña" onkeyup="check()" required>
+                                            <span id='message'></span>
                                             <%
                                                 if (canal.getPrivacidad() == Privacidad.PUBLICO) {
                                             %> 
@@ -153,9 +171,6 @@
                                             <hr class="mb-4">
 
                                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <button class="btn btn-lg btn-primary btn-block" type="reset" id="btn_Limpiar">Limpiar</button>
-                                                </div>
                                                 <div class="btn-group mr-2" role="group" aria-label="Second group">
                                                     <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn_Registrarme">Modificar usuario</button>
                                                 </div>

@@ -56,8 +56,6 @@
                                             <input type="text"name="user" id="txtUsuario" class="form-control mb-4" placeholder="nickname/email" required autofocus>
                                             <label for="inputPassword" name="password" class="sr-only" id="label_contrasenia">Contraseña</label>
                                             <input type="password" name="password" id="input_contraseña" class="form-control mb-4" placeholder="Contraseña" required>
-                                            <div class="checkbox mb-3">
-                                            </div>
                                             <button class="btn btn-lg btn-primary btn-block mb-4" type="submit" id="btn_Ingresar">Ingresar</button>
 
                                             <a href="/uytube/usuario-agregar" >Registrase</a>

@@ -7,6 +7,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+
+    <script>
+        var check = function () {
+            if (document.getElementById('input_Contrasenia').value ==
+                    document.getElementById('input_Repetir_contraseña').value) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'Correcto';
+                document.getElementById("btn_Registrarme").disabled = false;
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'No son iguales';
+                document.getElementById("btn_Registrarme").disabled = true;
+            }
+        }
+    </script>
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +35,7 @@
         <link rel="stylesheet" type="text/css" href="css/footer.css">
        	<link rel="stylesheet" type="text/css" href="css/contenido-alta-usuario.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
-        
+
         <title>UyTube - Registrarse</title>
     </head>
     <body>
@@ -64,8 +80,9 @@
                                             </div>
 
                                             <input class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start"><br>
-                                            <input class="form-control" type="password" placeholder="Contraseña" id="input_Contraseña" required><br>
-                                            <input class="form-control" name="password" type="password" placeholder="Repetir contraseña" id="input_Repetir_contraseña" required>
+                                            <input class="form-control" type="password" name="password" placeholder="Contraseña" id="input_Contrasenia" onkeyup="check()" required><br>
+                                            <input class="form-control" type="password" placeholder="Repita contraseña" id="input_Repetir_contraseña" onkeyup="check()" required>
+                                            <span id='message'></span>
 
                                             <div class="d-block my-3">
                                                 <label for="cc-name">Privacidad del canal</label>
@@ -88,7 +105,7 @@
 
 
                                             <label id="label_email">Imagen de perfil</label>
-                                            
+
                                             <div class="form-group">
                                                 <input accept=".PNG,.JPG,.jpg,.png" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
                                                 <small class="text-muted">Opcional*</small>
@@ -98,7 +115,7 @@
 
                                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <button class="btn btn-lg btn-primary btn-block" type="reset" id="btn_Limpiar">Limpiar</button>
+                                                    <button class="btn btn-lg btn-danger btn-block" type="reset" id="btn_Limpiar">Limpiar</button>
                                                 </div>
                                                 <div class="btn-group mr-2" role="group" aria-label="Second group">
                                                     <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn_Registrarme">Registrarme</button>
