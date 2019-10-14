@@ -27,6 +27,15 @@
     .contenido .contenido-flexible .card {
       width: 210px;
       margin: 0px; }
+      .contenido .contenido-flexible .card .card-body {
+        height: 90px;
+        background-color: #f6f6f6;
+        overflow-wrap: break-word; }
+        .contenido .contenido-flexible .card .card-body a {
+          text-decoration: none; }
+        .contenido .contenido-flexible .card .card-body h6 {
+          color: #0d0d0d;
+          font-size: 1rem; }
 
 @media (max-width: 340px) {
   .container-fluid {

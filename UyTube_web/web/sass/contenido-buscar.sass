@@ -27,6 +27,9 @@
         .video, .canal, .lista
             display: flex
             padding: 0px
+            a
+                color: $tituloItem
+                text-decoration: none
             //background-color: $amarillo
         //Estilos del contenedor para las imagenes
         .caja-imagen
@@ -36,17 +39,17 @@
             //overflow: hidden
             font-size: 0.8rem
             padding: 15px 10px 10px 10px
-            //background-color: orange
+            background-color: orange
             display: flex
+            flex-grow: 1
         //Estilos generales para el texto de los items    
         .caja-texto p
-            //background-color: $colorCelesteClaro
+            background-color: $colorCelesteClaro
             overflow: auto
             overflow-wrap: break-word
             padding-right: 10px
         .caja-texto h5 
-            min-height: 20px
-            //background-color: $colorPrimary
+            background-color: green
             overflow: auto
             overflow-wrap: break-word
         
@@ -59,39 +62,8 @@
     .container-fluid
         padding-left: 0px
         padding-right: 0px
-    .header
-        width: 100%
-        left: 0px
-        height: 175.112px  
-        nav 
-            height: 175.112px     
-        .item-header2
-            order: 3
-            width: 100%
-        //Espacio de relleno 
-    .relleno-header
-        height: 175.112px
-    //Estilos del contenedor del logo 
-    #navLogo
-        justify-content: flex-start
-        .icon-menu1
-            margin-left: 0px
-            margin-right: 10px
-    //Genera el espacio para dar lugar a el formulario de buscar
-    #navbarSupportedContent
-        width: 100%
-    //Estilos de formulario buscar
-    #formBuscar
-        display: flex
-        justify-content: space-between        
-        width: 100%
-        input
-            width: 100%
-        //Oculta el boton buscar
-        #btnBuscar
-            display: none
-    .menu
-        top: -171.112px
+    
+    //estilos del contenido principal
     .contenido
         width: 100%
         .contenido-flexible
@@ -100,20 +72,20 @@
             //Estilos para los items
             .video, .canal, .lista                
                 flex-direction: column
-                justify-content: space-between
+                justify-content: flex-start
                 align-content: center
                 width: 100%
-                height: 250px  
+                height: 260px  
                 //background-color: $violeta
             .caja-imagen
                 justify-content: center
                 align-items: center
-                width: 100%
-                height: 150px 
-                ///background-color: $grisVCodeBarra           
+                min-width: 246px
+                min-height: 150px 
+                //background-color: $grisVCodeBarra           
             //Imagen del video
             .video img
-                width: 200px
+                //width: 200px
                 height: 150px
             //Imagen del canal
             .canal img
@@ -124,73 +96,30 @@
                 padding: 5px
                 overflow: auto
                 flex-direction: column
-                justify-content: center
-                align-items: center
+                justify-content: flex-start
+                align-items: stretch
                 width: 100%
-                height: 100px
+                min-height: 110px
                 //Estilos para los textos de los items
                 .caja-texto p
-                    max-height: 50px
-                    overflow: auto            
-                .caja-texto h5
-                    height: 30% 
+                    min-height: 20px
+                    max-height: 55px
+                    overflow: auto                              
+                .caja-texto h5 
                     min-height: 20px
                     overflow: auto
+                a 
+                    font-size: 0.95rem
+        .h3
+            width: 90%
                     
-    .widgets
-        height: 170px
-        padding-top: 5px
-        padding-bottom: 5px
-        flex-direction: column
-        justify-content: space-around
-        align-content: center
-        .widget-1
-            width: 100%            
-            flex-direction: row
-            justify-content: space-around
-            align-items: center
-        .widget-2
-            width: 100%
-            justify-content: space-around
 
 // Para dispositivos mayores a 340 y menores a 388 ==============================================================
 @media (min-width: 341px) and (max-width: 387px)
     .container-fluid
         padding-left: 0px
         padding-right: 0px
-    //Estilos del header
-    .header
-        width: 100%
-        height: 175.112px
-        left: 0px
-        nav 
-            height: 175.112px        
-        .item-header2
-            order: 3
-            width: 100%
-    //Espacio de relleno 
-    .relleno-header
-        height: 175.112px
-    //Estilos del contenedor del logo 
-    #navLogo
-        justify-content: flex-start
-        .icon-menu1
-            margin-left: 0px
-            margin-right: 10px
-    //Genera el espacio para dar lugar a el formulario de buscar
-    #navbarSupportedContent
-        width: 100%
-    //Estilos de formulario buscar
-    #formBuscar
-        display: flex
-        justify-content: space-between        
-        width: 100%
-        input
-            width: 100%
-        //Oculta el boton buscar
-        #btnBuscar
-            display: none
-
+    
     //estilos del contenido principal
     .contenido
         width: 100%
@@ -200,20 +129,20 @@
             //Estilos para los items
             .video, .canal, .lista                
                 flex-direction: column
-                justify-content: space-between
+                justify-content: flex-start
                 align-content: center
                 width: 100%
-                height: 250px  
+                height: 260px  
                 //background-color: $violeta
             .caja-imagen
                 justify-content: center
                 align-items: center
-                width: 100%
-                height: 150px 
+                min-width: 246px
+                min-height: 150px 
                 //background-color: $grisVCodeBarra           
             //Imagen del video
             .video img
-                width: 200px
+                //width: 200px
                 height: 150px
             //Imagen del canal
             .canal img
@@ -224,74 +153,29 @@
                 padding: 5px
                 overflow: auto
                 flex-direction: column
-                justify-content: center
-                align-items: center
+                justify-content: flex-start
+                align-items: stretch
                 width: 100%
-                height: 100px
+                min-height: 110px
                 //Estilos para los textos de los items
                 .caja-texto p
-                    max-height: 50px
-                    overflow: auto            
-                .caja-texto h5
-                    height: 30% 
+                    min-height: 20px
+                    max-height: 55px
+                    overflow: auto                              
+                .caja-texto h5 
                     min-height: 20px
                     overflow: auto
+                a 
+                    font-size: 0.95rem
+        .h3
+            width: 90%
                     
-    .widgets
-        height: 170px
-        padding-top: 5px
-        padding-bottom: 5px
-        flex-direction: column
-        justify-content: space-around
-        align-content: center
-        .widget-1
-            width: 100%            
-            flex-direction: row
-            justify-content: space-around
-            align-items: center
-        .widget-2
-            width: 100%
-            justify-content: space-around
 // Para dispositivos mayores a 387 y menores a 500 ================================================================
 @media (min-width: 388px) and (max-width: 500px)
     .container-fluid
         padding-left: 0px
         padding-right: 0px
-    //Estilos del header
-    .header
-        width: 100%
-        left: 0px  
-        height: 127.176px
-        nav 
-            height: 127.176px     
-        .item-header2
-            order: 3
-            width: 100%
-    //Espacio de relleno 
-    .relleno-header
-        height: 127.176px
-    //Espacio de relleno 
-    .relleno-header
-    //Estilos del contenedor del logo 
-    #navLogo
-        justify-content: flex-start
-        .icon-menu1
-            margin-left: 0px
-            margin-right: 10px
-    //Genera el espacio para dar lugar a el formulario de buscar
-    #navbarSupportedContent
-        width: 100%
-    //Estilos de formulario buscar
-    #formBuscar
-        display: flex
-        justify-content: space-between        
-        width: 100%
-        input
-            width: 100%
-        //Oculta el boton buscar
-        #btnBuscar
-            display: none
-
+    
     //estilos del contenido principal
     .contenido
         width: 100%
@@ -301,20 +185,20 @@
             //Estilos para los items
             .video, .canal, .lista                
                 flex-direction: column
-                justify-content: space-between
+                justify-content: flex-start
                 align-content: center
                 width: 100%
-                height: 250px  
+                height: 260px  
                 //background-color: $violeta
             .caja-imagen
                 justify-content: center
                 align-items: center
-                width: 100%
-                height: 150px 
+                min-width: 246px
+                min-height: 150px 
                 //background-color: $grisVCodeBarra           
             //Imagen del video
             .video img
-                width: 200px
+                //width: 200px
                 height: 150px
             //Imagen del canal
             .canal img
@@ -325,77 +209,29 @@
                 padding: 5px
                 overflow: auto
                 flex-direction: column
-                justify-content: center
-                align-items: center
+                justify-content: flex-start
+                align-items: stretch
                 width: 100%
-                height: 100px
+                min-height: 110px
                 //Estilos para los textos de los items
                 .caja-texto p
-                    max-height: 50px
-                    overflow: auto  
-                            
-                .caja-texto h5
-                    height: 30% 
+                    min-height: 20px
+                    max-height: 55px
+                    overflow: auto                              
+                .caja-texto h5 
                     min-height: 20px
                     overflow: auto
+                a 
+                    font-size: 0.95rem
         .h3
             width: 90%
-        
-    .widgets
-        height: 180px
-        padding-top: 10px
-        padding-bottom: 10px
-        flex-direction: column
-        justify-content: space-around
-        align-content: center
-        .widget-1
-            width: 100%            
-            flex-direction: row
-            justify-content: space-around
-            align-items: center
-        .widget-2
-            width: 100%
-            justify-content: space-around
-    
         
 // Extra small devices (portrait phones, less than 576px) =======================================================
 @media (min-width: 501px) and (max-width: 575.98px)
     .container-fluid
         padding-left: 0px
         padding-right: 0px
-    //Estilos del header
-    .header
-        width: 100%
-        left: 0px
-        height: 129.176px
-        nav 
-            height: 129.176px     
-        .item-header2
-            order: 3
-            width: 100%
-    //Espacio de relleno 
-    .relleno-header
-        height: 129.176px
-    //Estilos del contenedor del logo 
-    #navLogo
-        justify-content: flex-start
-        .icon-menu1
-            margin-left: 0px
-            margin-right: 10px
-    //Genera el espacio para dar lugar a el formulario de buscar
-    #navbarSupportedContent
-        width: 100%
-    //Estilos de formulario buscar
-    #formBuscar
-        display: flex
-        justify-content: space-between        
-        width: 100%
-        input
-            width: 100%
-        //Oculta el boton buscar
-        #btnBuscar
-            display: none
-
+    
     //Estilos del contenido principal
     .contenido
         width: 100%
@@ -409,17 +245,14 @@
                 justify-content: space-between
                 align-content: center
                 width: 100%
-                height: 150px  
-                //background-color: $violeta
+                height: 150px                  
             .caja-imagen
                 justify-content: center
                 align-items: center
-                width: 100%
-                height: 150px 
-                //background-color: $grisVCodeBarra           
+                min-width: 246px
+                height: 150px                         
             //Imagen del video
             .video img
-                width: 200px
                 height: 150px
             //Imagen del canal
             .canal img
@@ -430,67 +263,26 @@
                 padding: 5px
                 overflow: auto
                 flex-direction: column
-                justify-content: center
-                align-items: center
+                justify-content: flex-start
+                align-items: stretch
                 width: 100%
                 height: 150px
                 //Estilos para los textos de los items
                 .caja-texto p
-                    max-height: 50px
-                    overflow: auto            
-                .caja-texto h5
-                    height: 30% 
+                    max-height: 75px
                     min-height: 20px
+                    overflow: auto            
+                .caja-texto h5 
+                    min-height: 20px
+                    max-height: 75px
                     overflow: auto
-        
-    .widgets
-        height: 180px
-        flex-direction: column
-        justify-content: space-around
-        align-items: center
-        .widget-1
-            width: 80%            
-            flex-direction: row
-            justify-content: space-around
-            align-items: center
-        .widget-2
-            width: 70%
-            display: flex
-            justify-content: space-around
-    .footer
-        padding: 1rem 0.625rem
-
 
 // Small devices (landscape phones, 576px and up) ================================================================
 @media (min-width: 576px) and (max-width: 767.98px)
     .container-fluid
         padding-left: 0px
         padding-right: 0px
-    //Estilos del header
-    .header
-        width: 100%
-        left: 0rem
-        height: 124.117px
-        .nav
-            height: 124.117px
-        .item-header2
-            order: 3
-            width: 100%
-    //Espacio de relleno 
-    .relleno-header
-        height: 124.117px
-    //Estilos del contenedor del logo 
-    #navLogo
-        justify-content: flex-start
-    //Genera el espacio para el formulario de buscar
-    #navbarSupportedContent
-        width: 100%
-        #formBuscar
-            display: flex
-            justify-content: space-between
-            width: 100%
-            input
-                width: 87%
+    
     //Estilos del contenido principal
     .contenido
         width: 100%
@@ -513,7 +305,6 @@
                 //background-color: $grisVCodeBarra           
             //Imagen del video
             .video img
-                width: 200px
                 height: 150px
             //Imagen del canal
             .canal img
@@ -524,65 +315,25 @@
                 padding: 5px
                 overflow: auto
                 flex-direction: column
-                justify-content: center
-                align-items: center
+                justify-content: flex-start
+                align-items: stretch
                 width: 100%
                 height: 150px
                 //Estilos para los textos de los items
                 .caja-texto p
-                    max-height: 50px
+                    min-height: 50px
+                    max-height: 75px
                     overflow: auto            
                 .caja-texto h5
-                    height: 30% 
                     min-height: 20px
+                    max-height: 75px
                     overflow: auto
-            
-    .widgets
-        height: 160px
-        flex-direction: column
-        justify-content: space-around
-        align-items: center
-        .widget-1
-            width: 60%            
-            flex-direction: row
-            justify-content: space-between
-            align-items: center
-        .widget-2
-            width: 60%
-            display: flex
-            justify-content: space-between
-    .footer
-        padding: 1rem 0.625rem
-      
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) and (max-width: 991.98px)
     .container-fluid
         padding-left: 0px
         padding-right: 0px
-    //Estilos del header
-    .header
-        width: 100%
-        left: 0rem
-        height: 77.2px
-        nav 
-            height: 77.2px
-            justify-content: space-between
-            //Estilos del contenedor del logo 
-            #navLogo
-                justify-content: space-between
-            //Genera el espacio para el formulario de buscar
-            #navbarSupportedContent
-                width: 100%
-                #formBuscar
-                    display: flex
-                    justify-content: space-between
-                    width: 100%
-                    input
-                        width: 87%
-    //Espacio de relleno 
-    .relleno-header
-        height: 77.2px
 
     //Estilos del contenido principal
     .contenido
@@ -594,7 +345,7 @@
             .video, .canal, .lista                
                 flex-direction: row
                 justify-content: space-between
-                align-content: center
+                align-content: stretch
                 width: 100%
                 height: 150px  
                 //background-color: $violeta
@@ -603,11 +354,12 @@
                 align-items: center
                 width: 200px
                 min-width: 200px
+                max-width: 200px
                 height: 150px 
                 //background-color: $grisVCodeBarra           
             //Imagen del video
             .video img
-                width: 200px
+                //width: 200px
                 height: 150px
             //Imagen del canal
             .canal img
@@ -618,52 +370,23 @@
                 padding: 5px
                 overflow: auto
                 flex-direction: column
-                justify-content: center
-                align-items: center
+                justify-content: flex-start
+                align-items: stretch
                 width: 100%
                 height: 150px
                 //Estilos para los textos de los items
                 .caja-texto p
-                    max-height: 50px
+                    min-height: 60px
+                    max-height: 100px
                     overflow: auto            
                 .caja-texto h5
-                    height: 30% 
+                    max-height: 50px 
                     min-height: 20px
                     overflow: auto
-            
-    .widgets
-        height: 100px
-        width: 100%
-        flex-direction: row
-        justify-content: space-around
-        align-items: center
-        .widget-1
-            width: 50%            
-            flex-direction: row
-            justify-content: space-around
-            align-items: center
-        .widget-2
-            width: 30%
-            display: flex
-            flex-direction: row
-            justify-content: center
-    .footer
-        padding: 1rem 0.625rem
-    
-        
 
 // Large devices (desktops, 992px and up) =======================================================================
 @media (min-width: 992px)
-    //Estilos del header
-    .header
-        width: 98%
-        height: 56px
-        nav 
-            height: 56px
-    //Espacio de relleno 
-    .relleno-header
-        height: 56px
-    //Estilos del contenido principal
+    
     .filtos
         display: flex
         flex-direction: row
@@ -671,7 +394,7 @@
         width: 70%
         .video, .canal, .lista
             justify-content: space-between
-            align-content: center
+            align-items: stretch
             width: 862px
             height: 152px  
         .caja-imagen
@@ -682,7 +405,6 @@
         //Imagen del video
         .video img
             width: 246px
-            height: 138px
         //Imagen del canal
         .canal img
             width: 138px
@@ -691,37 +413,22 @@
         .caja-texto
             //overflow: hidden
             flex-direction: column
-            justify-content: center
-            align-items: center
+            justify-content: flex-start
+            align-items: stretch
             width: 600px
             height: 152px
         //Estilos para los textos de los items
         .caja-texto p
-            height: 70%
+            min-height: 50px
+            max-height: 90px
+            //min-width: 550px
+            //max-width: 550px
             overflow: auto            
         .caja-texto h5 
             min-height: 20px
+            max-height: 60px
             overflow: auto
-            
-        
-    .widgets
-        height: 123px
-        //height: 223px
-        padding-left: 30px
-        padding-right: 30px
-        justify-content: space-around
-        flex-wrap: wrap   
-        align-content: center
-        .img-widget
-            height: 83px
-        .widget-1
-            width: 460px
-            display: flex
-            justify-content: space-around
-        .widget-2
-            width: 350px
-    //Estilos del footer
-    .footer
+     
         
     
 
