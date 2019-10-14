@@ -171,12 +171,15 @@
                                             if (propietarioDelVideo){
                                         %>
                                         <!-- Boton modificar video -->
-                                        <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">
+                                        <div class="p-2 btn-group" role="group" aria-label="Third group">
                                             <a href="video-modificar?id=<%= video.getId() %>">
-                                                <button type="button" id="btnModificarVideo" class="btn btn-primary icon-cog">
+                                                <button type="button" id="btnModificarVideo" class="btn btn-primary icon-cog mr-2">
                                                     MODIFICAR
                                                 </button>
                                             </a>
+                                            <button type="button" id="btnListarValoraciones" class="btn btn-info icon-info-with-circle">
+                                                QUIÉN VALORÓ
+                                            </button>
                                         </div>
                                         <%
                                             }

@@ -84,6 +84,15 @@ $("#btnAgregarALista").on('click',function(){
     });
 });
 
+//boton listar valoraciones
+$("#btnListarValoraciones").on('click',function(){
+    $.post("/uytube/video-consultar",
+        {
+          accion: "listarValoraciones" 
+        }, function(respuesta, status){
+        alert(respuesta);
+    });
+});
 
 //Responeder comentarios, se dispara luego de la ventana modal
 var responderComentario = function(){    

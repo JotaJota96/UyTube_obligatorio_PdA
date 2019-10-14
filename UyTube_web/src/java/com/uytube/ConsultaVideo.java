@@ -160,6 +160,17 @@ public class ConsultaVideo extends HttpServlet {
                     respuesta = "Esta funcionalidad no ha sido implementada aun...";
                     response.getWriter().write(respuesta);
                     break;
+                case "listarValoraciones":
+                    respuesta = "";
+                    ArrayList<DtValoracion> valoraciones = sys.obtenerValoracionesDeVideo();
+                    for (DtValoracion val : valoraciones){
+                        respuesta += val.getNickname() + " le ha dado " + val.getVal() + "\n";
+                    }
+                    if (valoraciones.isEmpty()){
+                        respuesta = "Este video no tiene valoraciones";
+                    }
+                    
+                    response.getWriter().write(respuesta);
                 default:
                     break;
             }
