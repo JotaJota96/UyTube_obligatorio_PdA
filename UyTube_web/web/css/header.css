@@ -78,8 +78,9 @@
         display: none; }
       .header nav #nombrePerfil {
         display: none; }
-    .header .relleno-header {
-      height: 56px; }
+
+  .relleno-header {
+    height: 56px; }
 
   #navLogo {
     justify-content: center;
@@ -171,9 +172,8 @@
         display: none; }
       .header nav #nombrePerfil {
         display: none; }
-
-  .relleno-header {
-    height: 56px; }
+    .header .relleno-header {
+      height: 56px; }
 
   #navLogo {
     justify-content: center;
@@ -277,7 +277,7 @@
   .header {
     width: 100%;
     left: 0rem;
-    height: 77.2px; }
+    height: 56px; }
     .header nav {
       height: 100%;
       justify-content: space-between; }
@@ -293,7 +293,7 @@
             width: 87%; }
 
   .relleno-header {
-    height: 77.2px; } }
+    height: 56px; } }
 @media (min-width: 992px) {
   .header {
     width: 100%;

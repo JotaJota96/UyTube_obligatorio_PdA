@@ -84,7 +84,7 @@
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <div class="container">
-                                    <div class="d-flex bd-highlight ">
+                                    <div class="d-block d-md-flex bd-highlight ">
                                         <div class="p-4 flex-fill bd-highlight">
                                             <div class="d-flex justify-content-center">
                                                 <%
@@ -208,7 +208,7 @@
                                                     );
                                             %>
                                             <!-- Video individual en la lista -->
-                                            <div class="d-flex bd-highlight ">
+                                            <div class="d-block d-md-flex bd-highlight ">
                                                 <div class="p-1 flex-shrink-1 bd-highlight ">
                                                     <div class="p-1 bd-highlight ">
                                                         <iframe class="embed-responsive-item" src="<%= urlEmbebida%>" allowfullscreen></iframe>
