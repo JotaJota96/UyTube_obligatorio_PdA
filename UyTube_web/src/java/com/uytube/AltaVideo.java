@@ -51,8 +51,11 @@ public class AltaVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/AltaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
@@ -102,9 +105,12 @@ public class AltaVideo extends HttpServlet {
             response.sendRedirect("/uytube/buscar?texto=" + vid.getNombre());
 
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/Presentacion.jsp");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
 

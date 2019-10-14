@@ -192,6 +192,9 @@ public class Video implements Serializable {
         if (usuario == null){
             throw new RuntimeException("El usuario es null");
         }
+        int likes_backup = this.cantLikes;
+        int disLikes_backup = this.cantDisLikes;
+        
         
         String nickname = usuario.getNickname();
         // por las dudas, para que los contadores de likes no queden inconsistentes:
@@ -199,6 +202,11 @@ public class Video implements Serializable {
         DtValoracion dtv = this.obtenerValoracion(nickname);
         // si el usuario ya lo valoro
         if (dtv != null) {
+            // si la valoracion anterior es igual a la nueva, no hace nada
+            if (dtv.getVal() == dtValoracion.getVal()){
+                return;
+            }
+            
             // segun cual fuera la valoracion anterior, resta 1 al contador
             if (dtv.getVal() == TipoValoracion.LIKE) {
                 cantLikes--;
@@ -217,15 +225,22 @@ public class Video implements Serializable {
                     try {
                         new ValoracionJpaController().edit(val);
                     } catch (Exception e) {
+                        this.cantLikes = likes_backup;
+                        this.cantDisLikes = disLikes_backup;
                         throw new RuntimeException(e.getMessage());
                     }
                     break;
                 }
             }
         } else {
-            Valoracion nuevaValoracion = new Valoracion(dtValoracion.getVal(), usuario);
-            new ValoracionJpaController().create(nuevaValoracion);
-            valoraciones.add(nuevaValoracion);
+            try {
+                Valoracion nuevaValoracion = new Valoracion(dtValoracion.getVal(), usuario);
+                new ValoracionJpaController().create(nuevaValoracion);
+                valoraciones.add(nuevaValoracion);
+            } catch (Exception e) {
+                this.cantLikes = likes_backup;
+                this.cantDisLikes = disLikes_backup;
+            }
         }
 
         // segun cual sea la nueva valoracion, suma 1 al contador
@@ -299,7 +314,7 @@ public class Video implements Serializable {
             throw new RuntimeException("El nickname no puede ser vacio");
         }
         for(int i = 0; i < this.valoraciones.size(); i++){
-            if( valoraciones.get(i).getNicknameDeUsuario() == nickname){
+            if( valoraciones.get(i).getNicknameDeUsuario().equals(nickname)){
                 return valoraciones.get(i).getDT();
             }
         }

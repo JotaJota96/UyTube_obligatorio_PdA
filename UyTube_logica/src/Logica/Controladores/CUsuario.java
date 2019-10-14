@@ -167,6 +167,9 @@ public class CUsuario implements IUsuario {
     @Override
     public void altaUsuarioCanal(DtUsuario usr, DtCanal canal) {
         // valida datos recibidos
+        if (sesionIniciada()){
+            throw new RuntimeException("Ya hay una sesión iniciada");
+        }
         if (usr == null){
             throw new RuntimeException("El DataType usuario no puede ser null");
         }

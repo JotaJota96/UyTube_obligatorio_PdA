@@ -14,7 +14,7 @@
 <html lang="es">
     <%
         boolean propietario = (boolean) request.getAttribute("propietario");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
         DtUsuario usuario = (DtUsuario) request.getAttribute("usuario");
         DtCanal canal = (DtCanal) request.getAttribute("canal");
         ArrayList<DtUsuario> seguidos = (ArrayList) request.getAttribute("seguidos");
@@ -23,6 +23,8 @@
         ArrayList<DtListaDeReproduccion> listasRep = (ArrayList) request.getAttribute("listasRep");
         String ps = (String) request.getAttribute("ps");
     %>
+      
+    
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,6 +42,7 @@
     </head>
     <body>
 
+        <%@ include file='include/ventana-modal_baja.html' %>
         <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
@@ -104,13 +107,29 @@
                                                 <img src="<%=rutaDeImagenDePerfil%>" class="rounded-circle" alt="<%=textoAlternativo%>" width="180" height="180"> 
                                             </div>
                                         </div>
+                                            
+                                            
                                         <div class="p-1 flex-fill bd-highlight ">
-                                            <div class="p-2 bd-highlight ">
-                                                <br><h3><%= usuario.getNombre() + " " + usuario.getApellido()%></h3>
-                                                <hr class="mb-1">
+                                            
+                                            <div class="d-flex bd-highlight ">
+                                                <div class="p-1 d-flex flex-fill bd-highlight">
+                                                    <br><h3><%= usuario.getNombre() + " " + usuario.getApellido()%></h3>
+                                                    <%
+                                                    if (sesionIniciada && propietario) {
+                                                    %>
+                                                        <button  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" class=" ml-5 btn btn-danger icon-remove-user" id="btnBaja">
+                                                            Darse de baja
+                                                        </button>
+                                                    <%  
+                                                    }
+                                                    %>
+                                                </div>
                                             </div>
+                                                <hr class="mb-2">
+                                                
                                             <div class="p-1 bd-highlight ">
                                                 <div class="d-flex bd-highlight ">
+                                                    
                                                     <div class="p-1 flex-fill bd-highlight ">
                                                         <p class="text-info"><%= canal.getNombre()%> &#x2714</p>
                                                     </div>
@@ -129,20 +148,39 @@
                                                             if (sesionIniciada && propietario) {
                                                         %>
                                                         <a href="usuario-modificar?id=<%= usuario.getNickname()%>">
-                                                            <button class="btn btn-primary" id="btnBuscar" type="submit">
-                                                                Modificar
+                                                            <button class="icon-cog btn btn-primary" id="btnBuscar" type="submit">
+                                                                Modificar usuario
                                                             </button>
-                                                        </a>
+                                                        </a>    
                                                         <%
                                                             }
                                                         %>
                                                         <%
-                                                            if (sesionIniciada && !propietario) {
-                                                        %>
-                                                        <button class="btn btn-primary" id="btnBuscar" type="submit">
-                                                            Seguir (IMPLENENTAR...)
-                                                        </button>
-                                                        <%
+                                                        if (sesionIniciada && !propietario) {
+                                                                boolean Sigue = false;
+                                                                DtUsuario actual = (DtUsuario)request.getSession().getAttribute("usuario");
+                                                                for (DtUsuario elem : seguidores){
+                                                                    if (elem.getNickname().equals(actual.getNickname())){
+                                                                        Sigue = true;
+                                                                    }
+                                                                }
+                                                                if (Sigue) {
+                                                                %>
+                                                                    <a href="usuario-seguir?id=<%= usuario.getNickname()%>">
+                                                                        <button class="btn btn-danger" id="btnBuscar" type="submit">
+                                                                            Dejar de seguir
+                                                                        </button>
+                                                                    </a>
+                                                                <%
+                                                                }else{
+                                                                %>
+                                                                    <a href="usuario-seguir?id=<%= usuario.getNickname()%>">
+                                                                        <button class="btn btn-primary" id="btnBuscar" type="submit">
+                                                                            Seguir
+                                                                        </button>
+                                                                    </a>
+                                                                <%
+                                                                }  
                                                             }
                                                         %>
                                                     </div>
@@ -203,18 +241,20 @@
 
                                             <%
                                                 for (DtVideo v : videos) {
-                                                    String urlEmbebida = Funciones.Funciones.obtenerEnlaceEmbebido(
-                                                            Funciones.Funciones.extraerIDYoutube(v.getUrlVideoOriginal())
+                                                    String miniatura = Funciones.Funciones.obtenerImagenDeVideo(
+                                                            Funciones.Funciones.extraerIDYoutube(v.getUrlVideoOriginal()), 2
                                                     );
                                             %>
                                             <!-- Video individual en la lista -->
                                             <div class="d-flex bd-highlight ">
                                                 <div class="p-1 flex-shrink-1 bd-highlight ">
                                                     <div class="p-1 bd-highlight ">
-                                                        <iframe class="embed-responsive-item" src="<%= urlEmbebida%>" allowfullscreen></iframe>
+                                                        <a href="video-consultar?id=<%= v.getId() %>">
+                                                            <img src="<%= miniatura %>" width="246" height="138">
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="p-1 flex-shrink-1 bd-highlight ">
+                                                <div class="p-1 caja-texto bd-highlight ">
                                                     <div class="overflow-auto p-1 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 530px; max-height: 170px;">
                                                         <a href="video-consultar?id=<%= v.getId()%>">
                                                             <h5 class="mt-0"><%= v.getNombre()%></h5>
@@ -252,12 +292,12 @@
                                                 <br><ul class="list-group">
                                             <%
                                             }
-                                        %>   
+                                        %>
                                                 <%
                                                     for (DtListaDeReproduccion l : listasRep) {
                                                 %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="lista-consultar?idUsu=<%= usuario.getNickname() %>&idList=<%= l.getId() %>">
+                                                    <a href="lista-consultar?id=<%= l.getId() %>">
                                                         <%= l.getNombre()%>
                                                     </a>
                                                 </li>

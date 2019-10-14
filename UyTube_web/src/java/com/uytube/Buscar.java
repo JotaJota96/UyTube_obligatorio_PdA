@@ -86,6 +86,7 @@ public class Buscar extends HttpServlet {
                 Ret = sys.buscar(Texto, Fil, ord);
             } else {
                 System.out.println("Categoria a buscar: " + Categoria);
+                Categoria = Categoria.toUpperCase();
                 Ret = sys.buscar(Categoria);
             }
             System.out.println("Cantidad de resultados a devolver: " + Ret.size());
@@ -97,8 +98,11 @@ public class Buscar extends HttpServlet {
             rd.forward(request, response);
             
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }

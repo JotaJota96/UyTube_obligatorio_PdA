@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <%
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
     %>
     <head>

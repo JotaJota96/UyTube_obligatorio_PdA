@@ -55,8 +55,11 @@ public class ModificarVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/ModificarVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
@@ -108,9 +111,12 @@ public class ModificarVideo extends HttpServlet {
             sys.modificarVideo(vid);
             response.sendRedirect("buscar?texto=" + vid.getNombre());
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }

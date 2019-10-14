@@ -14,7 +14,7 @@
     <%
         DtListaDeReproduccion listasRep = (DtListaDeReproduccion) request.getAttribute("listas");
         String usuario = (String)request.getAttribute("usuario");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
         boolean propietario = (boolean) request.getAttribute("propietario");
         ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
     %>

@@ -31,7 +31,7 @@ INSERT INTO public.canal (descripcion,eliminado,nombre,privacidad) VALUES
 
 -- Usuarios
 INSERT INTO public.usuario (id,apellido,contrasenia,correo,eliminado,fecha_eliminado,fecha_nacimiento,imagen,nombre,seguidores,id_canal) VALUES 
-('JotaJota96','Alvarez','12345678','jjap96@gmail.com',false,NULL,'1996-10-09','imagenes\perfiles\JotaJota96.jpg','Juan',3,1)
+('JotaJota96','Alvarez','12345678','jjap96@gmail.com',false,NULL,'1996-10-09','imagenes\perfiles\JotaJota96.JPG','Juan',3,1)
 ,('LuC31G','Garrido','12345678','LuC31@gmail.com',false,NULL,'1998-12-31','imagenes\perfiles\LuC31G.jpg','Lucas',2,2)
 ,('MCBolso','Castro','12345678','mcbolso96@gmail.com',false,NULL,'1999-08-04','imagenes\perfiles\MCBolso.jpg','Mariano',0,3)
 ,('camilillo15','Camilo','12345678','facu_camilo2@hotmail.com',false,NULL,'1999-07-13','imagenes\perfiles\camilillo15.jpg','Facundo',1,4)
@@ -114,31 +114,31 @@ INSERT INTO public.lista_de_reproduccion (categoria,eliminado,nombre,privacidad,
 
 -- Comentarios
 INSERT INTO public.comentario (fecha,nivel,texto,nick_usuario,id_com_padre,id_video) VALUES 
-('2019-08-01',0,'Buenisimo!!','LuC31G',NULL,1)
-,('2019-08-01',1,'Gracias!!!','JotaJota96',1,NULL)
+('2019-07-30',0,'Buenisimo!!','LuC31G',NULL,1)
+,('2019-07-30',1,'Gracias!!!','JotaJota96',1,NULL)
 ,('2019-08-01',0,'Cuando sale algo de los Artic Monkeys?','camilillo15',NULL,1)
 ,('2019-08-01',1,'Solo sube covers de rock nacional','LuC31G',3,NULL)
 ,('2019-08-01',2,'siempre hay un boludo','MCBolso',4,NULL)
 ,('2019-08-01',1,'O de los Guns and Roses','jarrieta31',3,NULL)
 ,('2019-08-01',2,'otro mas...','MCBolso',6,NULL)
 ,('2019-08-01',3,'otro mas que?','jarrieta31',7,NULL)
-,('2019-08-01',0,'¿Que usas para editar el video?','MCBolso',NULL,1)
-,('2019-08-01',1,'Sony Vegas Pro en Windows 10','JotaJota96',9,NULL)
-,('2019-08-01',2,'Tipico, nadie usa Linux.','MCBolso',10,NULL)
-,('2019-08-01',3,'Boo, que paso con Linux? hee??','jarrieta31',11,NULL)
-,('2019-08-01',2,'Yo que vos me compro una MAC...','camilillo15',10,NULL)
+,('2019-08-03',0,'¿Que usas para editar el video?','MCBolso',NULL,1)
+,('2019-08-03',1,'Sony Vegas Pro en Windows 10','JotaJota96',9,NULL)
+,('2019-08-04',2,'Tipico, nadie usa Linux.','MCBolso',10,NULL)
+,('2019-08-04',3,'Boo, que paso con Linux? hee??','jarrieta31',11,NULL)
+,('2019-08-05',2,'Yo que vos me compro una MAC...','camilillo15',10,NULL)
 ,('2019-10-03',0,'Me recuerda a Bulevard of broquen drims','LuC31G',NULL,11)
-,('2019-10-03',1,'Si, pa mi que green day les copio...','MCBolso',14,NULL)
-,('2019-10-03',2,'O ellos a green day','LuC31G',15,NULL)
-,('2019-10-03',3,'nunca lo sabremos...','jarrieta31',16,NULL)
+,('2019-10-04',1,'Si, pa mi que green day les copio...','MCBolso',14,NULL)
+,('2019-10-05',2,'O ellos a green day','LuC31G',15,NULL)
+,('2019-10-06',3,'nunca lo sabremos...','jarrieta31',16,NULL)
 ,('2019-10-03',1,'A mi me pasa al revez, esa me recuerda a esta','JotaJota96',14,NULL)
-,('2019-10-03',0,'que al pedo que estas','camilillo15',NULL,5)
-,('2019-10-03',0,'lo mejor que he visto!','jarrieta31',NULL,5)
-,('2019-10-03',0,'¿Como se llama esa cancion?','MCBolso',NULL,5)
-,('2019-10-03',0,'Cuando subis la parte 2?','JotaJota96',NULL,12)
-,('2019-10-03',1,'Ya esta subida, buscala en mis videos','jarrieta31',22,NULL)
-,('2019-10-03',0,'¿Algun tutorial de MAC que me recomiendes?','camilillo15',NULL,12)
-,('2019-10-03',1,'Instalale windows!','MCBolso',24,NULL)
+,('2019-10-01',0,'que al pedo que estas','camilillo15',NULL,5)
+,('2019-10-02',0,'lo mejor que he visto!','jarrieta31',NULL,5)
+,('2019-10-05',0,'¿Como se llama esa cancion?','MCBolso',NULL,5)
+,('2019-10-07',0,'Cuando subis la parte 2?','JotaJota96',NULL,12)
+,('2019-10-08',1,'Ya esta subida, buscala en mis videos','jarrieta31',22,NULL)
+,('2019-10-09',0,'¿Algun tutorial de MAC que me recomiendes?','camilillo15',NULL,12)
+,('2019-10-09',1,'Instalale windows!','MCBolso',24,NULL)
 ;
 
 -- Valoraciones
