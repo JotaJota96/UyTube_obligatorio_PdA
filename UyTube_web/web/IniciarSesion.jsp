@@ -24,21 +24,21 @@
     </head>
     <body>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <%@ include file='include/header-visitante.jsp' %>
                 </div>
             </div>		
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						

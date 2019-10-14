@@ -9,7 +9,6 @@
 
 .contenido    
     background-color: $colorGrisClaro
-    border-radius: 5px
     padding: 16px
     margin-left: auto
     margin-right: auto
@@ -32,7 +31,6 @@
             .card-body
                 height: 90px
                 background-color: $colorGrisClaro
-                //overflow: auto
                 overflow-wrap: break-word
                 a 
                     text-decoration: none
@@ -47,25 +45,36 @@
         padding-left: 0px
         padding-right: 0px
     
+    //estilos del contenido principal
     .contenido
         width: 100%
+        padding-left: 2px
+        padding-right: 2px
         .contenido-flexible
             width: 100%
-            justify-content: center
+            justify-content: flex-start
+            .card
+                width: 100%
     
 
 // Para dispositivos mayores a 340 y menores a 388 ==============================================================
 @media (min-width: 341px) and (max-width: 387px)
     .container-fluid
         padding-left: 0px
-        padding-right: 0px 
-
+        padding-right: 0px
+    
     //estilos del contenido principal
     .contenido
-        width: 100%
+        width: 330px
+        padding-left: 2px
+        padding-right: 2px
         .contenido-flexible
             width: 100%
-            justify-content: center
+            justify-content: flex-start
+            .card
+                width: 325px
+
+   
     
 // Para dispositivos mayores a 387 y menores a 500 ================================================================
 @media (min-width: 388px) and (max-width: 500px)
@@ -75,10 +84,14 @@
     
     //estilos del contenido principal
     .contenido
-        width: 100%
+        width: 388px
+        padding-left: 2px
+        padding-right: 2px
         .contenido-flexible
             width: 100%
-            justify-content: center
+            justify-content: flex-start
+            .card
+                width: 186px
         .h3
             width: 90%
       
@@ -91,10 +104,12 @@
     
     //Estilos del contenido principal
     .contenido
-        width: 100%
+        width: 501px
         .contenido-flexible
             width: 100%
-            justify-content: center
+            justify-content: flex-start
+            .card
+                width: 230.5px
         
 
 // Small devices (landscape phones, 576px and up) ================================================================
@@ -105,10 +120,12 @@
     
     //Estilos del contenido principal
     .contenido
-        width: 100%
+        width: 576px
         .contenido-flexible
             width: 100%
-            justify-content: center
+            justify-content: flex-start
+            .card
+                width: 177px
           
 
 // Medium devices (tablets, 768px and up)
@@ -119,21 +136,23 @@
     
     //Estilos del contenido principal
     .contenido
-        width: 100%
+        width: 664px
         .contenido-flexible
             width: 100%
-            justify-content: center
+            justify-content: flex-start
     
     
-    
-        
-
 // Large devices (desktops, 992px and up) =======================================================================
 @media (min-width: 992px)
+    .container-fluid
+        padding-left: 0px
+        padding-right: 0px
     //Estilos del contenido principal
     .contenido
-        width: 1070px
-    
+        width: 872px
+        .contenido-flexible
+            width: 100%
+            justify-content: flex-start
 
         
     

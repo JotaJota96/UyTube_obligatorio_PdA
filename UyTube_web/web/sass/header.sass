@@ -70,14 +70,29 @@
 // Para un maximo de 340px ================================================================================  
 @media (max-width: 340px) 
     .header
+        position: absolute
         width: 100%
-        left: 0px
-        height: $alturaHeader340 
+        left: 0px  
+        height: $alturaHeader388
         nav
-            height: 100%  
-        .item-header2
-            order: 3
-            width: 100%
+            height: 100% 
+            .item-header1
+                padding-left: 0px
+                padding-right: 0px
+                width: 10%
+                .fotoLogo
+                    display: none   
+            .item-header2
+                order: 2
+                width: 90%
+            .item-header3
+                order: 3
+                .fotoPerfil
+                    display: none
+            #iniciar-sesion
+                display: none
+            #nombrePerfil
+                display: none
         //Espacio de relleno 
     .relleno-header
         height: $alturaHeader340
@@ -103,16 +118,30 @@
     
 // Para dispositivos mayores a 340 y menores a 388 ==============================================================
 @media (min-width: 341px) and (max-width: 387px)
-    //Estilos del header
     .header
+        position: absolute
         width: 100%
-        height: $alturaHeader341
-        left: 0px
+        left: 0px  
+        height: $alturaHeader388
         nav
-            height: 100%       
-        .item-header2
-            order: 3
-            width: 100%
+            height: 100% 
+            .item-header1
+                padding-left: 0px
+                padding-right: 0px
+                width: 10%
+                .fotoLogo
+                    display: none   
+            .item-header2
+                order: 2
+                width: 90%
+            .item-header3
+                order: 3
+                .fotoPerfil
+                    display: none
+            #iniciar-sesion
+                display: none
+            #nombrePerfil
+                display: none
     //Espacio de relleno 
     .relleno-header
         height: $alturaHeader341
@@ -139,14 +168,29 @@
 // Para dispositivos mayores a 387 y menores a 500 ================================================================
 @media (min-width: 388px) and (max-width: 500px)
     .header
+        position: absolute
         width: 100%
         left: 0px  
         height: $alturaHeader388
         nav
-            height: 100%     
-        .item-header2
-            order: 3
-            width: 100%
+            height: 100% 
+            .item-header1
+                padding-left: 0px
+                padding-right: 0px
+                width: 10%
+                .fotoLogo
+                    display: none   
+            .item-header2
+                order: 2
+                width: 90%
+            .item-header3
+                order: 3
+                .fotoPerfil
+                    display: none
+            #iniciar-sesion
+                display: none
+            #nombrePerfil
+                display: none
     //Espacio de relleno 
     .relleno-header
         height: $alturaHeader388
@@ -176,14 +220,26 @@
 @media (min-width: 501px) and (max-width: 575.98px)
     //Estilos del header
     .header
+        position: absolute
         width: 100%
-        left: 0px
-        height: $alturaHeader501
+        left: 0rem
+        height: $alturaHeader576
+        justify-items: flex-start
+        align-content: center
         nav
-            height: 100%  
+            height: 100%
         .item-header2
+            order: 2
+            width: 65%
+        .item-header3
             order: 3
-            width: 100%
+            .fotoPerfil
+                display: none
+        #iniciar-sesion
+            display: none
+        #nombrePerfil
+            display: none
+            
     //Espacio de relleno 
     .relleno-header
         height: $alturaHeader501
@@ -212,14 +268,25 @@
 @media (min-width: 576px) and (max-width: 767.98px)
     //Estilos del header
     .header
+        position: absolute
         width: 100%
         left: 0rem
         height: $alturaHeader576
+        justify-items: flex-start
+        align-content: center
         nav
             height: 100%
         .item-header2
+            order: 2
+            width: 65%
+        .item-header3
             order: 3
-            width: 100%
+            .fotoPerfil
+                display: none
+        #iniciar-sesion
+            display: none
+        #nombrePerfil
+            display: none
    
     //Espacio de relleno 
     .relleno-header
@@ -236,6 +303,8 @@
             width: 100%
             input
                 width: 87%
+            #btnBuscar
+                display: none
     
       
 
@@ -270,10 +339,12 @@
 @media (min-width: 992px)
     //Estilos del header
     .header
-        width: 98%
+        width: 100%
         height: $alturaHeader992
         nav
             height: 100%
     //Espacio de relleno 
     .relleno-header
         height: $alturaHeader992
+    
+

@@ -20,13 +20,14 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/contenido-index.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/body.css">
         <link rel="stylesheet" type="text/css" href="css/header.css">
         <link rel="stylesheet" type="text/css" href="css/menu.css">
         <link rel="stylesheet" type="text/css" href="css/widget.css">
         <link rel="stylesheet" type="text/css" href="css/footer.css">
-       	<link rel="stylesheet" type="text/css" href="css/contenido-index.css">
+       	
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
         <title>UyTube</title>
@@ -43,14 +44,14 @@
         <%
             }
         %>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px; ">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						

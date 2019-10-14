@@ -32,16 +32,13 @@
     .contenido .contenido-flexible .caja-texto {
       font-size: 0.8rem;
       padding: 15px 10px 10px 10px;
-      background-color: orange;
       display: flex;
       flex-grow: 1; }
     .contenido .contenido-flexible .caja-texto p {
-      background-color: #5aa1e3;
       overflow: auto;
       overflow-wrap: break-word;
       padding-right: 10px; }
     .contenido .contenido-flexible .caja-texto h5 {
-      background-color: green;
       overflow: auto;
       overflow-wrap: break-word; }
 
@@ -67,7 +64,7 @@
         min-width: 246px;
         min-height: 150px; }
       .contenido .contenido-flexible .video img {
-        height: 150px; }
+        width: 100%; }
       .contenido .contenido-flexible .canal img {
         width: 138px;
         height: 138px; }
@@ -77,7 +74,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: stretch;
-        width: 100%;
+        min-width: 246px;
         min-height: 110px; }
         .contenido .contenido-flexible .caja-texto .caja-texto p {
           min-height: 20px;

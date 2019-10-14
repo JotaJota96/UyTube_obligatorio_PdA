@@ -29,7 +29,7 @@
     </head>
     <body>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
@@ -46,14 +46,14 @@
                 </div>
             </div>		
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">	

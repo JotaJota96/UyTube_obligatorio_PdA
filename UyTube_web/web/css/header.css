@@ -55,17 +55,32 @@
 
 @media (max-width: 340px) {
   .header {
+    position: absolute;
     width: 100%;
     left: 0px;
-    height: 175.112px; }
+    height: 56px; }
     .header nav {
       height: 100%; }
-    .header .item-header2 {
-      order: 3;
-      width: 100%; }
+      .header nav .item-header1 {
+        padding-left: 0px;
+        padding-right: 0px;
+        width: 10%; }
+        .header nav .item-header1 .fotoLogo {
+          display: none; }
+      .header nav .item-header2 {
+        order: 2;
+        width: 90%; }
+      .header nav .item-header3 {
+        order: 3; }
+        .header nav .item-header3 .fotoPerfil {
+          display: none; }
+      .header nav #iniciar-sesion {
+        display: none; }
+      .header nav #nombrePerfil {
+        display: none; }
 
   .relleno-header {
-    height: 175.112px; }
+    height: 56px; }
 
   #navLogo {
     justify-content: flex-start; }
@@ -86,17 +101,32 @@
       display: none; } }
 @media (min-width: 341px) and (max-width: 387px) {
   .header {
+    position: absolute;
     width: 100%;
-    height: 175.112px;
-    left: 0px; }
+    left: 0px;
+    height: 56px; }
     .header nav {
       height: 100%; }
-    .header .item-header2 {
-      order: 3;
-      width: 100%; }
+      .header nav .item-header1 {
+        padding-left: 0px;
+        padding-right: 0px;
+        width: 10%; }
+        .header nav .item-header1 .fotoLogo {
+          display: none; }
+      .header nav .item-header2 {
+        order: 2;
+        width: 90%; }
+      .header nav .item-header3 {
+        order: 3; }
+        .header nav .item-header3 .fotoPerfil {
+          display: none; }
+      .header nav #iniciar-sesion {
+        display: none; }
+      .header nav #nombrePerfil {
+        display: none; }
 
   .relleno-header {
-    height: 175.112px; }
+    height: 56px; }
 
   #navLogo {
     justify-content: flex-start; }
@@ -117,17 +147,32 @@
       display: none; } }
 @media (min-width: 388px) and (max-width: 500px) {
   .header {
+    position: absolute;
     width: 100%;
     left: 0px;
-    height: 127.176px; }
+    height: 56px; }
     .header nav {
       height: 100%; }
-    .header .item-header2 {
-      order: 3;
-      width: 100%; }
+      .header nav .item-header1 {
+        padding-left: 0px;
+        padding-right: 0px;
+        width: 10%; }
+        .header nav .item-header1 .fotoLogo {
+          display: none; }
+      .header nav .item-header2 {
+        order: 2;
+        width: 90%; }
+      .header nav .item-header3 {
+        order: 3; }
+        .header nav .item-header3 .fotoPerfil {
+          display: none; }
+      .header nav #iniciar-sesion {
+        display: none; }
+      .header nav #nombrePerfil {
+        display: none; }
 
   .relleno-header {
-    height: 127.176px; }
+    height: 56px; }
 
   #navLogo {
     justify-content: flex-start; }
@@ -148,17 +193,28 @@
       display: none; } }
 @media (min-width: 501px) and (max-width: 575.98px) {
   .header {
+    position: absolute;
     width: 100%;
-    left: 0px;
-    height: 129.176px; }
+    left: 0rem;
+    height: 56px;
+    justify-items: flex-start;
+    align-content: center; }
     .header nav {
       height: 100%; }
     .header .item-header2 {
-      order: 3;
-      width: 100%; }
+      order: 2;
+      width: 65%; }
+    .header .item-header3 {
+      order: 3; }
+      .header .item-header3 .fotoPerfil {
+        display: none; }
+    .header #iniciar-sesion {
+      display: none; }
+    .header #nombrePerfil {
+      display: none; }
 
   .relleno-header {
-    height: 129.176px; }
+    height: 56px; }
 
   #navLogo {
     justify-content: flex-start; }
@@ -179,17 +235,28 @@
       display: none; } }
 @media (min-width: 576px) and (max-width: 767.98px) {
   .header {
+    position: absolute;
     width: 100%;
     left: 0rem;
-    height: 124.117px; }
+    height: 56px;
+    justify-items: flex-start;
+    align-content: center; }
     .header nav {
       height: 100%; }
     .header .item-header2 {
-      order: 3;
-      width: 100%; }
+      order: 2;
+      width: 65%; }
+    .header .item-header3 {
+      order: 3; }
+      .header .item-header3 .fotoPerfil {
+        display: none; }
+    .header #iniciar-sesion {
+      display: none; }
+    .header #nombrePerfil {
+      display: none; }
 
   .relleno-header {
-    height: 124.117px; }
+    height: 56px; }
 
   #navLogo {
     justify-content: flex-start; }
@@ -201,7 +268,9 @@
       justify-content: space-between;
       width: 100%; }
       #navbarSupportedContent #formBuscar input {
-        width: 87%; } }
+        width: 87%; }
+      #navbarSupportedContent #formBuscar #btnBuscar {
+        display: none; } }
 @media (min-width: 768px) and (max-width: 991.98px) {
   .header {
     width: 100%;
@@ -225,7 +294,7 @@
     height: 77.2px; } }
 @media (min-width: 992px) {
   .header {
-    width: 98%;
+    width: 100%;
     height: 56px; }
     .header nav {
       height: 100%; }
