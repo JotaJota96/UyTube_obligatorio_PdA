@@ -122,42 +122,34 @@
                                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                         <!-- Botones Me gusta y no me gusta -->
                                         <div class="p-2 btn-group mr-2" role="group" aria-label="Third group">
-                                            <%                
+                                            <%
+                                                String textoBtnLike = "ME GUSTA";
+                                                String textoBtnDisLike = "NO ME GUSTA";
+                                                String deshabilitarBtnLike = "";
+                                                String deshabilitartextoBtnDisLike = "";
+                                                
                                                 if (valoracionDada == null){
-                                            %>
-                                            <button type="button" id="btnLike" class="btn btn-success icon-thumbs-up">
-                                                <span id="txtMeGusta">ME GUSTA</span>
-                                                <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
-                                            </button>
-                                            <button type="button" id="btnDisLike" class="btn btn-danger icon-thumbs-down">
-                                                <span id="txtNoMeGusta">NO ME GUSTA</span>
-                                                <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
-                                            </button>
-                                            <%
+                                                    // quedan como fueron declaradas
                                                 }else if (valoracionDada.getVal() == TipoValoracion.LIKE){
-                                            %>
-                                            <button disabled="true" type="button" id="btnLike" class="btn btn-success icon-thumbs-up">
-                                                <span id="txtMeGusta">TE GUSTA</span>
-                                                <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
-                                            </button>
-                                            <button type="button" id="btnDisLike" class="btn btn-danger icon-thumbs-down">
-                                                <span id="txtNoMeGusta">NO ME GUSTA</span>
-                                                <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
-                                            </button>
-                                            <%
+                                                    textoBtnLike = "TE GUSTA";
+                                                    textoBtnDisLike = "NO ME GUSTA";
+                                                    deshabilitarBtnLike = "disabled=\"true\"";
+                                                    deshabilitartextoBtnDisLike = "";
                                                 }else if (valoracionDada.getVal() == TipoValoracion.DISLIKE){
-                                            %>
-                                            <button type="button" id="btnLike" class="btn btn-success icon-thumbs-up">
-                                                <span id="txtMeGusta">ME GUSTA</span>
-                                                <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
-                                            </button>
-                                            <button disabled="true" type="button" id="btnDisLike" class="btn btn-danger icon-thumbs-down">
-                                                <span id="txtNoMeGusta">NO TE GUSTA</span>
-                                                <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
-                                            </button>
-                                            <%
+                                                    textoBtnLike = "ME GUSTA";
+                                                    textoBtnDisLike = "NO TE GUSTA";
+                                                    deshabilitarBtnLike = "";
+                                                    deshabilitartextoBtnDisLike = "disabled=\"true\"";
                                                 }
                                             %>
+                                            <button <%= deshabilitarBtnLike %> type="button" id="btnLike" class="btn btn-success icon-thumbs-up">
+                                                <span id="txtMeGusta"><%= textoBtnLike %></span>
+                                                <span id="txtLike" class="badge badge-light"><%= video.getCantLikes()%></span>
+                                            </button>
+                                                <button <%= deshabilitartextoBtnDisLike %> type="button" id="btnDisLike" class="btn btn-danger icon-thumbs-down">
+                                                <span id="txtNoMeGusta"><%= textoBtnDisLike %></span>
+                                                <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
+                                            </button>
                                         </div>
                                         
                                         <!-- Boton agregar a lista de reproduccion -->
