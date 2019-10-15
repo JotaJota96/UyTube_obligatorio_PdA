@@ -43,13 +43,16 @@ public class ConsultaVideo extends HttpServlet {
             DtVideo video = sys.seleccionarVideo(idVideo);
             ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
             DtValoracion valoracionDada = null;
+            ArrayList<DtValoracion> valoraciones = null;
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
             if (sesionIniciada) {
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
                 valoracionDada = sys.obtenerValoracionDada();
+                if (propietarioDelVideo){
+                     valoraciones = sys.obtenerValoracionesDeVideo();
+                }
             }
-
             
             String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), sesionIniciada);
             // no se si la siguiente linea es necesaria, pero por las dudas la pongo, para no dejar incoherencias en la logica
@@ -61,6 +64,7 @@ public class ConsultaVideo extends HttpServlet {
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("propietarioDelVideo", propietarioDelVideo);
             request.setAttribute("valoracionDada", valoracionDada);
+            request.setAttribute("valoraciones", valoraciones);
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
@@ -245,8 +249,13 @@ public class ConsultaVideo extends HttpServlet {
     private ArrayList<String> obtenerImagenesDeUsuarios(ArrayList<DtComentario> comentarios){
         ArrayList<String> ret = new ArrayList();
         IUsuario sys = Fabrica.getInstancia().getIUsuario();
+        String img;
         for (DtComentario c : comentarios){
-            ret.add(sys.seleccionarUsuario(c.getNickname()).getImagen());
+            img = sys.seleccionarUsuario(c.getNickname()).getImagen();
+            if (img == null || img.equals("")){
+                img = "imagenes/ukp.png";
+            }
+            ret.add(img);
         }
         return ret;
     }
