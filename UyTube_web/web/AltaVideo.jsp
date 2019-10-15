@@ -70,11 +70,11 @@
                                 <h3>Alta de video</h3>			
                                 <form class="form-alta-video" action="/uytube/video-agregar" method="post" >
                                     <div class="form-group row">
-                                        <div class="form-group col-md-9">
+                                        <div class="form-group col-12 col-md-9">
                                             <label for="inputNombre">Nombre</label>
                                             <input type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
                                         </div>
-                                        <div class="form-group col-md-3">
+                                        <div class="form-group col-4 col-md-3">
                                             <label for="inputDuracion">Duración</label>
                                             <input type="time" step='1'class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
                                         </div>
@@ -92,12 +92,14 @@
                                         </div>
                                     </div>										
                                     <div class="form-group row">
-                                        <div class="form-group col-md-5">
+                                        <div class="form-group col-6 col-md-4">
                                             <label for="inputFecha">Fecha</label>
                                             <input type="date" name="fecha" class="form-control"  id="inputFecha">
                                         </div>
-                                        
-                                        <div class="form-group col-md-7">
+                                        <div class="form-group col-md-2">
+                                            
+                                        </div>
+                                        <div class="form-group col-8 col-md-7">
                                             <label for="inputCategoria">Categoría</label>
                                             <select id="inputCategoria" name="categoria" class="form-control">
                                                 <%
