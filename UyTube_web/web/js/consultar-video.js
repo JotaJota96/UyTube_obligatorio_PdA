@@ -84,7 +84,6 @@ $("#btnAgregarALista").on('click',function(){
     });
 });
 
-
 //Responeder comentarios, se dispara luego de la ventana modal
 var responderComentario = function(){    
         $("#exampleModal .close").click(); //Cierra el modal

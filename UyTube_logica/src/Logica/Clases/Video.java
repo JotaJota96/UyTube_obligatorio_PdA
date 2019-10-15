@@ -199,11 +199,9 @@ public class Video implements Serializable {
         DtValoracion dtv = this.obtenerValoracion(nickname);
         // si el usuario ya lo valoro
         if (dtv != null) {
-            // segun cual fuera la valoracion anterior, resta 1 al contador
-            if (dtv.getVal() == TipoValoracion.LIKE) {
-                cantLikes--;
-            } else {
-                cantDisLikes--;
+            // si la valoracion anterior es igual a la nueva, no hace nada
+            if (dtv.getVal() == dtValoracion.getVal()){
+                return;
             }
             
             // Si te estas preguntando por que esta parte de la cobertura esta en amarillo
@@ -222,17 +220,24 @@ public class Video implements Serializable {
                     break;
                 }
             }
+            // segun cual fuera la valoracion anterior, resta 1 al contador
+            if (dtv.getVal() == TipoValoracion.LIKE) {
+                cantLikes--;
+                cantDisLikes++;
+            } else {
+                cantLikes++;
+                cantDisLikes--;
+            }
         } else {
             Valoracion nuevaValoracion = new Valoracion(dtValoracion.getVal(), usuario);
             new ValoracionJpaController().create(nuevaValoracion);
             valoraciones.add(nuevaValoracion);
-        }
-
-        // segun cual sea la nueva valoracion, suma 1 al contador
-        if (dtValoracion.getVal() == TipoValoracion.LIKE) {
-            cantLikes++;
-        } else {
-            cantDisLikes++;
+            // segun cual sea la nueva valoracion, suma 1 al contador
+            if (dtValoracion.getVal() == TipoValoracion.LIKE) {
+                cantLikes++;
+            } else {
+                cantDisLikes++;
+            }
         }
     }
 
@@ -299,7 +304,7 @@ public class Video implements Serializable {
             throw new RuntimeException("El nickname no puede ser vacio");
         }
         for(int i = 0; i < this.valoraciones.size(); i++){
-            if( valoraciones.get(i).getNicknameDeUsuario() == nickname){
+            if( valoraciones.get(i).getNicknameDeUsuario().equals(nickname)){
                 return valoraciones.get(i).getDT();
             }
         }

@@ -15,7 +15,7 @@
     <%
         DtVideo video = (DtVideo) request.getAttribute("video");
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
     <head>
         <meta charset="UTF-8">

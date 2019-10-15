@@ -14,7 +14,7 @@
 <html lang="es">
     <%
         ArrayList<Object> video = (ArrayList) Fabrica.getInstancia().getIUsuario().buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
     <head>
         <meta charset="UTF-8">
