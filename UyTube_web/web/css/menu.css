@@ -1,5 +1,4 @@
 .menu {
-  position: fixed;
   max-height: 450px;
   z-index: 10;
   width: 0px;
@@ -84,10 +83,12 @@
     left: 0px; } }
 @media (min-width: 768px) and (max-width: 991.98px) {
   .menu {
-    top: 77.2px;
+    position: absolute;
+    top: 0px;
     left: 0px; } }
 @media (min-width: 992px) {
   .menu {
+    position: fixed;
     top: 56px;
     left: 0px; } }
 

@@ -84,6 +84,39 @@ $("#btnAgregarALista").on('click',function(){
     });
 });
 
+//boton agregar lista de reproduccion
+$("#btnListarValoraciones").on('click',function(){
+    // obtengo el id del video
+    var idVideo = $("#video").attr("value");
+    // mando una peticion post a esa ruta con los parametros entre {}, 
+    // y defino una funcion callback (ejecuta al recibir respuesta
+    $.post("/uytube/video-consultar",
+        {
+          accion: "listarValoraciones" ,
+            idVideo: idVideo
+        }, function(respuesta, status){
+            // esta variable contrendra el htm de las nuevas filas
+            var nuevasFilas = '';
+            // esta variable es un array con los pares (usuario:valoracion)
+            // cada par viene en la respuesta separado por punto y coma
+            var filasObtenidas = respuesta.split(";");
+            // itero sobre los elementos del array (el ultimo es vacio, por eso el -1)
+            for (var i = 0; i < filasObtenidas.length -1; i++){
+                // esta variable es un array en cuyo indice 0 esta el nickname de un usuario y en el 1 su valoracion
+                var fila = (filasObtenidas[i]).split(":");
+                // esta variable sera la fila procesada en esta iteracion, y contendra las dos celdas
+                var tr = '';
+                tr += '<tr>\n';
+                tr += '<td>' + fila[0] + '</td>\n';
+                tr += '<td>' + fila[1] + '</td>\n';
+                tr += '</tr>\n';
+                // concatena la nueva fila con las filas ya procesadas
+                nuevasFilas += tr;
+            }
+            // reemplaza el contenido de la etiqueta <body> con los nuevos datos
+           $("#tblValoraciones-bodyRows").html(nuevasFilas);
+    });
+});
 
 //Responeder comentarios, se dispara luego de la ventana modal
 var responderComentario = function(){    

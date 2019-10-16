@@ -7,7 +7,6 @@ import JPAControllerClasses.UsuarioJpaController;
 import Logica.Clases.Categoria;
 import Logica.Clases.ListaPorDefecto;
 import Logica.Clases.Usuario;
-import Logica.Clases.Video;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtListaDeReproduccion;
@@ -759,7 +758,11 @@ public class CUsuario implements IUsuario {
 
     @Override
     public DtUsuario seleccionarUsuario(String nickname) {
-        usuarioSeleccionado = obtenerUsuarios().get(nickname);
+        if (usuarioActual != null && usuarioActual.getNickname().equals(nickname)){
+            usuarioSeleccionado = usuarioActual;
+        }else{
+            usuarioSeleccionado = obtenerUsuarios().get(nickname);
+        }
         if (usuarioSeleccionado == null){
             throw new RuntimeException("No se encontro ningun usuario con ese nickname");
         }
