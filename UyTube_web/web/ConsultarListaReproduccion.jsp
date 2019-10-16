@@ -4,6 +4,7 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.Enumerados.TipoListaDeReproduccion"%>
 <%@page import="Logica.DataType.DtVideo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Logica.DataType.DtListaDeReproduccion"%>
@@ -96,34 +97,27 @@
                                             <h5><%= listasRep.getPrivacidad()%></h5>
                                             <h5><%= listasRep.getCategoria()%></h5> 
                                         </div>
-
-                                            <%
-                                                if (sesionIniciada && propietario) {
-                                            %>
-                                                    <a href="lista-modificar?idUsu=<%= usuario %>&idList=<%= listasRep.getId()%>">
-                                                        <div class="p-2 d-flex align-items-end">
-                                                            <button type="button" class="btn btn-primary">Modificar</button>
-                                                        </div>
-                                                    </a>
-                                            <%
-                                                }
-                                            %>
-
-                                        
-                                        
+                                        <%
+                                            if (sesionIniciada && propietario && listasRep.getTipo() != TipoListaDeReproduccion.POR_DEFECTO) {
+                                        %>
+                                        <div class="p-2 d-flex align-items-end">
+                                            <a href="lista-modificar?idUsu=<%= usuario%>&idList=<%= listasRep.getId()%>">
+                                                <button type="button" class="btn btn-primary">MODIFICAR</button>
+                                            </a>
+                                        </div>
+                                        <%
+                                            }
+                                        %>
                                     </div>
 
                                     <!--FIN INFORMACION LISTA.REP-->
                                     <hr>
-                                    <h3>VIDEOS:</h3>
-
-
                                     <!--LISTA DE CONTENIDO-->
+                                    <h3>VIDEOS:</h3>
 
                                     <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
                                         <!--PRIMER VIDEO-->
                                         <%
-
                                             for (DtVideo elem : videos) {
                                                 String id = Funciones.Funciones.extraerIDYoutube(elem.getUrlVideoOriginal());
                                         %>
@@ -147,8 +141,6 @@
                                         <%
                                             }
                                         %>
-
-
                                     </div>							
                             </section>
                         </div> 

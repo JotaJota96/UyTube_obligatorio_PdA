@@ -170,7 +170,7 @@
                                                     MODIFICAR
                                                 </button>
                                             </a>
-                                            <button href="#ventanaModalValoraciones" data-toggle="modal" type="button" id="btnListarValoraciones" class="btn btn-info icon-info-with-circle">
+                                             <button href="#ventanaModalValoraciones" data-toggle="modal" type="button" id="btnListarValoraciones" class="btn btn-info icon-info-with-circle">
                                                 QUIÉN VALORÓ
                                             </button>
                                         </div>
@@ -311,24 +311,15 @@
                         <h3 class="modal-title">Valoraciones</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
-                    <table class="table table-striped table-fixed" id="tblGrid">
+                    <table class="table table-striped table-fixed" id="tblValoraciones">
                         <thead id="tblHead">
                             <tr>
                                 <th>Usuario</th>
                                 <th>Valoración</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <%                        
-                                for (DtValoracion dtv : valoraciones){
-                            %>
-                            <tr>
-                                <td><%= dtv.getNickname() %></td>
-                                <td><%= dtv.getVal()%></td>
-                            </tr>
-                            <%
-                                }
-                            %>
+                        <tbody id="tblValoraciones-bodyRows">
+                            <!-- El contenido es obtenido por jQuery -->
                         </tbody>
                     </table>
                     <div class="modal-footer">
@@ -345,7 +336,7 @@
         <style>
             .table-fixed tbody {
                 display:block;
-                height:350px; /* Altura a la cual aparece el scroll */
+                height:250px; /* Altura a la cual aparece el scroll */
                 overflow:auto;
             }
             .table-fixed thead, .table-fixed tbody tr {
@@ -354,11 +345,7 @@
             }
         </style>
 
-
-
-
-
-
+        
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 

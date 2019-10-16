@@ -1,5 +1,7 @@
 package Logica;
 
+import Logica.DataType.DtValoracion;
+import Logica.Enumerados.TipoValoracion;
 import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
 import java.util.ArrayList;

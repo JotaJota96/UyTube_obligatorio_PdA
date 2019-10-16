@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ConsultaVideo extends HttpServlet {
-
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -118,7 +118,18 @@ public class ConsultaVideo extends HttpServlet {
                      * solucionar de manera correcta, por favor comuniquese
                      * conmigo
                      */
-                    /*
+                    /**
+                     * En respuesta al comentario anterior:
+                     * Parece ser que el
+                     * error estaba en la logica, JPA hacia cosas raras.
+                     * Modifiqué la funcion seleccionarUsuario(nickname) en la
+                     * Logica para que si se intenta seleccionar al usuario que
+                     * tiene la sesion iniciada, se apunte a usuarioActual y no
+                     * a una copia de la entidad (generada por JPA)
+                     * Descomento
+                     * el codigo que parecia no funcionar y comento el otro
+                     * (aunque sospecho que tampoco funcionaba)
+                     */
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     DtValoracion dtVal = null;
                     switch (accion) {
@@ -141,8 +152,8 @@ public class ConsultaVideo extends HttpServlet {
                     respuesta = strCantLikes + ":" + strCantDisLikes;
                     response.getWriter().write(respuesta);
                     break;
-                    */
                     
+                    /*
                     IAdmin parche = Fabrica.getInstancia().getIAdmin();
                     
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
@@ -168,6 +179,7 @@ public class ConsultaVideo extends HttpServlet {
                     respuesta = strCantLikes + ":" + strCantDisLikes;
                     response.getWriter().write(respuesta);
                     break;
+                    */
                 }
                 // ---- Acciones relacionadas a COMENTAR VIDEO ----
                 case "comentarVideo":
@@ -210,15 +222,13 @@ public class ConsultaVideo extends HttpServlet {
                     response.getWriter().write(respuesta);
                     break;
                 case "listarValoraciones":
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     respuesta = "";
+                    sys.seleccionarVideo(idVideo);
                     ArrayList<DtValoracion> valoraciones = sys.obtenerValoracionesDeVideo();
                     for (DtValoracion val : valoraciones){
-                        respuesta += val.getNickname() + " le ha dado " + val.getVal() + "\n";
+                        respuesta += val.getNickname() + ":" + val.getVal() + ";";
                     }
-                    if (valoraciones.isEmpty()){
-                        respuesta = "Este video no tiene valoraciones";
-                    }
-                    
                     response.getWriter().write(respuesta);
                     break;
                 default:
