@@ -343,24 +343,27 @@ public interface IUsuario {
     
     /**
      * Verifica si el usuarioActual puede agregar una lista de reproduccion con
-     * el nombre indicado (Si hay una idListaSeleccionada y su nombre coincide
-     * con el nombre a verificar, retorna true)
+     * el nombre indicado. Si se está modificando una lista, se puede
+     * especificar el ID de la lista que se está modificando para una validacion
+     * correcta
      *
      * @param nombre Nombre de la lista de reproduccion
+     * @param idExcepcion ID de la lista a ignorar (0 si no se decea ignorar ninguna)
      * @return true si el usuarioActual puede agregar una lista de reproduccion
      * con ese nombre
      */
-    public boolean validarNuevaListaParticular(String nombre);
+    public boolean validarNuevaListaParticular(String nombre, int idExcepcion);
 
     /**
      * Verifica si el usuarioActual puede agregar un video con el nombre
-     * indicado (Si hay un idVideoSeleccionado y su nombre coincide con el
-     * nombre a verificar, retorna true)
-     *
+     * indicado. Si se está modificando un video, se puede especificar el ID del
+     * video que se está modificando para una validacion correcta
+     * 
      * @param nombre Nombre del video
+     * @param idExcepcion ID del video a ignorar (0 si no se decea ignorar ninguno)
      * @return true si el usuarioActual puede agregar un video con ese nombre
      */
-    public boolean validarNuevoVideo(String nombre);
+    public boolean validarNuevoVideo(String nombre, int idExcepcion);
 
     /**
      * Se ingresa la nueva valoracion dada por usuarioActual al video

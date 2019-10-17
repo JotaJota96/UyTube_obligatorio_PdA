@@ -8,8 +8,6 @@ package com.uytube;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -65,6 +63,29 @@ public class PeticionAjax extends HttpServlet {
                 case "validarEmail":
                     if (sys.existeEmail(dato)){
                         respuesta = "Este email no está disponible";
+                    }
+                    break;
+                case "validarNombreVideo":
+                    int idVideo = 0;
+                    if (request.getParameter("idVideo") != null){
+                        idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    }
+                    
+                    if (dato == null || dato.equals("")){
+                        break;
+                    }
+                    if ( ! sys.validarNuevoVideo(dato, idVideo)){
+                        respuesta = "El canal ya posee un video con ese nombre";
+                    }
+                    break;
+                case "validarNombreLista":
+                    int idLista = 0;
+                    if (request.getParameter("idLista") != null){
+                        idLista = Integer.valueOf(request.getParameter("idLista"));
+                    }
+                    
+                    if ( ! sys.validarNuevaListaParticular(dato, idLista)){
+                        respuesta = "El canal ya posee una lista con ese nombre";
                     }
                     break;
             }

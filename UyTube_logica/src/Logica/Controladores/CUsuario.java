@@ -797,32 +797,36 @@ public class CUsuario implements IUsuario {
     }
     
     @Override
-    public boolean validarNuevaListaParticular(String nombre) {
+    public boolean validarNuevaListaParticular(String nombre, int idExcepcion) {
         if (this.usuarioActual == null){
             throw new RuntimeException("No se ha iniciado sesión");
         }
         if (obtenerListasPorDefecto().containsKey(nombre)) {
             return false;
         }
-        if (idListaSeleccionada != 0){
-            if (usuarioActual.obtenerListaDeReproduccion(idListaSeleccionada).getNombre().equals(nombre)){
-                return true;
+        for (DtListaDeReproduccion it : usuarioActual.listarListasDeReproduccionDeCanal(true)){
+            if (it.getId() != idExcepcion){
+                if (it.getNombre().equals(nombre)){
+                    return false;
+                }
             }
         }
-        return usuarioActual.validarListaParticular(nombre);
+        return true;
     }
 
     @Override
-    public boolean validarNuevoVideo(String nombre) {
+    public boolean validarNuevoVideo(String nombre, int idExcepcion) {
         if (this.usuarioActual == null){
             throw new RuntimeException("No se ha iniciado sesión");
         }
-        if (idVideoSeleccionado != 0){
-            if (usuarioActual.obtenerVideo(idVideoSeleccionado).getNombre().equals(nombre)){
-                return true;
+        for (DtVideo it : usuarioActual.listarVideosDeCanal()){
+            if (it.getId() != idExcepcion){
+                if (it.getNombre().equals(nombre)){
+                    return false;
+                }
             }
         }
-        return usuarioActual.validarListaParticular(nombre);
+        return true;
     }
 
     @Override
