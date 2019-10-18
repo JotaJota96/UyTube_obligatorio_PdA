@@ -79,7 +79,7 @@
                             <section class="contenido-flexible">							
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
-                                        <form class="form-signin" action="/uytube/usuario-modificar" method="post">
+                                        <form class="form-signin" action="/uytube/usuario-modificar" method="post" enctype="multipart/form-data">
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
                                             <input value="<%= usuario.getNickname()%>" class="form-control" type="text" name="nickname" readonly="readonly" placeholder="Nickname" id="input_Nickname" required><br>
                                             <div class="row">
