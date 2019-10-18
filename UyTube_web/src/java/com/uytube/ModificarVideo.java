@@ -55,8 +55,11 @@ public class ModificarVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/ModificarVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
@@ -104,13 +107,28 @@ public class ModificarVideo extends HttpServlet {
             Time duracion = java.sql.Time.valueOf(pDuracion);
             //======================================================================
             DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl, Priv, pCategoria, 0, 0);
-
+            
             sys.modificarVideo(vid);
-            response.sendRedirect("buscar?texto=" + vid.getNombre());
+            
+            
+            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+            ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
+            int idNuevoVideo = 0;
+            for (DtVideo v : videos){
+                if (v.getNombre().equals(vid.getNombre())){
+                    idNuevoVideo = v.getId();
+                    break;
+                }
+            }
+            
+            response.sendRedirect("video-consultar?id=" + idNuevoVideo);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }

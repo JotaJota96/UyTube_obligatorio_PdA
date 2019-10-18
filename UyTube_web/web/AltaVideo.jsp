@@ -10,7 +10,7 @@
 
     <%
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
 
     <head>
@@ -73,6 +73,7 @@
                                         <div class="form-group col-12 col-md-9">
                                             <label for="inputNombre">Nombre</label>
                                             <input type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
+                                            <span id="msjNombre"></span>
                                         </div>
                                         <div class="form-group col-4 col-md-3">
                                             <label for="inputDuracion">Duración</label>
@@ -131,5 +132,6 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/funciones.js"></script>
+        <script src="js/alta-modificar-video.js"></script>
     </body>
 </html>

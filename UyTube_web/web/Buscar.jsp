@@ -65,7 +65,6 @@
                 <div class="col-12">
                     <section class="principal">
                         
-
                         <%
                             if (sesionIniciada) {
                         %>
