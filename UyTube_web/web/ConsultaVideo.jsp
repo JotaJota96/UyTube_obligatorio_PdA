@@ -154,8 +154,8 @@
                                         </div>
 
                                         <!-- Boton agregar a lista de reproduccion -->
-                                        <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">
-                                            <button type="button" id="btnAgregarALista" class="btn btn-info icon-add-to-list">
+                                        <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">                                            
+                                            <button data-toggle="modal" type="button" id="btnAgregarALista" data-target="#ventanaModalAgregarALista" class="btn btn-info icon-add-to-list">
                                                 LISTA DE REPRODUCCIÓN
                                             </button>
                                         </div>
@@ -345,7 +345,51 @@
             }
         </style>
 
-        
+    <!-- Modal -->
+    <div class="modal fade" id="ventanaModalAgregarALista" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Guardar en ...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input checkLista" type="checkbox" value="Ver más tarde" id="checkbox1">
+                        <label class="form-check-label" for="checkbox1">Ver más tarde <span class="icon-earth"></span></label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input checkLista" type="checkbox" value="Favoritos" id="checkbox2" >
+                        <label class="form-check-label " for="checkbox2">Favoritos <span class="icon-lock1"></span></label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input checkLista" type="checkbox" value="Algun dia los vere" id="checkbox3" >
+                        <label class="form-check-label" for="checkbox3">Algun dia los vere <span class="icon-earth"></span></label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input checkLista" type="checkbox" value="Bossa nova" id="checkbox4" >
+                        <label class="form-check-label" for="checkbox4">Bossa nova <span class="icon-lock1"></span></label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input checkLista" type="checkbox" value="Musica que me gusta" id="checkbox5">
+                        <label class="form-check-label" for="checkbox5">Musica que me gusta</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input checkLista" type="checkbox" value="Covers" id="checkbox6">
+                        <label class="form-check-label" for="checkbox6">Covers <span class="icon-lock1"></span></label>
+                      </div>
+                      
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 
