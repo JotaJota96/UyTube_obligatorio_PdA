@@ -8,7 +8,6 @@ import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.TipoValoracion;
 import Logica.Fabrica;
-import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
