@@ -471,7 +471,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
             IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
             DtImagenUsuario dtiu = pi.find(u.getNickname());
             if (dtiu == null){
-                FuncionesImagenes.cargarImagenEnJlabel(lbImg, null);
+                FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
             }else{
                 FuncionesImagenes.cargarImagenEnJlabel(
                         lbImg,
@@ -534,7 +534,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private void btnQuitarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarImagenActionPerformed
         // Quitar imagen
         ruta = "";
-        FuncionesImagenes.cargarImagenEnJlabel(lbImg, null);
+        FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
     }//GEN-LAST:event_btnQuitarImagenActionPerformed
 
 

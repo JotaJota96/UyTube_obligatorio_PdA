@@ -57,7 +57,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         sys = Fabrica.getInstancia().getIAdmin();
         bordeDefault = txtNombre.getBorder();
-        FuncionesImagenes.cargarImagenEnJlabel(lbImg, null);
+        FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
     }
     
     private boolean validarFormatoEmail(String _email){
@@ -623,7 +623,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     private void btnQuitarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarImagenActionPerformed
          // Quitar imagen
         ruta = "";
-        FuncionesImagenes.cargarImagenEnJlabel(lbImg, null);
+        FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
     }//GEN-LAST:event_btnQuitarImagenActionPerformed
 
        

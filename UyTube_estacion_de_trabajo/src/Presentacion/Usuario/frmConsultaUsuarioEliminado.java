@@ -312,7 +312,7 @@ public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
             IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
             DtImagenUsuario dtiu = pi.find(u.getNickname());
             if (dtiu == null){
-                FuncionesImagenes.cargarImagenEnJlabel(lbImagen, null);
+                FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImagen);
             }else{
                 FuncionesImagenes.cargarImagenEnJlabel(
                         lbImagen,

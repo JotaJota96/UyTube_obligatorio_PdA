@@ -93,6 +93,20 @@ public class FuncionesImagenes {
             }
         }
     }
+    
+    public static void cargarImagenPorDefectoEnJlabel(javax.swing.JLabel jLabelx) {
+        jLabelx.setText(null);
+        String Ruta = "Imagenes\\ukp.png";
+        // Carga la imagen a la variable de tipo Image
+        Image img = new ImageIcon(Ruta).getImage();
+        // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
+        ImageIcon icono = new ImageIcon(
+                img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH)
+        );
+        // establece la imagen en el label
+        jLabelx.setIcon(icono);
+    }
+
 
     public static void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, Image img) {
         jLabelx.setText(null);
