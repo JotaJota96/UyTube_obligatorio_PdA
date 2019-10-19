@@ -27,12 +27,15 @@ public class CPersistenciaDeImagenes implements IPersistenciaDeImagenes {
     //****************************************************************************************
     @Override
     public DtImagenUsuario find(String id) throws RuntimeException {
+        if ( ! exists(id)){
+            return null;
+        }
         try {
             ImagenUsuario iu = new ImagenUsuarioJpaController().findImagenUsuario(id);
             return new DtImagenUsuario(iu.getNickname(), iu.getImagen(), iu.getNombreArchivo());
         } catch (Exception ex) {
             Logger.getLogger(CPersistenciaDeImagenes.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            throw new RuntimeException("Algo falló al intentar consultar la imagen\n" + ex.getMessage());
         }
     }
 
