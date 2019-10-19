@@ -470,11 +470,14 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         try {
             IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
             DtImagenUsuario dtiu = pi.find(u.getNickname());
-            if (dtiu == null) return;
-            FuncionesImagenes.cargarImagenEnJlabel(
-                    lbImg,
-                    FuncionesImagenes.byteArrayToImage(dtiu.getImagen())
-            );
+            if (dtiu == null){
+                FuncionesImagenes.cargarImagenEnJlabel(lbImg, null);
+            }else{
+                FuncionesImagenes.cargarImagenEnJlabel(
+                        lbImg,
+                        FuncionesImagenes.byteArrayToImage(dtiu.getImagen())
+                );
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar la imagen del usuario\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
