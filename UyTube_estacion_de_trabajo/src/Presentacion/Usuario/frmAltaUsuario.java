@@ -1,10 +1,13 @@
 package Presentacion.Usuario;
 
 import Logica.DataType.DtCanal;
+import Logica.DataType.DtImagenUsuario;
 import Logica.DataType.DtUsuario;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
+import Logica.Interfaces.IPersistenciaDeImagenes;
+import Presentacion.FuncionesImagenes;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Image;
@@ -54,7 +57,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         sys = Fabrica.getInstancia().getIAdmin();
         bordeDefault = txtNombre.getBorder();
-        cargarImagenEnJlabel(lbImg, "");
+        FuncionesImagenes.cargarImagenEnJlabel(lbImg, null);
     }
     
     private boolean validarFormatoEmail(String _email){
@@ -163,7 +166,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jDateChooser1.setDate(null);
         lbImg.setIcon(null);
         ruta = "";
-        cargarImagenEnJlabel(lbImg, ruta);
+        FuncionesImagenes.cargarImagenEnJlabel(lbImg, null);
     }
 
     @SuppressWarnings("unchecked")
@@ -424,86 +427,17 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     private void btSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeleccionarActionPerformed
         //cargarImagen(lbImagen);
         String rutaAnterior = ruta;
-        ruta = seleccionarImagen();
+        ruta = FuncionesImagenes.seleccionarImagen();
         if (ruta.isEmpty()) {
             ruta = rutaAnterior;
         }
-        cargarImagenEnJlabel(lbImg, ruta);
-    }//GEN-LAST:event_btSeleccionarActionPerformed
-    
-    private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta) {
-        jLabelx.setText(null);
-        if (Ruta == null || Ruta.isEmpty()){
-            Ruta = "Imagenes\\ukp.png";
-        }
-        // Carga la imagen a la variable de tipo Image
-        Image img = new ImageIcon(Ruta).getImage();
-        // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
-        ImageIcon icono = new ImageIcon(
-                img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH)
+        FuncionesImagenes.cargarImagenEnJlabel(
+                lbImg, 
+                FuncionesImagenes.byteArrayToImage(
+                        FuncionesImagenes.pathToByteArray(ruta)
+                )
         );
-        // establece la imagen en el label
-        jLabelx.setIcon(icono);
-    }
-    
-    private String seleccionarImagen() {
-        // Crea un JFileChooser
-        JFileChooser JFC = new JFileChooser();
-        // crea un filtro para aceptar solo algunas extensiones
-        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG", "JPEG", "PNG", "jpg", "jpeg", "png");
-        // Agrega el filtro al JFileChooser
-        JFC.setFileFilter(filtroImagen);
-
-        // archivo seleccionado
-        File archivo;
-        // para saber si se selecciono algo o se cancelo
-        int resultado;
-
-        while (true) {
-            // muestra el JFileChooser
-            resultado = JFC.showOpenDialog(this);
-
-            // Si pasa algo que no sea el aceptar
-            if (resultado != JFileChooser.APPROVE_OPTION) {
-                return "";
-            }
-
-            // obtiene el archivo seleccionado
-            archivo = JFC.getSelectedFile();
-
-            // Si se selecciono algun archivo
-            if (archivo != null) {
-                // obtiene la ruta del archivo
-                String rutaArchivo = archivo.getAbsolutePath();
-                // obtiene el archivo como imagen a partir de la ruta
-                Image img = new ImageIcon(rutaArchivo).getImage();
-
-                // verifica que tanto se deformará la imagen al mostrarla en un cuadrado
-                float deformacion;
-                if (img.getHeight(null) > img.getWidth(null)) {
-                    deformacion = img.getHeight(null) / img.getWidth(null);
-                } else {
-                    deformacion = img.getWidth(null) / img.getHeight(null);
-                }
-
-                if (deformacion < 1.3 && deformacion >= 1) {
-                    // si no se deforma demasiado
-                    // devuelve la ruta absoluta
-                    return rutaArchivo;
-                } else {
-                    // si se deforma demasiado, lo avisa al usuario para que escoja otra
-                    JOptionPane.showMessageDialog(null,
-                            "La imagen es demasiado alta o demasiado ancha.\n" + img.getWidth(null) + "x" + img.getHeight(null),
-                            "Problemas con la imagen",
-                            JOptionPane.WARNING_MESSAGE
-                    );
-                }
-            } else {
-                // sino devuelve un string vacio
-                return "";
-            }
-        }
-    }
+    }//GEN-LAST:event_btSeleccionarActionPerformed
     
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         jDateChooser1.setBorder(bordeDefault);
@@ -566,6 +500,19 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             DtUsuario dtUsuario = new DtUsuario(nickname, nickname, nombre, apellido, email, fecha, ruta, 0);
             DtCanal dtCanal = new DtCanal(0, nombreCanal, descripcion, privacidad);
             sys.altaUsuarioCanal(dtUsuario, dtCanal);
+            
+            IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
+            if (ruta == null || ruta.equals("")) {
+                // no se hace nada
+            } else {
+                DtImagenUsuario dtiu = new DtImagenUsuario(
+                        dtUsuario.getNickname(),
+                        FuncionesImagenes.pathToByteArray(ruta),
+                        FuncionesImagenes.getNombreArchivo(ruta)
+                );
+                pi.create(dtiu);
+            }
+            
             JOptionPane.showMessageDialog(null, "Se ha creado el usuario "+nickname, "Alta de usuario", JOptionPane.INFORMATION_MESSAGE);
             limpiarCampos();
         } catch (Exception e) {
@@ -676,7 +623,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     private void btnQuitarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarImagenActionPerformed
          // Quitar imagen
         ruta = "";
-        cargarImagenEnJlabel(lbImg, ruta);
+        FuncionesImagenes.cargarImagenEnJlabel(lbImg, null);
     }//GEN-LAST:event_btnQuitarImagenActionPerformed
 
        
