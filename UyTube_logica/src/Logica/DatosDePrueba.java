@@ -12,9 +12,9 @@ public class DatosDePrueba {
     
     public static void main(String[] args) {
         Fabrica f = Fabrica.getInstancia();
-        usuSys = f.getIUsuario();
         try {
-            
+            usuSys = f.getIUsuario();
+            adminSys = f.getIAdmin();
         } catch (Exception e) {
             System.out.println("//////////////////////////");
             System.out.println(e.getMessage());
