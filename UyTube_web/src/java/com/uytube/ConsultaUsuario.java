@@ -10,6 +10,7 @@ import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
 import Logica.Fabrica;
+import Logica.Interfaces.IPersistenciaDeImagenes;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.util.ArrayList;

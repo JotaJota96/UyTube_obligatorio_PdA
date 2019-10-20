@@ -9,6 +9,7 @@ INSERT INTO public.categoria (nombre) VALUES
 ('MUSICA')
 ,('DEPORTE')
 ,('GAMING')
+-- Si te dio error con el undefined, comenta la siguiente linea
 ,('UNDEFINED')
 ;
 

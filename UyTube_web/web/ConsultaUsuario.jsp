@@ -91,20 +91,9 @@
                                         <div class="p-4 flex-fill bd-highlight">
                                             <div class="d-flex justify-content-center">
                                                 <%
-                                                    String textoAlternativo;
-                                                    String rutaDeImagenDePerfil;
-                                                    if (usuario.getImagen() == null || usuario.getImagen().equals("")) {
-                                                        rutaDeImagenDePerfil = "imagenes/ukp.png";
-                                                        textoAlternativo = "Imagen de perfil por defecto";
-                                                    } else {
-                                                        rutaDeImagenDePerfil = usuario.getImagen();
-                                                        textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
-                                                        //char contrabarra = 92;
-                                                        //char barra = 47;
-                                                        //rutaImagenPerfil = rutaImagenPerfil = rutaImagenPerfil.replace(contrabarra, barra);
-                                                    }
+                                                    // src="<%
                                                 %>
-                                                <img src="<%=rutaDeImagenDePerfil%>" class="rounded-circle" alt="<%=textoAlternativo%>" width="180" height="180"> 
+                                                <img src="usuario-imagen?id=<%= usuario.getNickname() %>" class="rounded-circle" alt="Imagen de perfil de <% usuario.getNickname(); %>" width="180" height="180"> 
                                             </div>
                                         </div>
                                             

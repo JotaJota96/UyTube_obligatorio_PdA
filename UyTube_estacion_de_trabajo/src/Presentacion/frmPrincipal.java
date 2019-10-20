@@ -1,11 +1,19 @@
 package Presentacion;
 
+import Logica.DataType.DtImagenUsuario;
+import Logica.Fabrica;
 import Presentacion.Categoria.*;
 import Presentacion.ListaDeReproduccion.*;
 import Presentacion.Usuario.*;
 import Presentacion.Video.*;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
     
@@ -23,7 +31,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         
         // carga la imagen de fondo
         this.lbFondo.setText(null);
-        Image img3 = new ImageIcon("Imagenes/des.jpeg").getImage();
+        // originalmente se usaba la siguiente linea: 
+        //Image img3 = new ImageIcon("Imagenes/des.jpeg").getImage();
+        // Pero para cargar la imagen que esta en el .jar se usa esta:
+        URL path = this.getClass().getClassLoader().getResource("Imagenes/des.jpeg");
+        Image img3 = new ImageIcon(path).getImage();
         ImageIcon img4 = new ImageIcon(img3.getScaledInstance(lbFondo.getWidth(), lbFondo.getHeight(), Image.SCALE_SMOOTH));
         lbFondo.setIcon(img4);
         

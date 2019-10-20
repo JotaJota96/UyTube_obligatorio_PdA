@@ -1,7 +1,5 @@
 package Logica;
 
-import Logica.DataType.DtValoracion;
-import Logica.Enumerados.TipoValoracion;
 import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
 import java.util.ArrayList;
@@ -11,10 +9,15 @@ public class DatosDePrueba {
     private static IUsuario usuSys = null;
     
     public static void main(String[] args) {
-        Fabrica f = Fabrica.getInstancia();
-        usuSys = f.getIUsuario();
+        String mensajeEasterEgg = "Hola! gracias por ejecutarme, pero solo soy una libreria";
+        //Fabrica f = Fabrica.getInstancia();
         try {
-            
+            /*
+            usuSys = f.getIUsuario();
+            adminSys = f.getIAdmin();
+            */
+            javax.swing.JOptionPane.showMessageDialog(null, mensajeEasterEgg,"", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(mensajeEasterEgg);
         } catch (Exception e) {
             System.out.println("//////////////////////////");
             System.out.println(e.getMessage());

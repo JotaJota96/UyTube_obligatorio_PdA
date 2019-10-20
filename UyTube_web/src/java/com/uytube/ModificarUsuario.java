@@ -6,26 +6,32 @@
 package com.uytube;
 
 import Logica.DataType.DtCanal;
+import Logica.DataType.DtImagenUsuario;
 import Logica.DataType.DtUsuario;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author administrador
  */
+@MultipartConfig
 public class ModificarUsuario extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -123,6 +129,16 @@ public class ModificarUsuario extends HttpServlet {
 
             sys.modificarUsuarioYCanal(Usu, CanUsu);
 
+            Part partImagen = request.getPart("imagen");
+            String nombreArchivo = Paths.get(partImagen.getSubmittedFileName()).getFileName().toString();
+            InputStream archivoContenido = partImagen.getInputStream();
+            if (archivoContenido.available() > 0) {
+                byte[] byteArr = new byte[archivoContenido.available()];
+                archivoContenido.read(byteArr);
+                DtImagenUsuario dtiu = new DtImagenUsuario(Usu.getNickname(), byteArr, nombreArchivo);
+                Fabrica.getInstancia().getIPersistenciaDeImagenes().edit(dtiu);
+            }
+            
             response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
 
         } catch (Exception e) {

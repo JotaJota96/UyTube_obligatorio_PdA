@@ -5,12 +5,12 @@
  */
 package com.uytube;
 
-import Logica.Enumerados.Filtrado;
-import Logica.Enumerados.Ordenacion;
+import Logica.DataType.DtImagenUsuario;
 import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import Logica.Interfaces.IPersistenciaDeImagenes;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,35 +20,37 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author administrador
+ * @author Juan
  */
-@WebServlet(name = "Presentacion", urlPatterns = {"/"})
-public class Presentacion extends HttpServlet {
+@WebServlet(name = "ImagenUsuario", urlPatterns = {"/usuario-imagen"})
+public class ImagenUsuario extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
-            boolean sesionIniciada = sys.sesionIniciada();
-            ArrayList<Object> videos = sys.buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
-
-            request.setAttribute("sesionIniciada", sesionIniciada);
-            request.setAttribute("videos", videos);
-
-            RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/Presentacion.jsp");
-            rd.forward(request, response);
+            String id = request.getParameter("id");
+            if (id == null)  id = "";
+            
+            System.out.println("------------------");
+            System.out.println("GET /imagen");
+            System.out.println("id = " + request.getParameter("id"));
+            
+            byte[] byteArr;
+            
+            DtImagenUsuario iu = pi.find(id);
+            byteArr = iu.getImagen();
+            
+            
+            //byte[] byteArr = ImagePersistController.pathToByteArray("C:\\cnf.jpg");
+            
+            response.setContentType("image/" + iu.getExtension());
+            OutputStream sos = response.getOutputStream();
+            sos.write(byteArr);
+            sos.flush();
+            sos.close();
+            
         } catch (Exception e) {
             System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
@@ -58,7 +60,12 @@ public class Presentacion extends HttpServlet {
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
-
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
     }
 
     /**
