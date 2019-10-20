@@ -47,4 +47,7 @@ public interface IPersistenciaDeImagenes {
      * @return true si el usuario tiene una imagen de perfil persistida
      */
     public boolean exists(String id) throws RuntimeException;
+    
+    public DtImagenUsuario getDefaultImage();
+    
 }

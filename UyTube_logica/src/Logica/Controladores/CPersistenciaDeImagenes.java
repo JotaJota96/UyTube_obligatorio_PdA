@@ -5,8 +5,18 @@ import JPAControllerClasses.exceptions.NonexistentEntityException;
 import Logica.Clases.ImagenUsuario;
 import Logica.DataType.DtImagenUsuario;
 import Logica.Interfaces.IPersistenciaDeImagenes;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.effect.ImageInput;
+import javax.swing.ImageIcon;
 
 public class CPersistenciaDeImagenes implements IPersistenciaDeImagenes {
 
@@ -28,7 +38,7 @@ public class CPersistenciaDeImagenes implements IPersistenciaDeImagenes {
     @Override
     public DtImagenUsuario find(String id) throws RuntimeException {
         if ( ! exists(id)){
-            return null;
+            return getDefaultImage();
         }
         try {
             ImagenUsuario iu = new ImagenUsuarioJpaController().findImagenUsuario(id);
@@ -85,5 +95,26 @@ public class CPersistenciaDeImagenes implements IPersistenciaDeImagenes {
     @Override
     public boolean exists(String id) throws RuntimeException {
         return new ImagenUsuarioJpaController().findImagenUsuario(id) != null;
+    }
+
+    @Override
+    public DtImagenUsuario getDefaultImage() {
+        try {
+            InputStream in = getClass().getResourceAsStream("/imagenes/ukp.png");
+            //File f = new File(getClass().getResource("/imagenes/ukp.png").getFile());
+            //File f = new File(connection.getJarFileURL().toURI()); //asociamos el archivo fisico
+            //InputStream is = new FileInputStream(f); //lo abrimos. Lo importante es que sea un InputStream
+            byte[] buffer = new byte[(int) in.available()]; //creamos el buffer
+            int readers = in.read(buffer); //leemos el archivo al buffer
+            
+            return new DtImagenUsuario("", buffer, "ukp.png");
+            
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
