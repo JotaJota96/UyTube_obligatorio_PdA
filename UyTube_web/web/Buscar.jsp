@@ -34,7 +34,7 @@
         <title>UyTube</title>
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
@@ -53,19 +53,18 @@
             </div>		
         </div>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">
                         
-
                         <%
                             if (sesionIniciada) {
                         %>
@@ -153,18 +152,12 @@
                                                     DtCanal e = (DtCanal) o;
                                                     // buena suerte entendiendo esto...
                                                     DtUsuario usu = Fabrica.getInstancia().getIUsuario().obtenerPropietarioDeCanal(e.getId());
-                                                    String imagenCanal;
-                                                    if (usu.getImagen() == null || usu.getImagen().equals("")){
-                                                        imagenCanal = "imagenes/ukp.png";
-                                                    }else{
-                                                        imagenCanal = usu.getImagen();
-                                                    }
                                         %>
                                         <div class="canal bd-highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight">
                                                     <a href="usuario-consultar?id=<%= usu.getNickname() %>">
-                                                       <img src="<%= imagenCanal %>" class="align-self-center rounded-circle" alt="Cinque Terre" >
+                                                       <img src="usuario-imagen?id=<%= usu.getNickname() %>" class="align-self-center rounded-circle" alt="Cinque Terre" >
                                                     </a>
                                                 </div>
                                             </div>

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <%
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
     %>
     <head>
@@ -29,7 +29,7 @@
     </head>
     <body>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
@@ -46,14 +46,14 @@
                 </div>
             </div>		
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">	
@@ -80,9 +80,10 @@
                                             <h1 class="h3 mb-4 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1>
                                             <div class="mb-5">
                                                 <input type="text" class="form-control" name="nombreL" id="nombreLista" placeholder="Nombre de la lista" required>
+                                               <span id="msjNombre"></span>
                                             </div>
-
-
+                                            
+                                            
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <label class="">Privacidad</label>
@@ -139,5 +140,6 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/funciones.js"></script>
+        <script src="js/alta-modificar-lista.js"></script>
     </body>
 </html>

@@ -1,13 +1,12 @@
 .menu {
-  position: absolute;
+  max-height: 450px;
   z-index: 10;
   width: 0px;
-  top: -60px;
   left: 0px;
   padding-top: 20px;
   background-color: #00001a;
-  overflow: hidden;
-  transition: all 300ms; }
+  overflow: auto;
+  transition: all 250ms; }
   .menu ul {
     list-style: none;
     padding: 0px;
@@ -46,12 +45,51 @@
         padding: 0.625rem 0.625rem 0.625rem 1rem;
         display: block;
         text-decoration: none; }
+      .menu ul li a span {
+        padding-left: 16px; }
 
 .menu li a:hover {
   text-decoration: none;
   background-color: #48549c33; }
 
 .abrir {
-  width: 17.625rem; }
+  width: 16.625rem;
+  left: 0px; }
+
+@media (max-width: 340px) {
+  .menu {
+    position: absolute;
+    top: 0px;
+    left: -3px; } }
+@media (min-width: 341px) and (max-width: 387px) {
+  .menu {
+    position: absolute;
+    top: 0px;
+    left: 0px; } }
+@media (min-width: 388px) and (max-width: 500px) {
+  .menu {
+    position: absolute;
+    top: 0px;
+    left: 0px; } }
+@media (min-width: 501px) and (max-width: 575.98px) {
+  .menu {
+    position: absolute;
+    top: 0px;
+    left: 0px; } }
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .menu {
+    position: absolute;
+    top: 0px;
+    left: 0px; } }
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .menu {
+    position: absolute;
+    top: 0px;
+    left: 0px; } }
+@media (min-width: 992px) {
+  .menu {
+    position: fixed;
+    top: 56px;
+    left: 0px; } }
 
 /*# sourceMappingURL=menu.css.map */

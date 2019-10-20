@@ -24,18 +24,21 @@
     .contenido .contenido-flexible .video, .contenido .contenido-flexible .canal, .contenido .contenido-flexible .lista {
       display: flex;
       padding: 0px; }
+      .contenido .contenido-flexible .video a, .contenido .contenido-flexible .canal a, .contenido .contenido-flexible .lista a {
+        color: #0d0d0d;
+        text-decoration: none; }
     .contenido .contenido-flexible .caja-imagen {
       display: flex; }
     .contenido .contenido-flexible .caja-texto {
       font-size: 0.8rem;
       padding: 15px 10px 10px 10px;
-      display: flex; }
+      display: flex;
+      flex-grow: 1; }
     .contenido .contenido-flexible .caja-texto p {
       overflow: auto;
       overflow-wrap: break-word;
       padding-right: 10px; }
     .contenido .contenido-flexible .caja-texto h5 {
-      min-height: 20px;
       overflow: auto;
       overflow-wrap: break-word; }
 
@@ -44,40 +47,6 @@
     padding-left: 0px;
     padding-right: 0px; }
 
-  .header {
-    width: 100%;
-    left: 0px;
-    height: 175.112px; }
-    .header nav {
-      height: 175.112px; }
-    .header .item-header2 {
-      order: 3;
-      width: 100%; }
-
-  .relleno-header {
-    height: 175.112px; }
-
-  #navLogo {
-    justify-content: flex-start; }
-    #navLogo .icon-menu1 {
-      margin-left: 0px;
-      margin-right: 10px; }
-
-  #navbarSupportedContent {
-    width: 100%; }
-
-  #formBuscar {
-    display: flex;
-    justify-content: space-between;
-    width: 100%; }
-    #formBuscar input {
-      width: 100%; }
-    #formBuscar #btnBuscar {
-      display: none; }
-
-  .menu {
-    top: -171.112px; }
-
   .contenido {
     width: 100%; }
     .contenido .contenido-flexible {
@@ -85,18 +54,17 @@
       justify-content: center; }
       .contenido .contenido-flexible .video, .contenido .contenido-flexible .canal, .contenido .contenido-flexible .lista {
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-content: center;
         width: 100%;
-        height: 250px; }
+        height: 260px; }
       .contenido .contenido-flexible .caja-imagen {
         justify-content: center;
         align-items: center;
-        width: 100%;
-        height: 150px; }
+        min-width: 246px;
+        min-height: 150px; }
       .contenido .contenido-flexible .video img {
-        width: 200px;
-        height: 150px; }
+        width: 100%; }
       .contenido .contenido-flexible .canal img {
         width: 138px;
         height: 138px; }
@@ -104,69 +72,26 @@
         padding: 5px;
         overflow: auto;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100px; }
+        justify-content: flex-start;
+        align-items: stretch;
+        min-width: 246px;
+        min-height: 110px; }
         .contenido .contenido-flexible .caja-texto .caja-texto p {
-          max-height: 50px;
+          min-height: 20px;
+          max-height: 55px;
           overflow: auto; }
         .contenido .contenido-flexible .caja-texto .caja-texto h5 {
-          height: 30%;
           min-height: 20px;
           overflow: auto; }
-
-  .widgets {
-    height: 170px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    flex-direction: column;
-    justify-content: space-around;
-    align-content: center; }
-    .widgets .widget-1 {
-      width: 100%;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center; }
-    .widgets .widget-2 {
-      width: 100%;
-      justify-content: space-around; } }
+        .contenido .contenido-flexible .caja-texto a {
+          font-size: 0.95rem; }
+    .contenido .h3 {
+      width: 90%; } }
 @media (min-width: 341px) and (max-width: 387px) {
   .container-fluid {
     padding-left: 0px;
     padding-right: 0px; }
 
-  .header {
-    width: 100%;
-    height: 175.112px;
-    left: 0px; }
-    .header nav {
-      height: 175.112px; }
-    .header .item-header2 {
-      order: 3;
-      width: 100%; }
-
-  .relleno-header {
-    height: 175.112px; }
-
-  #navLogo {
-    justify-content: flex-start; }
-    #navLogo .icon-menu1 {
-      margin-left: 0px;
-      margin-right: 10px; }
-
-  #navbarSupportedContent {
-    width: 100%; }
-
-  #formBuscar {
-    display: flex;
-    justify-content: space-between;
-    width: 100%; }
-    #formBuscar input {
-      width: 100%; }
-    #formBuscar #btnBuscar {
-      display: none; }
-
   .contenido {
     width: 100%; }
     .contenido .contenido-flexible {
@@ -174,17 +99,16 @@
       justify-content: center; }
       .contenido .contenido-flexible .video, .contenido .contenido-flexible .canal, .contenido .contenido-flexible .lista {
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-content: center;
         width: 100%;
-        height: 250px; }
+        height: 260px; }
       .contenido .contenido-flexible .caja-imagen {
         justify-content: center;
         align-items: center;
-        width: 100%;
-        height: 150px; }
+        min-width: 246px;
+        min-height: 150px; }
       .contenido .contenido-flexible .video img {
-        width: 200px;
         height: 150px; }
       .contenido .contenido-flexible .canal img {
         width: 138px;
@@ -193,69 +117,26 @@
         padding: 5px;
         overflow: auto;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: stretch;
         width: 100%;
-        height: 100px; }
+        min-height: 110px; }
         .contenido .contenido-flexible .caja-texto .caja-texto p {
-          max-height: 50px;
+          min-height: 20px;
+          max-height: 55px;
           overflow: auto; }
         .contenido .contenido-flexible .caja-texto .caja-texto h5 {
-          height: 30%;
           min-height: 20px;
           overflow: auto; }
-
-  .widgets {
-    height: 170px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    flex-direction: column;
-    justify-content: space-around;
-    align-content: center; }
-    .widgets .widget-1 {
-      width: 100%;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center; }
-    .widgets .widget-2 {
-      width: 100%;
-      justify-content: space-around; } }
+        .contenido .contenido-flexible .caja-texto a {
+          font-size: 0.95rem; }
+    .contenido .h3 {
+      width: 90%; } }
 @media (min-width: 388px) and (max-width: 500px) {
   .container-fluid {
     padding-left: 0px;
     padding-right: 0px; }
 
-  .header {
-    width: 100%;
-    left: 0px;
-    height: 127.176px; }
-    .header nav {
-      height: 127.176px; }
-    .header .item-header2 {
-      order: 3;
-      width: 100%; }
-
-  .relleno-header {
-    height: 127.176px; }
-
-  #navLogo {
-    justify-content: flex-start; }
-    #navLogo .icon-menu1 {
-      margin-left: 0px;
-      margin-right: 10px; }
-
-  #navbarSupportedContent {
-    width: 100%; }
-
-  #formBuscar {
-    display: flex;
-    justify-content: space-between;
-    width: 100%; }
-    #formBuscar input {
-      width: 100%; }
-    #formBuscar #btnBuscar {
-      display: none; }
-
   .contenido {
     width: 100%; }
     .contenido .contenido-flexible {
@@ -263,17 +144,16 @@
       justify-content: center; }
       .contenido .contenido-flexible .video, .contenido .contenido-flexible .canal, .contenido .contenido-flexible .lista {
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-content: center;
         width: 100%;
-        height: 250px; }
+        height: 260px; }
       .contenido .contenido-flexible .caja-imagen {
         justify-content: center;
         align-items: center;
-        width: 100%;
-        height: 150px; }
+        min-width: 246px;
+        min-height: 150px; }
       .contenido .contenido-flexible .video img {
-        width: 200px;
         height: 150px; }
       .contenido .contenido-flexible .canal img {
         width: 138px;
@@ -282,70 +162,25 @@
         padding: 5px;
         overflow: auto;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: stretch;
         width: 100%;
-        height: 100px; }
+        min-height: 110px; }
         .contenido .contenido-flexible .caja-texto .caja-texto p {
-          max-height: 50px;
+          min-height: 20px;
+          max-height: 55px;
           overflow: auto; }
         .contenido .contenido-flexible .caja-texto .caja-texto h5 {
-          height: 30%;
           min-height: 20px;
           overflow: auto; }
+        .contenido .contenido-flexible .caja-texto a {
+          font-size: 0.95rem; }
     .contenido .h3 {
-      width: 90%; }
-
-  .widgets {
-    height: 180px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    flex-direction: column;
-    justify-content: space-around;
-    align-content: center; }
-    .widgets .widget-1 {
-      width: 100%;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center; }
-    .widgets .widget-2 {
-      width: 100%;
-      justify-content: space-around; } }
+      width: 90%; } }
 @media (min-width: 501px) and (max-width: 575.98px) {
   .container-fluid {
     padding-left: 0px;
     padding-right: 0px; }
-
-  .header {
-    width: 100%;
-    left: 0px;
-    height: 129.176px; }
-    .header nav {
-      height: 129.176px; }
-    .header .item-header2 {
-      order: 3;
-      width: 100%; }
-
-  .relleno-header {
-    height: 129.176px; }
-
-  #navLogo {
-    justify-content: flex-start; }
-    #navLogo .icon-menu1 {
-      margin-left: 0px;
-      margin-right: 10px; }
-
-  #navbarSupportedContent {
-    width: 100%; }
-
-  #formBuscar {
-    display: flex;
-    justify-content: space-between;
-    width: 100%; }
-    #formBuscar input {
-      width: 100%; }
-    #formBuscar #btnBuscar {
-      display: none; }
 
   .contenido {
     width: 100%; }
@@ -362,10 +197,9 @@
       .contenido .contenido-flexible .caja-imagen {
         justify-content: center;
         align-items: center;
-        width: 100%;
+        min-width: 246px;
         height: 150px; }
       .contenido .contenido-flexible .video img {
-        width: 200px;
         height: 150px; }
       .contenido .contenido-flexible .canal img {
         width: 138px;
@@ -374,64 +208,22 @@
         padding: 5px;
         overflow: auto;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: stretch;
         width: 100%;
         height: 150px; }
         .contenido .contenido-flexible .caja-texto .caja-texto p {
-          max-height: 50px;
-          overflow: auto; }
-        .contenido .contenido-flexible .caja-texto .caja-texto h5 {
-          height: 30%;
+          max-height: 75px;
           min-height: 20px;
           overflow: auto; }
-
-  .widgets {
-    height: 180px;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center; }
-    .widgets .widget-1 {
-      width: 80%;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center; }
-    .widgets .widget-2 {
-      width: 70%;
-      display: flex;
-      justify-content: space-around; }
-
-  .footer {
-    padding: 1rem 0.625rem; } }
+        .contenido .contenido-flexible .caja-texto .caja-texto h5 {
+          min-height: 20px;
+          max-height: 75px;
+          overflow: auto; } }
 @media (min-width: 576px) and (max-width: 767.98px) {
   .container-fluid {
     padding-left: 0px;
     padding-right: 0px; }
-
-  .header {
-    width: 100%;
-    left: 0rem;
-    height: 124.117px; }
-    .header .nav {
-      height: 124.117px; }
-    .header .item-header2 {
-      order: 3;
-      width: 100%; }
-
-  .relleno-header {
-    height: 124.117px; }
-
-  #navLogo {
-    justify-content: flex-start; }
-
-  #navbarSupportedContent {
-    width: 100%; }
-    #navbarSupportedContent #formBuscar {
-      display: flex;
-      justify-content: space-between;
-      width: 100%; }
-      #navbarSupportedContent #formBuscar input {
-        width: 87%; }
 
   .contenido {
     width: 100%; }
@@ -450,7 +242,6 @@
         width: 100%;
         height: 150px; }
       .contenido .contenido-flexible .video img {
-        width: 200px;
         height: 150px; }
       .contenido .contenido-flexible .canal img {
         width: 138px;
@@ -459,60 +250,22 @@
         padding: 5px;
         overflow: auto;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: stretch;
         width: 100%;
         height: 150px; }
         .contenido .contenido-flexible .caja-texto .caja-texto p {
-          max-height: 50px;
+          min-height: 50px;
+          max-height: 75px;
           overflow: auto; }
         .contenido .contenido-flexible .caja-texto .caja-texto h5 {
-          height: 30%;
           min-height: 20px;
-          overflow: auto; }
-
-  .widgets {
-    height: 160px;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center; }
-    .widgets .widget-1 {
-      width: 60%;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center; }
-    .widgets .widget-2 {
-      width: 60%;
-      display: flex;
-      justify-content: space-between; }
-
-  .footer {
-    padding: 1rem 0.625rem; } }
+          max-height: 75px;
+          overflow: auto; } }
 @media (min-width: 768px) and (max-width: 991.98px) {
   .container-fluid {
     padding-left: 0px;
     padding-right: 0px; }
-
-  .header {
-    width: 100%;
-    left: 0rem;
-    height: 77.2px; }
-    .header nav {
-      height: 77.2px;
-      justify-content: space-between; }
-      .header nav #navLogo {
-        justify-content: space-between; }
-      .header nav #navbarSupportedContent {
-        width: 100%; }
-        .header nav #navbarSupportedContent #formBuscar {
-          display: flex;
-          justify-content: space-between;
-          width: 100%; }
-          .header nav #navbarSupportedContent #formBuscar input {
-            width: 87%; }
-
-  .relleno-header {
-    height: 77.2px; }
 
   .contenido {
     width: 100%; }
@@ -522,7 +275,7 @@
       .contenido .contenido-flexible .video, .contenido .contenido-flexible .canal, .contenido .contenido-flexible .lista {
         flex-direction: row;
         justify-content: space-between;
-        align-content: center;
+        align-content: stretch;
         width: 100%;
         height: 150px; }
       .contenido .contenido-flexible .caja-imagen {
@@ -530,9 +283,9 @@
         align-items: center;
         width: 200px;
         min-width: 200px;
+        max-width: 200px;
         height: 150px; }
       .contenido .contenido-flexible .video img {
-        width: 200px;
         height: 150px; }
       .contenido .contenido-flexible .canal img {
         width: 138px;
@@ -541,52 +294,28 @@
         padding: 5px;
         overflow: auto;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: stretch;
         width: 100%;
         height: 150px; }
         .contenido .contenido-flexible .caja-texto .caja-texto p {
-          max-height: 50px;
+          min-height: 60px;
+          max-height: 100px;
           overflow: auto; }
         .contenido .contenido-flexible .caja-texto .caja-texto h5 {
-          height: 30%;
+          max-height: 50px;
           min-height: 20px;
-          overflow: auto; }
-
-  .widgets {
-    height: 100px;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center; }
-    .widgets .widget-1 {
-      width: 50%;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center; }
-    .widgets .widget-2 {
-      width: 30%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center; }
-
-  .footer {
-    padding: 1rem 0.625rem; } }
+          overflow: auto; } }
 @media (min-width: 992px) {
-  .header {
-    width: 98%;
-    height: 56px; }
-    .header nav {
-      height: 56px; }
-
-  .relleno-header {
-    height: 56px; }
+  .filtos {
+    display: flex;
+    flex-direction: row; }
 
   .contenido {
     width: 70%; }
     .contenido .video, .contenido .canal, .contenido .lista {
       justify-content: space-between;
-      align-content: center;
+      align-items: stretch;
       width: 862px;
       height: 152px; }
     .contenido .caja-imagen {
@@ -595,38 +324,23 @@
       width: 246px;
       height: 152px; }
     .contenido .video img {
-      width: 246px;
-      height: 138px; }
+      width: 246px; }
     .contenido .canal img {
       width: 138px;
       height: 138px; }
     .contenido .caja-texto {
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: stretch;
       width: 600px;
       height: 152px; }
     .contenido .caja-texto p {
-      height: 70%;
+      min-height: 50px;
+      max-height: 90px;
       overflow: auto; }
     .contenido .caja-texto h5 {
       min-height: 20px;
-      overflow: auto; }
-
-  .widgets {
-    height: 123px;
-    padding-left: 30px;
-    padding-right: 30px;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    align-content: center; }
-    .widgets .img-widget {
-      height: 83px; }
-    .widgets .widget-1 {
-      width: 460px;
-      display: flex;
-      justify-content: space-around; }
-    .widgets .widget-2 {
-      width: 350px; } }
+      max-height: 60px;
+      overflow: auto; } }
 
 /*# sourceMappingURL=contenido-buscar.css.map */

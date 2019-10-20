@@ -6,46 +6,31 @@
 package com.uytube;
 
 import Logica.DataType.DtCanal;
+import Logica.DataType.DtImagenUsuario;
 import Logica.DataType.DtUsuario;
 import Logica.Enumerados.Filtrado;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Formatter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-/**
- *
- * @author administrador
- */
+@MultipartConfig
 public class AltaUsuario extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AltaUsuario</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AltaUsuario at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -64,8 +49,11 @@ public class AltaUsuario extends HttpServlet {
             rd = request.getRequestDispatcher("/AltaUsuario.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
@@ -118,11 +106,28 @@ public class AltaUsuario extends HttpServlet {
 
             DtCanal CanUsu = new DtCanal(0, pCanal, pDescripcion, Priv);
             sys.altaUsuarioCanal(Usu, CanUsu);
+            DtUsuario nuevoUsuario = sys.obtenerUsuarioActual();
+            
+            Part partImagen = request.getPart("imagen");
+            String nombreArchivo = Paths.get(partImagen.getSubmittedFileName()).getFileName().toString();
+            InputStream archivoContenido = partImagen.getInputStream();
+            if (archivoContenido.available() > 0) {
+                byte[] byteArr = new byte[archivoContenido.available()];
+                archivoContenido.read(byteArr);
+                DtImagenUsuario dtiu = new DtImagenUsuario(nuevoUsuario.getNickname(), byteArr, nombreArchivo);
+                Fabrica.getInstancia().getIPersistenciaDeImagenes().create(dtiu);
+            }
+            
+            request.getSession().setMaxInactiveInterval(14400);
+            request.getSession().setAttribute("usuario", nuevoUsuario);
             response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
-
+            
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }

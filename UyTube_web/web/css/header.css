@@ -1,25 +1,21 @@
 .header {
   z-index: 9;
-  position: fixed;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  background-color: #00001a;
+  margin: 0px;
   left: 0px;
-  right: 0px;
-  margin-left: auto;
-  margin-right: auto; }
+  padding-left: 20px;
+  padding-right: 20px; }
   .header nav {
-    background-color: #00001a;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: space-between;
-    padding: 0.1rem 1rem; }
+    height: 100%; }
     .header nav .item-header {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      padding: 0rem 1rem; }
+      padding: 0rem 0rem; }
       .header nav .item-header #nombrePerfil {
         color: #fff; }
       .header nav .item-header .fotoLogo {
@@ -33,7 +29,6 @@
         border-radius: 50%; }
       .header nav .item-header .formBuscar {
         display: flex;
-        width: 500px;
         justify-content: center;
         flex-wrap: nowrap; }
         .header nav .item-header .formBuscar input {
@@ -43,14 +38,273 @@
           border-radius: 0.25rem;
           font-size: 1rem;
           padding: 0.375rem 0.75rem; }
+      .header nav .item-header a {
+        color: #fff;
+        text-decoration: none; }
       .header nav .item-header .icon-menu1 {
         color: #fff;
-        margin-right: 2rem;
-        margin-top: 7px;
+        margin-right: 16px;
+        margin-top: 8px;
         font-size: 1.62rem;
         cursor: pointer; }
     .header nav .btn {
       height: 32px;
       padding: 0px 10px; }
+
+@media (max-width: 340px) {
+  .header {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    height: 56px; }
+    .header nav {
+      height: 100%; }
+      .header nav .item-header1 {
+        padding-left: 0px;
+        padding-right: 0px;
+        width: 10%; }
+        .header nav .item-header1 .fotoLogo {
+          display: none; }
+      .header nav .item-header2 {
+        order: 2;
+        width: 90%; }
+      .header nav .item-header3 {
+        order: 3; }
+        .header nav .item-header3 .fotoPerfil {
+          display: none; }
+      .header nav #iniciar-sesion {
+        display: none; }
+      .header nav #nombrePerfil {
+        display: none; }
+
+  .relleno-header {
+    height: 56px; }
+
+  #navLogo {
+    justify-content: center;
+    align-items: center; }
+    #navLogo .icon-menu1 {
+      margin-left: 10px;
+      margin-right: 16px;
+      margin-top: 12px; }
+
+  #navbarSupportedContent {
+    width: 100%; }
+
+  #formBuscar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; }
+    #formBuscar input {
+      width: 100%; }
+    #formBuscar #btnBuscar {
+      display: none; } }
+@media (min-width: 341px) and (max-width: 387px) {
+  .header {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    height: 56px; }
+    .header nav {
+      height: 100%; }
+      .header nav .item-header1 {
+        padding-left: 0px;
+        padding-right: 0px;
+        width: 10%; }
+        .header nav .item-header1 .fotoLogo {
+          display: none; }
+      .header nav .item-header2 {
+        order: 2;
+        width: 90%; }
+      .header nav .item-header3 {
+        order: 3; }
+        .header nav .item-header3 .fotoPerfil {
+          display: none; }
+      .header nav #iniciar-sesion {
+        display: none; }
+      .header nav #nombrePerfil {
+        display: none; }
+
+  .relleno-header {
+    height: 56px; }
+
+  #navLogo {
+    justify-content: center;
+    align-items: center; }
+    #navLogo .icon-menu1 {
+      margin-left: 10px;
+      margin-right: 16px;
+      margin-top: 12px; }
+
+  #navbarSupportedContent {
+    width: 100%; }
+
+  #formBuscar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; }
+    #formBuscar input {
+      width: 100%; }
+    #formBuscar #btnBuscar {
+      display: none; } }
+@media (min-width: 388px) and (max-width: 500px) {
+  .header {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    height: 56px; }
+    .header nav {
+      height: 100%; }
+      .header nav .item-header1 {
+        padding-left: 5px;
+        padding-right: 0px;
+        width: 10%; }
+        .header nav .item-header1 .fotoLogo {
+          display: none; }
+      .header nav .item-header2 {
+        order: 2;
+        width: 90%; }
+      .header nav .item-header3 {
+        order: 3; }
+        .header nav .item-header3 .fotoPerfil {
+          display: none; }
+      .header nav #iniciar-sesion {
+        display: none; }
+      .header nav #nombrePerfil {
+        display: none; }
+
+  .relleno-header {
+    height: 56px; }
+
+  #navLogo {
+    justify-content: center;
+    align-items: center; }
+    #navLogo .icon-menu1 {
+      margin-left: 10px;
+      margin-right: 16px;
+      margin-top: 14px; }
+
+  #navbarSupportedContent {
+    width: 100%; }
+
+  #formBuscar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; }
+    #formBuscar input {
+      width: 100%; }
+    #formBuscar #btnBuscar {
+      display: none; } }
+@media (min-width: 501px) and (max-width: 575.98px) {
+  .header {
+    position: absolute;
+    width: 100%;
+    left: 0rem;
+    height: 56px;
+    justify-items: flex-start;
+    align-content: center; }
+    .header nav {
+      height: 100%; }
+    .header .item-header2 {
+      order: 2;
+      width: 65%; }
+    .header .item-header3 {
+      order: 3; }
+      .header .item-header3 .fotoPerfil {
+        display: none; }
+    .header #iniciar-sesion {
+      display: none; }
+    .header #nombrePerfil {
+      display: none; }
+
+  .relleno-header {
+    height: 56px; }
+
+  #navLogo {
+    justify-content: flex-start; }
+    #navLogo .icon-menu1 {
+      margin-left: 5px;
+      margin-right: 5px; }
+
+  #navbarSupportedContent {
+    width: 100%; }
+
+  #formBuscar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; }
+    #formBuscar input {
+      width: 100%; }
+    #formBuscar #btnBuscar {
+      display: none; } }
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .header {
+    position: absolute;
+    width: 100%;
+    left: 0rem;
+    height: 56px;
+    justify-items: flex-start;
+    align-content: center; }
+    .header nav {
+      height: 100%; }
+    .header .item-header2 {
+      order: 2;
+      width: 65%; }
+    .header .item-header3 {
+      order: 3; }
+      .header .item-header3 .fotoPerfil {
+        display: none; }
+    .header #iniciar-sesion {
+      display: none; }
+    .header #nombrePerfil {
+      display: none; }
+
+  .relleno-header {
+    height: 56px; }
+
+  #navLogo {
+    justify-content: flex-start; }
+
+  #navbarSupportedContent {
+    width: 100%; }
+    #navbarSupportedContent #formBuscar {
+      display: flex;
+      justify-content: space-between;
+      width: 100%; }
+      #navbarSupportedContent #formBuscar input {
+        width: 87%; }
+      #navbarSupportedContent #formBuscar #btnBuscar {
+        display: none; } }
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .header {
+    position: absolute;
+    width: 100%;
+    left: 0rem;
+    height: 56px; }
+    .header nav {
+      justify-content: space-between; }
+      .header nav #navLogo {
+        justify-content: space-between; }
+      .header nav #navbarSupportedContent {
+        width: 100%; }
+        .header nav #navbarSupportedContent #formBuscar {
+          display: flex;
+          justify-content: space-between;
+          width: 100%; }
+          .header nav #navbarSupportedContent #formBuscar input {
+            width: 87%; }
+
+  .relleno-header {
+    height: 56px; } }
+@media (min-width: 992px) {
+  .header {
+    position: fixed;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    height: 56px; }
+
+  .relleno-header {
+    height: 56px; } }
 
 /*# sourceMappingURL=header.css.map */

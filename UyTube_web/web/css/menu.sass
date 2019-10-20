@@ -1,0 +1,120 @@
+@import _colores
+@import _alturas
+
+//Estilos del menu
+.menu
+    max-height: 450px
+    z-index: 10
+    width: 0px
+    left: 0px
+    padding-top: 20px
+    //padding-left: 16px
+    background-color: $colorHeaderMenuFooter
+    overflow: auto
+    transition: all 250ms
+    ul
+        list-style: none
+        padding: 0px
+        margin: 0px
+        width: 100%
+        .titulo, .salir
+            border-top: 1px solid $colorHover
+        //Estilos de las titulos del menú
+        .titulo
+            text-align: center
+            padding: 0.5rem
+            margin: auto
+            color: $gris
+        li 
+            transition: border 0.3s
+            background-color: #08081a
+            display: block
+            width: 100%
+            label
+                height: 50px
+            .icon-menu1
+                color: $colorBlanco
+                margin: 1.5rem 1rem 0rem 3rem
+                font-size: 1.62rem
+                cursor: pointer
+            span 
+                text-align: center
+                width: 100%
+                color: $colorBlanco
+                margin-left: auto
+                margin-right: auto
+                //Estilos del logo para el menu
+                .fotoLogo
+                    height: 30px
+                    margin-bottom: 14px
+            //Estilos de los links del menú
+            a 
+                color: $colorBlanco
+                padding: 0.625rem 0.625rem 0.625rem 1rem
+                display: block
+                text-decoration: none
+                //padding-left: 10px
+            a span 
+                padding-left: 16px
+                
+//Al pasar por los links al pasar el raton, cambian de color
+.menu li a:hover
+    text-decoration: none
+    background-color: $colorHover
+
+.abrir
+    width: 16.625rem
+    left: 0px
+
+// Para un maximo de 340px ================================================================================  
+@media (max-width: 340px) 
+    .menu
+        position: absolute
+        top: 0px
+        left: -3px
+// Para dispositivos mayores a 340 y menores a 388 ==============================================================
+@media (min-width: 341px) and (max-width: 387px)
+    .menu
+        position: absolute
+        top: 0px
+        left: 0px
+// Para dispositivos mayores a 387 y menores a 500 ================================================================
+@media (min-width: 388px) and (max-width: 500px)
+    .menu
+        position: absolute
+        top: 0px
+        left: 0px
+        
+// Extra small devices (portrait phones, less than 576px) =======================================================
+@media (min-width: 501px) and (max-width: 575.98px)
+    .menu
+        position: absolute
+        top: 0px
+        left: 0px
+
+// Small devices (landscape phones, 576px and up) ================================================================
+@media (min-width: 576px) and (max-width: 767.98px)
+    .menu
+        position: absolute
+        top: 0px
+        left: 0px
+      
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px)
+    .menu
+        position: absolute
+        top: 0px
+        left: 0px
+
+        
+        
+
+// Large devices (desktops, 992px and up) =======================================================================
+@media (min-width: 992px)
+    .menu
+        position: fixed
+        top: $alturaHeader992
+        left: 0px
+      
+        

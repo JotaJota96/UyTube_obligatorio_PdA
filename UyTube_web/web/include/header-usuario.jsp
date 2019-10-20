@@ -8,7 +8,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
     <%
         IUsuario sys = Fabrica.getInstancia().getIUsuario();
         DtUsuario usu = sys.obtenerUsuarioActual();
@@ -36,23 +36,11 @@ and open the template in the editor.
                                 <%= usu.getNickname()%>
                             </a>
                         </div>	
-                        <div>
+                        <div class="fotoPerfil">
                             <a href="/uytube/usuario-consultar?id=<%= usu.getNickname()%>">
-                                <%
-                                 if (usu.getImagen() == null || usu.getImagen().equals("")) {
-                                %>
-                                    <img id="fotoPerfil" src="imagenes/ukp.png" alt="Perfil">
-                                <%
-                                } else {
-                                %>
-                                    <img id="fotoPerfil" src=<%= usu.getImagen()%> alt="Perfil">
-                                <%
-                                    }
-                                %>
+                                <img id="fotoPerfil" src="usuario-imagen?id=<%= usu.getNickname() %>" alt="Perfil">
                             </a>
                         </div>
-
-
                     </div>
                 </nav>					
             </header>

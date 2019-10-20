@@ -71,8 +71,11 @@ public class IniciarSesion extends HttpServlet {
             rd = request.getRequestDispatcher("/IniciarSesion.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
@@ -102,20 +105,24 @@ public class IniciarSesion extends HttpServlet {
             if (sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute("usuario") == null) {
                 DtUsuario usuario = sys.obtenerUsuarioActual();
                 //si coincide usuario y password y además no hay sesión iniciada
+                sesion.setMaxInactiveInterval(14400);
                 sesion.setAttribute("usuario", usuario);
 
                 //redirijo a página con información de login exitoso
                 rd = request.getRequestDispatcher("/");
             } else {
                 //lógica para login inválido
+                request.setAttribute("mostrarMsjError", true);
                 rd = request.getRequestDispatcher("/IniciarSesion.jsp");
             }
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
-            response.sendRedirect("");
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/IniciarSesion.jsp");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }

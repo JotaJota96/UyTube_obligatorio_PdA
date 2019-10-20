@@ -14,7 +14,7 @@
 <html lang="es">
     <%
         boolean propietario = (boolean) request.getAttribute("propietario");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
         DtUsuario usuario = (DtUsuario) request.getAttribute("usuario");
         DtCanal canal = (DtCanal) request.getAttribute("canal");
         ArrayList<DtUsuario> seguidos = (ArrayList) request.getAttribute("seguidos");
@@ -23,6 +23,8 @@
         ArrayList<DtListaDeReproduccion> listasRep = (ArrayList) request.getAttribute("listasRep");
         String ps = (String) request.getAttribute("ps");
     %>
+      
+    
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,7 +42,8 @@
     </head>
     <body>
 
-        <div class="container-fluid">
+        <%@ include file='include/ventana-modal_baja.html' %>
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
@@ -58,14 +61,14 @@
                 </div>
             </div>		
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">	
@@ -84,33 +87,38 @@
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <div class="container">
-                                    <div class="d-flex bd-highlight ">
+                                    <div class="d-block d-md-flex bd-highlight ">
                                         <div class="p-4 flex-fill bd-highlight">
                                             <div class="d-flex justify-content-center">
                                                 <%
-                                                    String textoAlternativo;
-                                                    String rutaDeImagenDePerfil;
-                                                    if (usuario.getImagen() == null || usuario.getImagen().equals("")) {
-                                                        rutaDeImagenDePerfil = "imagenes/ukp.png";
-                                                        textoAlternativo = "Imagen de perfil por defecto";
-                                                    } else {
-                                                        rutaDeImagenDePerfil = usuario.getImagen();
-                                                        textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
-                                                        //char contrabarra = 92;
-                                                        //char barra = 47;
-                                                        //rutaImagenPerfil = rutaImagenPerfil = rutaImagenPerfil.replace(contrabarra, barra);
-                                                    }
+                                                    // src="<%
                                                 %>
-                                                <img src="<%=rutaDeImagenDePerfil%>" class="rounded-circle" alt="<%=textoAlternativo%>" width="180" height="180"> 
+                                                <img src="usuario-imagen?id=<%= usuario.getNickname() %>" class="rounded-circle" alt="Imagen de perfil de <% usuario.getNickname(); %>" width="180" height="180"> 
                                             </div>
                                         </div>
+                                            
+                                            
                                         <div class="p-1 flex-fill bd-highlight ">
-                                            <div class="p-2 bd-highlight ">
-                                                <br><h3><%= usuario.getNombre() + " " + usuario.getApellido()%></h3>
-                                                <hr class="mb-1">
+                                            
+                                            <div class="d-flex bd-highlight ">
+                                                <div class="p-1 d-flex flex-fill bd-highlight">
+                                                    <br><h3><%= usuario.getNombre() + " " + usuario.getApellido()%></h3>
+                                                    <%
+                                                    if (sesionIniciada && propietario) {
+                                                    %>
+                                                        <button  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" class=" ml-5 btn btn-danger icon-remove-user" id="btnBaja">
+                                                            Darse de baja
+                                                        </button>
+                                                    <%  
+                                                    }
+                                                    %>
+                                                </div>
                                             </div>
+                                                <hr class="mb-2">
+                                                
                                             <div class="p-1 bd-highlight ">
                                                 <div class="d-flex bd-highlight ">
+                                                    
                                                     <div class="p-1 flex-fill bd-highlight ">
                                                         <p class="text-info"><%= canal.getNombre()%> &#x2714</p>
                                                     </div>
@@ -129,20 +137,39 @@
                                                             if (sesionIniciada && propietario) {
                                                         %>
                                                         <a href="usuario-modificar?id=<%= usuario.getNickname()%>">
-                                                            <button class="btn btn-primary" id="btnBuscar" type="submit">
-                                                                Modificar
+                                                            <button class="icon-cog btn btn-primary" id="btnBuscar" type="submit">
+                                                                Modificar usuario
                                                             </button>
-                                                        </a>
+                                                        </a>    
                                                         <%
                                                             }
                                                         %>
                                                         <%
-                                                            if (sesionIniciada && !propietario) {
-                                                        %>
-                                                        <button class="btn btn-primary" id="btnBuscar" type="submit">
-                                                            Seguir (IMPLENENTAR...)
-                                                        </button>
-                                                        <%
+                                                        if (sesionIniciada && !propietario) {
+                                                                boolean Sigue = false;
+                                                                DtUsuario actual = (DtUsuario)request.getSession().getAttribute("usuario");
+                                                                for (DtUsuario elem : seguidores){
+                                                                    if (elem.getNickname().equals(actual.getNickname())){
+                                                                        Sigue = true;
+                                                                    }
+                                                                }
+                                                                if (Sigue) {
+                                                                %>
+                                                                    <a href="usuario-seguir?id=<%= usuario.getNickname()%>">
+                                                                        <button class="btn btn-danger" id="btnBuscar" type="submit">
+                                                                            Dejar de seguir
+                                                                        </button>
+                                                                    </a>
+                                                                <%
+                                                                }else{
+                                                                %>
+                                                                    <a href="usuario-seguir?id=<%= usuario.getNickname()%>">
+                                                                        <button class="btn btn-primary" id="btnBuscar" type="submit">
+                                                                            Seguir
+                                                                        </button>
+                                                                    </a>
+                                                                <%
+                                                                }  
                                                             }
                                                         %>
                                                     </div>
@@ -158,11 +185,11 @@
                                             if (ps.equals("VIDEOS")) {
                                             %>    
 
-                                                <a class="nav-item nav-link active" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS</a>
+                                            <a class="nav-item nav-link active" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS (<%=videos.size()%>)</a>
                                             <%
                                             } else {
                                             %> 
-                                                <a class="nav-item nav-link" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS</a>
+                                                <a class="nav-item nav-link" id="refVideos" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-VIDEO" aria-selected="true">VIDEOS (<%=videos.size()%>)</a>
                                             <%
                                             }
                                             %>
@@ -170,16 +197,16 @@
                                             <%
                                             if (ps.equals("LISTAS")) {
                                             %>    
-                                                <a class="nav-item nav-link active" id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS</a>
+                                                <a class="nav-item nav-link active" id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS (<%=listasRep.size()%>)</a>
                                             <%
                                             } else {
                                             %> 
-                                                <a class="nav-item nav-link " id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS</a>
+                                                <a class="nav-item nav-link " id="refListas" data-toggle="tab" href="#listas" role="tab" aria-controls="nav-LISTAS" aria-selected="false">LISTAS (<%=listasRep.size()%>)</a>
                                             <%
                                             }
                                             %> 
-                                                <a class="nav-item nav-link " id="refSeguidores" data-toggle="tab" href="#seguidores" role="tab" aria-controls="nav-SEGUIDORES" aria-selected="false">SEGUIDORES</a>
-                                                <a class="nav-item nav-link " id="refSeguidos" data-toggle="tab" href="#seguidos" role="tab" aria-controls="nav-SEGUIDOS" aria-selected="false">SEGUIDOS</a>
+                                                <a class="nav-item nav-link " id="refSeguidores" data-toggle="tab" href="#seguidores" role="tab" aria-controls="nav-SEGUIDORES" aria-selected="false">SEGUIDORES (<%=seguidores.size()%>)</a>
+                                                <a class="nav-item nav-link " id="refSeguidos" data-toggle="tab" href="#seguidos" role="tab" aria-controls="nav-SEGUIDOS" aria-selected="false">SEGUIDOS (<%=seguidos.size()%>)</a>
                                             </div>
                                         </nav>
                                     </div>
@@ -208,7 +235,7 @@
                                                     );
                                             %>
                                             <!-- Video individual en la lista -->
-                                            <div class="d-flex bd-highlight ">
+                                            <div class="d-block d-md-flex bd-highlight ">
                                                 <div class="p-1 flex-shrink-1 bd-highlight ">
                                                     <div class="p-1 bd-highlight ">
                                                         <a href="video-consultar?id=<%= v.getId() %>">
@@ -259,7 +286,7 @@
                                                     for (DtListaDeReproduccion l : listasRep) {
                                                 %>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="lista-consultar?idUsu=<%= usuario.getNickname() %>&idList=<%= l.getId() %>">
+                                                    <a href="lista-consultar?id=<%= l.getId() %>">
                                                         <%= l.getNombre()%>
                                                     </a>
                                                 </li>

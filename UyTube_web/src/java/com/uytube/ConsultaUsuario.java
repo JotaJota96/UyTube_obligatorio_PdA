@@ -10,6 +10,7 @@ import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
 import Logica.Fabrica;
+import Logica.Interfaces.IPersistenciaDeImagenes;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class ConsultaUsuario extends HttpServlet {
             ArrayList<DtUsuario> seguidos = sys.listarUsuarioSeguidos();
             ArrayList<DtUsuario> seguidores = sys.listarUsuarioSeguidores();
             ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
-            ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(false);
+            ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(true);
             boolean sesionIniciada = sys.sesionIniciada();
 
             boolean usuarioPropietario = false;
@@ -72,8 +73,11 @@ public class ConsultaUsuario extends HttpServlet {
             rd.forward(request, response);
 
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }

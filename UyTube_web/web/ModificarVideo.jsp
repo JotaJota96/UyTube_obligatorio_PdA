@@ -15,7 +15,7 @@
     <%
         DtVideo video = (DtVideo) request.getAttribute("video");
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
     <head>
         <meta charset="UTF-8">
@@ -45,14 +45,14 @@
         <%
             }
         %>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">	
@@ -77,7 +77,8 @@
                                     <div class="form-group row">
                                         <div class="form-group col-md-9">
                                             <label for="inputNombre">Nombre</label>
-                                            <input value="<%= video.getNombre()%>" type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
+                                            <input idVideo="<%= video.getId() %>" value="<%= video.getNombre()%>" type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
+                                            <span id="msjNombre"></span>
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="inputDuracion">Duración</label>
@@ -176,5 +177,6 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/funciones.js"></script>
+        <script src="js/alta-modificar-video.js"></script>
     </body>
 </html>

@@ -4,9 +4,15 @@
     Author     : administrador
 --%>
 
+<%@page import="com.uytube.AltaUsuario"%>
+<%@page import="java.io.File"%>
+<%@page import="Logica.Fabrica"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+    <%
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,10 +38,10 @@
                 </div>
             </div>
         </div>
-        
+
          <% response.sendRedirect("presentacion"); %>
-         
-        <%@ include file='include/widgets.html' %>
+        
+         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 
         <script src="js/jquery-3.4.1.min_1.js"></script>

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ConsultaVideo extends HttpServlet {
-
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -42,15 +42,18 @@ public class ConsultaVideo extends HttpServlet {
             DtVideo video = sys.seleccionarVideo(idVideo);
             ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
             DtValoracion valoracionDada = null;
+            ArrayList<DtValoracion> valoraciones = null;
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
             if (sesionIniciada) {
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
                 valoracionDada = sys.obtenerValoracionDada();
+                if (propietarioDelVideo){
+                     valoraciones = sys.obtenerValoracionesDeVideo();
+                }
             }
-
             
-            String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), sesionIniciada);
+            String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, sesionIniciada);
             // no se si la siguiente linea es necesaria, pero por las dudas la pongo, para no dejar incoherencias en la logica
             sys.seleccionarUsuario(usuario.getNickname());
             request.setAttribute("usuario", usuario);
@@ -60,12 +63,16 @@ public class ConsultaVideo extends HttpServlet {
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("propietarioDelVideo", propietarioDelVideo);
             request.setAttribute("valoracionDada", valoracionDada);
+            request.setAttribute("valoraciones", valoraciones);
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
@@ -93,6 +100,35 @@ public class ConsultaVideo extends HttpServlet {
             switch (accion) {
                 case "like":
                 case "disLike": {
+                    /**
+                     * Estimado programador que está leyendo esto:
+                     * El codigo que comento a continuacion deberia ser el
+                     * correcto para esta funcionalidad, pero por alguna extraña
+                     * razon no funciona y debi implementar un parche. El codigo
+                     * en cuestion falla al hacer la siguiente secuencia de
+                     * pasos: 1- Iniciar sesion en el sitio web 2- Consultar un
+                     * video que no posee ninguna valoracion 3- Indicar que te
+                     * gusta el video Sibien la página muestra los contadores
+                     * correctamente, este cambio no se ve reflejado en la base
+                     * de datos, lo cual genera inconsistencias al recargar la
+                     * página
+                     * Si
+                     * usted encuentra el verdadero problema y lo logra
+                     * solucionar de manera correcta, por favor comuniquese
+                     * conmigo
+                     */
+                    /**
+                     * En respuesta al comentario anterior:
+                     * Parece ser que el
+                     * error estaba en la logica, JPA hacia cosas raras.
+                     * Modifiqué la funcion seleccionarUsuario(nickname) en la
+                     * Logica para que si se intenta seleccionar al usuario que
+                     * tiene la sesion iniciada, se apunte a usuarioActual y no
+                     * a una copia de la entidad (generada por JPA)
+                     * Descomento
+                     * el codigo que parecia no funcionar y comento el otro
+                     * (aunque sospecho que tampoco funcionaba)
+                     */
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     DtValoracion dtVal = null;
                     switch (accion) {
@@ -108,15 +144,43 @@ public class ConsultaVideo extends HttpServlet {
                     sys.seleccionarVideo(idVideo);
                     sys.valorarVideo(dtVal);
                     // obtiene las cantidades de valoraciones
-                    String strCantLikes = String.valueOf(sys.seleccionarVideo(idVideo).getCantLikes());
-                    String strCantDisLikes = String.valueOf(sys.seleccionarVideo(idVideo).getCantDisLikes());
+                    DtVideo dtv = sys.seleccionarVideo(idVideo);
+                    String strCantLikes = String.valueOf(dtv.getCantLikes());
+                    String strCantDisLikes = String.valueOf(dtv.getCantDisLikes());
                     // Las concatena para devolverlas
                     respuesta = strCantLikes + ":" + strCantDisLikes;
                     response.getWriter().write(respuesta);
-
-                    // ---- Acciones relacionadas a COMENTAR VIDEO ----
                     break;
+                    
+                    /*
+                    IAdmin parche = Fabrica.getInstancia().getIAdmin();
+                    
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    DtValoracion dtVal = null;
+                    switch (accion) {
+                        case "like":
+                            dtVal = new DtValoracion(TipoValoracion.LIKE, "");
+                            break;
+                        case "disLike":
+                            dtVal = new DtValoracion(TipoValoracion.DISLIKE, "");
+                            break;
+                    }       // se seleccionan el usuario due;o del video y el video (por las dudas)
+                    DtUsuario usuarioDuenioDelVideo = parche.obtenerPropietarioDeVideo(idVideo);
+                    parche.seleccionarUsuarioActual(((DtUsuario)request.getSession().getAttribute("usuario")).getNickname());
+                    parche.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
+                    parche.seleccionarVideo(idVideo);
+                    parche.altaValoracion(dtVal);
+                    // obtiene las cantidades de valoraciones
+                    DtVideo dtv = parche.seleccionarVideo(idVideo);
+                    String strCantLikes = String.valueOf(dtv.getCantLikes());
+                    String strCantDisLikes = String.valueOf(dtv.getCantDisLikes());
+                    // Las concatena para devolverlas
+                    respuesta = strCantLikes + ":" + strCantDisLikes;
+                    response.getWriter().write(respuesta);
+                    break;
+                    */
                 }
+                // ---- Acciones relacionadas a COMENTAR VIDEO ----
                 case "comentarVideo":
                 case "responderComentario": {
                     // Se extraen los datos recibidos
@@ -137,15 +201,14 @@ public class ConsultaVideo extends HttpServlet {
                         sys.altaComentario(dtc, idComentario);
                     }       // se obtienen los comentarios y se genera el HTML para actualizar la p'pagina
                     ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
-                    String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), true);
+                    String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, true);
                     // la funcion 'obtenerImagenesDeUsuarios' selecciona usuarios asi que por las dudas lo vuelvo a seleccionar para que la logica quede coherente
                     sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
                     respuesta = htmlComentarios;
                     response.getWriter().write(respuesta);
-
-                    // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
                     break;
                 }
+                // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
                 case "agregarALista":
                     /*
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
@@ -157,14 +220,26 @@ public class ConsultaVideo extends HttpServlet {
                     respuesta = "Esta funcionalidad no ha sido implementada aun...";
                     response.getWriter().write(respuesta);
                     break;
+                case "listarValoraciones":
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    respuesta = "";
+                    sys.seleccionarVideo(idVideo);
+                    ArrayList<DtValoracion> valoraciones = sys.obtenerValoracionesDeVideo();
+                    for (DtValoracion val : valoraciones){
+                        respuesta += val.getNickname() + ":" + val.getVal() + ";";
+                    }
+                    response.getWriter().write(respuesta);
+                    break;
                 default:
                     break;
             }
-
-        } catch (IOException | NumberFormatException e) {
+        } catch (Exception e) {
+            System.out.println("---- Exception ----");
             System.out.println(e.getMessage());
+            System.out.println("-------------------");
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }
@@ -180,24 +255,14 @@ public class ConsultaVideo extends HttpServlet {
     }// </editor-fold>
     
     
-    private ArrayList<String> obtenerImagenesDeUsuarios(ArrayList<DtComentario> comentarios){
-        ArrayList<String> ret = new ArrayList();
-        IUsuario sys = Fabrica.getInstancia().getIUsuario();
-        for (DtComentario c : comentarios){
-            ret.add(sys.seleccionarUsuario(c.getNickname()).getImagen());
-        }
-        return ret;
-    }
-    
-    private String htmlDeSeccionDeComentarios(ArrayList<DtComentario> comentarios, ArrayList<String> imagenes, boolean  mostrarBotonResponder){
+    private String htmlDeSeccionDeComentarios(ArrayList<DtComentario> comentarios, boolean  mostrarBotonResponder){
         if (comentarios == null || comentarios.isEmpty()){
             return "";
         }
         
         String ret = "";
         DtComentario c = comentarios.remove(0);
-        String imgPerfil = "imagenes/ukp.png";
-        if ( ! imagenes.isEmpty())  imgPerfil = imagenes.remove(0);
+        String imgPerfil = "usuario-imagen?id=" + c.getNickname();
         String strFecha = new SimpleDateFormat("dd/MM/yyyy").format(c.getFecha());
         
         ret += "    <div class=\"media\">";
@@ -216,14 +281,14 @@ public class ConsultaVideo extends HttpServlet {
         ret += "            <br>";
         
         if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() > c.getNivelSubComentario())){
-                ret += htmlDeSeccionDeComentarios(comentarios, imagenes, mostrarBotonResponder);
+                ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
         }
         
         ret += "    </div>";
         ret += "</div>";
         
         if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() == c.getNivelSubComentario())){
-                ret += htmlDeSeccionDeComentarios(comentarios, imagenes, mostrarBotonResponder);
+                ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
         }
         return ret;
     }

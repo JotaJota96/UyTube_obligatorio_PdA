@@ -7,6 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+    <%
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,25 +27,43 @@
     </head>
     <body>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
+                    <%
+                        if (sesionIniciada) {
+                    %>
+                    <%@ include file='include/header-usuario.jsp' %>
+                    <%                    } else {
+                    %>
                     <%@ include file='include/header-visitante.jsp' %>
+                    <%
+                        }
+                    %>
                 </div>
             </div>		
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
+                    <section class="principal">					
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%                        } else {
+                        %>
                         <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">
@@ -56,12 +77,16 @@
                                             <input type="text"name="user" id="txtUsuario" class="form-control mb-4" placeholder="nickname/email" required autofocus>
                                             <label for="inputPassword" name="password" class="sr-only" id="label_contrasenia">Contraseña</label>
                                             <input type="password" name="password" id="input_contraseña" class="form-control mb-4" placeholder="Contraseña" required>
-                                            <div class="checkbox mb-3">
-                                                <label>
-                                                    <input type="checkbox" value="remember-me" id="check_recuerdarme"> Recuerdarme
-                                                    <p id="mitexto"></p>
-                                                </label>
+                                            <%
+                                                boolean mostrarMsjError = (request.getAttribute("mostrarMsjError") != null);
+                                                if (mostrarMsjError) {
+                                            %>
+                                            <div class="mb-3">
+                                                <span id="msjError" style="color: red">El usuario o la contraseña son incorrectos</span>
                                             </div>
+                                            <%
+                                                }
+                                            %>
                                             <button class="btn btn-lg btn-primary btn-block mb-4" type="submit" id="btn_Ingresar">Ingresar</button>
 
                                             <a href="/uytube/usuario-agregar" >Registrase</a>
