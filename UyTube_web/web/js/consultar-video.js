@@ -74,14 +74,40 @@ $("#btnCancelar").on('click',function(){
     $("#input_descripcion").val("");
 });
 
-//boton agregar lista de reproduccion
-$("#btnAgregarALista").on('click',function(){
-    $.post("/uytube/video-consultar",
+//boton agregar a lista de reproduccion
+var agregarALista = function(){
+    //$("#agregarALista .close").click(); //Cierra el modal
+    //alert($("#defaultCheck1").value());
+    alert("Diste click");
+    // $.post("/uytube/video-consultar",
+    //     {
+    //       accion: "agregarALista" 
+    //     }, function(respuesta, status){
+        
+    // });
+};
+
+// Checkbox para agregar o quitar de la Lista de Reproduccion
+$(".checkLista").on('change', function(){
+   
+    if($(this).prop('checked') == true){
+        alert($(this).val()+", esta seleccionado");
+        $.post("/uytube/video-consultar",
         {
           accion: "agregarALista" 
         }, function(respuesta, status){
-        alert(respuesta);
-    });
+            alert(respuesta);
+        });
+       
+    }else{
+        alert($(this).val()+", no esta seleccionado");
+        $.post("/uytube/video-consultar",
+        {
+          accion: "agregarALista" 
+        }, function(respuesta, status){
+            alert(respuesta);
+        });
+    }
 });
 
 //boton agregar lista de reproduccion
