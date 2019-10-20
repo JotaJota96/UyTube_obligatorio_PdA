@@ -38,21 +38,9 @@ and open the template in the editor.
                         </div>	
                         <div class="fotoPerfil">
                             <a href="/uytube/usuario-consultar?id=<%= usu.getNickname()%>">
-                                <%
-                                 if (usu.getImagen() == null || usu.getImagen().equals("")) {
-                                %>
-                                    <img id="fotoPerfil" src="imagenes/ukp.png" alt="Perfil">
-                                <%
-                                } else {
-                                %>
-                                    <img id="fotoPerfil" src=<%= usu.getImagen()%> alt="Perfil">
-                                <%
-                                    }
-                                %>
+                                <img id="fotoPerfil" src="usuario-imagen?id=<%= usu.getNickname() %>" alt="Perfil">
                             </a>
                         </div>
-
-
                     </div>
                 </nav>					
             </header>
