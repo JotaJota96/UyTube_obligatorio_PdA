@@ -1,8 +1,10 @@
 package Logica;
 
 import Logica.Controladores.CAdmin;
+import Logica.Controladores.CPersistenciaDeImagenes;
 import Logica.Controladores.CUsuario;
 import Logica.Interfaces.IAdmin;
+import Logica.Interfaces.IPersistenciaDeImagenes;
 import Logica.Interfaces.IUsuario;
 
 
@@ -29,5 +31,10 @@ public class Fabrica {
     /* Crea una unicia instancia del controlador CUsuario */
     public IUsuario getIUsuario(){
         return CUsuario.getInstancia();
+    }
+    
+    /* Crea una unicia instancia del controlador CPersistenciaDeImagenes */
+    public IPersistenciaDeImagenes getIPersistenciaDeImagenes(){
+        return CPersistenciaDeImagenes.getInstancia();
     }
 }

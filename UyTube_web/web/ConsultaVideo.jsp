@@ -188,15 +188,8 @@
                                     <!-- IMAGEN DEL USUARIO Y NOMBRE DEL CANAL -->
                                     <div class="row">
                                         <%
-                                            String textoAlternativo;
-                                            String rutaDeImagenDePerfil;
-                                            if (usuario.getImagen() == null || usuario.getImagen().equals("")) {
-                                                rutaDeImagenDePerfil = "imagenes/ukp.png";
-                                                textoAlternativo = "Imagen de perfil por defecto";
-                                            } else {
-                                                rutaDeImagenDePerfil = usuario.getImagen();
-                                                textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
-                                            }
+                                            String textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
+                                            String rutaDeImagenDePerfil = "usuario-imagen?id=" + usuario.getNickname();
                                         %>
                                         <div class="bd-highlight">
                                             <img class="align-self-center mr-3" src="<%= rutaDeImagenDePerfil%>" width="70" height="70" alt="<%= textoAlternativo%>">

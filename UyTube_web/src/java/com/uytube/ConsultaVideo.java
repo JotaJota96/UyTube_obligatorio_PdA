@@ -8,7 +8,6 @@ import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.TipoValoracion;
 import Logica.Fabrica;
-import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -54,7 +53,7 @@ public class ConsultaVideo extends HttpServlet {
                 }
             }
             
-            String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), sesionIniciada);
+            String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, sesionIniciada);
             // no se si la siguiente linea es necesaria, pero por las dudas la pongo, para no dejar incoherencias en la logica
             sys.seleccionarUsuario(usuario.getNickname());
             request.setAttribute("usuario", usuario);
@@ -202,7 +201,7 @@ public class ConsultaVideo extends HttpServlet {
                         sys.altaComentario(dtc, idComentario);
                     }       // se obtienen los comentarios y se genera el HTML para actualizar la p'pagina
                     ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
-                    String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), true);
+                    String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, true);
                     // la funcion 'obtenerImagenesDeUsuarios' selecciona usuarios asi que por las dudas lo vuelvo a seleccionar para que la logica quede coherente
                     sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
                     respuesta = htmlComentarios;
@@ -256,29 +255,14 @@ public class ConsultaVideo extends HttpServlet {
     }// </editor-fold>
     
     
-    private ArrayList<String> obtenerImagenesDeUsuarios(ArrayList<DtComentario> comentarios){
-        ArrayList<String> ret = new ArrayList();
-        IUsuario sys = Fabrica.getInstancia().getIUsuario();
-        String img;
-        for (DtComentario c : comentarios){
-            img = sys.seleccionarUsuario(c.getNickname()).getImagen();
-            if (img == null || img.equals("")){
-                img = "imagenes/ukp.png";
-            }
-            ret.add(img);
-        }
-        return ret;
-    }
-    
-    private String htmlDeSeccionDeComentarios(ArrayList<DtComentario> comentarios, ArrayList<String> imagenes, boolean  mostrarBotonResponder){
+    private String htmlDeSeccionDeComentarios(ArrayList<DtComentario> comentarios, boolean  mostrarBotonResponder){
         if (comentarios == null || comentarios.isEmpty()){
             return "";
         }
         
         String ret = "";
         DtComentario c = comentarios.remove(0);
-        String imgPerfil = "imagenes/ukp.png";
-        if ( ! imagenes.isEmpty())  imgPerfil = imagenes.remove(0);
+        String imgPerfil = "usuario-imagen?id=" + c.getNickname();
         String strFecha = new SimpleDateFormat("dd/MM/yyyy").format(c.getFecha());
         
         ret += "    <div class=\"media\">";
@@ -297,14 +281,14 @@ public class ConsultaVideo extends HttpServlet {
         ret += "            <br>";
         
         if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() > c.getNivelSubComentario())){
-                ret += htmlDeSeccionDeComentarios(comentarios, imagenes, mostrarBotonResponder);
+                ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
         }
         
         ret += "    </div>";
         ret += "</div>";
         
         if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() == c.getNivelSubComentario())){
-                ret += htmlDeSeccionDeComentarios(comentarios, imagenes, mostrarBotonResponder);
+                ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
         }
         return ret;
     }

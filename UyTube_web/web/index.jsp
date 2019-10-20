@@ -4,6 +4,9 @@
     Author     : administrador
 --%>
 
+<%@page import="com.uytube.AltaUsuario"%>
+<%@page import="java.io.File"%>
+<%@page import="Logica.Fabrica"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -35,10 +38,10 @@
                 </div>
             </div>
         </div>
-        
+
          <% response.sendRedirect("presentacion"); %>
-         
-        <%@ include file='include/widgets.html' %>
+        
+         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 
         <script src="js/jquery-3.4.1.min_1.js"></script>

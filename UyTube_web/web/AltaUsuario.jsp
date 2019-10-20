@@ -31,11 +31,13 @@
         <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
+
                     <%
                         if (sesionIniciada) {
                     %>
                     <%@ include file='include/header-usuario.jsp' %>
-                    <%                    } else {
+                    <%
+                        } else {
                     %>
                     <%@ include file='include/header-visitante.jsp' %>
                     <%
@@ -59,7 +61,8 @@
                             if (sesionIniciada) {
                         %>
                         <%@ include file='include/menu-usuario.jsp' %>
-                        <%                        } else {
+                        <%
+                            } else {
                         %>
                         <%@ include file='include/menu-visitante.jsp' %>
                         <%
@@ -68,13 +71,13 @@
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <div class="principal d-flex flex-row justify-content-center">
-                                    <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
+                                    <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">
                                         <form class="form-signin" action="/uytube/usuario-agregar" method="post" enctype="multipart/form-data">
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
                                             <input class="form-control" type="text" name="nickname" placeholder="Nickname" id="input_Nickname" required>
                                             <span class="small" id="msjNickname"></span>
                                             <br>
-                                            
+
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <input type="text" class="form-control" name="nombre" id="input_Nombre" placeholder="Nombre" required>
@@ -114,10 +117,9 @@
 
 
                                             <label id="label_email">Imagen de perfil</label>
-
+                                            
                                             <div class="form-group">
-                                                <input disabled="true" accept=".PNG,.JPG,.jpg,.png" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
-                                                <span id='message'>(Funcionalidad no disponible)</span><br>
+                                                <input id="input_Imagen_Perfil" name="imagen" accept=".PNG,.JPG,.jpg,.png" type="file" class="file" multiple=false data-preview-file-type="any"><br>
                                                 <small class="text-muted">Opcional*</small>
                                             </div>
 

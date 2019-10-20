@@ -99,7 +99,7 @@
                             <section class="contenido-flexible">							
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
-                                        <form class="form-signin" action="/uytube/usuario-modificar" method="post" enctype="multipart/form-data">
+                                        <form class="form-signin" action="usuario-modificar" method="post" enctype="multipart/form-data">
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
                                             <input value="<%= usuario.getNickname()%>" class="form-control" type="text" name="nickname" readonly="readonly" placeholder="Nickname" id="input_Nickname" required><br>
                                             <div class="row">
@@ -168,10 +168,8 @@
                                             <br>   
                                             <label id="label_email">Imagen de perfil</label>	
                                             <div class="form-group">
-                                                <input disabled="true" name="imagen" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
-                                                <span id='message'>(Funcionalidad no disponible)</span><br>
+                                                <input id="input_Imagen_Perfil" name="imagen" accept=".PNG,.JPG,.jpg,.png" type="file" class="file" multiple=false data-preview-file-type="any"><br>
                                             </div>
-
 
                                             <hr class="mb-4">
 
