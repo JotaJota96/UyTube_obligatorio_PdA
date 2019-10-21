@@ -13,11 +13,9 @@ import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,7 +47,19 @@ public class ModificarUsuario extends HttpServlet {
 
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
-
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                System.out.println("---- Exception ----");
+                System.out.println(msj);
+                System.out.println("-------------------");
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             String nick = request.getParameter("id");
 
             DtUsuario usuario = sys.seleccionarUsuario(nick);
@@ -93,6 +103,20 @@ public class ModificarUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                System.out.println("---- Exception ----");
+                System.out.println(msj);
+                System.out.println("-------------------");
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             String pNickname = request.getParameter("nickname");
             String pNombre = request.getParameter("nombre");
             String pApellido = request.getParameter("apellido");
@@ -103,8 +127,6 @@ public class ModificarUsuario extends HttpServlet {
             String pCanal = request.getParameter("canal");
             String pDescripcion = request.getParameter("descripcion");
             String pImaguen = request.getParameter("imagen");
-
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
 
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
             Date fechaDate = null;

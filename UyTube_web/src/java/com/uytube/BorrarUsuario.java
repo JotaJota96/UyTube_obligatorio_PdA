@@ -5,11 +5,9 @@
  */
 package com.uytube;
 
-import Logica.Clases.Usuario;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +31,19 @@ public class BorrarUsuario extends HttpServlet {
             throws ServletException, IOException {
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes realizar esta acción";
+                System.out.println("---- Exception ----");
+                System.out.println(msj);
+                System.out.println("-------------------");
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             sys.bajaUsuario();
             request.getSession().invalidate();
             

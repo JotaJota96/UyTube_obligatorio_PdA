@@ -9,7 +9,6 @@ import Logica.DataType.DtUsuario;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +27,19 @@ public class AgregarVideoAListaReproduccion extends HttpServlet {
             throws ServletException, IOException {
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                System.out.println("---- Exception ----");
+                System.out.println(msj);
+                System.out.println("-------------------");
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             String pIDVideo = request.getParameter("idvideo");
             String pIDLista = request.getParameter("idlista");
             int IDVideo = Integer.valueOf(pIDVideo);

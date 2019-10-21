@@ -10,7 +10,6 @@ import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,9 +40,22 @@ public class ModificarVideo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                System.out.println("---- Exception ----");
+                System.out.println(msj);
+                System.out.println("-------------------");
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             int id = Integer.parseInt(request.getParameter("id"));
 
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
             boolean sesionIniciada = sys.sesionIniciada();
             ArrayList<String> cate = sys.listarCategorias();
             DtVideo video = sys.seleccionarVideo(id);
@@ -79,6 +91,19 @@ public class ModificarVideo extends HttpServlet {
 
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                System.out.println("---- Exception ----");
+                System.out.println(msj);
+                System.out.println("-------------------");
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             String pNombre = request.getParameter("nombre");
             String pDuracion = request.getParameter("duracion");
             String pUrl = request.getParameter("url");

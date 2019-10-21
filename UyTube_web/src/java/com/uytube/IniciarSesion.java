@@ -9,7 +9,6 @@ import Logica.DataType.DtUsuario;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +37,12 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            
+            if (sys.sesionIniciada()){
+                response.sendRedirect("");
+                return;
+            }
 
             DtUsuario usuario = (DtUsuario) request.getSession().getAttribute("usuario");
             boolean sesReq = usuario != null;

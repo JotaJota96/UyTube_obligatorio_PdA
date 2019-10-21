@@ -42,6 +42,19 @@ public class ModificarListaReproduccion extends HttpServlet {
             throws ServletException, IOException {
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                System.out.println("---- Exception ----");
+                System.out.println(msj);
+                System.out.println("-------------------");
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             boolean sesionIniciada = sys.sesionIniciada();
             ArrayList<String> cate = sys.listarCategorias();
             String usuario = request.getParameter("idUsu");
@@ -83,13 +96,23 @@ public class ModificarListaReproduccion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                System.out.println("---- Exception ----");
+                System.out.println(msj);
+                System.out.println("-------------------");
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
             
             String pPrivacidad = request.getParameter("privacidad");
             String pCategoria = request.getParameter("categoria");
             String pNombre = request.getParameter("nombre");
-            
-
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
             
             DtUsuario usu = sys.obtenerUsuarioActual();
             
