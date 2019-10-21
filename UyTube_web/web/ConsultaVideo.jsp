@@ -337,7 +337,10 @@
             }
         </style>
 
-        <!-- Modal -->
+        <!-- Modal Agregar a lista de reproduccion -->
+        <%    
+            if (sesionIniciada){
+        %>
         <div class="modal fade" id="ventanaModalAgregarALista" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
@@ -387,6 +390,9 @@
             </div>
         </div>
 
+        <%
+            }
+        %>
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 
