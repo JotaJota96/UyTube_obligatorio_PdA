@@ -84,7 +84,7 @@
 
                                     <!-- BOTONES DESPLEGABLES-->
 
-                                    <%@ include file='include/filtro-visible.html' %>
+                                    <%@ include file='include/filtro-visible.jsp' %>
 
                                     <!--FIN DE LOS BOTONES-->
 
