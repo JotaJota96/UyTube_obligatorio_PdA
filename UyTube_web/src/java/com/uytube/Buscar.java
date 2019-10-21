@@ -35,6 +35,7 @@ public class Buscar extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             //-----------------------------------------------------
@@ -44,14 +45,6 @@ public class Buscar extends HttpServlet {
             String Orden = request.getParameter("orden");
             //------------------------------------------------------
             ArrayList<Object> Ret = null;
-            
-            System.out.println("-------------------------");
-            System.out.println("Busqueda a realizar con los siguientes parametros");
-            System.out.println("categoria: '" + Categoria + "'");
-            System.out.println("texto: '" + Texto + "'");
-            System.out.println("filtro: '" + Filtro + "'");
-            System.out.println("orden: '" + Orden + "'");
-                System.out.println("-------------------------");
             
             if (Categoria == null || Categoria.equalsIgnoreCase("")) {
                 Filtrado Fil = Filtrado.TODO;
@@ -79,18 +72,13 @@ public class Buscar extends HttpServlet {
                     Texto = Texto.replaceAll(comilla, vacio);
                 }
                 
-                System.out.println("texto a buscar: '" + Texto + "'");
-                System.out.println("Filtro a utilizar: " + Fil);
-                System.out.println("Orden a utilizar: " + ord);
-                
                 Ret = sys.buscar(Texto, Fil, ord);
             } else {
-                System.out.println("Categoria a buscar: " + Categoria);
                 Categoria = Categoria.toUpperCase();
                 Ret = sys.buscar(Categoria);
             }
-            System.out.println("Cantidad de resultados a devolver: " + Ret.size());
-            
+            Funciones.Funciones.showLog("Cantidad de resultados a devolver: ", String.valueOf(Ret.size()));
+
             request.setAttribute("Lista", Ret);
 
             RequestDispatcher rd; //objeto para despachar
@@ -98,9 +86,7 @@ public class Buscar extends HttpServlet {
             rd.forward(request, response);
             
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");

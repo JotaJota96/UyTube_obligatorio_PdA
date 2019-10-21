@@ -32,6 +32,7 @@ public class ConsultaVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String strIDVideo = request.getParameter("id");
@@ -74,9 +75,7 @@ public class ConsultaVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
@@ -95,6 +94,7 @@ public class ConsultaVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String accion = request.getParameter("accion");
@@ -259,9 +259,7 @@ public class ConsultaVideo extends HttpServlet {
                     break;
             }
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");

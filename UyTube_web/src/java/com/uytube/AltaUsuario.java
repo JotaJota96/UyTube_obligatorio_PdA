@@ -41,6 +41,7 @@ public class AltaUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             
@@ -53,9 +54,7 @@ public class AltaUsuario extends HttpServlet {
             rd = request.getRequestDispatcher("/AltaUsuario.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
@@ -75,6 +74,7 @@ public class AltaUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             String pNickname = request.getParameter("nickname");
             String pNombre = request.getParameter("nombre");
@@ -127,9 +127,7 @@ public class AltaUsuario extends HttpServlet {
             response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
             
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");

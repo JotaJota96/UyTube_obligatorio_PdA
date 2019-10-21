@@ -35,6 +35,7 @@ public class IniciarSesion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             
@@ -48,9 +49,10 @@ public class IniciarSesion extends HttpServlet {
             boolean sesReq = usuario != null;
             boolean sesSys = sys.sesionIniciada();
 
-            System.out.println("Intento de carga de pagina /inicio-sesion");
-            System.out.println("Sesion en req: " + sesReq);
-            System.out.println("Sesion en sys: " + sesSys);
+            String tit = "Intento de carga de pagina /inicio-sesion";
+            String msj = "Sesion en req: " + sesReq;
+            msj += "\nSesion en sys: " + sesSys;
+            Funciones.Funciones.showLog(tit, msj);
 
             /**
              * Descripción del siguiente IF sesReq sesSys accion a realizar 0 0
@@ -76,9 +78,7 @@ public class IniciarSesion extends HttpServlet {
             rd = request.getRequestDispatcher("/IniciarSesion.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
@@ -97,6 +97,7 @@ public class IniciarSesion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
 
@@ -122,9 +123,7 @@ public class IniciarSesion extends HttpServlet {
             }
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");

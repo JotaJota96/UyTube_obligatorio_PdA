@@ -39,14 +39,13 @@ public class ModificarVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             
             if (!sys.sesionIniciada()){
                 String msj = "No puedes acceder a esta página";
-                System.out.println("---- Exception ----");
-                System.out.println(msj);
-                System.out.println("-------------------");
+                Funciones.Funciones.showLog("Acceso denegado", msj);
                 RequestDispatcher rd; //objeto para despachar
                 request.setAttribute("mensajeError", msj);
                 rd = request.getRequestDispatcher("/401.jsp");
@@ -67,9 +66,7 @@ public class ModificarVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/ModificarVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
@@ -88,15 +85,13 @@ public class ModificarVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             
             if (!sys.sesionIniciada()){
                 String msj = "No puedes acceder a esta página";
-                System.out.println("---- Exception ----");
-                System.out.println(msj);
-                System.out.println("-------------------");
+                Funciones.Funciones.showLog("Acceso denegado", msj);
                 RequestDispatcher rd; //objeto para despachar
                 request.setAttribute("mensajeError", msj);
                 rd = request.getRequestDispatcher("/401.jsp");
@@ -148,9 +143,7 @@ public class ModificarVideo extends HttpServlet {
             
             response.sendRedirect("video-consultar?id=" + idNuevoVideo);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
