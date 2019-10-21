@@ -92,8 +92,8 @@
                                             <br>
 
                                             <input class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start"><br>
-                                            <input class="form-control" type="password" name="password" placeholder="Contraseña" id="input_Contrasenia" onkeyup="check()" required><br>
-                                            <input class="form-control" type="password" placeholder="Repita contraseña" id="input_Repetir_contraseña" onkeyup="check()" required>
+                                            <input class="form-control" type="password" name="password" placeholder="Contraseña" id="input_Contrasenia" onfocus="borrar()" required><br>
+                                            <input class="form-control" type="password" placeholder="Repita contraseña" id="input_Repetir_contraseña" onblur="check()" required>
                                             <span class="small" id='message'></span>
 
                                             <div class="d-block my-3">
