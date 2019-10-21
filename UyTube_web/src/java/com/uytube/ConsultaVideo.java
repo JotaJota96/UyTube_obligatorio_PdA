@@ -215,19 +215,36 @@ public class ConsultaVideo extends HttpServlet {
                     break;
                 }
                 // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
-                case "agregarALista":
-                    /*
+                case "agregarALista":{
+                    
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     int idLista = Integer.valueOf(request.getParameter("idLista"));
                     
                     sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                    sys.seleccionarVideo(idVideo);
                     sys.agregarVideoAListaDeReproduccion(idLista);
-                     */
+                     
                     
-                    respuesta = "Esta funcionalidad no ha sido implementada aun...";
+                    respuesta = "ok";
                     response.getWriter().write(respuesta);
                     break;
-                case "listarValoraciones":
+                }
+                case "quitarDeLista":{
+                    
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    int idLista = Integer.valueOf(request.getParameter("idLista"));
+                    
+                    sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+                    sys.seleccionarListaDeReproduccion(idLista);
+                    sys.quitarVideoDeListaDeReproduccion(idVideo);
+                    sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                    
+                    respuesta = "ok";
+                    response.getWriter().write(respuesta);
+                    break;
+                }
+                    
+                case "listarValoraciones":{
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     respuesta = "";
                     sys.seleccionarVideo(idVideo);
@@ -237,6 +254,7 @@ public class ConsultaVideo extends HttpServlet {
                     }
                     response.getWriter().write(respuesta);
                     break;
+                }
                 default:
                     break;
             }

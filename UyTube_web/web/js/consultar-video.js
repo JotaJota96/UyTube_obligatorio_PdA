@@ -89,23 +89,30 @@ var agregarALista = function(){
 
 // Checkbox para agregar o quitar de la Lista de Reproduccion
 $(".checkLista").on('change', function(){
-   
-    if($(this).prop('checked') == true){
-        alert($(this).val()+", esta seleccionado");
+    var id_video = $("#video").attr("value");
+    var id_lista = $(this).val();
+    if($(this).prop('checked') == true){  
         $.post("/uytube/video-consultar",
         {
-          accion: "agregarALista" 
+          accion: "agregarALista",
+          idVideo: id_video,
+          idLista: id_lista
         }, function(respuesta, status){
-            alert(respuesta);
+            if(respuesta != "ok"){
+                alert("No se ha podido agregar el video a la lista.")
+            }
         });
        
     }else{
-        alert($(this).val()+", no esta seleccionado");
         $.post("/uytube/video-consultar",
         {
-          accion: "agregarALista" 
+          accion: "quitarDeLista",
+          idVideo: id_video,
+          idLista: id_lista
         }, function(respuesta, status){
-            alert(respuesta);
+            if(respuesta != "ok"){
+                alert("No se ha podido quitar el video de la lista.")
+            }
         });
     }
 });
