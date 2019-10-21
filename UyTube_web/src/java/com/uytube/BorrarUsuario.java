@@ -5,11 +5,9 @@
  */
 package com.uytube;
 
-import Logica.Clases.Usuario;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,8 +29,20 @@ public class BorrarUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes realizar esta acción";
+                Funciones.Funciones.showLog("Acceso denegado", msj);
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             sys.bajaUsuario();
             request.getSession().invalidate();
             
@@ -40,9 +50,7 @@ public class BorrarUsuario extends HttpServlet {
             rd = request.getRequestDispatcher("/");
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");

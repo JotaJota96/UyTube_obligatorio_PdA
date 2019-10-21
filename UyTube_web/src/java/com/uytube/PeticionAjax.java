@@ -32,7 +32,6 @@ public class PeticionAjax extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         
         try {
             /*
          Aca debe recibir un parametor de nombre accion el cual define cual es la funcion
@@ -43,10 +42,6 @@ public class PeticionAjax extends HttpServlet {
             // datos recibidos
             String accion = request.getParameter("accion"); // obtiene lo enviado por AJAX
             String dato = request.getParameter("dato"); // obtiene lo enviado por AJAX
-            
-            System.out.println("-- Peticion AJAX --");
-            System.out.println("accion: " + accion);
-            System.out.println("dato: " + dato);
             
             // prepara respuesta
             response.setContentType("text/plain");  //Set content type of the response so that jQuery knows what it can expect.
@@ -89,12 +84,11 @@ public class PeticionAjax extends HttpServlet {
                     }
                     break;
             }
-            System.out.println("Respuesta: " + respuesta);
+            Funciones.Funciones.showLog(request, response);
+            Funciones.Funciones.showLog("Respuesta", respuesta);
             response.getWriter().write(respuesta);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
