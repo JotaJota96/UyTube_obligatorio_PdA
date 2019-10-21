@@ -3,6 +3,7 @@ package com.uytube;
 import Funciones.Funciones;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
+import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
@@ -35,7 +36,7 @@ public class ConsultaVideo extends HttpServlet {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String strIDVideo = request.getParameter("id");
             int idVideo = Integer.valueOf(strIDVideo);
-
+            
             DtUsuario usuario = sys.obtenerPropietarioDeVideo(idVideo);
             sys.seleccionarUsuario(usuario.getNickname());
             DtCanal canal = sys.obtenerCanalDeUsuario();
@@ -45,12 +46,16 @@ public class ConsultaVideo extends HttpServlet {
             ArrayList<DtValoracion> valoraciones = null;
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
+            ArrayList<DtListaDeReproduccion> listas = null;
             if (sesionIniciada) {
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
                 valoracionDada = sys.obtenerValoracionDada();
                 if (propietarioDelVideo){
-                     valoraciones = sys.obtenerValoracionesDeVideo();
+                    valoraciones = sys.obtenerValoracionesDeVideo();
                 }
+                sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+                listas = sys.listarListasDeReproduccionDeUsuario(true);
+                sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
             }
             
             String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, sesionIniciada);
@@ -64,6 +69,7 @@ public class ConsultaVideo extends HttpServlet {
             request.setAttribute("propietarioDelVideo", propietarioDelVideo);
             request.setAttribute("valoracionDada", valoracionDada);
             request.setAttribute("valoraciones", valoraciones);
+            request.setAttribute("listas", listas);
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
@@ -217,6 +223,7 @@ public class ConsultaVideo extends HttpServlet {
                     sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
                     sys.agregarVideoAListaDeReproduccion(idLista);
                      */
+                    
                     respuesta = "Esta funcionalidad no ha sido implementada aun...";
                     response.getWriter().write(respuesta);
                     break;
