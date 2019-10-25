@@ -4,6 +4,7 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.Enumerados.Privacidad"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Logica.Enumerados.TipoValoracion"%>
 <%@page import="Logica.DataType.DtValoracion"%>
@@ -31,6 +32,7 @@
         String htmlComentarios = (String) request.getAttribute("comentarios");
         DtValoracion valoracionDada = (DtValoracion) request.getAttribute("valoracionDada");
         ArrayList<DtValoracion> valoraciones = (ArrayList) request.getAttribute("valoraciones");
+        ArrayList<DtListaDeReproduccion> listas = (ArrayList) request.getAttribute("listas");
     %>
     <head>
         <meta charset="UTF-8">
@@ -56,8 +58,7 @@
                         if (sesionIniciada) {
                     %>
                     <%@ include file='include/header-usuario.jsp' %>
-                    <%
-                        } else {
+                    <%                    } else {
                     %>
                     <%@ include file='include/header-visitante.jsp' %>
                     <%
@@ -82,12 +83,10 @@
                             if (sesionIniciada) {
                         %>
                         <%@ include file='include/menu-usuario.jsp' %>
-                        <%
-                            } else {
+                        <%                        } else {
                         %>
                         <%@ include file='include/menu-visitante.jsp' %>
-                        <%
-                            }
+                        <%                            }
                         %>
 
                         <div class="contenido">
@@ -154,8 +153,8 @@
                                         </div>
 
                                         <!-- Boton agregar a lista de reproduccion -->
-                                        <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">
-                                            <button type="button" id="btnAgregarALista" class="btn btn-info icon-add-to-list">
+                                        <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">                                            
+                                            <button data-toggle="modal" type="button" id="btnAgregarALista" data-target="#ventanaModalAgregarALista" class="btn btn-info icon-add-to-list">
                                                 LISTA DE REPRODUCCIÓN
                                             </button>
                                         </div>
@@ -170,7 +169,7 @@
                                                     MODIFICAR
                                                 </button>
                                             </a>
-                                             <button href="#ventanaModalValoraciones" data-toggle="modal" type="button" id="btnListarValoraciones" class="btn btn-info icon-info-with-circle">
+                                            <button href="#ventanaModalValoraciones" data-toggle="modal" type="button" id="btnListarValoraciones" class="btn btn-info icon-info-with-circle">
                                                 QUIÉN VALORÓ
                                             </button>
                                         </div>
@@ -188,15 +187,8 @@
                                     <!-- IMAGEN DEL USUARIO Y NOMBRE DEL CANAL -->
                                     <div class="row">
                                         <%
-                                            String textoAlternativo;
-                                            String rutaDeImagenDePerfil;
-                                            if (usuario.getImagen() == null || usuario.getImagen().equals("")) {
-                                                rutaDeImagenDePerfil = "imagenes/ukp.png";
-                                                textoAlternativo = "Imagen de perfil por defecto";
-                                            } else {
-                                                rutaDeImagenDePerfil = usuario.getImagen();
-                                                textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
-                                            }
+                                            String textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
+                                            String rutaDeImagenDePerfil = "usuario-imagen?id=" + usuario.getNickname();
                                         %>
                                         <div class="bd-highlight">
                                             <img class="align-self-center mr-3" src="<%= rutaDeImagenDePerfil%>" width="70" height="70" alt="<%= textoAlternativo%>">
@@ -345,7 +337,62 @@
             }
         </style>
 
-        
+        <!-- Modal Agregar a lista de reproduccion -->
+        <%    
+            if (sesionIniciada){
+        %>
+        <div class="modal fade" id="ventanaModalAgregarALista" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Guardar en ...</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <% 
+                            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+                            String idLista, nombreList, icono, checked, idCheckbox; 
+                            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+                            for (DtListaDeReproduccion dl : listas) {
+                                idLista = String.valueOf(dl.getId());
+                                idCheckbox = "checkbox"+idLista;
+                                nombreList = dl.getNombre();
+                                if( dl.getPrivacidad() == Privacidad.PRIVADO){
+                                    icono = "icon-lock1";
+                                }else{
+                                    icono = "icon-earth";
+                                }
+                                sys.seleccionarListaDeReproduccion(dl.getId());
+                                checked = "";
+                                for (DtVideo dv : sys.listarVideosDeListaDeReproduccion()) {
+                                    if( video.getId() == dv.getId()){
+                                        checked = "checked";
+                                        break;
+                                    }
+                                }    
+                        %>
+                        <div class="form-check">
+                            <input class="form-check-input checkLista" type="checkbox" <%= checked %> value="<%= idLista %>" id="<%=idCheckbox%>">
+                            <label class="form-check-label" for="<%=idCheckbox%>"><%= nombreList %> <span class="<%= icono%>"></span></label>
+                        </div>
+                        <%
+                            }
+                            sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(video.getId()).getNickname());
+                        %>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%
+            }
+        %>
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 

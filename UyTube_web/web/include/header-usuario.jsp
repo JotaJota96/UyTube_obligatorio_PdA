@@ -25,7 +25,7 @@ and open the template in the editor.
                     <div class="navbar-dark item-header item-header2">					  
                         <div id="navbarSupportedContent">		
                             <form class="form-inline my-2 my-lg-0 formBuscar" action="/uytube/buscar" id="formBuscar" method="get">
-                                <input class=" mr-sm-2" name="texto" type="search" placeholder="Search" aria-label="Search">
+                                <input class=" mr-sm-2" name="texto" type="search" placeholder="Buscar" aria-label="Search">
                                 <button class="btn btn-primary" id="btnBuscar" type="submit">Buscar</button>
                             </form>
                         </div>
@@ -38,21 +38,9 @@ and open the template in the editor.
                         </div>	
                         <div class="fotoPerfil">
                             <a href="/uytube/usuario-consultar?id=<%= usu.getNickname()%>">
-                                <%
-                                 if (usu.getImagen() == null || usu.getImagen().equals("")) {
-                                %>
-                                    <img id="fotoPerfil" src="imagenes/ukp.png" alt="Perfil">
-                                <%
-                                } else {
-                                %>
-                                    <img id="fotoPerfil" src=<%= usu.getImagen()%> alt="Perfil">
-                                <%
-                                    }
-                                %>
+                                <img id="fotoPerfil" src="usuario-imagen?id=<%= usu.getNickname() %>" alt="Perfil">
                             </a>
                         </div>
-
-
                     </div>
                 </nav>					
             </header>

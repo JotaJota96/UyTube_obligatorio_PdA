@@ -3,12 +3,12 @@ package com.uytube;
 import Funciones.Funciones;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
+import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.TipoValoracion;
 import Logica.Fabrica;
-import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,11 +32,12 @@ public class ConsultaVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String strIDVideo = request.getParameter("id");
             int idVideo = Integer.valueOf(strIDVideo);
-
+            
             DtUsuario usuario = sys.obtenerPropietarioDeVideo(idVideo);
             sys.seleccionarUsuario(usuario.getNickname());
             DtCanal canal = sys.obtenerCanalDeUsuario();
@@ -46,15 +47,19 @@ public class ConsultaVideo extends HttpServlet {
             ArrayList<DtValoracion> valoraciones = null;
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
+            ArrayList<DtListaDeReproduccion> listas = null;
             if (sesionIniciada) {
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
                 valoracionDada = sys.obtenerValoracionDada();
                 if (propietarioDelVideo){
-                     valoraciones = sys.obtenerValoracionesDeVideo();
+                    valoraciones = sys.obtenerValoracionesDeVideo();
                 }
+                sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+                listas = sys.listarListasDeReproduccionDeUsuario(true);
+                sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
             }
             
-            String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), sesionIniciada);
+            String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, sesionIniciada);
             // no se si la siguiente linea es necesaria, pero por las dudas la pongo, para no dejar incoherencias en la logica
             sys.seleccionarUsuario(usuario.getNickname());
             request.setAttribute("usuario", usuario);
@@ -65,13 +70,12 @@ public class ConsultaVideo extends HttpServlet {
             request.setAttribute("propietarioDelVideo", propietarioDelVideo);
             request.setAttribute("valoracionDada", valoracionDada);
             request.setAttribute("valoraciones", valoraciones);
+            request.setAttribute("listas", listas);
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
@@ -90,6 +94,7 @@ public class ConsultaVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String accion = request.getParameter("accion");
@@ -202,7 +207,7 @@ public class ConsultaVideo extends HttpServlet {
                         sys.altaComentario(dtc, idComentario);
                     }       // se obtienen los comentarios y se genera el HTML para actualizar la p'pagina
                     ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
-                    String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, obtenerImagenesDeUsuarios(comentarios), true);
+                    String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, true);
                     // la funcion 'obtenerImagenesDeUsuarios' selecciona usuarios asi que por las dudas lo vuelvo a seleccionar para que la logica quede coherente
                     sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
                     respuesta = htmlComentarios;
@@ -210,18 +215,36 @@ public class ConsultaVideo extends HttpServlet {
                     break;
                 }
                 // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
-                case "agregarALista":
-                    /*
+                case "agregarALista":{
+                    
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     int idLista = Integer.valueOf(request.getParameter("idLista"));
                     
                     sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                    sys.seleccionarVideo(idVideo);
                     sys.agregarVideoAListaDeReproduccion(idLista);
-                     */
-                    respuesta = "Esta funcionalidad no ha sido implementada aun...";
+                     
+                    
+                    respuesta = "ok";
                     response.getWriter().write(respuesta);
                     break;
-                case "listarValoraciones":
+                }
+                case "quitarDeLista":{
+                    
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    int idLista = Integer.valueOf(request.getParameter("idLista"));
+                    
+                    sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+                    sys.seleccionarListaDeReproduccion(idLista);
+                    sys.quitarVideoDeListaDeReproduccion(idVideo);
+                    sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                    
+                    respuesta = "ok";
+                    response.getWriter().write(respuesta);
+                    break;
+                }
+                    
+                case "listarValoraciones":{
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     respuesta = "";
                     sys.seleccionarVideo(idVideo);
@@ -231,13 +254,12 @@ public class ConsultaVideo extends HttpServlet {
                     }
                     response.getWriter().write(respuesta);
                     break;
+                }
                 default:
                     break;
             }
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
@@ -256,29 +278,14 @@ public class ConsultaVideo extends HttpServlet {
     }// </editor-fold>
     
     
-    private ArrayList<String> obtenerImagenesDeUsuarios(ArrayList<DtComentario> comentarios){
-        ArrayList<String> ret = new ArrayList();
-        IUsuario sys = Fabrica.getInstancia().getIUsuario();
-        String img;
-        for (DtComentario c : comentarios){
-            img = sys.seleccionarUsuario(c.getNickname()).getImagen();
-            if (img == null || img.equals("")){
-                img = "imagenes/ukp.png";
-            }
-            ret.add(img);
-        }
-        return ret;
-    }
-    
-    private String htmlDeSeccionDeComentarios(ArrayList<DtComentario> comentarios, ArrayList<String> imagenes, boolean  mostrarBotonResponder){
+    private String htmlDeSeccionDeComentarios(ArrayList<DtComentario> comentarios, boolean  mostrarBotonResponder){
         if (comentarios == null || comentarios.isEmpty()){
             return "";
         }
         
         String ret = "";
         DtComentario c = comentarios.remove(0);
-        String imgPerfil = "imagenes/ukp.png";
-        if ( ! imagenes.isEmpty())  imgPerfil = imagenes.remove(0);
+        String imgPerfil = "usuario-imagen?id=" + c.getNickname();
         String strFecha = new SimpleDateFormat("dd/MM/yyyy").format(c.getFecha());
         
         ret += "    <div class=\"media\">";
@@ -297,14 +304,14 @@ public class ConsultaVideo extends HttpServlet {
         ret += "            <br>";
         
         if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() > c.getNivelSubComentario())){
-                ret += htmlDeSeccionDeComentarios(comentarios, imagenes, mostrarBotonResponder);
+                ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
         }
         
         ret += "    </div>";
         ret += "</div>";
         
         if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() == c.getNivelSubComentario())){
-                ret += htmlDeSeccionDeComentarios(comentarios, imagenes, mostrarBotonResponder);
+                ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
         }
         return ret;
     }

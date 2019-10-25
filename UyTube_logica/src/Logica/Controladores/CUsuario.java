@@ -114,7 +114,7 @@ public class CUsuario implements IUsuario {
         }
         usuarioActual.agregarVideoALista(idLista, idVideoSeleccionado, usuarioSeleccionado);
     }
-
+    
     @Override
     public void altaComentario(DtComentario dtCom) {
         if (usuarioActual == null){
@@ -762,9 +762,12 @@ public class CUsuario implements IUsuario {
             usuarioSeleccionado = usuarioActual;
         }else{
             usuarioSeleccionado = obtenerUsuarios().get(nickname);
-        }
-        if (usuarioSeleccionado == null){
-            throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+            if (usuarioSeleccionado == null){
+                throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+            }
+            if (usuarioSeleccionado.obtenerCanal().getPrivacidad() == Privacidad.PRIVADO){
+                throw new RuntimeException("El canal seleccionado es privado");
+            }
         }
         return usuarioSeleccionado.getDT();
     }
@@ -776,6 +779,11 @@ public class CUsuario implements IUsuario {
             this.seleccionarUsuario(nick);
         }
         DtListaDeReproduccion ret = usuarioSeleccionado.obtenerListaDeReproduccion(idLista);
+        if (ret.getPrivacidad() == Privacidad.PRIVADO){
+            if ( ! elUsuarioSeleccionadoEsElUsuarioActual()){
+                throw new RuntimeException("La lista de reproduccion seleccionada es privada");
+            }
+        }
         idListaSeleccionada = idLista;
         return ret;
     }
@@ -787,6 +795,11 @@ public class CUsuario implements IUsuario {
             this.seleccionarUsuario(nick);
         }
         DtVideo ret = usuarioSeleccionado.obtenerVideoDeCanal(idVideo);
+        if (ret.getPrivacidad() == Privacidad.PRIVADO){
+            if ( ! elUsuarioSeleccionadoEsElUsuarioActual()){
+                throw new RuntimeException("El video seleccionado es privado");
+            }
+        }
         idVideoSeleccionado = idVideo;
         return ret;
     }

@@ -23,6 +23,9 @@
     flex-shrink: 0; }
     .contenido .contenido-flexible h3 {
       width: 100%; }
+    .contenido .contenido-flexible #btnBaja, .contenido .contenido-flexible #btnBuscar {
+      height: 38px;
+      min-width: 198px; }
 
 @media (max-width: 340px) {
   .container-fluid {

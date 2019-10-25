@@ -100,7 +100,7 @@
                                         <div class="form-group col-md-2">
                                             
                                         </div>
-                                        <div class="form-group col-8 col-md-7">
+                                        <div class="form-group col-8 col-md-6">
                                             <label for="inputCategoria">Categoría</label>
                                             <select id="inputCategoria" name="categoria" class="form-control">
                                                 <%

@@ -12,6 +12,7 @@
     <class>Logica.Clases.Usuario</class>
     <class>Logica.Clases.Valoracion</class>
     <class>Logica.Clases.Video</class>
+    <class>Logica.Clases.ImagenUsuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/UyTube"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

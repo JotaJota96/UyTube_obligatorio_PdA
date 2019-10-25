@@ -91,20 +91,9 @@
                                         <div class="p-4 flex-fill bd-highlight">
                                             <div class="d-flex justify-content-center">
                                                 <%
-                                                    String textoAlternativo;
-                                                    String rutaDeImagenDePerfil;
-                                                    if (usuario.getImagen() == null || usuario.getImagen().equals("")) {
-                                                        rutaDeImagenDePerfil = "imagenes/ukp.png";
-                                                        textoAlternativo = "Imagen de perfil por defecto";
-                                                    } else {
-                                                        rutaDeImagenDePerfil = usuario.getImagen();
-                                                        textoAlternativo = "Imagen de perfil de " + usuario.getNickname();
-                                                        //char contrabarra = 92;
-                                                        //char barra = 47;
-                                                        //rutaImagenPerfil = rutaImagenPerfil = rutaImagenPerfil.replace(contrabarra, barra);
-                                                    }
+                                                    // src="<%
                                                 %>
-                                                <img src="<%=rutaDeImagenDePerfil%>" class="rounded-circle" alt="<%=textoAlternativo%>" width="180" height="180"> 
+                                                <img src="usuario-imagen?id=<%= usuario.getNickname() %>" class="rounded-circle" alt="Imagen de perfil de <% usuario.getNickname(); %>" width="180" height="180"> 
                                             </div>
                                         </div>
                                             
@@ -112,12 +101,12 @@
                                         <div class="p-1 flex-fill bd-highlight ">
                                             
                                             <div class="d-flex bd-highlight ">
-                                                <div class="p-1 d-flex flex-fill bd-highlight">
+                                                <div class="p-1 d-flex flex-wrap flex-sm-nowrap bd-highlight">
                                                     <br><h3><%= usuario.getNombre() + " " + usuario.getApellido()%></h3>
                                                     <%
                                                     if (sesionIniciada && propietario) {
                                                     %>
-                                                        <button  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" class=" ml-5 btn btn-danger icon-remove-user" id="btnBaja">
+                                                        <button  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" class=" ml-sm-3 btn btn-danger icon-remove-user" id="btnBaja">
                                                             Darse de baja
                                                         </button>
                                                     <%  
@@ -139,7 +128,7 @@
                                                 </div>
                                             </div>
                                             <div class="p-1 bd-highlight ">
-                                                <div class="d-flex bd-highlight ">
+                                                <div class="d-flex flex-wrap flex-md-nowrap bd-highlight ">
                                                     <div class="p-1 flex-fill bd-highlight ">
                                                         <p>PRIVACIDAD: <%= canal.getPrivacidad()%></p>
                                                     </div>

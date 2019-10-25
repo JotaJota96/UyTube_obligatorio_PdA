@@ -22,7 +22,7 @@
         <link rel="stylesheet" type="text/css" href="css/menu.css">
         <link rel="stylesheet" type="text/css" href="css/widget.css">
         <link rel="stylesheet" type="text/css" href="css/footer.css">
-        <link rel="stylesheet" type="text/css" href="css/contenido-consulta-usuario.css">
+        <link rel="stylesheet" type="text/css" href="css/contenido-alta-lista.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
         <title>UyTube - Nueva Lista</title>
@@ -73,40 +73,45 @@
                                 <div class="container">
 
                                     <!-- Agregar Listas-->
-                                    <div class="d-flex flex-row justify-content-center">
+                                    <div class="">
                                         <form class="form-signin" action="/uytube/lista-agregar" method="post">
                                             <br>
                                             <br>
                                             <h1 class="h3 mb-4 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1>
-                                            <div class="mb-5">
-                                                <input type="text" class="form-control" name="nombreL" id="nombreLista" placeholder="Nombre de la lista" required>
-                                               <span id="msjNombre"></span>
+                                            <div class="mb-8 row">
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" name="nombreL" id="nombreLista" placeholder="Nombre de la lista" required>
+                                                    <span class="small" id="msjNombre"></span>
+                                                </div>                                               
                                             </div>
                                             
                                             
                                             <div class="row">
-                                                <div class="col-md-5">
+                                                <div class="col-4 col-md-3">
                                                     <label class="">Privacidad</label>
                                                 </div>
-                                                <div class="custom-control custom-radio">
+                                                <div class="custom-control custom-radio col-4 col-md-3">
                                                     <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked>
                                                     <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
-                                                <div class="custom-control custom-radio">
+                                                <div class="custom-control custom-radio col-4  col-md-3">
                                                     <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input">
                                                     <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
+                                                <div class="col-0 col-md-3"></div>
                                             </div>
-                                            <div class=" bd-light">
-                                                <select class="custom-select d-block w-100" name="categoria" id="categoria" required>
-                                                    <%
-                                                        for (String l : Categorias) {
-                                                    %>
-                                                    <option> <%= l%>  </option> 
-                                                    <%
-                                                        }
-                                                    %>
-                                                </select>
+                                            <div class=" bd-light row">
+                                                <div class="col-md-12">
+                                                    <select class="custom-select d-block w-100" name="categoria" id="categoria" required>
+                                                        <%
+                                                            for (String l : Categorias) {
+                                                        %>
+                                                        <option> <%= l%>  </option> 
+                                                        <%
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div>                                                
                                             </div>
 
                                             <hr class="mb-4">
