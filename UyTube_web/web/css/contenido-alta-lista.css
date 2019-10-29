@@ -23,9 +23,6 @@
     flex-shrink: 0; }
     .contenido .contenido-flexible h3 {
       width: 100%; }
-    .contenido .contenido-flexible #btnBaja, .contenido .contenido-flexible #btnBuscar {
-      height: 38px;
-      min-width: 198px; }
 
 @media (max-width: 340px) {
   .container-fluid {
@@ -101,9 +98,9 @@
     padding-right: 0px; }
 
   .contenido {
-    width: 872px; }
+    width: 35%; }
     .contenido .contenido-flexible {
       width: 100%;
       justify-content: flex-start; } }
 
-/*# sourceMappingURL=contenido-consulta-usuario.css.map */
+/*# sourceMappingURL=contenido-alta-lista.css.map */

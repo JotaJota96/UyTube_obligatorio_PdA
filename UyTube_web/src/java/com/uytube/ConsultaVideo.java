@@ -3,6 +3,7 @@ package com.uytube;
 import Funciones.Funciones;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
+import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
@@ -31,11 +32,12 @@ public class ConsultaVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String strIDVideo = request.getParameter("id");
             int idVideo = Integer.valueOf(strIDVideo);
-
+            
             DtUsuario usuario = sys.obtenerPropietarioDeVideo(idVideo);
             sys.seleccionarUsuario(usuario.getNickname());
             DtCanal canal = sys.obtenerCanalDeUsuario();
@@ -45,12 +47,16 @@ public class ConsultaVideo extends HttpServlet {
             ArrayList<DtValoracion> valoraciones = null;
             boolean sesionIniciada = sys.sesionIniciada();
             boolean propietarioDelVideo = false;
+            ArrayList<DtListaDeReproduccion> listas = null;
             if (sesionIniciada) {
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
                 valoracionDada = sys.obtenerValoracionDada();
                 if (propietarioDelVideo){
-                     valoraciones = sys.obtenerValoracionesDeVideo();
+                    valoraciones = sys.obtenerValoracionesDeVideo();
                 }
+                sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+                listas = sys.listarListasDeReproduccionDeUsuario(true);
+                sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
             }
             
             String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, sesionIniciada);
@@ -64,13 +70,12 @@ public class ConsultaVideo extends HttpServlet {
             request.setAttribute("propietarioDelVideo", propietarioDelVideo);
             request.setAttribute("valoracionDada", valoracionDada);
             request.setAttribute("valoraciones", valoraciones);
+            request.setAttribute("listas", listas);
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");
@@ -89,6 +94,7 @@ public class ConsultaVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String accion = request.getParameter("accion");
@@ -209,18 +215,36 @@ public class ConsultaVideo extends HttpServlet {
                     break;
                 }
                 // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
-                case "agregarALista":
-                    /*
+                case "agregarALista":{
+                    
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     int idLista = Integer.valueOf(request.getParameter("idLista"));
                     
                     sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                    sys.seleccionarVideo(idVideo);
                     sys.agregarVideoAListaDeReproduccion(idLista);
-                     */
-                    respuesta = "Esta funcionalidad no ha sido implementada aun...";
+                     
+                    
+                    respuesta = "ok";
                     response.getWriter().write(respuesta);
                     break;
-                case "listarValoraciones":
+                }
+                case "quitarDeLista":{
+                    
+                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                    int idLista = Integer.valueOf(request.getParameter("idLista"));
+                    
+                    sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+                    sys.seleccionarListaDeReproduccion(idLista);
+                    sys.quitarVideoDeListaDeReproduccion(idVideo);
+                    sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                    
+                    respuesta = "ok";
+                    response.getWriter().write(respuesta);
+                    break;
+                }
+                    
+                case "listarValoraciones":{
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     respuesta = "";
                     sys.seleccionarVideo(idVideo);
@@ -230,13 +254,12 @@ public class ConsultaVideo extends HttpServlet {
                     }
                     response.getWriter().write(respuesta);
                     break;
+                }
                 default:
                     break;
             }
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");

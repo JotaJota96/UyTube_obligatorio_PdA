@@ -10,7 +10,6 @@ import Logica.Fabrica;
 import Logica.Interfaces.IPersistenciaDeImagenes;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,14 +27,11 @@ public class ImagenUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
+        Funciones.Funciones.showLog(request, response);
         try {
+            IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
             String id = request.getParameter("id");
             if (id == null)  id = "";
-            
-            System.out.println("------------------");
-            System.out.println("GET /imagen");
-            System.out.println("id = " + request.getParameter("id"));
             
             byte[] byteArr;
             
@@ -52,9 +48,7 @@ public class ImagenUsuario extends HttpServlet {
             sos.close();
             
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");

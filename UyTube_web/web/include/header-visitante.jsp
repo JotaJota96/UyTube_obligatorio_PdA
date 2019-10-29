@@ -15,7 +15,7 @@ Header para el visitante
                     <div class="navbar-dark item-header item-header2">					  
                         <div id="navbarSupportedContent">		
                             <form class="form-inline my-2 my-lg-0 formBuscar" action="/uytube/buscar" id="formBuscar" method="get">
-                                <input class=" mr-sm-2" name="texto" type="search" placeholder="Search" aria-label="Search">
+                                <input class=" mr-sm-2" name="texto" type="search" placeholder="Buscar" aria-label="Search">
                                 <button class="btn btn-primary" id="btnBuscar" type="submit">Buscar</button>
                             </form>
                         </div>

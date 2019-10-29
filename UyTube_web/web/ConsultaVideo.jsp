@@ -4,6 +4,7 @@
     Author     : administrador
 --%>
 
+<%@page import="Logica.Enumerados.Privacidad"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Logica.Enumerados.TipoValoracion"%>
 <%@page import="Logica.DataType.DtValoracion"%>
@@ -31,6 +32,7 @@
         String htmlComentarios = (String) request.getAttribute("comentarios");
         DtValoracion valoracionDada = (DtValoracion) request.getAttribute("valoracionDada");
         ArrayList<DtValoracion> valoraciones = (ArrayList) request.getAttribute("valoraciones");
+        ArrayList<DtListaDeReproduccion> listas = (ArrayList) request.getAttribute("listas");
     %>
     <head>
         <meta charset="UTF-8">
@@ -56,8 +58,7 @@
                         if (sesionIniciada) {
                     %>
                     <%@ include file='include/header-usuario.jsp' %>
-                    <%
-                        } else {
+                    <%                    } else {
                     %>
                     <%@ include file='include/header-visitante.jsp' %>
                     <%
@@ -82,12 +83,10 @@
                             if (sesionIniciada) {
                         %>
                         <%@ include file='include/menu-usuario.jsp' %>
-                        <%
-                            } else {
+                        <%                        } else {
                         %>
                         <%@ include file='include/menu-visitante.jsp' %>
-                        <%
-                            }
+                        <%                            }
                         %>
 
                         <div class="contenido">
@@ -170,7 +169,7 @@
                                                     MODIFICAR
                                                 </button>
                                             </a>
-                                             <button href="#ventanaModalValoraciones" data-toggle="modal" type="button" id="btnListarValoraciones" class="btn btn-info icon-info-with-circle">
+                                            <button href="#ventanaModalValoraciones" data-toggle="modal" type="button" id="btnListarValoraciones" class="btn btn-info icon-info-with-circle">
                                                 QUIÉN VALORÓ
                                             </button>
                                         </div>
@@ -338,51 +337,62 @@
             }
         </style>
 
-    <!-- Modal -->
-    <div class="modal fade" id="ventanaModalAgregarALista" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Guardar en ...</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-check">
-                        <input class="form-check-input checkLista" type="checkbox" value="Ver más tarde" id="checkbox1">
-                        <label class="form-check-label" for="checkbox1">Ver más tarde <span class="icon-earth"></span></label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input checkLista" type="checkbox" value="Favoritos" id="checkbox2" >
-                        <label class="form-check-label " for="checkbox2">Favoritos <span class="icon-lock1"></span></label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input checkLista" type="checkbox" value="Algun dia los vere" id="checkbox3" >
-                        <label class="form-check-label" for="checkbox3">Algun dia los vere <span class="icon-earth"></span></label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input checkLista" type="checkbox" value="Bossa nova" id="checkbox4" >
-                        <label class="form-check-label" for="checkbox4">Bossa nova <span class="icon-lock1"></span></label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input checkLista" type="checkbox" value="Musica que me gusta" id="checkbox5">
-                        <label class="form-check-label" for="checkbox5">Musica que me gusta</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input checkLista" type="checkbox" value="Covers" id="checkbox6">
-                        <label class="form-check-label" for="checkbox6">Covers <span class="icon-lock1"></span></label>
-                      </div>
-                      
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
-                    
+        <!-- Modal Agregar a lista de reproduccion -->
+        <%    
+            if (sesionIniciada){
+        %>
+        <div class="modal fade" id="ventanaModalAgregarALista" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Guardar en ...</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <% 
+                            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+                            String idLista, nombreList, icono, checked, idCheckbox; 
+                            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+                            for (DtListaDeReproduccion dl : listas) {
+                                idLista = String.valueOf(dl.getId());
+                                idCheckbox = "checkbox"+idLista;
+                                nombreList = dl.getNombre();
+                                if( dl.getPrivacidad() == Privacidad.PRIVADO){
+                                    icono = "icon-lock1";
+                                }else{
+                                    icono = "icon-earth";
+                                }
+                                sys.seleccionarListaDeReproduccion(dl.getId());
+                                checked = "";
+                                for (DtVideo dv : sys.listarVideosDeListaDeReproduccion()) {
+                                    if( video.getId() == dv.getId()){
+                                        checked = "checked";
+                                        break;
+                                    }
+                                }    
+                        %>
+                        <div class="form-check">
+                            <input class="form-check-input checkLista" type="checkbox" <%= checked %> value="<%= idLista %>" id="<%=idCheckbox%>">
+                            <label class="form-check-label" for="<%=idCheckbox%>"><%= nombreList %> <span class="<%= icono%>"></span></label>
+                        </div>
+                        <%
+                            }
+                            sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(video.getId()).getNickname());
+                        %>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
+
+        <%
+            }
+        %>
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 
