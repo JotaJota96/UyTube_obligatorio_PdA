@@ -3,7 +3,12 @@ package Logica.Interfaces;
 import Logica.DataType.*;
 import Logica.Enumerados.*;
 import java.util.ArrayList;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 
+@WebService
+@SOAPBinding(style = SOAPBinding.Style.RPC, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public interface IUsuario {
 
     /**
@@ -12,6 +17,7 @@ public interface IUsuario {
      *
      * @param idLista ID de la lista de reproduccon
      */
+    @WebMethod
     public void agregarVideoAListaDeReproduccion(int idLista);
 
     /**
@@ -20,6 +26,7 @@ public interface IUsuario {
      *
      * @param dtCom Comentario a agregar
      */
+    @WebMethod
     public void altaComentario(DtComentario dtCom);
 
     /**
@@ -30,13 +37,15 @@ public interface IUsuario {
      * @param dtCom Comentario a agregar
      * @param idComPadre ID del comentario a responder
      */
-    public void altaComentario(DtComentario dtCom, int idComPadre);
+    @WebMethod
+    public void altaSubComentario(DtComentario dtCom, int idComPadre);
 
     /**
      * Da de alta la lista de reproduccion particular para usuarioActual
      *
      * @param lista Lista particular a dar de alta
      */
+    @WebMethod
     public void altaListaDeReproduccionParticular(DtListaDeReproduccion lista);
 
     /**
@@ -46,6 +55,7 @@ public interface IUsuario {
      * @param usr Datos del usuario a dar de alta
      * @param canal Datos del canal del usuario
      */
+    @WebMethod
     public void altaUsuarioCanal(DtUsuario usr, DtCanal canal);
 
     /**
@@ -53,12 +63,14 @@ public interface IUsuario {
      *
      * @param video Datos del video a dar de alta
      */
+    @WebMethod
     public void altaVideo(DtVideo video);
 
     /**
      * Da de baja al usuarioActual
      * En el proceso se cierra la sesion
      */
+    @WebMethod
     public void bajaUsuario();
 
     /**
@@ -67,13 +79,14 @@ public interface IUsuario {
      * el filtrado) los videos privados del usuarioActual
      * Si no se ha iniciado sesión, se muestran sólo los contenidos públicos
      * 
-     * @param busqueda Texto a buscar (si es vacío incluye todo el contenido)
+     * @param busqueda Texto a buscarPorCategoria (si es vacío incluye todo el contenido)
      * @param filtro Tipo de contenido en el cual se realizará la búsqueda
      * @param orden Manera de ordenar el resultado de la búsqueda
      * @return Resultado de la busqueda. Puede contener DtVideo,
      * DtListaDeReproduccion y/o DtCanal. (para usar los elementos devueltos hay
      * que castearlos)
      */
+    @WebMethod
     public ArrayList<Object> buscar(String busqueda, Filtrado filtro, Ordenacion orden);
 
     /**
@@ -82,16 +95,18 @@ public interface IUsuario {
      * usuarioActual
      * Si no se ha iniciado sesión, se muestran sólo los contenidos públicos
      * 
-     * @param categoria Nombre de la categoria a buscar
+     * @param categoria Nombre de la categoria a buscarPorCategoria
      * @return Resultado de la busqueda. Puede contener DtVideo y
      * DtListaDeReproduccion. (para usar los elementos devueltos hay que
      * castearlos)
      */
-    public ArrayList<Object> buscar(String categoria);
+    @WebMethod
+    public ArrayList<Object> buscarPorCategoria(String categoria);
 
     /**
      * Cierra la sesión del usuarioActual (lo quita de memoria)
      */
+    @WebMethod
     public void cerrarSesion();
 
     /**
@@ -101,6 +116,7 @@ public interface IUsuario {
      * @return true si el usuario seleccionado es el usuario que inicio la
      * sesion
      */
+    @WebMethod
     public boolean elUsuarioSeleccionadoEsElUsuarioActual();
     
     /**
@@ -109,6 +125,7 @@ public interface IUsuario {
      * @param email Email a verificar
      * @return true si el email ya esta en uso
      */
+    @WebMethod
     public boolean existeEmail(String email);
 
     /**
@@ -117,6 +134,7 @@ public interface IUsuario {
      * @param nickname Nickname a verificar
      * @return true si el nickname ya esta en uso
      */
+    @WebMethod
     public boolean existeNickname(String nickname);
 
     /**
@@ -128,21 +146,25 @@ public interface IUsuario {
      * @return true si el usuario con el nickname o email existe y ademas la
      * contrasenia es correcta
      */
+    @WebMethod
     public boolean iniciarSesionUsuario(String nickOEmail, String contrasenia);
 
     /**
      * Libera memoria de la lista de reproduccion seleccionada
      */
+    @WebMethod
     public void liberarMemoriaListaDeReproduccion();
 
     /**
      * Libera memoria del usuario seleccionado
      */
+    @WebMethod
     public void liberarMemoriaUsuario();
 
     /**
      * Libera memoria del video seleccionado
      */
+    @WebMethod
     public void liberarMemoriaVideo();
 
     /**
@@ -150,6 +172,7 @@ public interface IUsuario {
      *
      * @return Conjunto de nombres de categorías
      */
+    @WebMethod
     public ArrayList<String> listarCategorias();
 
     /**
@@ -158,6 +181,7 @@ public interface IUsuario {
      *
      * @return Conjunto de comentarios
      */
+    @WebMethod
     public ArrayList<DtComentario> listarComentariosDeVideo();
 
     /**
@@ -173,6 +197,7 @@ public interface IUsuario {
      * listas por defecto
      * @return Conjunto de listas de reproduccion
      */
+    @WebMethod
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccionDeUsuario(boolean incluirListasPorDefecto);
 
     /**
@@ -180,6 +205,7 @@ public interface IUsuario {
      *
      * @return Conjunto de usuarios
      */
+    @WebMethod
     public ArrayList<DtUsuario> listarUsuarioSeguidores();
 
     /**
@@ -187,6 +213,7 @@ public interface IUsuario {
      *
      * @return Conjunto de usuarios
      */
+    @WebMethod
     public ArrayList<DtUsuario> listarUsuarioSeguidos();
 
     /**
@@ -194,6 +221,7 @@ public interface IUsuario {
      *
      * @return Conjunto de usuarios
      */
+    @WebMethod
     public ArrayList<DtUsuario> listarUsuarios();
 
     /**
@@ -204,6 +232,7 @@ public interface IUsuario {
      * 
      * @return Conjunto de videos
      */
+    @WebMethod
     public ArrayList<DtVideo> listarVideosDeListaDeReproduccion();
 
     /**
@@ -212,6 +241,7 @@ public interface IUsuario {
      *
      * @return Conjunto de videos
      */
+    @WebMethod
     public ArrayList<DtVideo> listarVideosDeUsuario();
 
     /**
@@ -220,6 +250,7 @@ public interface IUsuario {
      *
      * @param lista Nuevos datos de la lista de reproduccion
      */
+    @WebMethod
     public void modificarListaDeReproduccion(DtListaDeReproduccion lista);
 
     /**
@@ -228,6 +259,7 @@ public interface IUsuario {
      * @param usr Nuevos datos del usuario
      * @param canal Nuevos datos del canal
      */
+    @WebMethod
     public void modificarUsuarioYCanal(DtUsuario usr, DtCanal canal);
 
     /**
@@ -236,6 +268,7 @@ public interface IUsuario {
      *
      * @param video Nuevos datos del video
      */
+    @WebMethod
     public void modificarVideo(DtVideo video);
 
     /**
@@ -243,6 +276,7 @@ public interface IUsuario {
      *
      * @return Datos del canal
      */
+    @WebMethod
     public DtCanal obtenerCanalDeUsuario();
     
     /**
@@ -251,6 +285,7 @@ public interface IUsuario {
      * @param idCanal ID del canal
      * @return Datos del usuario
      */
+    @WebMethod
     public DtUsuario obtenerPropietarioDeCanal(int idCanal);
     
     /**
@@ -259,6 +294,7 @@ public interface IUsuario {
      * @param idVideo ID del video
      * @return Datos del usuario
      */
+    @WebMethod
     public DtUsuario obtenerPropietarioDeVideo(int idVideo);
     
     /**
@@ -267,12 +303,14 @@ public interface IUsuario {
      * @param idLista ID de la lista de reproduccion
      * @return Datos del usuario
      */
+    @WebMethod
     public DtUsuario obtenerPropietarioDeListaDeReproduccion(int idLista);
     
     /**
      * Devuelve los datos del usuario que inició sesión
      * @return Datos del usuario actual
      */
+    @WebMethod
     public DtUsuario obtenerUsuarioActual();
     
     /**
@@ -281,6 +319,7 @@ public interface IUsuario {
      *
      * @return Valoracion dada o null si no ha valorado
      */
+    @WebMethod
     public DtValoracion obtenerValoracionDada();
 
     /**
@@ -289,6 +328,7 @@ public interface IUsuario {
      *
      * @return Conjunto de valoraciones
      */
+    @WebMethod
     public ArrayList<DtValoracion> obtenerValoracionesDeVideo();
 
     /**
@@ -297,12 +337,14 @@ public interface IUsuario {
      *
      * @param idVideo ID del video a quitar
      */
+    @WebMethod
     public void quitarVideoDeListaDeReproduccion(int idVideo);
 
     /**
      * El usuarioActual comienza a seguir a usuarioSeleccionado En caso de que
      * este ya lo esté siguiendo, lo deja de seguir
      */
+    @WebMethod
     public void seguirUsuario();
 
     /**
@@ -312,6 +354,7 @@ public interface IUsuario {
      * @param nickname Nickname del usuario
      * @return Datos del usuario
      */
+    @WebMethod
     public DtUsuario seleccionarUsuario(String nickname);
 
     /**
@@ -323,6 +366,7 @@ public interface IUsuario {
      * @param idLista ID de la lista de reproduccion
      * @return Datos de la lista de reproduccion seleccionada
      */
+    @WebMethod
     public DtListaDeReproduccion seleccionarListaDeReproduccion(int idLista);
 
     /**
@@ -333,12 +377,14 @@ public interface IUsuario {
      * @param idVideo ID del video
      * @return Datos del video seleccionado
      */
+    @WebMethod
     public DtVideo seleccionarVideo(int idVideo);
 
     /**
      * Permite saber si hay una sesion iniciada
      * @return true si hay una sesion iniciada
      */
+    @WebMethod
     public boolean sesionIniciada();
     
     /**
@@ -352,6 +398,7 @@ public interface IUsuario {
      * @return true si el usuarioActual puede agregar una lista de reproduccion
      * con ese nombre
      */
+    @WebMethod
     public boolean validarNuevaListaParticular(String nombre, int idExcepcion);
 
     /**
@@ -363,6 +410,7 @@ public interface IUsuario {
      * @param idExcepcion ID del video a ignorar (0 si no se decea ignorar ninguno)
      * @return true si el usuarioActual puede agregar un video con ese nombre
      */
+    @WebMethod
     public boolean validarNuevoVideo(String nombre, int idExcepcion);
 
     /**
@@ -373,6 +421,7 @@ public interface IUsuario {
      *
      * @param val Valoracion dada (puede ser null)
      */
+    @WebMethod
     public void valorarVideo(DtValoracion val);
     
     ///////// Operaciones con imagenes de usuarios //////////////////////
@@ -382,6 +431,7 @@ public interface IUsuario {
      * @param id ID del usuario del cual se quiere obtener la imagen
      * @return Datos del usuario si existe, o null si no se encontro
      */
+    @WebMethod
     public DtImagenUsuario obtenerImagenDeUsuario(String id) throws RuntimeException;
 
     /**
@@ -389,6 +439,7 @@ public interface IUsuario {
      *
      * @param iu Datos de la imagen del usuario
      */
+    @WebMethod
     public void altaImagenDeUsuario(DtImagenUsuario iu) throws RuntimeException;
 
     /**
@@ -396,6 +447,7 @@ public interface IUsuario {
      *
      * @param iu Datos de la imagen del usuario
      */
+    @WebMethod
     public void modificarImagenDeUsuario(DtImagenUsuario iu) throws RuntimeException;
 
     /**
@@ -403,6 +455,7 @@ public interface IUsuario {
      *
      * @param id ID del usuario
      */
+    @WebMethod
     public void eliminarImagenDeUsuario(String id) throws RuntimeException;
 
     /**
@@ -412,6 +465,7 @@ public interface IUsuario {
      * @param id ID del usuario
      * @return true si el usuario tiene una imagen de perfil persistida
      */
+    @WebMethod
     public boolean existeImagenDeUsuario(String id) throws RuntimeException;
     
     /**
@@ -419,6 +473,7 @@ public interface IUsuario {
      * 
      * @return Imagen de usuario por defecto
      */
+    @WebMethod
     public DtImagenUsuario obtenerImagenDeUsuarioPorDefecto();
     
 }

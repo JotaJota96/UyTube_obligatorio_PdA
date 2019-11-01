@@ -1,7 +1,10 @@
 package Logica.DataType;
 
 import java.sql.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtUsuario extends DtPersona{
     private String nickname;
     private String correo;

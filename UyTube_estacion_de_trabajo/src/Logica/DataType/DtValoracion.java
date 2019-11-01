@@ -1,7 +1,10 @@
 package Logica.DataType;
 
 import Logica.Enumerados.TipoValoracion;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtValoracion {
     private TipoValoracion val;
     private String nickname;

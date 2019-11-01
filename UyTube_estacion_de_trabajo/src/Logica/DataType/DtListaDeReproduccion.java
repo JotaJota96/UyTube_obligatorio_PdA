@@ -2,7 +2,10 @@ package Logica.DataType;
 
 import Logica.Enumerados.Privacidad;
 import Logica.Enumerados.TipoListaDeReproduccion;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtListaDeReproduccion {
     private int id;
     private String nombre;

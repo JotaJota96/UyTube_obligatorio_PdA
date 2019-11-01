@@ -32,7 +32,10 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
+@WebService(endpointInterface = "Logica.Controladores.CUsuario")
 public class CUsuario implements IUsuario {
     private static CUsuario instancia = null;
     private Usuario usuarioActual;
@@ -141,7 +144,7 @@ public class CUsuario implements IUsuario {
     }
 
     @Override
-    public void altaComentario(DtComentario dtCom, int idComPadre) {
+    public void altaSubComentario(DtComentario dtCom, int idComPadre) {
         if (usuarioActual == null){
             throw new RuntimeException("No se ha iniciado sesión");
         }
@@ -299,7 +302,7 @@ public class CUsuario implements IUsuario {
     }
 
     @Override
-    public ArrayList<Object> buscar(String categoria) {
+    public ArrayList<Object> buscarPorCategoria(String categoria) {
         //Cambiar la linea de abajo cuando se implemente la funcion de juan
         // hecho
         ArrayList<Object> ret = new BusquedaEnBDD().buscarPorCategoria(categoria);

@@ -3,7 +3,10 @@ package Logica.DataType;
 import java.sql.Time;
 import java.sql.Date;
 import Logica.Enumerados.Privacidad;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtVideo {
     private int id;
     private String nombre;
