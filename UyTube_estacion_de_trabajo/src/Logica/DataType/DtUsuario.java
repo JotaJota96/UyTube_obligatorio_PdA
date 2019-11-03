@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class DtUsuario extends DtPersona{
     private String nickname;
     private String correo;
-    private Date fechaNacimiento;
-    private Date fechaEliminado;
+    private Fecha fechaNacimiento;
+    private Fecha fechaEliminado;
     private String imagen;
     private int cantSeguidores;
 
@@ -21,7 +21,10 @@ public class DtUsuario extends DtPersona{
         // y ahora se setean los atributos propios
         this.nickname = nickname;
         this.correo = correo;
-        this.fechaNacimiento = fechaNacimiento;
+        this.fechaNacimiento = null;
+        if (fechaNacimiento != null) {
+            this.fechaNacimiento = new Fecha(fechaNacimiento);
+        }
         this.imagen = imagen;
         this.cantSeguidores = cantSeguidores;
     }
@@ -34,8 +37,14 @@ public class DtUsuario extends DtPersona{
         // y ahora se setean los atributos propios
         this.nickname = nickname;
         this.correo = correo;
-        this.fechaNacimiento = fechaNacimiento;
-        this.fechaEliminado = fechaEliminado;
+        this.fechaNacimiento = null;
+        if (fechaNacimiento != null) {
+            this.fechaNacimiento = new Fecha(fechaNacimiento);
+        }
+        this.fechaEliminado = null;
+        if (fechaEliminado != null) {
+            this.fechaEliminado = new Fecha(fechaEliminado);
+        }
         this.imagen = imagen;
         this.cantSeguidores = cantSeguidores;
     }
@@ -49,11 +58,17 @@ public class DtUsuario extends DtPersona{
     }
 
     public Date getFechaNacimiento() {
-        return fechaNacimiento;
+        if (fechaNacimiento == null){
+            return null;
+        }
+        return fechaNacimiento.toSqlDate();
     }
 
     public Date getFechaEliminado() {
-        return fechaEliminado;
+        if (fechaEliminado == null){
+            return null;
+        }
+        return fechaEliminado.toSqlDate();
     }
 
     public String getImagen() {

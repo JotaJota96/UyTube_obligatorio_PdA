@@ -8,14 +8,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class DtComentario {
     private int id;
     private String nickname;
-    private  Date fecha;
+    private  Fecha fecha;
     private String texto;
     private int nivelSubComentario;
 
     public DtComentario(int id, String nickname, Date fecha, String texto, int nivelSubComentario) {
         this.id = id;
         this.nickname = nickname;
-        this.fecha = fecha;
+        this.fecha = null;
+        if (fecha != null) {
+            this.fecha = new Fecha(fecha);
+        }
         this.texto = texto;
         this.nivelSubComentario = nivelSubComentario;
     }
@@ -29,7 +32,7 @@ public class DtComentario {
     }
 
     public Date getFecha() {
-        return fecha;
+        return fecha.toSqlDate();
     }
 
     public String getTexto() {
