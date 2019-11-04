@@ -5,10 +5,8 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtVideo;
-import Logica.Enumerados.Privacidad;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtVideo;
+import logica.controladores.Privacidad;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +18,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
+import logica.controladores.Duracion;
+import logica.controladores.Fecha;
 
 /**
  *
@@ -40,7 +42,8 @@ public class AltaVideo extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             
             if (!sys.sesionIniciada()){
                 String msj = "No puedes acceder a esta página";
@@ -53,7 +56,7 @@ public class AltaVideo extends HttpServlet {
             }
             
             boolean sesionIniciada = sys.sesionIniciada();
-            ArrayList<String> cate = sys.listarCategorias();
+            ArrayList<String> cate = (ArrayList<String>)sys.listarCategorias();
 
             request.setAttribute("Categorias", cate);
             request.setAttribute("sesionIniciada", sesionIniciada);
@@ -84,7 +87,8 @@ public class AltaVideo extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             
             if (!sys.sesionIniciada()){
                 String msj = "No puedes acceder a esta página";
@@ -119,12 +123,34 @@ public class AltaVideo extends HttpServlet {
             //============= Casteo de string a Time ================================
             Time duracion = java.sql.Time.valueOf(pDuracion);
             //======================================================================
-            DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl,Privacidad.PRIVADO, pCategoria, 0, 0);
 
+            Fecha f = new Fecha();
+            f.setAnio(data.getYear());
+            f.setMes(data.getMonth());
+            f.setDia(data.getDate());
+            
+            Duracion d = new Duracion();
+            d.setHoras(duracion.getHours());
+            d.setMinutos(data.getMinutes());
+            d.setSegundos(data.getSeconds());
+            
+            DtVideo vid = new DtVideo();
+            vid.setId(0);
+            vid.setNombre(pNombre);
+            vid.setDescripcion(pDescripcion);
+            vid.setDuracion(d);
+            vid.setFechaPublicacion(f);
+            vid.setUrlVideoOriginal(pUrl);
+            vid.setPrivacidad(Privacidad.PRIVADO);
+            vid.setCategoria(pCategoria);
+            vid.setCantLikes(0);
+            vid.setCantDisLikes(0);
+                    
+                    
             sys.altaVideo(vid);
             
             sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
-            ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
+            ArrayList<DtVideo> videos = (ArrayList<DtVideo>)sys.listarVideosDeUsuario();
             
             int idNuevoVideo = 0;
             for (DtVideo v : videos){

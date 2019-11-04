@@ -5,12 +5,10 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtListaDeReproduccion;
-import Logica.DataType.DtUsuario;
-import Logica.Enumerados.Privacidad;
-import Logica.Enumerados.TipoListaDeReproduccion;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtListaDeReproduccion;
+import logica.controladores.DtUsuario;
+import logica.controladores.Privacidad;
+import logica.controladores.TipoListaDeReproduccion;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -18,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -39,9 +39,11 @@ public class AltaListaReproduccion extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
-            
-            if (!sys.sesionIniciada()){
+            //IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+
+            if (!sys.sesionIniciada()) {
                 String msj = "No puedes acceder a esta página";
                 Funciones.Funciones.showLog("Acceso denegado", msj);
                 RequestDispatcher rd; //objeto para despachar
@@ -50,9 +52,9 @@ public class AltaListaReproduccion extends HttpServlet {
                 rd.forward(request, response);
                 return;
             }
-            
+
             boolean sesionIniciada = sys.sesionIniciada();
-            ArrayList<String> cate = sys.listarCategorias();
+            ArrayList<String> cate = (ArrayList<String>) sys.listarCategorias();
 
             request.setAttribute("Categorias", cate);
             request.setAttribute("sesionIniciada", sesionIniciada);
@@ -83,9 +85,10 @@ public class AltaListaReproduccion extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
-            
-            if (!sys.sesionIniciada()){
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+
+            if (!sys.sesionIniciada()) {
                 String msj = "No puedes acceder a esta página";
                 Funciones.Funciones.showLog("Acceso denegado", msj);
                 RequestDispatcher rd; //objeto para despachar
@@ -94,33 +97,39 @@ public class AltaListaReproduccion extends HttpServlet {
                 rd.forward(request, response);
                 return;
             }
-            
+
             String pNombreLista = request.getParameter("nombreL");
             String pPrivacidad = request.getParameter("privacidad_1");
             String pCategoria = request.getParameter("categoria");
-            
+
             DtUsuario usu = sys.obtenerUsuarioActual();
-            
+
             Privacidad priv = Privacidad.PRIVADO;
             if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
                 priv = Privacidad.PUBLICO;
             }
+
+            DtListaDeReproduccion listRepo = new DtListaDeReproduccion();
+            listRepo.setId(0);
+            listRepo.setNombre(pNombreLista);
+            listRepo.setPrivacidad(priv);
+            listRepo.setTipo(TipoListaDeReproduccion.PARTICULAR);
+            listRepo.setCategoria(pCategoria);
             
-            DtListaDeReproduccion listRepo = new DtListaDeReproduccion(0, pNombreLista, priv, TipoListaDeReproduccion.PARTICULAR, pCategoria);
             sys.altaListaDeReproduccionParticular(listRepo);
-            
+
             sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
-            ArrayList<DtListaDeReproduccion> listas = sys.listarListasDeReproduccionDeUsuario(true);
-            
+            ArrayList<DtListaDeReproduccion> listas = (ArrayList<DtListaDeReproduccion>)sys.listarListasDeReproduccionDeUsuario(true);
+
             int idNuevaLista = 0;
-            for (DtListaDeReproduccion l : listas){
-                if (l.getId() > idNuevaLista){
+            for (DtListaDeReproduccion l : listas) {
+                if (l.getId() > idNuevaLista) {
                     idNuevaLista = l.getId();
                 }
             }
-            
+
             response.sendRedirect("lista-consultar?id=" + idNuevaLista);
-            
+
         } catch (Exception e) {
             Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
@@ -128,8 +137,7 @@ public class AltaListaReproduccion extends HttpServlet {
             rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
-        
-        
+
     }
 
     /**
