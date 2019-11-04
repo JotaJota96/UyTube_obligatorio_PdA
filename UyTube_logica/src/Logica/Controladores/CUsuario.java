@@ -7,7 +7,6 @@ import JPAControllerClasses.UsuarioJpaController;
 import Logica.Clases.Categoria;
 import Logica.Clases.ListaPorDefecto;
 import Logica.Clases.Usuario;
-import Logica.Clases.Video;
 import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtListaDeReproduccion;
@@ -115,7 +114,7 @@ public class CUsuario implements IUsuario {
         }
         usuarioActual.agregarVideoALista(idLista, idVideoSeleccionado, usuarioSeleccionado);
     }
-
+    
     @Override
     public void altaComentario(DtComentario dtCom) {
         if (usuarioActual == null){
@@ -167,6 +166,9 @@ public class CUsuario implements IUsuario {
     @Override
     public void altaUsuarioCanal(DtUsuario usr, DtCanal canal) {
         // valida datos recibidos
+        if (sesionIniciada()){
+            throw new RuntimeException("Ya hay una sesión iniciada");
+        }
         if (usr == null){
             throw new RuntimeException("El DataType usuario no puede ser null");
         }
@@ -756,9 +758,16 @@ public class CUsuario implements IUsuario {
 
     @Override
     public DtUsuario seleccionarUsuario(String nickname) {
-        usuarioSeleccionado = obtenerUsuarios().get(nickname);
-        if (usuarioSeleccionado == null){
-            throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+        if (usuarioActual != null && usuarioActual.getNickname().equals(nickname)){
+            usuarioSeleccionado = usuarioActual;
+        }else{
+            usuarioSeleccionado = obtenerUsuarios().get(nickname);
+            if (usuarioSeleccionado == null){
+                throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+            }
+            if (usuarioSeleccionado.obtenerCanal().getPrivacidad() == Privacidad.PRIVADO){
+                throw new RuntimeException("El canal seleccionado es privado");
+            }
         }
         return usuarioSeleccionado.getDT();
     }
@@ -770,6 +779,11 @@ public class CUsuario implements IUsuario {
             this.seleccionarUsuario(nick);
         }
         DtListaDeReproduccion ret = usuarioSeleccionado.obtenerListaDeReproduccion(idLista);
+        if (ret.getPrivacidad() == Privacidad.PRIVADO){
+            if ( ! elUsuarioSeleccionadoEsElUsuarioActual()){
+                throw new RuntimeException("La lista de reproduccion seleccionada es privada");
+            }
+        }
         idListaSeleccionada = idLista;
         return ret;
     }
@@ -781,6 +795,11 @@ public class CUsuario implements IUsuario {
             this.seleccionarUsuario(nick);
         }
         DtVideo ret = usuarioSeleccionado.obtenerVideoDeCanal(idVideo);
+        if (ret.getPrivacidad() == Privacidad.PRIVADO){
+            if ( ! elUsuarioSeleccionadoEsElUsuarioActual()){
+                throw new RuntimeException("El video seleccionado es privado");
+            }
+        }
         idVideoSeleccionado = idVideo;
         return ret;
     }
@@ -791,32 +810,36 @@ public class CUsuario implements IUsuario {
     }
     
     @Override
-    public boolean validarNuevaListaParticular(String nombre) {
+    public boolean validarNuevaListaParticular(String nombre, int idExcepcion) {
         if (this.usuarioActual == null){
             throw new RuntimeException("No se ha iniciado sesión");
         }
         if (obtenerListasPorDefecto().containsKey(nombre)) {
             return false;
         }
-        if (idListaSeleccionada != 0){
-            if (usuarioActual.obtenerListaDeReproduccion(idListaSeleccionada).getNombre().equals(nombre)){
-                return true;
+        for (DtListaDeReproduccion it : usuarioActual.listarListasDeReproduccionDeCanal(true)){
+            if (it.getId() != idExcepcion){
+                if (it.getNombre().equals(nombre)){
+                    return false;
+                }
             }
         }
-        return usuarioActual.validarListaParticular(nombre);
+        return true;
     }
 
     @Override
-    public boolean validarNuevoVideo(String nombre) {
+    public boolean validarNuevoVideo(String nombre, int idExcepcion) {
         if (this.usuarioActual == null){
             throw new RuntimeException("No se ha iniciado sesión");
         }
-        if (idVideoSeleccionado != 0){
-            if (usuarioActual.obtenerVideo(idVideoSeleccionado).getNombre().equals(nombre)){
-                return true;
+        for (DtVideo it : usuarioActual.listarVideosDeCanal()){
+            if (it.getId() != idExcepcion){
+                if (it.getNombre().equals(nombre)){
+                    return false;
+                }
             }
         }
-        return usuarioActual.validarListaParticular(nombre);
+        return true;
     }
 
     @Override

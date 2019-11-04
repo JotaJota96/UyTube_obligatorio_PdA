@@ -1,9 +1,0 @@
-sass --watch \
-    body.sass:../css/body.css \
-    header.sass:../css/header.css \
-    principal.sass:../css/principal.css \
-    contenido-consulata-video2.sass:../css/contenido-consulta-video.css \
-    menu.sass:../css/menu.css  grid.sass:../css/grid.css \
-    widget.sass:../css/widget.css \
-    footer.sass:../css/footer.css \
-    mqueries-consulta-video2.sass:../css/mqueries-consulta-video.css;

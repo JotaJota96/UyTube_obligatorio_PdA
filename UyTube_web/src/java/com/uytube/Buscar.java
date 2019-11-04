@@ -35,6 +35,7 @@ public class Buscar extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             //-----------------------------------------------------
@@ -44,52 +45,51 @@ public class Buscar extends HttpServlet {
             String Orden = request.getParameter("orden");
             //------------------------------------------------------
             ArrayList<Object> Ret = null;
-
-            if (Categoria == null || Categoria.equals("")) {
+            
+            if (Categoria == null || Categoria.equalsIgnoreCase("")) {
                 Filtrado Fil = Filtrado.TODO;
                 Ordenacion ord = Ordenacion.FECHA_DESCENDENTE;
 
-                if (Filtro != null && Filtro.equals("CANALES")) {
+                if (Filtro != null && Filtro.equalsIgnoreCase("CANALES")) {
                     Fil = Filtrado.CANALES;
                 }
-                if (Filtro != null && Filtro.equals("LISTAS_DE_REPRODUCCION")) {
+                if (Filtro != null && (Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS_DE_REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCIóN") || Filtro.equalsIgnoreCase("LISTAS_DE_REPRODUCCIÓN"))) {
                     Fil = Filtrado.LISTAS_DE_REPRODUCCION;
                 }
-                if (Filtro != null && Filtro.equals("VIDEOS")) {
+                if (Filtro != null && Filtro.equalsIgnoreCase("VIDEOS")) {
                     Fil = Filtrado.VIDEOS;
                 }
-                if (Orden != null && Orden.equals("ALFABETICO")) {
+                if (Orden != null && (Orden.equalsIgnoreCase("ALFABÉTICO") || Orden.equalsIgnoreCase("ALFABETICO"))) {
                     ord = Ordenacion.ALFABETICA_ASCENDENTE;
                 }
-                
+
                 String comilla = "" + (char) 34;
                 String vacio = "";
+
                 if (Texto == null){
                     Texto = "";
                 }else{
                     Texto = Texto.replaceAll(comilla, vacio);
                 }
                 
-                if (Texto.equals("")){
-                    Texto = " ";
-                }
-                System.out.println("Todo bien hasta aqui");
                 Ret = sys.buscar(Texto, Fil, ord);
-                
             } else {
+                Categoria = Categoria.toUpperCase();
                 Ret = sys.buscar(Categoria);
             }
+            Funciones.Funciones.showLog("Cantidad de resultados a devolver: ", String.valueOf(Ret.size()));
 
             request.setAttribute("Lista", Ret);
 
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/Buscar.jsp");
             rd.forward(request, response);
-
+            
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }

@@ -14,6 +14,10 @@
 <!DOCTYPE html>
 
 <html lang="es">
+    <%
+        ArrayList<Object> lista = (ArrayList) request.getAttribute("Lista");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+    %>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,18 +34,18 @@
         <title>UyTube</title>
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
                     <%
-                        if (false){
+                        if (sesionIniciada){
                     %>
-                    <%@ include file='include/header-usuario.html' %>
+                    <%@ include file='include/header-usuario.jsp' %>
                     <%
                         }else{
                     %>
-                    <%@ include file='include/header-visitante.html' %>
+                    <%@ include file='include/header-visitante.jsp' %>
                     <%
                         }
                     %>
@@ -49,18 +53,29 @@
             </div>		
         </div>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
-                        <%@ include file='include/menu-usuario.html' %>
+                    <section class="principal">
+                        
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%
+                            } else {
+                        %>
+                        <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
 
                         <div class="contenido">
                             <section class="contenido-flexible">								
@@ -69,7 +84,7 @@
 
                                     <!-- BOTONES DESPLEGABLES-->
 
-                                    <%@ include file='include/filtro-visible.html' %>
+                                    <%@ include file='include/filtro-visible.jsp' %>
 
                                     <!--FIN DE LOS BOTONES-->
 
@@ -79,7 +94,6 @@
 
                                     <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
                                         <%
-                                            ArrayList<Object> lista = (ArrayList) request.getAttribute("Lista");
                                             for (Object o : lista){
                                                 if (o instanceof DtVideo){
                                                     DtVideo e = (DtVideo) o;
@@ -138,18 +152,12 @@
                                                     DtCanal e = (DtCanal) o;
                                                     // buena suerte entendiendo esto...
                                                     DtUsuario usu = Fabrica.getInstancia().getIUsuario().obtenerPropietarioDeCanal(e.getId());
-                                                    String imagenCanal;
-                                                    if (usu.getImagen() == null || usu.getImagen().equals("")){
-                                                        imagenCanal = "imagenes/ukp.png";
-                                                    }else{
-                                                        imagenCanal = usu.getImagen();
-                                                    }
                                         %>
                                         <div class="canal bd-highlight">
                                             <div class="bd-highlight caja-imagen">
                                                 <div class="bd-highlight">
                                                     <a href="usuario-consultar?id=<%= usu.getNickname() %>">
-                                                       <img src="<%= imagenCanal %>" class="align-self-center rounded-circle" alt="Cinque Terre" >
+                                                       <img src="usuario-imagen?id=<%= usu.getNickname() %>" class="align-self-center rounded-circle" alt="Cinque Terre" >
                                                     </a>
                                                 </div>
                                             </div>

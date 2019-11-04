@@ -5,8 +5,15 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtListaDeReproduccion;
+import Logica.DataType.DtUsuario;
+import Logica.Enumerados.Privacidad;
+import Logica.Enumerados.TipoListaDeReproduccion;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,32 +24,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author administrador
  */
 public class AltaListaReproduccion extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AltaListaReproduccion</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AltaListaReproduccion at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -56,7 +37,37 @@ public class AltaListaReproduccion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Funciones.Funciones.showLog(request, response);
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                Funciones.Funciones.showLog("Acceso denegado", msj);
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
+            boolean sesionIniciada = sys.sesionIniciada();
+            ArrayList<String> cate = sys.listarCategorias();
+
+            request.setAttribute("Categorias", cate);
+            request.setAttribute("sesionIniciada", sesionIniciada);
+
+            RequestDispatcher rd; //objeto para despachar
+            rd = request.getRequestDispatcher("/AltaListaReproduccion.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            Funciones.Funciones.showLog(e);
+            RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     /**
@@ -70,7 +81,55 @@ public class AltaListaReproduccion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Funciones.Funciones.showLog(request, response);
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                Funciones.Funciones.showLog("Acceso denegado", msj);
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
+            String pNombreLista = request.getParameter("nombreL");
+            String pPrivacidad = request.getParameter("privacidad_1");
+            String pCategoria = request.getParameter("categoria");
+            
+            DtUsuario usu = sys.obtenerUsuarioActual();
+            
+            Privacidad priv = Privacidad.PRIVADO;
+            if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
+                priv = Privacidad.PUBLICO;
+            }
+            
+            DtListaDeReproduccion listRepo = new DtListaDeReproduccion(0, pNombreLista, priv, TipoListaDeReproduccion.PARTICULAR, pCategoria);
+            sys.altaListaDeReproduccionParticular(listRepo);
+            
+            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+            ArrayList<DtListaDeReproduccion> listas = sys.listarListasDeReproduccionDeUsuario(true);
+            
+            int idNuevaLista = 0;
+            for (DtListaDeReproduccion l : listas){
+                if (l.getId() > idNuevaLista){
+                    idNuevaLista = l.getId();
+                }
+            }
+            
+            response.sendRedirect("lista-consultar?id=" + idNuevaLista);
+            
+        } catch (Exception e) {
+            Funciones.Funciones.showLog(e);
+            RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
+        
+        
     }
 
     /**

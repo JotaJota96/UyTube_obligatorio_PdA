@@ -1,21 +1,19 @@
 package Presentacion.Usuario;
 
 import Logica.DataType.DtCanal;
+import Logica.DataType.DtImagenUsuario;
 import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
-import Presentacion.ListaDeReproduccion.frmConsultaListaDeReproduccion;
+import Presentacion.FuncionesImagenes;
 import Presentacion.ListaDeReproduccion.frmConsultaListaDeReproduccionEliminada;
-import Presentacion.Video.frmConsultaVideo;
 import Presentacion.Video.frmConsultaVideoEliminado;
-import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
@@ -30,7 +28,7 @@ public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         
         try {
-            cargarImagenEnJlabel(lbImagen, "");
+            FuncionesImagenes.cargarImagenEnJlabel(lbImagen, null);
             lbImagen.setEnabled(false);
             // obtiene la instancia de sistema
             sys = Fabrica.getInstancia().getIAdmin();
@@ -304,8 +302,20 @@ public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
         lbEmail.setText(u.getCorreo());
         lbFechaN.setText(new SimpleDateFormat("dd-MM-yyyy").format(u.getFechaNacimiento()));
         lbFechaElim.setText(new SimpleDateFormat("dd-MM-yyyy").format(u.getFechaEliminado()));
-        cargarImagenEnJlabel(lbImagen, u.getImagen());
         lbImagen.setEnabled(true);
+        try {
+            DtImagenUsuario dtiu = sys.obtenerImagenDeUsuario(u.getNickname());
+            if (dtiu == null){
+                FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImagen);
+            }else{
+                FuncionesImagenes.cargarImagenEnJlabel(
+                        lbImagen,
+                        FuncionesImagenes.byteArrayToImage(dtiu.getImagen())
+                );
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar la imagen del usuario\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     private void cargarLabelsConDatosDelCanal(DtCanal c){
         lbNombreCanal.setText(c.getNombre());
@@ -315,20 +325,6 @@ public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
         }else{
             lbPrivacidad.setText("Privado");
         }
-    }
-    private void cargarImagenEnJlabel(javax.swing.JLabel jLabelx, String Ruta){
-        jLabelx.setText(null);
-        if (Ruta == null || Ruta.isEmpty()){
-            Ruta = "Imagenes\\ukp.png";
-        }
-        // Carga la imagen a la variable de tipo Image
-        Image img = new ImageIcon(Ruta).getImage();
-        // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
-        ImageIcon icono = new ImageIcon(
-                img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH)
-        );
-        // establece la imagen en el label
-        jLabelx.setIcon(icono);
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
     

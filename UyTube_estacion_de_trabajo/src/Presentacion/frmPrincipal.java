@@ -1,11 +1,14 @@
 package Presentacion;
 
+import Logica.DataType.DtImagenUsuario;
+import Logica.Fabrica;
 import Presentacion.Categoria.*;
 import Presentacion.ListaDeReproduccion.*;
 import Presentacion.Usuario.*;
 import Presentacion.Video.*;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
     
@@ -23,7 +26,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         
         // carga la imagen de fondo
         this.lbFondo.setText(null);
-        Image img3 = new ImageIcon("Imagenes/des.jpeg").getImage();
+        // originalmente se usaba la siguiente linea: 
+        //Image img3 = new ImageIcon("Imagenes/des.jpeg").getImage();
+        // Pero para cargar la imagen que esta en el .jar se usa esta:
+        URL path = this.getClass().getClassLoader().getResource("Imagenes/des.jpeg");
+        Image img3 = new ImageIcon(path).getImage();
         ImageIcon img4 = new ImageIcon(img3.getScaledInstance(lbFondo.getWidth(), lbFondo.getHeight(), Image.SCALE_SMOOTH));
         lbFondo.setIcon(img4);
         
@@ -551,6 +558,19 @@ public class frmPrincipal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        // Publicacion del Web Service
+        try {
+            String url = Fabrica.getInstancia().publicarWebService();
+            System.out.println("Se ha publicado el Web Service en la siguiente URL:");
+            System.out.println(url);
+            System.out.println("El WSDL se encuentra disponible en:");
+            System.out.println(url + "?wsdl");
+        } catch (Exception e) {
+            System.err.println("---- Error al publicar el Web Service ----");
+            System.out.println(e.getMessage());
+            System.err.println("------------------------------------------");
+        }
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Metal".equals(info.getName())) {

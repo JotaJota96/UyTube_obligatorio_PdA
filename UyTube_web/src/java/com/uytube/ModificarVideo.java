@@ -10,7 +10,6 @@ import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,10 +39,22 @@ public class ModificarVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                Funciones.Funciones.showLog("Acceso denegado", msj);
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             int id = Integer.parseInt(request.getParameter("id"));
 
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
             boolean sesionIniciada = sys.sesionIniciada();
             ArrayList<String> cate = sys.listarCategorias();
             DtVideo video = sys.seleccionarVideo(id);
@@ -55,8 +66,10 @@ public class ModificarVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/ModificarVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }
@@ -72,9 +85,20 @@ public class ModificarVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                Funciones.Funciones.showLog("Acceso denegado", msj);
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             String pNombre = request.getParameter("nombre");
             String pDuracion = request.getParameter("duracion");
             String pUrl = request.getParameter("url");
@@ -103,13 +127,26 @@ public class ModificarVideo extends HttpServlet {
             Time duracion = java.sql.Time.valueOf(pDuracion);
             //======================================================================
             DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl, Priv, pCategoria, 0, 0);
-
+            
             sys.modificarVideo(vid);
-            response.sendRedirect("buscar?texto="+vid.getNombre());
+            
+            
+            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+            ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
+            int idNuevoVideo = 0;
+            for (DtVideo v : videos){
+                if (v.getNombre().equals(vid.getNombre())){
+                    idNuevoVideo = v.getId();
+                    break;
+                }
+            }
+            
+            response.sendRedirect("video-consultar?id=" + idNuevoVideo);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }

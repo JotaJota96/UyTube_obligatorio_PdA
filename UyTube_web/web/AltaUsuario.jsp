@@ -7,6 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+    <%
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+    %>
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,37 +23,61 @@
         <link rel="stylesheet" type="text/css" href="css/footer.css">
        	<link rel="stylesheet" type="text/css" href="css/contenido-alta-usuario.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
-        
+
         <title>UyTube - Registrarse</title>
     </head>
     <body>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
-                    <%@ include file='include/header-visitante.html' %>
+
+                    <%
+                        if (sesionIniciada) {
+                    %>
+                    <%@ include file='include/header-usuario.jsp' %>
+                    <%
+                        } else {
+                    %>
+                    <%@ include file='include/header-visitante.jsp' %>
+                    <%
+                        }
+                    %>
                 </div>
             </div>		
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
-                        <%@ include file='include/menu-visitante.html' %>
+                    <section class="principal">				
+                        <%
+                            if (sesionIniciada) {
+                        %>
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%
+                            } else {
+                        %>
+                        <%@ include file='include/menu-visitante.jsp' %>
+                        <%
+                            }
+                        %>
                         <div class="contenido">
                             <section class="contenido-flexible">
                                 <div class="principal d-flex flex-row justify-content-center">
-                                    <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
-                                        <form class="form-signin" action="/uytube/usuario-agregar" method="post">
+                                    <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">
+                                        <form class="form-signin" action="/uytube/usuario-agregar" method="post" enctype="multipart/form-data">
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
-                                            <input class="form-control" type="text" name="nickname" placeholder="Nickname" id="input_Nickname" required><span id="msjNickname"></span> <br>
+                                            <input class="form-control" type="text" name="nickname" placeholder="Nickname" id="input_Nickname" required>
+                                            <span class="small" id="msjNickname"></span>
+                                            <br>
+
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <input type="text" class="form-control" name="nombre" id="input_Nombre" placeholder="Nombre" required>
@@ -59,22 +87,23 @@
                                                 </div>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                                            </div>
+                                            <input class="form-control" type="email" name="email" placeholder="Email" id="email" required>
+                                            <span class="small" id="msjEmail"></span>
+                                            <br>
 
                                             <input class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start"><br>
-                                            <input class="form-control" type="password" placeholder="Contraseña" id="input_Contraseña" required><br>
-                                            <input class="form-control" name="password" type="password" placeholder="Repetir contraseña" id="input_Repetir_contraseña" required>
+                                            <input class="form-control" type="password" name="password" placeholder="Contraseña" id="input_Contrasenia" onkeyup="check()" required><br>
+                                            <input class="form-control" type="password" placeholder="Repita contraseña" id="input_Repetir_contraseña" onkeyup="check()" required>
+                                            <span class="small" id='message'></span>
 
                                             <div class="d-block my-3">
                                                 <label for="cc-name">Privacidad del canal</label>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked >
+                                                    <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked >
                                                     <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" >
+                                                    <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input" >
                                                     <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
                                             </div>
@@ -87,18 +116,18 @@
                                             <small class="text-muted">Opcional*</small><br><br>
 
 
-                                            <label id="label_email">Imagen de perfil</label>	
+                                            <label id="label_email">Imagen de perfil</label>
+                                            
                                             <div class="form-group">
-                                                <input id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
+                                                <input id="input_Imagen_Perfil" name="imagen" accept=".PNG,.JPG,.jpg,.png" type="file" class="file" multiple=false data-preview-file-type="any"><br>
                                                 <small class="text-muted">Opcional*</small>
                                             </div>
-
 
                                             <hr class="mb-4">
 
                                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <button class="btn btn-lg btn-primary btn-block" type="reset" id="btn_Limpiar">Limpiar</button>
+                                                    <button class="btn btn-lg btn-danger btn-block" type="reset" id="btn_Limpiar">Limpiar</button>
                                                 </div>
                                                 <div class="btn-group mr-2" role="group" aria-label="Second group">
                                                     <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn_Registrarme">Registrarme</button>

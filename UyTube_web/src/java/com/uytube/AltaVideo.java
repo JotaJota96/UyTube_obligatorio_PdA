@@ -5,27 +5,18 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtCanal;
-import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.Time;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.input.DataFormat;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,33 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AltaVideo extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AltaVideo</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AltaVideo at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -74,8 +38,20 @@ public class AltaVideo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                Funciones.Funciones.showLog("Acceso denegado", msj);
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             boolean sesionIniciada = sys.sesionIniciada();
             ArrayList<String> cate = sys.listarCategorias();
 
@@ -86,8 +62,10 @@ public class AltaVideo extends HttpServlet {
             rd = request.getRequestDispatcher("/AltaVideo.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
 
@@ -104,21 +82,27 @@ public class AltaVideo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                Funciones.Funciones.showLog("Acceso denegado", msj);
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             String pNombre = request.getParameter("nombre");
             String pDuracion = request.getParameter("duracion");
             String pUrl = request.getParameter("url");
             String pFecha = request.getParameter("fecha");
             String pDescripcion = request.getParameter("descripcion");
-            String pPrivacidad = request.getParameter("privacidad");
             String pCategoria = request.getParameter("categoria");
-
-            Privacidad Priv = Privacidad.PRIVADO;
-            if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
-                Priv = Privacidad.PUBLICO;
-            }
+            
             //============ Casteo de string a date =================================
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
             Date fechaDate = null;
@@ -131,19 +115,31 @@ public class AltaVideo extends HttpServlet {
             }
             java.sql.Date data = new java.sql.Date(fechaDate.getTime());
             //======================================================================
+            
             //============= Casteo de string a Time ================================
             Time duracion = java.sql.Time.valueOf(pDuracion);
-
             //======================================================================
-            DtVideo vid = new DtVideo(0, pNombre, pDescripcion,duracion, data, pUrl, Priv, pCategoria, 0, 0);
+            DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl,Privacidad.PRIVADO, pCategoria, 0, 0);
 
             sys.altaVideo(vid);
-            response.sendRedirect("/uytube/buscar?texto="+vid.getNombre());
-
+            
+            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
+            ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
+            
+            int idNuevoVideo = 0;
+            for (DtVideo v : videos){
+                if (v.getId() > idNuevoVideo){
+                    idNuevoVideo = v.getId();
+                }
+            }
+            
+            response.sendRedirect("/uytube/video-consultar?id=" + idNuevoVideo);
+            
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/Presentacion.jsp");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
 

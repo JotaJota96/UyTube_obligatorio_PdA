@@ -15,7 +15,7 @@
     <%
         DtVideo video = (DtVideo) request.getAttribute("video");
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
     <head>
         <meta charset="UTF-8">
@@ -37,22 +37,22 @@
         <%
             if (sesionIniciada) {
         %>
-        <%@ include file='include/header-usuario.html' %>
+        <%@ include file='include/header-usuario.jsp' %>
         <%
         } else {
         %>
-        <%@ include file='include/header-visitante.html' %>
+        <%@ include file='include/header-visitante.jsp' %>
         <%
             }
         %>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">	
@@ -60,11 +60,11 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.html' %>
+                        <%@ include file='include/menu-usuario.jsp' %>
                         <%
                         } else {
                         %>
-                        <%@ include file='include/menu-visitante.html' %>
+                        <%@ include file='include/menu-visitante.jsp' %>
                         <%
                             }
                         %>
@@ -77,7 +77,8 @@
                                     <div class="form-group row">
                                         <div class="form-group col-md-9">
                                             <label for="inputNombre">Nombre</label>
-                                            <input value="<%= video.getNombre()%>" type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
+                                            <input idVideo="<%= video.getId() %>" value="<%= video.getNombre()%>" type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
+                                            <span id="msjNombre"></span>
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="inputDuracion">Duración</label>
@@ -101,29 +102,27 @@
 
                                             <label  for="cc-name">Privacidad del video</label>
                                             <%
-                                                if (video.getPrivacidad() == Privacidad.PRIVADO) {
+                                                if (video.getPrivacidad().equals(Privacidad.PRIVADO)) {
                                             %>
                                             <div class="custom-control custom-radio">
-                                                <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
+                                                <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" >
                                                 <label class="custom-control-label" for="publico">Publico</label>
                                             </div>
+                                            
                                             <div class="custom-control custom-radio">
-                                                <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
+                                                <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input" checked>
                                                 <label class="custom-control-label" for="privado">Privado</label>
                                             </div>
                                             <%
-                                                }
-
-                                            %>
-
-                                            <%                                                if (video.getPrivacidad() == Privacidad.PUBLICO) {
+                                                }else {
                                             %>
                                             <div class="custom-control custom-radio">
-                                                <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked>
+                                                <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked>
                                                 <label class="custom-control-label" for="publico">Publico</label>
                                             </div>
+                                            
                                             <div class="custom-control custom-radio">
-                                                <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input">
+                                                <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input">
                                                 <label class="custom-control-label" for="privado">Privado</label>
                                             </div>
                                             <%
@@ -178,5 +177,6 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/funciones.js"></script>
+        <script src="js/alta-modificar-video.js"></script>
     </body>
 </html>

@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube-404</title>
+        <title>UyTube - 404</title>
         
     <style>
         *
@@ -258,11 +258,29 @@
                     <div class="clip"><div class="shadow"><span class="digit firstDigit">4</span></div></div>
                     <div class="msg">Uy!<span class="triangle"></span></div>
                 </div>
-                <h2 class="h1">UyTube se cayó</h2>
+                <h2 class="h1">¡Uy!, no encontramos esta página</h2>
+                <%
+                    String mensajeError = (String) request.getAttribute("mensajeError");
+                    if (mensajeError != null){
+                        String msj = "";
+                        for (int idx = 0; idx < mensajeError.length(); idx++) {
+                            if (mensajeError.charAt(idx) == '\n'){
+                                break;
+                            }
+                            msj += mensajeError.charAt(idx);
+                        }
+                %>
+                <h2 class="h1" style="font-size: 20px;"><%= msj %></h2>
+                <%
+                    }
+                %>
+                
+                <h2 class="h1">
+                    <a href="/uytube/">Ir al inicio</a>
+                </h2>
             </div>
         </div>
     </div>
     <!-- Error Page -->
 </body>
 </html>
-

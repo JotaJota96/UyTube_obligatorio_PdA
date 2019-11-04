@@ -8,8 +8,8 @@ public class DtVideo {
     private int id;
     private String nombre;
     private String descripcion;
-    private Time duracion;
-    private Date fechaPublicacion;
+    private Duracion duracion;
+    private Fecha fechaPublicacion;
     private String urlVideoOriginal;
     private Privacidad privacidad;
     private String categoria;
@@ -21,8 +21,14 @@ public class DtVideo {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.duracion = duracion;
-        this.fechaPublicacion = fechaPublicacion;
+        this.duracion = null;
+        if (duracion != null) {
+            this.duracion = new Duracion(duracion);
+        }
+        this.fechaPublicacion = null;
+        if (fechaPublicacion != null) {
+            this.fechaPublicacion = new Fecha(fechaPublicacion);
+        }
         this.urlVideoOriginal = urlVideoOriginal;
         this.privacidad = privacidad;
         this.categoria = categoria;
@@ -34,8 +40,14 @@ public class DtVideo {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.duracion = duracion;
-        this.fechaPublicacion = fechaPublicacion;
+        this.duracion = null;
+        if (duracion != null) {
+            this.duracion = new Duracion(duracion);
+        }
+        this.fechaPublicacion = null;
+        if (fechaPublicacion != null) {
+            this.fechaPublicacion = new Fecha(fechaPublicacion);
+        }
         this.urlVideoOriginal = urlVideoOriginal;
         this.privacidad = privacidad;
         this.categoria = categoria;
@@ -57,11 +69,11 @@ public class DtVideo {
     }
 
     public Time getDuracion() {
-        return duracion;
+        return duracion.toSqlDate();
     }
 
     public Date getFechaPublicacion() {
-        return fechaPublicacion;
+        return fechaPublicacion.toSqlDate();
     }
 
     public String getUrlVideoOriginal() {

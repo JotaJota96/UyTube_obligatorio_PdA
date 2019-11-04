@@ -5,10 +5,10 @@
  */
 package com.uytube;
 
-import Logica.Enumerados.Filtrado;
 import Logica.Fabrica;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  * @author administrador
  */
 public class CerrarSesion extends HttpServlet {
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -32,20 +32,29 @@ public class CerrarSesion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        IUsuario sys = Fabrica.getInstancia().getIUsuario();
-        
-        // cierra la sesion HTTP (si es que hay una iniciada)
-        HttpSession session = request.getSession(false);
-        if(session != null){
-            session.invalidate();
+        Funciones.Funciones.showLog(request, response);
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+
+            // cierra la sesion HTTP (si es que hay una iniciada)
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            // Cierra la sesion en el sistema (si es que hay una iniciada)
+            if (sys.sesionIniciada()) {
+                sys.cerrarSesion();
+            }
+            response.sendRedirect("/uytube/");
+        } catch (Exception e) {
+            Funciones.Funciones.showLog(e);
+            RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
         }
-        // Cierra la sesion en el sistema (si es que hay una iniciada)
-        if (sys.sesionIniciada()){
-            sys.cerrarSesion();
-        }
-        request.getRequestDispatcher("/index.jsp").forward(request,response);
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *

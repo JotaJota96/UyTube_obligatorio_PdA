@@ -14,10 +14,30 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
+    
+    <script>
+        var check = function() {
+          if (document.getElementById('input_Contrasenia').value == document.getElementById('input_Repetir_contraseña').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Correcto';
+            document.getElementById("btn_Registrarme").disabled = false;
+            if (document.getElementById('input_Contrasenia').value == ""){
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'Ingrese la contraseña';
+                document.getElementById("btn_Registrarme").disabled = true;
+            }
+          } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'No son iguales';
+            document.getElementById("btn_Registrarme").disabled = true;
+          }
+        }
+    </script>
+    
     <%
         DtUsuario usuario = (DtUsuario) request.getAttribute("usuario");
         DtCanal canal = (DtCanal) request.getAttribute("canal");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
     <head>
         <meta charset="UTF-8">
@@ -36,44 +56,42 @@
     </head>
     <body>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
                     <%
-                        if (sesionIniciada){
+                        if (sesionIniciada) {
                     %>
-                    <%@ include file='include/header-usuario.html' %>
-                    <%
-                        }else{
+                    <%@ include file='include/header-usuario.jsp' %>
+                    <%                    } else {
                     %>
-                    <%@ include file='include/header-visitante.html' %>
+                    <%@ include file='include/header-visitante.jsp' %>
                     <%
                         }
                     %>
                 </div>
             </div>		
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <section class="principal">						
-                         <!-- Inclusion del menu lateral -->
+                        <!-- Inclusion del menu lateral -->
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.html' %>
-                        <%
-                        } else {
+                        <%@ include file='include/menu-usuario.jsp' %>
+                        <%                        } else {
                         %>
-                        <%@ include file='include/menu-visitante.html' %>
+                        <%@ include file='include/menu-visitante.jsp' %>
                         <%
                             }
                         %>
@@ -81,7 +99,7 @@
                             <section class="contenido-flexible">							
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">					
-                                        <form class="form-signin" action="/uytube/usuario-modificar" method="post">
+                                        <form class="form-signin" action="usuario-modificar" method="post" enctype="multipart/form-data">
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1><br>
                                             <input value="<%= usuario.getNickname()%>" class="form-control" type="text" name="nickname" readonly="readonly" placeholder="Nickname" id="input_Nickname" required><br>
                                             <div class="row">
@@ -99,21 +117,23 @@
                                                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                                                 String fecha = df.format(usuario.getFechaNacimiento());
                                             %>
-                                            <input  value="<%= fecha %>" class="form-control" name="fechaNa" type="date" id="input_fecha" name="trip-start" readonly="readonly"><br>
-                                                
-                                            <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" placeholder="Contraseña" id="input_Contraseña" required><br>
-                                            <input value="<%= usuario.getContrasenia()%>" class="form-control" name="password" type="password" placeholder="Repetir contraseña" id="input_Repetir_contraseña" required>
+                                            <input  value="<%= fecha%>" class="form-control" name="fechaNa" type="date" id="input_fecha"><br>
+                                            
+
+                                            <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" name="password" placeholder="Contraseña" id="input_Contrasenia" onkeyup="check()" required><br>
+                                            <input value="<%= usuario.getContrasenia()%>" class="form-control" type="password" placeholder="Repita contraseña" id="input_Repetir_contraseña" onkeyup="check()" required>
+                                            <span id='message'></span>
                                             <%
                                                 if (canal.getPrivacidad() == Privacidad.PUBLICO) {
                                             %> 
                                             <div class="d-block my-3">
                                                 <label for="cc-name">Privacidad del canal</label>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="publico" name="privacidad" type="radio" class="custom-control-input" checked >
+                                                    <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" checked>
                                                     <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" >
+                                                    <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input">
                                                     <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
                                             </div>
@@ -128,11 +148,11 @@
                                             <div class="d-block my-3">
                                                 <label for="cc-name">Privacidad del canal</label>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
+                                                    <input id="publico" name="privacidad" value="PUBLICO" type="radio" class="custom-control-input" >
                                                     <label class="custom-control-label" for="publico">Publico</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
+                                                    <input id="privado" name="privacidad" value="PRIVADO" type="radio" class="custom-control-input" checked>
                                                     <label class="custom-control-label" for="privado">Privado</label>
                                                 </div>
                                             </div>
@@ -140,24 +160,20 @@
                                             <%
                                                 }
                                             %>
-                                            
-                                            <input value="<%= canal.getNombre() %>" class="form-control" name="canal" type="text" placeholder="Nombre del Canal" readonly="readonly" id="input_Nombre_canal" required><br>
+
+                                            <input value="<%= canal.getNombre()%>" class="form-control" name="canal" type="text" placeholder="Nombre del Canal" readonly="readonly" id="input_Nombre_canal" required><br>
 
                                             <textarea class="form-control" name="descripcion" id="input_descripcion" placeholder="Descripción del Canal" rows="3"> <%=canal.getDescripcion()%> </textarea>
 
                                             <br>   
                                             <label id="label_email">Imagen de perfil</label>	
                                             <div class="form-group">
-                                                <input value="<%= usuario.getImagen() %>" id="input_Imagen_Perfil" type="file" class="file" multiple=false data-preview-file-type="any"><br>
+                                                <input id="input_Imagen_Perfil" name="imagen" accept=".PNG,.JPG,.jpg,.png" type="file" class="file" multiple=false data-preview-file-type="any"><br>
                                             </div>
-
 
                                             <hr class="mb-4">
 
                                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <button class="btn btn-lg btn-primary btn-block" type="reset" id="btn_Limpiar">Limpiar</button>
-                                                </div>
                                                 <div class="btn-group mr-2" role="group" aria-label="Second group">
                                                     <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn_Registrarme">Modificar usuario</button>
                                                 </div>

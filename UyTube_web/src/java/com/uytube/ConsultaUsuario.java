@@ -10,6 +10,7 @@ import Logica.DataType.DtListaDeReproduccion;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtVideo;
 import Logica.Fabrica;
+import Logica.Interfaces.IPersistenciaDeImagenes;
 import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,23 +37,29 @@ public class ConsultaUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Funciones.Funciones.showLog(request, response);
         try {
             IUsuario sys = Fabrica.getInstancia().getIUsuario();
             String nick = request.getParameter("id");
-            
+            String ps = request.getParameter("ps");
+            if (ps == null || ps.equals("")) {
+                ps = "VIDEOS";
+            }
+
             DtUsuario usuario = sys.seleccionarUsuario(nick);
             DtCanal canal = sys.obtenerCanalDeUsuario();
             ArrayList<DtUsuario> seguidos = sys.listarUsuarioSeguidos();
             ArrayList<DtUsuario> seguidores = sys.listarUsuarioSeguidores();
             ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
-            ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(false);
+            ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(true);
             boolean sesionIniciada = sys.sesionIniciada();
-            
+
             boolean usuarioPropietario = false;
-            if (sesionIniciada){
+            if (sesionIniciada) {
                 usuarioPropietario = sys.obtenerUsuarioActual().getNickname().equals(nick);
             }
-            
+
+            request.setAttribute("ps", ps);
             request.setAttribute("usuario", usuario);
             request.setAttribute("canal", canal);
             request.setAttribute("seguidos", seguidos);
@@ -67,8 +74,10 @@ public class ConsultaUsuario extends HttpServlet {
             rd.forward(request, response);
 
         } catch (Exception e) {
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
-            rd = request.getRequestDispatcher("/");
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
             rd.forward(request, response);
         }
     }

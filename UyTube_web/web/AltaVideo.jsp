@@ -10,7 +10,7 @@
 
     <%
         ArrayList<String> Categorias = (ArrayList) request.getAttribute("Categorias");
-        boolean sesionIniciada = (boolean) request.getAttribute("sesionIniciada");
+        boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
 
     <head>
@@ -33,15 +33,15 @@
         <%
             if (sesionIniciada) {
         %>
-        <%@ include file='include/header-usuario.html' %>
+        <%@ include file='include/header-usuario.jsp' %>
         <%
         } else {
         %>
-        <%@ include file='include/header-visitante.html' %>
+        <%@ include file='include/header-visitante.jsp' %>
         <%
             }
         %>
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
                     <div class="relleno-header"></div>
@@ -56,11 +56,11 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.html' %>
+                        <%@ include file='include/menu-usuario.jsp' %>
                         <%
                         } else {
                         %>
-                        <%@ include file='include/menu-visitante.html' %>
+                        <%@ include file='include/menu-visitante.jsp' %>
                         <%
                             }
                         %>
@@ -70,11 +70,12 @@
                                 <h3>Alta de video</h3>			
                                 <form class="form-alta-video" action="/uytube/video-agregar" method="post" >
                                     <div class="form-group row">
-                                        <div class="form-group col-md-9">
+                                        <div class="form-group col-12 col-md-9">
                                             <label for="inputNombre">Nombre</label>
                                             <input type="text" class="form-control" name="nombre" id="inputNombre" placeholder="Nombre del video">
+                                            <span id="msjNombre"></span>
                                         </div>
-                                        <div class="form-group col-md-3">
+                                        <div class="form-group col-4 col-md-3">
                                             <label for="inputDuracion">Duración</label>
                                             <input type="time" step='1'class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
                                         </div>
@@ -92,25 +93,14 @@
                                         </div>
                                     </div>										
                                     <div class="form-group row">
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-6 col-md-4">
                                             <label for="inputFecha">Fecha</label>
                                             <input type="date" name="fecha" class="form-control"  id="inputFecha">
                                         </div>
-
-                                        <div class="form-group col-md-4">
-
-                                            <label  for="cc-name">Privacidad del video</label>
-                                            <div class="custom-control custom-radio">
-                                                <input id="publico" name="privacidad" type="radio" class="custom-control-input" >
-                                                <label class="custom-control-label" for="publico">Publico</label>
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <input id="privado" name="privacidad" name="foto" type="radio" class="custom-control-input" checked>
-                                                <label class="custom-control-label" for="privado">Privado</label>
-                                            </div>
+                                        <div class="form-group col-md-2">
+                                            
                                         </div>
-
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-8 col-md-6">
                                             <label for="inputCategoria">Categoría</label>
                                             <select id="inputCategoria" name="categoria" class="form-control">
                                                 <%
@@ -142,5 +132,6 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/funciones.js"></script>
+        <script src="js/alta-modificar-video.js"></script>
     </body>
 </html>

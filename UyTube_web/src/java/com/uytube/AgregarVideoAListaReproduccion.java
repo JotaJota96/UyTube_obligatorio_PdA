@@ -5,8 +5,11 @@
  */
 package com.uytube;
 
+import Logica.DataType.DtUsuario;
+import Logica.Fabrica;
+import Logica.Interfaces.IUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,60 +20,43 @@ import javax.servlet.http.HttpServletResponse;
  * @author administrador
  */
 public class AgregarVideoAListaReproduccion extends HttpServlet {
+    // Ejemplo: localhost:8084/uytube/lista-agregar-video?idvideo=13&idlista=10
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AgregarVideoAListaReproduccion</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AgregarVideoAListaReproduccion at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+        Funciones.Funciones.showLog(request, response);
+        try {
+            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            if (!sys.sesionIniciada()){
+                String msj = "No puedes acceder a esta página";
+                Funciones.Funciones.showLog("Acceso denegado", msj);
+                RequestDispatcher rd; //objeto para despachar
+                request.setAttribute("mensajeError", msj);
+                rd = request.getRequestDispatcher("/401.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
+            String pIDVideo = request.getParameter("idvideo");
+            String pIDLista = request.getParameter("idlista");
+            int IDVideo = Integer.valueOf(pIDVideo);
+            int IDLista = Integer.valueOf(pIDLista);
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            DtUsuario usuActual = sys.obtenerUsuarioActual();
+            sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(IDVideo).getNickname());
+            sys.seleccionarVideo(IDVideo);
+            sys.agregarVideoAListaDeReproduccion(IDLista);
+
+            response.sendRedirect("lista-consultar?id="+IDLista);
+        } catch (Exception e) {
+            Funciones.Funciones.showLog(e);
+            RequestDispatcher rd; //objeto para despachar
+            request.setAttribute("mensajeError", e.getMessage());
+            rd = request.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**
