@@ -1,7 +1,8 @@
+<%@page import="logica.controladores.CUsuarioService"%>
+<%@page import="logica.controladores.CUsuario"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Logica.DataType.DtUsuario"%>
-<%@page import="Logica.Interfaces.IUsuario"%>
-<%@page import="Logica.Fabrica"%>
+<%@page import="logica.controladores.DtUsuario"%>
+
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--
@@ -9,9 +10,11 @@ Menú para el usuario logueado
 -->
 <aside class="menu" >	
     <%
-        IUsuario sys = Fabrica.getInstancia().getIUsuario();
+        CUsuarioService servicio = new CUsuarioService();
+        CUsuario sys = servicio.getCUsuarioPort();
+        
         DtUsuario usu = sys.obtenerUsuarioActual();
-        ArrayList<String> cate = sys.listarCategorias();
+        ArrayList<String> cate = (ArrayList<String>) sys.listarCategorias();
     %>
     <ul>	
         <li class="titulo"> Inicio </li>
