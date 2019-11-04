@@ -5,10 +5,8 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtListaDeReproduccion;
-import Logica.DataType.DtVideo;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtListaDeReproduccion;
+import logica.controladores.DtVideo;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -37,7 +37,9 @@ public class ConsultaListaReproducion extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+            
             boolean sesionIniciada = sys.sesionIniciada();
             String lista = request.getParameter("id");
             int idLista = Integer.parseInt(lista);
@@ -46,7 +48,7 @@ public class ConsultaListaReproducion extends HttpServlet {
             sys.seleccionarUsuario(usuario);
             
             DtListaDeReproduccion listas = sys.seleccionarListaDeReproduccion(idLista);
-            ArrayList <DtVideo> videos = sys.listarVideosDeListaDeReproduccion();
+            ArrayList <DtVideo> videos = (ArrayList <DtVideo>) sys.listarVideosDeListaDeReproduccion();
             
             boolean usuarioPropietario = false;
             if (sesionIniciada) {
@@ -58,7 +60,7 @@ public class ConsultaListaReproducion extends HttpServlet {
             request.setAttribute("videos", videos);
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("listas", listas);
-          
+            
             RequestDispatcher rd; //objeto para despachar
             rd = request.getRequestDispatcher("/ConsultarListaReproduccion.jsp");
             rd.forward(request, response);

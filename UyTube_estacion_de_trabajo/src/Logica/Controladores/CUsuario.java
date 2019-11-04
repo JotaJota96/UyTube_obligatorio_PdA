@@ -787,6 +787,11 @@ public class CUsuario implements IUsuario {
             this.seleccionarUsuario(nick);
         }
         DtListaDeReproduccion ret = usuarioSeleccionado.obtenerListaDeReproduccion(idLista);
+        if (ret.getPrivacidad() == Privacidad.PRIVADO){
+            if ( ! elUsuarioSeleccionadoEsElUsuarioActual()){
+                throw new RuntimeException("La lista de reproduccion seleccionada es privada");
+            }
+        }
         idListaSeleccionada = idLista;
         return ret;
     }
@@ -798,6 +803,11 @@ public class CUsuario implements IUsuario {
             this.seleccionarUsuario(nick);
         }
         DtVideo ret = usuarioSeleccionado.obtenerVideoDeCanal(idVideo);
+        if (ret.getPrivacidad() == Privacidad.PRIVADO){
+            if ( ! elUsuarioSeleccionadoEsElUsuarioActual()){
+                throw new RuntimeException("El video seleccionada es privado");
+            }
+        }
         idVideoSeleccionado = idVideo;
         return ret;
     }

@@ -4,10 +4,10 @@
     Author     : administrador
 --%>
 
-<%@page import="Logica.Enumerados.TipoListaDeReproduccion"%>
-<%@page import="Logica.DataType.DtVideo"%>
+<%@page import="logica.controladores.TipoListaDeReproduccion"%>
+<%@page import="logica.controladores.DtVideo"%>
+<%@page import="logica.controladores.DtListaDeReproduccion"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Logica.DataType.DtListaDeReproduccion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -42,14 +42,14 @@
                     <%
                         if (sesionIniciada) {
                     %>
-                    <%@ include file='include/header-usuario.jsp' %>
-                    <%                    } else {
+                    <jsp:include page="include/header-usuario.jsp" />
+                    <%
+                        } else {
                     %>
-                    <%@ include file='include/header-visitante.jsp' %>
+                    <jsp:include page="include/header-visitante.jsp" />
                     <%
                         }
                     %>
-
 
                 </div>
             </div>		
@@ -65,14 +65,15 @@
         <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">						
+                    <section class="principal">
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.jsp' %>
-                        <%                        } else {
+                        <jsp:include page="include/menu-usuario.jsp" />
+                        <%
+                        } else {
                         %>
-                        <%@ include file='include/menu-visitante.jsp' %>
+                        <jsp:include page="include/menu-visitante.jsp" />
                         <%
                             }
                         %>
