@@ -5,9 +5,7 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtImagenUsuario;
-import Logica.Fabrica;
-import Logica.Interfaces.IPersistenciaDeImagenes;
+import logica.controladores.DtImagenUsuario;
 import java.io.IOException;
 import java.io.OutputStream;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -29,19 +29,21 @@ public class ImagenUsuario extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+            
             String id = request.getParameter("id");
             if (id == null)  id = "";
             
             byte[] byteArr;
             
-            DtImagenUsuario iu = pi.find(id);
+            DtImagenUsuario iu = sys.obtenerImagenDeUsuario(id);
             byteArr = iu.getImagen();
             
             
             //byte[] byteArr = ImagePersistController.pathToByteArray("C:\\cnf.jpg");
             
-            response.setContentType("image/" + iu.getExtension());
+            response.setContentType("image/" + getExtension(iu));
             OutputStream sos = response.getOutputStream();
             sos.write(byteArr);
             sos.flush();
@@ -71,5 +73,24 @@ public class ImagenUsuario extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    //----------------------------------------
+    public String getExtension(DtImagenUsuario dtiu){
+        String ret = "";
+        String nombreArchivo = dtiu.getNombreArchivo();
+        
+        // recorre desde el final hacia el principio hasta encontrar un '.'  extrayendo la extension del archivo
+        for (int i = nombreArchivo.length() - 1; i >= 0; i--) {
+            if (nombreArchivo.charAt(i) == '.') {
+                break;
+            }
+            ret = nombreArchivo.charAt(i) + ret;
+        }
+        // si la extension obtenida es igual al nombre del archivo, entonces no se encontro ningun punto y el archivo no tienee extension
+        if (ret.equals(nombreArchivo)) {
+            return "";
+        }
+        // sino devuelve la extension obtenida
+        return ret;
+    }
 }
