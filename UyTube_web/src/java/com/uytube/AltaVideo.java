@@ -131,8 +131,8 @@ public class AltaVideo extends HttpServlet {
             
             Duracion d = new Duracion();
             d.setHoras(duracion.getHours());
-            d.setMinutos(data.getMinutes());
-            d.setSegundos(data.getSeconds());
+            d.setMinutos(duracion.getMinutes());
+            d.setSegundos(duracion.getSeconds());
             
             DtVideo vid = new DtVideo();
             vid.setId(0);
