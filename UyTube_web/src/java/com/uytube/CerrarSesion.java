@@ -5,8 +5,6 @@
  */
 package com.uytube;
 
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -34,7 +34,8 @@ public class CerrarSesion extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
 
             // cierra la sesion HTTP (si es que hay una iniciada)
             HttpSession session = request.getSession(false);
