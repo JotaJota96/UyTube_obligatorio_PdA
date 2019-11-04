@@ -5,9 +5,9 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtUsuario;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtUsuario;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
