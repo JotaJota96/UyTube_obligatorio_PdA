@@ -4,16 +4,19 @@
     Author     : administrador
 --%>
 
-<%@page import="Logica.Enumerados.Ordenacion"%>
-<%@page import="Logica.Enumerados.Filtrado"%>
-<%@page import="Logica.Fabrica"%>
-<%@page import="Logica.DataType.DtVideo"%>
+<%@page import="logica.controladores.CUsuario"%>
+<%@page import="logica.controladores.CUsuarioService"%>
+<%@page import="logica.controladores.Ordenacion"%>
+<%@page import="logica.controladores.Filtrado"%>
+<%@page import="logica.controladores.DtVideo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
     <%
-        ArrayList<Object> video = (ArrayList) Fabrica.getInstancia().getIUsuario().buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
+        CUsuarioService servicio = new CUsuarioService();
+        CUsuario sys = servicio.getCUsuarioPort();
+        ArrayList<Object> video = (ArrayList) sys.buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
         boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
     %>
     <head>
@@ -36,11 +39,11 @@
         <%
             if (sesionIniciada) {
         %>
-        <%@ include file='include/header-usuario.jsp' %>
+        <jsp:include page="include/header-usuario.jsp" />
         <%
         } else {
         %>
-        <%@ include file='include/header-visitante.jsp' %>
+        <jsp:include page="include/header-visitante.jsp" />
         <%
             }
         %>
@@ -57,13 +60,13 @@
                     <section class="principal">						
 
                         <%
-                        if (sesionIniciada) {
+                            if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.jsp' %>
+                        <jsp:include page="include/menu-usuario.jsp" />
                         <%
                         } else {
                         %>
-                        <%@ include file='include/menu-visitante.jsp' %>
+                        <jsp:include page="include/menu-visitante.jsp" />
                         <%
                             }
                         %>

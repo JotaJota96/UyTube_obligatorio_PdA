@@ -9,7 +9,6 @@ import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
-import Logica.Interfaces.IPersistenciaDeImagenes;
 import Presentacion.FuncionesImagenes;
 import Presentacion.Video.frmConsultaVideo;
 import java.awt.Image;
@@ -355,8 +354,7 @@ public class frmConsultaUsuario extends javax.swing.JDialog {
         lbImagen.setEnabled(true);
         
         try {
-            IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
-            DtImagenUsuario dtiu = pi.find(u.getNickname());
+            DtImagenUsuario dtiu = sys.obtenerImagenDeUsuario(u.getNickname());
             if (dtiu == null){
                 FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImagen);
             }else{

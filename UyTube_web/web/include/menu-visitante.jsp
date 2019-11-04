@@ -1,4 +1,5 @@
-<%@page import="Logica.Fabrica"%>
+<%@page import="logica.controladores.CUsuario"%>
+<%@page import="logica.controladores.CUsuarioService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,8 +16,11 @@ Menú para el Visitante
         <li class="titulo">Buscar</li>
         <li><a href="/uytube/buscar"><span class="icon-magnifying-glass"></span> Buscar</a></li>
         <li class="titulo">Categoria</li>
-        <% 
-            ArrayList<String> cate = Fabrica.getInstancia().getIUsuario().listarCategorias();
+        <%
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+
+            ArrayList<String> cate = (ArrayList<String>) sys.listarCategorias();
             for (String elem : cate) {
                 if(!elem.equals("UNDEFINED")){
         %> 

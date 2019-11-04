@@ -5,10 +5,8 @@
  */
 package com.uytube;
 
-import Logica.Enumerados.Filtrado;
-import Logica.Enumerados.Ordenacion;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.Filtrado;
+import logica.controladores.Ordenacion;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -37,11 +37,13 @@ public class Presentacion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+            
             boolean sesionIniciada = sys.sesionIniciada();
-            ArrayList<Object> videos = sys.buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
+            ArrayList<Object> videos = (ArrayList<Object>) sys.buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
 
             request.setAttribute("sesionIniciada", sesionIniciada);
             request.setAttribute("videos", videos);
@@ -50,9 +52,7 @@ public class Presentacion extends HttpServlet {
             rd = request.getRequestDispatcher("/Presentacion.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
-            System.out.println("---- Exception ----");
-            System.out.println(e.getMessage());
-            System.out.println("-------------------");
+            Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar
             request.setAttribute("mensajeError", e.getMessage());
             rd = request.getRequestDispatcher("/404.jsp");

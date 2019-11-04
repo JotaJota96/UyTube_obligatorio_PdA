@@ -8,17 +8,12 @@ import Logica.DataType.DtVideo;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
-import Logica.Interfaces.IPersistenciaDeImagenes;
 import Presentacion.FuncionesImagenes;
-import Presentacion.ListaDeReproduccion.frmConsultaListaDeReproduccion;
 import Presentacion.ListaDeReproduccion.frmConsultaListaDeReproduccionEliminada;
-import Presentacion.Video.frmConsultaVideo;
 import Presentacion.Video.frmConsultaVideoEliminado;
-import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
@@ -309,8 +304,7 @@ public class frmConsultaUsuarioEliminado extends javax.swing.JDialog {
         lbFechaElim.setText(new SimpleDateFormat("dd-MM-yyyy").format(u.getFechaEliminado()));
         lbImagen.setEnabled(true);
         try {
-            IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
-            DtImagenUsuario dtiu = pi.find(u.getNickname());
+            DtImagenUsuario dtiu = sys.obtenerImagenDeUsuario(u.getNickname());
             if (dtiu == null){
                 FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImagen);
             }else{
