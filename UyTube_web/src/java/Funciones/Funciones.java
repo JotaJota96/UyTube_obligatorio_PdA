@@ -1,6 +1,9 @@
 package Funciones;
 
 import java.util.Map;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
+import logica.controladores.DtUsuario;
 
 /**
  *
