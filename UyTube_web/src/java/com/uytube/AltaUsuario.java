@@ -5,13 +5,11 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtCanal;
-import Logica.DataType.DtImagenUsuario;
-import Logica.DataType.DtUsuario;
-import Logica.Enumerados.Filtrado;
-import Logica.Enumerados.Privacidad;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtCanal;
+import logica.controladores.DtImagenUsuario;
+import logica.controladores.DtUsuario;
+import logica.controladores.Filtrado;
+import logica.controladores.Privacidad;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -25,6 +23,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
+import logica.controladores.Fecha;
 
 @MultipartConfig
 public class AltaUsuario extends HttpServlet {
@@ -43,8 +44,8 @@ public class AltaUsuario extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
-            
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             if (sys.sesionIniciada()){
                 response.sendRedirect("");
                 return;
@@ -87,7 +88,8 @@ public class AltaUsuario extends HttpServlet {
             String pCanal = request.getParameter("canal");
             String pDescripcion = request.getParameter("descripcion");
             
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
 
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
             Date fechaDate = null;
@@ -100,15 +102,35 @@ public class AltaUsuario extends HttpServlet {
                 rd.forward(request, response);
             }
             java.sql.Date data = new java.sql.Date(fechaDate.getTime());
-
-            DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, data, pImaguen, 0);
-
+            
+            
+            Fecha f = new Fecha();
+            f.setAnio(data.getYear()-1900);
+            f.setDia(data.getDate());
+            f.setMes(data.getMonth());
+            System.out.println(f.toString());
+                    
+            DtUsuario Usu = new DtUsuario();
+            Usu.setNickname(pNickname);
+            Usu.setNombre(pNombre);
+            Usu.setApellido(pApellido);
+            Usu.setContrasenia(pPassword);
+            Usu.setFechaNacimiento(f);
+            Usu.setCorreo(pEmail);
+            Usu.setImagen(pImaguen);
+            Usu.setCantSeguidores(0);
+            
+              
             Privacidad Priv = Privacidad.PRIVADO;
             if (pPrivacidad != null && pPrivacidad.equals("PUBLICO")) {
                 Priv = Privacidad.PUBLICO;
             }
-
-            DtCanal CanUsu = new DtCanal(0, pCanal, pDescripcion, Priv);
+            DtCanal CanUsu = new DtCanal();
+            CanUsu.setId(0);
+            CanUsu.setNombre(pCanal);
+            CanUsu.setDescripcion(pDescripcion);
+            CanUsu.setPrivacidad(Priv);
+            
             sys.altaUsuarioCanal(Usu, CanUsu);
             DtUsuario nuevoUsuario = sys.obtenerUsuarioActual();
             
@@ -118,8 +140,11 @@ public class AltaUsuario extends HttpServlet {
             if (archivoContenido.available() > 0) {
                 byte[] byteArr = new byte[archivoContenido.available()];
                 archivoContenido.read(byteArr);
-                DtImagenUsuario dtiu = new DtImagenUsuario(nuevoUsuario.getNickname(), byteArr, nombreArchivo);
-                Fabrica.getInstancia().getIPersistenciaDeImagenes().create(dtiu);
+                DtImagenUsuario dtiu = new DtImagenUsuario();
+                dtiu.setNickname(nuevoUsuario.getNickname());
+                dtiu.setImagen(byteArr);
+                dtiu.setNombreArchivo(nombreArchivo);
+                sys.altaImagenDeUsuario(dtiu);
             }
             
             request.getSession().setMaxInactiveInterval(14400);
