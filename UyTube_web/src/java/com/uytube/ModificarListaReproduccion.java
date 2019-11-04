@@ -5,12 +5,12 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtListaDeReproduccion;
-import Logica.DataType.DtUsuario;
-import Logica.Enumerados.Privacidad;
-import Logica.Enumerados.TipoListaDeReproduccion;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtListaDeReproduccion;
+import logica.controladores.DtUsuario;
+import logica.controladores.Privacidad;
+import logica.controladores.TipoListaDeReproduccion;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -41,8 +41,9 @@ public class ModificarListaReproduccion extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
-            
+           // IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             if (!sys.sesionIniciada()){
                 String msj = "No puedes acceder a esta página";
                 Funciones.Funciones.showLog("Acceso denegado", msj);
@@ -54,7 +55,7 @@ public class ModificarListaReproduccion extends HttpServlet {
             }
             
             boolean sesionIniciada = sys.sesionIniciada();
-            ArrayList<String> cate = sys.listarCategorias();
+            ArrayList<String> cate =(ArrayList<String>) sys.listarCategorias();
             String usuario = request.getParameter("idUsu");
             String lista = request.getParameter("idList");
             
@@ -93,7 +94,8 @@ public class ModificarListaReproduccion extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
          try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             
             if (!sys.sesionIniciada()){
                 String msj = "No puedes acceder a esta página";
@@ -116,11 +118,17 @@ public class ModificarListaReproduccion extends HttpServlet {
                 priv = Privacidad.PUBLICO;
             }
             
-            DtListaDeReproduccion listRepo = new DtListaDeReproduccion(0, pNombre, priv, TipoListaDeReproduccion.PARTICULAR, pCategoria);
+            DtListaDeReproduccion listRepo = new DtListaDeReproduccion();
+            listRepo.setId(0);
+            listRepo.setNombre(pNombre);
+            listRepo.setPrivacidad(priv);
+            listRepo.setTipo(TipoListaDeReproduccion.PARTICULAR);
+            listRepo.setCategoria(pCategoria);
+            
             sys.modificarListaDeReproduccion(listRepo);
             
             sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
-            ArrayList<DtListaDeReproduccion> listas = sys.listarListasDeReproduccionDeUsuario(true);
+            ArrayList<DtListaDeReproduccion> listas =(ArrayList<DtListaDeReproduccion>) sys.listarListasDeReproduccionDeUsuario(true);
             
             int idNuevaLista = 0;
             for (DtListaDeReproduccion l : listas){
