@@ -5,14 +5,14 @@
  */
 package com.uytube;
 
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -39,7 +39,9 @@ public class SeguirUsuario extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+            
             String nick = request.getParameter("id");
             sys.seleccionarUsuario(nick);
             sys.seguirUsuario();
