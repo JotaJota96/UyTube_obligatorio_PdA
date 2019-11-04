@@ -1,6 +1,6 @@
-<%@page import="Logica.DataType.DtUsuario"%>
-<%@page import="Logica.Interfaces.IUsuario"%>
-<%@page import="Logica.Fabrica"%>
+<%@page import="logica.controladores.CUsuario"%>
+<%@page import="logica.controladores.CUsuarioService"%>
+<%@page import="logica.controladores.DtUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--
@@ -10,7 +10,8 @@ and open the template in the editor.
 -->
 <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
     <%
-        IUsuario sys = Fabrica.getInstancia().getIUsuario();
+        CUsuarioService servicio = new CUsuarioService();
+        CUsuario sys = servicio.getCUsuarioPort();
         DtUsuario usu = sys.obtenerUsuarioActual();
 
     %>

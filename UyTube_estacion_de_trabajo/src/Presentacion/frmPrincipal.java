@@ -8,11 +8,6 @@ import Presentacion.Usuario.*;
 import Presentacion.Video.*;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -563,6 +558,19 @@ public class frmPrincipal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        // Publicacion del Web Service
+        try {
+            String url = Fabrica.getInstancia().publicarWebService();
+            System.out.println("Se ha publicado el Web Service en la siguiente URL:");
+            System.out.println(url);
+            System.out.println("El WSDL se encuentra disponible en:");
+            System.out.println(url + "?wsdl");
+        } catch (Exception e) {
+            System.err.println("---- Error al publicar el Web Service ----");
+            System.out.println(e.getMessage());
+            System.err.println("------------------------------------------");
+        }
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Metal".equals(info.getName())) {

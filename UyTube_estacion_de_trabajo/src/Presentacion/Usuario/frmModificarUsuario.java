@@ -6,20 +6,15 @@ import Logica.DataType.DtUsuario;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
-import Logica.Interfaces.IPersistenciaDeImagenes;
 import Presentacion.FuncionesImagenes;
 import Presentacion.ListaDeReproduccion.frmModificarListaDeReproduccion;
 import Presentacion.Video.frmModificarVideo;
 import java.awt.Image;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class frmModificarUsuario extends javax.swing.JDialog {
 
@@ -410,16 +405,15 @@ public class frmModificarUsuario extends javax.swing.JDialog {
                                     DtCanal c = new DtCanal(0, txtNombreCanal.getText(), txtDescrpcion.getText(), priv);
                                     sys.modificarUsuarioYCanal(u, c);
                                     
-                                    IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
                                     if (ruta == null || ruta.equals("")){
-                                        pi.remove(user.getNickname());
+                                        sys.eliminarImagenDeUsuario(user.getNickname());
                                     }else{
                                         DtImagenUsuario dtiu = new DtImagenUsuario(
                                                 user.getNickname(), 
                                                 FuncionesImagenes.pathToByteArray(ruta), 
                                                 FuncionesImagenes.getNombreArchivo(ruta)
                                         );
-                                        pi.edit(dtiu);
+                                        sys.modificarImagenDeUsuario(dtiu);
                                     }
                                     
                                     JOptionPane.showMessageDialog(null, "Datos modificados correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
@@ -468,8 +462,7 @@ public class frmModificarUsuario extends javax.swing.JDialog {
         txtCorreo.setText(u.getCorreo());
         dcFecha.setDate(u.getFechaNacimiento());
         try {
-            IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
-            DtImagenUsuario dtiu = pi.find(u.getNickname());
+            DtImagenUsuario dtiu = sys.obtenerImagenDeUsuario(u.getNickname());
             if (dtiu == null){
                 FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
             }else{
@@ -534,7 +527,17 @@ public class frmModificarUsuario extends javax.swing.JDialog {
     private void btnQuitarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarImagenActionPerformed
         // Quitar imagen
         ruta = "";
-        FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
+        try {
+            // obtengo del sistema un DT con imagen por defecto
+            DtImagenUsuario dtUkp = sys.obtenerImagenDeUsuarioPorDefecto();
+            // Lo convierto a un tipo Image
+            Image ukp = FuncionesImagenes.byteArrayToImage(dtUkp.getImagen());
+            // Lo mando para que se muestre en el JLabel
+            FuncionesImagenes.cargarImagenEnJlabel(lbImg, ukp);
+        } catch (Exception e) {
+            // Si algo sale mal, cargo la imagen de repuesto en local
+            FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
+        }
     }//GEN-LAST:event_btnQuitarImagenActionPerformed
 
 

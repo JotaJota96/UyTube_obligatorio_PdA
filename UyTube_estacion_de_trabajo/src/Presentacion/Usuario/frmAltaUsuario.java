@@ -6,20 +6,15 @@ import Logica.DataType.DtUsuario;
 import Logica.Enumerados.Privacidad;
 import Logica.Fabrica;
 import Logica.Interfaces.IAdmin;
-import Logica.Interfaces.IPersistenciaDeImagenes;
 import Presentacion.FuncionesImagenes;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Image;
-import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JLabel;
@@ -55,9 +50,20 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        sys = Fabrica.getInstancia().getIAdmin();
         bordeDefault = txtNombre.getBorder();
-        FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
+        try {
+             sys = Fabrica.getInstancia().getIAdmin();
+        
+            // obtengo del sistema un DT con imagen por defecto
+            DtImagenUsuario dtUkp = sys.obtenerImagenDeUsuarioPorDefecto();
+            // Lo convierto a un tipo Image
+            Image ukp = FuncionesImagenes.byteArrayToImage(dtUkp.getImagen());
+            // Lo mando para que se muestre en el JLabel
+            FuncionesImagenes.cargarImagenEnJlabel(lbImg, ukp);
+        } catch (Exception e) {
+            // Si algo sale mal, cargo la imagen de repuesto en local
+            FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
+        }
     }
     
     private boolean validarFormatoEmail(String _email){
@@ -501,7 +507,6 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             DtCanal dtCanal = new DtCanal(0, nombreCanal, descripcion, privacidad);
             sys.altaUsuarioCanal(dtUsuario, dtCanal);
             
-            IPersistenciaDeImagenes pi = Fabrica.getInstancia().getIPersistenciaDeImagenes();
             if (ruta == null || ruta.equals("")) {
                 // no se hace nada
             } else {
@@ -510,7 +515,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                         FuncionesImagenes.pathToByteArray(ruta),
                         FuncionesImagenes.getNombreArchivo(ruta)
                 );
-                pi.create(dtiu);
+                sys.altaImagenDeUsuario(dtiu);
             }
             
             JOptionPane.showMessageDialog(null, "Se ha creado el usuario "+nickname, "Alta de usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -623,7 +628,17 @@ public class frmAltaUsuario extends javax.swing.JDialog {
     private void btnQuitarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarImagenActionPerformed
          // Quitar imagen
         ruta = "";
-        FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
+        try {
+            // obtengo del sistema un DT con imagen por defecto
+            DtImagenUsuario dtUkp = sys.obtenerImagenDeUsuarioPorDefecto();
+            // Lo convierto a un tipo Image
+            Image ukp = FuncionesImagenes.byteArrayToImage(dtUkp.getImagen());
+            // Lo mando para que se muestre en el JLabel
+            FuncionesImagenes.cargarImagenEnJlabel(lbImg, ukp);
+        } catch (Exception e) {
+            // Si algo sale mal, cargo la imagen de repuesto en local
+            FuncionesImagenes.cargarImagenPorDefectoEnJlabel(lbImg);
+        }
     }//GEN-LAST:event_btnQuitarImagenActionPerformed
 
        
