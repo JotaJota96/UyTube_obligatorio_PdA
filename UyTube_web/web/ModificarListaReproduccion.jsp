@@ -4,9 +4,9 @@
     Author     : administrador
 --%>
 
-<%@page import="Logica.Enumerados.Privacidad"%>
+<%@page import="logica.controladores.Privacidad"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Logica.DataType.DtListaDeReproduccion"%>
+<%@page import="logica.controladores.DtListaDeReproduccion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,10 +38,10 @@
                     <%
                         if (sesionIniciada) {
                     %>
-                    <%@ include file='include/header-usuario.jsp' %>
+                    <jsp:include page='include/header-usuario.jsp' />
                     <%                    } else {
                     %>
-                    <%@ include file='include/header-visitante.jsp' %>
+                    <jsp:include page='include/header-visitante.jsp' />
                     <%
                         }
                     %>
@@ -62,10 +62,10 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.jsp' %>
+                        <jsp:include page='include/menu-usuario.jsp' />
                         <%                        } else {
                         %>
-                        <%@ include file='include/menu-visitante.jsp' %>
+                        <jsp:include page='include/menu-visitante.jsp' />
                         <%
                             }
                         %>
@@ -179,8 +179,8 @@
             </div>
         </div>
 
-        <%@ include file='include/widgets.html' %>
-        <%@ include file='include/footer.html' %>
+        <jsp:include page='include/widgets.html' />
+        <jsp:include page='include/footer.html' />
 
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>

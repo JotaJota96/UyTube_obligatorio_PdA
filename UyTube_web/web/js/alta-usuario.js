@@ -14,7 +14,7 @@ $("#input_Nickname").keyup(function(){
         //alert("Data: " + respuesta + "\nStatus: " + status);
         $("#msjNickname").text(respuesta);
         if(respuesta == "Este nickname no está disponible"){
-          $("#msjNickname").css("color","red");
+          $("#msjNickname").css("color","#dc3545");
         }
     });
 }); 
@@ -33,6 +33,7 @@ $("#email").keyup(function(){
         }, function(respuesta, status){
         //alert("Data: " + respuesta + "\nStatus: " + status);
         $("#msjEmail").text(respuesta);
+        $("#msjEmail").css("color","#dc3545");
     });
 }); 
 
@@ -42,14 +43,19 @@ var check = function () {
       document.getElementById('message').innerHTML = 'Correcto';
       document.getElementById("btn_Registrarme").disabled = false;
       if (document.getElementById('input_Contrasenia').value == ""){
-          document.getElementById('message').style.color = 'red';
+          document.getElementById('message').style.color = '#dc3545';
           document.getElementById('message').innerHTML = 'Ingrese la contraseña';
           document.getElementById("btn_Registrarme").disabled = true;
       }
   } else {
-      document.getElementById('message').style.color = 'red';
+      document.getElementById('message').style.color = '#dc3545';
       document.getElementById('message').innerHTML = 'No son iguales';
       document.getElementById("btn_Registrarme").disabled = true;
   }
 }
 
+var borrar = function(){
+  $("#message").text("");
+  $("#input_Contrasenia").val("");
+  $("#input_Repetir_contraseña").val("");
+};
