@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--
-Menú para el usuario logueado
+Menú para el usuario logueado   <%%>
 -->
 <aside class="menu" >	
     <%

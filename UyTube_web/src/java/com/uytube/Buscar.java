@@ -5,10 +5,8 @@
  */
 package com.uytube;
 
-import Logica.Enumerados.Filtrado;
-import Logica.Enumerados.Ordenacion;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.Filtrado;
+import logica.controladores.Ordenacion;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -37,7 +37,8 @@ public class Buscar extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             //-----------------------------------------------------
             String Categoria = request.getParameter("categoria");
             String Texto = request.getParameter("texto");
@@ -72,10 +73,10 @@ public class Buscar extends HttpServlet {
                     Texto = Texto.replaceAll(comilla, vacio);
                 }
                 
-                Ret = sys.buscar(Texto, Fil, ord);
+                Ret = (ArrayList<Object>) sys.buscar(Texto, Fil, ord);
             } else {
                 Categoria = Categoria.toUpperCase();
-                Ret = sys.buscar(Categoria);
+                Ret = (ArrayList<Object>) sys.buscarPorCategoria(Categoria);
             }
             Funciones.Funciones.showLog("Cantidad de resultados a devolver: ", String.valueOf(Ret.size()));
 

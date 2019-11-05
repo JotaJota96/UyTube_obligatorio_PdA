@@ -5,12 +5,10 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtCanal;
-import Logica.DataType.DtImagenUsuario;
-import Logica.DataType.DtUsuario;
-import Logica.Enumerados.Privacidad;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtCanal;
+import logica.controladores.DtImagenUsuario;
+import logica.controladores.DtUsuario;
+import logica.controladores.Privacidad;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -24,6 +22,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
+import logica.controladores.Fecha;
 
 /**
  *
@@ -46,7 +47,8 @@ public class ModificarUsuario extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             
             if (!sys.sesionIniciada()){
                 String msj = "No puedes acceder a esta página";
@@ -100,7 +102,8 @@ public class ModificarUsuario extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             
             if (!sys.sesionIniciada()){
                 String msj = "No puedes acceder a esta página";
@@ -139,8 +142,27 @@ public class ModificarUsuario extends HttpServlet {
                 Priv = Privacidad.PUBLICO;
             }
             
-            DtCanal CanUsu = new DtCanal(0, pCanal, pDescripcion, Priv);
-            DtUsuario Usu = new DtUsuario(pNickname, pPassword, pNombre, pApellido, pEmail, fecha_Nac, pImaguen, 0);
+            DtCanal CanUsu = new DtCanal();
+            CanUsu.setId(0);
+            CanUsu.setNombre(pCanal);
+            CanUsu.setDescripcion(pDescripcion);
+            CanUsu.setPrivacidad(Priv);
+            
+            DtUsuario Usu = new DtUsuario();
+            Fecha f = new Fecha();
+            f.setAnio(fecha_Nac.getYear()-1900);
+            f.setDia(fecha_Nac.getDate());
+            f.setMes(fecha_Nac.getMonth());
+            
+            
+            Usu.setNickname(pNickname);
+            Usu.setContrasenia(pPassword);
+            Usu.setNombre(pNombre);
+            Usu.setApellido(pApellido);
+            Usu.setCorreo(pEmail);
+            Usu.setFechaNacimiento(f);
+            Usu.setImagen(pImaguen);
+            Usu.setCantSeguidores(0);
 
             sys.modificarUsuarioYCanal(Usu, CanUsu);
 
@@ -150,8 +172,11 @@ public class ModificarUsuario extends HttpServlet {
             if (archivoContenido.available() > 0) {
                 byte[] byteArr = new byte[archivoContenido.available()];
                 archivoContenido.read(byteArr);
-                DtImagenUsuario dtiu = new DtImagenUsuario(Usu.getNickname(), byteArr, nombreArchivo);
-                Fabrica.getInstancia().getIPersistenciaDeImagenes().edit(dtiu);
+                DtImagenUsuario dtiu = new DtImagenUsuario();
+                dtiu.setNickname(Usu.getNickname());
+                dtiu.setImagen(byteArr);
+                dtiu.setNombreArchivo(nombreArchivo);
+                sys.altaImagenDeUsuario(dtiu);
             }
             
             response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
