@@ -115,8 +115,7 @@
                                                 <input value="<%= usuario.getCorreo()%>" type="email" class="form-control" name="email" readonly="readonly" id="email" placeholder="Email" required>
                                             </div>
                                             <%
-                                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                                                String fecha = df.format(usuario.getFechaNacimiento());
+                                                String fecha = Funciones.Funciones.darFormatoFecha(usuario.getFechaNacimiento());
                                             %>
                                             <input  value="<%= fecha%>" class="form-control" name="fechaNa" type="date" id="input_fecha"><br>
                                             

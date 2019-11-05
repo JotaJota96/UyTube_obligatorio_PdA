@@ -4,11 +4,11 @@
     Author     : administrador
 --%>
 
-<%@page import="Logica.DataType.DtListaDeReproduccion"%>
-<%@page import="Logica.DataType.DtVideo"%>
-<%@page import="Logica.DataType.DtCanal"%>
+<%@page import="logica.controladores.DtListaDeReproduccion"%>
+<%@page import="logica.controladores.DtVideo"%>
+<%@page import="logica.controladores.DtCanal"%>
+<%@page import="logica.controladores.DtUsuario"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Logica.DataType.DtUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">

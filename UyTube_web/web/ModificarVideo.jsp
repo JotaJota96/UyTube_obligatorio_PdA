@@ -133,8 +133,7 @@
 
                                         <div class="form-group col-md-4">
                                             <%
-                                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                                                String fecha = df.format(video.getFechaPublicacion());
+                                                String fecha = Funciones.Funciones.darFormatoFecha(video.getFechaPublicacion());
                                             %>
                                             <label for="inputFecha">Fecha</label>
                                             <input value="<%= fecha %>" type="date" name="fecha" class="form-control"  id="inputFecha">

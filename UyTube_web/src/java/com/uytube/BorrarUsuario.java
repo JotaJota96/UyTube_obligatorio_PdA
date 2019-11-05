@@ -31,7 +31,8 @@ public class BorrarUsuario extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService Servicio = new CUsuarioService();
+            CUsuario sys = Servicio.getCUsuarioPort();
             
             if (!sys.sesionIniciada()){
                 String msj = "No puedes realizar esta acción";

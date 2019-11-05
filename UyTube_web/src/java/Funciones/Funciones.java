@@ -2,6 +2,7 @@ package Funciones;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import logica.controladores.Fecha;
 
 /**
  *
@@ -181,6 +182,10 @@ public class Funciones {
             }
         }
         return false;
+    }
+    
+    public static String darFormatoFecha(Fecha f){
+        return f.getAnio() + "-" + f.getMes() + "-" + f.getDia();
     }
     
 }
