@@ -773,9 +773,12 @@ public class CUsuario implements IUsuario {
             usuarioSeleccionado = usuarioActual;
         }else{
             usuarioSeleccionado = obtenerUsuarios().get(nickname);
-        }
-        if (usuarioSeleccionado == null){
-            throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+            if (usuarioSeleccionado == null){
+                throw new RuntimeException("No se encontro ningun usuario con ese nickname");
+            }
+            if (usuarioSeleccionado.obtenerCanal().getPrivacidad() == Privacidad.PRIVADO){
+                throw new RuntimeException("El canal seleccionado es privado");
+            }
         }
         return usuarioSeleccionado.getDT();
     }
@@ -805,7 +808,7 @@ public class CUsuario implements IUsuario {
         DtVideo ret = usuarioSeleccionado.obtenerVideoDeCanal(idVideo);
         if (ret.getPrivacidad() == Privacidad.PRIVADO){
             if ( ! elUsuarioSeleccionadoEsElUsuarioActual()){
-                throw new RuntimeException("El video seleccionada es privado");
+                throw new RuntimeException("El video seleccionado es privado");
             }
         }
         idVideoSeleccionado = idVideo;
