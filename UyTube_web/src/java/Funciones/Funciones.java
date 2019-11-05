@@ -1,9 +1,7 @@
 package Funciones;
 
 import java.util.Map;
-import logica.controladores.CUsuario;
-import logica.controladores.CUsuarioService;
-import logica.controladores.DtUsuario;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -140,5 +138,49 @@ public class Funciones {
         System.out.println(e.getMessage());
         System.out.println("///////////////////////////////////");
     }
+    
+    private boolean esUnDispositivoMovil(HttpServletRequest request){
+        /**
+         * El plan B en caso de que esta funcion no funcione (osea, que sea una
+         * disfuncion) es utilizar esta clase: 
+         * https://github.com/ahand/mobileesp/tree/master/Java
+         */
+        String ua = request.getHeader("User-Agent");
+        //System.out.println("El cliente es: " + ua);
+        String[] so = {"Linux", "Windows", "Mac OS", "Iphone", "Android"};
+        //String cliente = "";
+        for (String item : so) {
+            switch (item) {
+                case "Linux":
+                    //console.log(ua);
+                    if (ua.indexOf("Android") != -1 && ua.indexOf("Linux") != -1) {
+                        //cliente = "Estás usando android";
+                        return true;
+                    }
+                    if (ua.indexOf("Linux") != -1) {
+                        return false;
+                    }
+                    break;
+                case "Mac OS":
+                    if (ua.indexOf("iPhone OS") != -1 && ua.indexOf("Mac OS") != -1) {
+                        //cliente  = "Estás usando iphone";
+                        return true;
+                    }
+                    if (ua.indexOf("Mac OS") != -1) {
+                        //cliente  = "Estas usando Mac";
+                        return false;
+                    }
+                    break;
+                case "Windows":
+                    if (ua.indexOf("Win64") != -1 || ua.indexOf("Win32") != -1 || ua.indexOf("Win86") != -1) {
+                        //cliente  = "Estas en Windows";
+                        return false;
+                    }
+                    break;
 
+            }
+        }
+        return false;
+    }
+    
 }
