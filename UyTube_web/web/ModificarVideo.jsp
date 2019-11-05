@@ -7,8 +7,8 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="Logica.Enumerados.Privacidad"%>
-<%@page import="Logica.DataType.DtVideo"%>
+<%@page import="logica.controladores.Privacidad"%>
+<%@page import="logica.controladores.DtVideo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="es">
@@ -37,11 +37,11 @@
         <%
             if (sesionIniciada) {
         %>
-        <%@ include file='include/header-usuario.jsp' %>
+        <jsp:include page="include/header-usuario.jsp" />
         <%
         } else {
         %>
-        <%@ include file='include/header-visitante.jsp' %>
+        <jsp:include page="include/header-visitante.jsp" />
         <%
             }
         %>
@@ -60,11 +60,11 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.jsp' %>
+                        <jsp:include page="include/menu-usuario.jsp" />
                         <%
                         } else {
                         %>
-                        <%@ include file='include/menu-visitante.jsp' %>
+                        <jsp:include page="include/menu-visitante.jsp" />
                         <%
                             }
                         %>

@@ -5,13 +5,10 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtCanal;
-import Logica.DataType.DtListaDeReproduccion;
-import Logica.DataType.DtUsuario;
-import Logica.DataType.DtVideo;
-import Logica.Fabrica;
-import Logica.Interfaces.IPersistenciaDeImagenes;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtCanal;
+import logica.controladores.DtListaDeReproduccion;
+import logica.controladores.DtUsuario;
+import logica.controladores.DtVideo;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -19,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -39,7 +38,9 @@ public class ConsultaUsuario extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+
             String nick = request.getParameter("id");
             String ps = request.getParameter("ps");
             if (ps == null || ps.equals("")) {
@@ -48,10 +49,10 @@ public class ConsultaUsuario extends HttpServlet {
 
             DtUsuario usuario = sys.seleccionarUsuario(nick);
             DtCanal canal = sys.obtenerCanalDeUsuario();
-            ArrayList<DtUsuario> seguidos = sys.listarUsuarioSeguidos();
-            ArrayList<DtUsuario> seguidores = sys.listarUsuarioSeguidores();
-            ArrayList<DtVideo> videos = sys.listarVideosDeUsuario();
-            ArrayList<DtListaDeReproduccion> listasRep = sys.listarListasDeReproduccionDeUsuario(true);
+            ArrayList<DtUsuario> seguidos = (ArrayList<DtUsuario>)sys.listarUsuarioSeguidos();
+            ArrayList<DtUsuario> seguidores = (ArrayList<DtUsuario>)sys.listarUsuarioSeguidores();
+            ArrayList<DtVideo> videos = (ArrayList<DtVideo>)sys.listarVideosDeUsuario();
+            ArrayList<DtListaDeReproduccion> listasRep = (ArrayList<DtListaDeReproduccion>)sys.listarListasDeReproduccionDeUsuario(true);
             boolean sesionIniciada = sys.sesionIniciada();
 
             boolean usuarioPropietario = false;

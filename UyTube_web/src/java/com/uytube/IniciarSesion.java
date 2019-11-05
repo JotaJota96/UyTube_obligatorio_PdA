@@ -5,9 +5,7 @@
  */
 package com.uytube;
 
-import Logica.DataType.DtUsuario;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtUsuario;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
 
 /**
  *
@@ -37,8 +37,8 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
-            
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
             
             if (sys.sesionIniciada()){
                 response.sendRedirect("");
@@ -99,7 +99,8 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
         Funciones.Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
 
             String paramUser = request.getParameter("user");
             String paramPassword = request.getParameter("password");
