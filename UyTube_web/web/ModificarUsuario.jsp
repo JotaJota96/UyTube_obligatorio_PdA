@@ -6,11 +6,10 @@
 
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
-<%@page import="Logica.Clases.Categoria"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Logica.Enumerados.Privacidad"%>
-<%@page import="Logica.DataType.DtCanal"%>
-<%@page import="Logica.DataType.DtUsuario"%>
+<%@page import="logica.controladores.Privacidad"%>
+<%@page import="logica.controladores.DtCanal"%>
+<%@page import="logica.controladores.DtUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,10 +62,11 @@
                     <%
                         if (sesionIniciada) {
                     %>
-                    <%@ include file='include/header-usuario.jsp' %>
-                    <%                    } else {
+                     <jsp:include page="include/header-usuario.jsp" />
+                    <%
+                        } else {
                     %>
-                    <%@ include file='include/header-visitante.jsp' %>
+                    <jsp:include page="include/header-visitante.jsp" />
                     <%
                         }
                     %>
@@ -88,10 +88,11 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.jsp' %>
-                        <%                        } else {
+                        <jsp:include page="include/menu-usuario.jsp" />
+                        <%
+                        } else {
                         %>
-                        <%@ include file='include/menu-visitante.jsp' %>
+                        <jsp:include page="include/menu-visitante.jsp" />
                         <%
                             }
                         %>

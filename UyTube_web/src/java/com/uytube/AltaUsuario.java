@@ -108,7 +108,6 @@ public class AltaUsuario extends HttpServlet {
             f.setAnio(data.getYear()-1900);
             f.setDia(data.getDate());
             f.setMes(data.getMonth());
-            System.out.println(f.toString());
                     
             DtUsuario Usu = new DtUsuario();
             Usu.setNickname(pNickname);

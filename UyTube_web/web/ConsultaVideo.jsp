@@ -4,19 +4,19 @@
     Author     : administrador
 --%>
 
-<%@page import="Logica.Enumerados.Privacidad"%>
+<%@page import="logica.controladores.CUsuario"%>
+<%@page import="logica.controladores.CUsuarioService"%>
+<%@page import="logica.controladores.Privacidad"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="Logica.Enumerados.TipoValoracion"%>
-<%@page import="Logica.DataType.DtValoracion"%>
-<%@page import="org.eclipse.persistence.jpa.jpql.tools.model.query.DerivedPathVariableDeclarationStateObject"%>
+<%@page import="logica.controladores.TipoValoracion"%>
+<%@page import="logica.controladores.DtValoracion"%>
 <%@page import="java.util.TreeMap"%>
 <%@page import="javax.swing.text.Document"%>
-<%@page import="Logica.DataType.DtComentario"%>
-<%@page import="Logica.DataType.DtUsuario"%>
-<%@page import="Logica.Fabrica"%>
-<%@page import="Logica.DataType.DtVideo"%>
-<%@page import="Logica.DataType.DtListaDeReproduccion"%>
-<%@page import="Logica.DataType.DtCanal"%>
+<%@page import="logica.controladores.DtComentario"%>
+<%@page import="logica.controladores.DtUsuario"%>
+<%@page import="logica.controladores.DtVideo"%>
+<%@page import="logica.controladores.DtListaDeReproduccion"%>
+<%@page import="logica.controladores.DtCanal"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -57,10 +57,11 @@
                     <%
                         if (sesionIniciada) {
                     %>
-                    <%@ include file='include/header-usuario.jsp' %>
-                    <%                    } else {
+                    <jsp:include page="include/menu-usuario.jsp" />
+                    <%
+                    } else {
                     %>
-                    <%@ include file='include/header-visitante.jsp' %>
+                    <jsp:include page="include/menu-visitante.jsp" />
                     <%
                         }
                     %>
@@ -82,11 +83,13 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.jsp' %>
-                        <%                        } else {
+                        <jsp:include page="include/header-usuario.jsp" />
+                        <%
+                        } else {
                         %>
-                        <%@ include file='include/menu-visitante.jsp' %>
-                        <%                            }
+                        <jsp:include page="include/header-visitante.jsp" />
+                        <%
+                            }
                         %>
 
                         <div class="contenido">
@@ -203,7 +206,7 @@
 
                                     <!-- DESCRIPCION DEL VIDEO -->
                                     <div class="bd-highlight" >
-                                        <h5>Fecha de publicación: <%= new SimpleDateFormat("dd/MM/yyyy").format(video.getFechaPublicacion())%></h5>
+                                        <h5>Fecha de publicación: <%= video.getFechaPublicacion().getAnio()%>-<%= video.getFechaPublicacion().getMes()%>-<%= video.getFechaPublicacion().getDia()%></h5>
                                     </div>
                                     <div class="bd-highlight" >
                                         <h3><small class="text-muted">DESCRIPCIÓN</small></h3>
@@ -352,7 +355,8 @@
                     </div>
                     <div class="modal-body">
                         <% 
-                            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+                            CUsuarioService servicio = new CUsuarioService();
+                            CUsuario sys = servicio.getCUsuarioPort();
                             String idLista, nombreList, icono, checked, idCheckbox; 
                             sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
                             for (DtListaDeReproduccion dl : listas) {

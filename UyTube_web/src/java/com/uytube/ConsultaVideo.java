@@ -1,15 +1,13 @@
 package com.uytube;
 
 import Funciones.Funciones;
-import Logica.DataType.DtCanal;
-import Logica.DataType.DtComentario;
-import Logica.DataType.DtListaDeReproduccion;
-import Logica.DataType.DtUsuario;
-import Logica.DataType.DtValoracion;
-import Logica.DataType.DtVideo;
-import Logica.Enumerados.TipoValoracion;
-import Logica.Fabrica;
-import Logica.Interfaces.IUsuario;
+import logica.controladores.DtCanal;
+import logica.controladores.DtComentario;
+import logica.controladores.DtListaDeReproduccion;
+import logica.controladores.DtUsuario;
+import logica.controladores.DtValoracion;
+import logica.controladores.DtVideo;
+import logica.controladores.TipoValoracion;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +16,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logica.controladores.CUsuario;
+import logica.controladores.CUsuarioService;
+import logica.controladores.Fecha;
 
 public class ConsultaVideo extends HttpServlet {
     
@@ -34,7 +35,10 @@ public class ConsultaVideo extends HttpServlet {
             throws ServletException, IOException {
         Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+            
             String strIDVideo = request.getParameter("id");
             int idVideo = Integer.valueOf(strIDVideo);
             
@@ -42,7 +46,7 @@ public class ConsultaVideo extends HttpServlet {
             sys.seleccionarUsuario(usuario.getNickname());
             DtCanal canal = sys.obtenerCanalDeUsuario();
             DtVideo video = sys.seleccionarVideo(idVideo);
-            ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
+            ArrayList<DtComentario> comentarios = (ArrayList<DtComentario>) sys.listarComentariosDeVideo();
             DtValoracion valoracionDada = null;
             ArrayList<DtValoracion> valoraciones = null;
             boolean sesionIniciada = sys.sesionIniciada();
@@ -52,10 +56,10 @@ public class ConsultaVideo extends HttpServlet {
                 propietarioDelVideo = usuario.getNickname().equals(sys.obtenerUsuarioActual().getNickname());
                 valoracionDada = sys.obtenerValoracionDada();
                 if (propietarioDelVideo){
-                    valoraciones = sys.obtenerValoracionesDeVideo();
+                    valoraciones = (ArrayList<DtValoracion>) sys.obtenerValoracionesDeVideo();
                 }
                 sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
-                listas = sys.listarListasDeReproduccionDeUsuario(true);
+                listas = (ArrayList<DtListaDeReproduccion>) sys.listarListasDeReproduccionDeUsuario(true);
                 sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
             }
             
@@ -96,7 +100,9 @@ public class ConsultaVideo extends HttpServlet {
             throws ServletException, IOException {
         Funciones.showLog(request, response);
         try {
-            IUsuario sys = Fabrica.getInstancia().getIUsuario();
+            CUsuarioService servicio = new CUsuarioService();
+            CUsuario sys = servicio.getCUsuarioPort();
+            
             String accion = request.getParameter("accion");
             String respuesta;
             response.setContentType("text/html");  // Tipo de dato de la respuesta
@@ -139,10 +145,14 @@ public class ConsultaVideo extends HttpServlet {
                     DtValoracion dtVal = null;
                     switch (accion) {
                         case "like":
-                            dtVal = new DtValoracion(TipoValoracion.LIKE, "");
+                            dtVal = new DtValoracion();
+                            dtVal.setVal(TipoValoracion.LIKE);
+                            dtVal.setNickname("");
                             break;
                         case "disLike":
-                            dtVal = new DtValoracion(TipoValoracion.DISLIKE, "");
+                            dtVal = new DtValoracion();
+                            dtVal.setVal(TipoValoracion.DISLIKE);
+                            dtVal.setNickname("");
                             break;
                     }       // se seleccionan el usuario due;o del video y el video (por las dudas)
                     DtUsuario usuarioDuenioDelVideo = sys.obtenerPropietarioDeVideo(idVideo);
@@ -200,13 +210,23 @@ public class ConsultaVideo extends HttpServlet {
                     sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
                     sys.seleccionarVideo(idVideo);
                     // Crea el DT y lo manda al sistema
-                    DtComentario dtc = new DtComentario(0, "", Funciones.fechaActual(), texto, 0);
+                    DtComentario dtc = new DtComentario();
+                    dtc.setId(0);
+                    dtc.setNickname("");
+                    Fecha f = new Fecha();
+                    f.setAnio(Funciones.fechaActual().getYear()-1900);
+                    f.setDia(Funciones.fechaActual().getDate());
+                    f.setMes(Funciones.fechaActual().getMonth());
+                    dtc.setFecha(f);
+                    dtc.setTexto(texto);
+                    dtc.setNivelSubComentario(0);
+                    
                     if (idComentario <= 0) {
                         sys.altaComentario(dtc);
                     } else {
-                        sys.altaComentario(dtc, idComentario);
+                        sys.altaSubComentario(dtc, idComentario);
                     }       // se obtienen los comentarios y se genera el HTML para actualizar la p'pagina
-                    ArrayList<DtComentario> comentarios = sys.listarComentariosDeVideo();
+                    ArrayList<DtComentario> comentarios = (ArrayList<DtComentario>) sys.listarComentariosDeVideo();
                     String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, true);
                     // la funcion 'obtenerImagenesDeUsuarios' selecciona usuarios asi que por las dudas lo vuelvo a seleccionar para que la logica quede coherente
                     sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
@@ -248,7 +268,7 @@ public class ConsultaVideo extends HttpServlet {
                     int idVideo = Integer.valueOf(request.getParameter("idVideo"));
                     respuesta = "";
                     sys.seleccionarVideo(idVideo);
-                    ArrayList<DtValoracion> valoraciones = sys.obtenerValoracionesDeVideo();
+                    ArrayList<DtValoracion> valoraciones = (ArrayList<DtValoracion>) sys.obtenerValoracionesDeVideo();
                     for (DtValoracion val : valoraciones){
                         respuesta += val.getNickname() + ":" + val.getVal() + ";";
                     }
@@ -286,7 +306,7 @@ public class ConsultaVideo extends HttpServlet {
         String ret = "";
         DtComentario c = comentarios.remove(0);
         String imgPerfil = "usuario-imagen?id=" + c.getNickname();
-        String strFecha = new SimpleDateFormat("dd/MM/yyyy").format(c.getFecha());
+        String strFecha = (c.getFecha().getAnio()) + "-" + (c.getFecha().getMes()) + "-" + (c.getFecha().getDia());
         
         ret += "    <div class=\"media\">";
         ret += "        <img class=\"mr-3\" src=\"" + imgPerfil + "\" width=\"50\" height=\"50\">";

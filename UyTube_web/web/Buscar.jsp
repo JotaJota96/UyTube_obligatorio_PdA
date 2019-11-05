@@ -4,11 +4,12 @@
     Author     : administrador
 --%>
 
-<%@page import="Logica.DataType.DtUsuario"%>
-<%@page import="Logica.Fabrica"%>
-<%@page import="Logica.DataType.DtVideo"%>
-<%@page import="Logica.DataType.DtListaDeReproduccion"%>
-<%@page import="Logica.DataType.DtCanal"%>
+<%@page import="logica.controladores.CUsuario"%>
+<%@page import="logica.controladores.CUsuarioService"%>
+<%@page import="logica.controladores.DtUsuario"%>
+<%@page import="logica.controladores.DtVideo"%>
+<%@page import="logica.controladores.DtListaDeReproduccion"%>
+<%@page import="logica.controladores.DtCanal"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,6 +18,8 @@
     <%
         ArrayList<Object> lista = (ArrayList) request.getAttribute("Lista");
         boolean sesionIniciada = (boolean) (request.getSession().getAttribute("usuario") != null);
+        CUsuarioService servicio = new CUsuarioService();
+        CUsuario sys = servicio.getCUsuarioPort();
     %>
     <head>
         <meta charset="UTF-8">
@@ -39,13 +42,13 @@
                 <div class="col-12">
                     <!-- Inclusion de la barra superior -->
                     <%
-                        if (sesionIniciada){
+                        if (sesionIniciada) {
                     %>
-                    <%@ include file='include/header-usuario.jsp' %>
+                     <jsp:include page="include/header-usuario.jsp" />
                     <%
-                        }else{
+                        } else {
                     %>
-                    <%@ include file='include/header-visitante.jsp' %>
+                    <jsp:include page="include/header-visitante.jsp" />
                     <%
                         }
                     %>
@@ -68,11 +71,11 @@
                         <%
                             if (sesionIniciada) {
                         %>
-                        <%@ include file='include/menu-usuario.jsp' %>
+                        <jsp:include page="include/menu-usuario.jsp" />
                         <%
-                            } else {
+                        } else {
                         %>
-                        <%@ include file='include/menu-visitante.jsp' %>
+                        <jsp:include page="include/menu-visitante.jsp" />
                         <%
                             }
                         %>
@@ -151,7 +154,7 @@
                                                 }else if (o instanceof DtCanal){
                                                     DtCanal e = (DtCanal) o;
                                                     // buena suerte entendiendo esto...
-                                                    DtUsuario usu = Fabrica.getInstancia().getIUsuario().obtenerPropietarioDeCanal(e.getId());
+                                                    DtUsuario usu = sys.obtenerPropietarioDeCanal(e.getId());
                                         %>
                                         <div class="canal bd-highlight">
                                             <div class="bd-highlight caja-imagen">
