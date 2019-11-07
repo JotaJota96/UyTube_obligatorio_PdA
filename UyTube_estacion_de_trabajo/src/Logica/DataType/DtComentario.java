@@ -23,6 +23,10 @@ public class DtComentario {
         this.nivelSubComentario = nivelSubComentario;
     }
 
+    public DtComentario() {
+    }
+    
+    //*********************************************************************
     public int getId() {
         return id;
     }

@@ -58,7 +58,11 @@ public class DtVideo {
         this.cantDisLikes = cantDisLikes;
         this.nombreDuenio = nombreDuenio;
     }
+
+    public DtVideo() {
+    }
     
+    //*********************************************************************
     public int getId() {
         return id;
     }

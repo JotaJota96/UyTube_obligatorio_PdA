@@ -44,7 +44,7 @@ public class IniciarSesion extends HttpServlet {
                 response.sendRedirect("");
                 return;
             }
-
+            
             DtUsuario usuario = (DtUsuario) request.getSession().getAttribute("usuario");
             boolean sesReq = usuario != null;
             boolean sesSys = sys.sesionIniciada();

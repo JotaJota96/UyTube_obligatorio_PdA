@@ -82,7 +82,7 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="inputDuracion">Duración</label>
-                                            <input value="<%=video.getDuracion()%>" type="time" step='1' class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
+                                            <input value="<%= Funciones.Funciones.darFormatoDuracion(video.getDuracion()) %>" type="time" step='1' class="form-control" name="duracion" id="inputDuracion" placeholder="Duración">
                                         </div>
                                     </div>
                                     <div class="form-group row">

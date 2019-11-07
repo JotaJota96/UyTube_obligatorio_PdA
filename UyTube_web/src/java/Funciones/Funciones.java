@@ -2,6 +2,7 @@ package Funciones;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import logica.controladores.Duracion;
 import logica.controladores.Fecha;
 
 /**
@@ -185,7 +186,33 @@ public class Funciones {
     }
     
     public static String darFormatoFecha(Fecha f){
-        return f.getAnio() + "-" + f.getMes() + "-" + f.getDia();
+        int anio = f.getAnio();
+        int mes = f.getMes();
+        int dia = f.getDia();
+        
+        String strAnio = "" + anio;
+        String strMes = "" + mes;
+        String strDia = "" + dia;
+        
+        if (mes < 10) strMes = "0" + mes;
+        if (dia < 10) strDia = "0" + dia;
+        
+        return strAnio + "-" + strMes + "-" + strDia;
     }
     
+    public static String darFormatoDuracion(Duracion d){
+        int horas = d.getHoras();
+        int minutos = d.getMinutos();
+        int segundos = d.getSegundos();
+        
+        String strHoras = "" + horas;
+        String strMinutos = "" + minutos;
+        String strSegundos = "" + segundos;
+        
+        if (horas < 10) strHoras = "0" + horas;
+        if (minutos < 10) strMinutos = "0" + minutos;
+        if (segundos < 10) strMinutos = "0" + segundos;
+        
+        return strHoras + ":" + strMinutos + ":" + strSegundos;
+    }
 }

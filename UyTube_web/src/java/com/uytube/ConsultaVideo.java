@@ -214,9 +214,9 @@ public class ConsultaVideo extends HttpServlet {
                     dtc.setId(0);
                     dtc.setNickname("");
                     Fecha f = new Fecha();
-                    f.setAnio(Funciones.fechaActual().getYear()-1900);
+                    f.setAnio(Funciones.fechaActual().getYear() +1900);
                     f.setDia(Funciones.fechaActual().getDate());
-                    f.setMes(Funciones.fechaActual().getMonth());
+                    f.setMes(Funciones.fechaActual().getMonth() +1);
                     dtc.setFecha(f);
                     dtc.setTexto(texto);
                     dtc.setNivelSubComentario(0);

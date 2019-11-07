@@ -13,6 +13,11 @@ public class DtValoracion {
         this.val = val;
         this.nickname = nickname;
     }
+
+    public DtValoracion() {
+    }
+    
+    //*********************************************************************
     public String getNickname() {
         return nickname;
     }

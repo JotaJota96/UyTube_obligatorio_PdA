@@ -49,6 +49,11 @@ public class DtUsuario extends DtPersona{
         this.cantSeguidores = cantSeguidores;
     }
 
+    public DtUsuario() {
+        super();
+    }
+    
+    //*********************************************************************
     public String getNickname() {
         return nickname;
     }

@@ -133,8 +133,8 @@ public class ModificarVideo extends HttpServlet {
             //======================================================================
             //DtVideo vid = new DtVideo(0, pNombre, pDescripcion, duracion, data, pUrl, Priv, pCategoria, 0, 0);
             Fecha f = new Fecha();
-            f.setAnio(data.getYear());
-            f.setMes(data.getMonth());
+            f.setAnio(data.getYear() +1900);
+            f.setMes(data.getMonth() +1);
             f.setDia(data.getDate());
             
             Duracion d = new Duracion();

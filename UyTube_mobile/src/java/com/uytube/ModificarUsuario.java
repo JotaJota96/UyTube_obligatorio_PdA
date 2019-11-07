@@ -150,9 +150,9 @@ public class ModificarUsuario extends HttpServlet {
             
             DtUsuario Usu = new DtUsuario();
             Fecha f = new Fecha();
-            f.setAnio(fecha_Nac.getYear()-1900);
+            f.setAnio(fecha_Nac.getYear() + 1900);
             f.setDia(fecha_Nac.getDate());
-            f.setMes(fecha_Nac.getMonth());
+            f.setMes(fecha_Nac.getMonth() +1);
             
             
             Usu.setNickname(pNickname);

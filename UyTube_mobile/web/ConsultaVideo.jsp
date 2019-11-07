@@ -206,7 +206,7 @@
 
                                     <!-- DESCRIPCION DEL VIDEO -->
                                     <div class="bd-highlight" >
-                                        <h5>Fecha de publicación: <%= video.getFechaPublicacion().getAnio()%>-<%= video.getFechaPublicacion().getMes()%>-<%= video.getFechaPublicacion().getDia()%></h5>
+                                        <h5>Fecha de publicación: <%= Funciones.Funciones.darFormatoFecha(video.getFechaPublicacion()) %></h5>
                                     </div>
                                     <div class="bd-highlight" >
                                         <h3><small class="text-muted">DESCRIPCIÓN</small></h3>

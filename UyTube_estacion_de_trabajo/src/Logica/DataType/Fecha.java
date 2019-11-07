@@ -12,7 +12,7 @@ public class Fecha {
 
     public Fecha() {
         this.anio = 1900;
-        this.mes = 0;
+        this.mes = 1;
         this.dia = 1;
     }
 
@@ -25,17 +25,17 @@ public class Fecha {
     public Fecha(java.sql.Date d) {
         if (d == null) {
             this.anio = 1900;
-            this.mes = 0;
+            this.mes = 1;
             this.dia = 1;
         } else {
             this.anio = d.getYear() + 1900;
-            this.mes = d.getMonth();
+            this.mes = d.getMonth() +1;
             this.dia = d.getDate();
         }
     }
 
     public java.sql.Date toSqlDate() {
-        return new java.sql.Date(anio - 1900, mes, dia);
+        return new java.sql.Date(anio -1900, mes- 1, dia);
     }
 
     @Override

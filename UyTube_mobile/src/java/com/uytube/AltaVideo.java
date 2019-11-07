@@ -125,8 +125,8 @@ public class AltaVideo extends HttpServlet {
             //======================================================================
 
             Fecha f = new Fecha();
-            f.setAnio(data.getYear());
-            f.setMes(data.getMonth());
+            f.setAnio(data.getYear() +1900);
+            f.setMes(data.getMonth() +1);
             f.setDia(data.getDate());
             
             Duracion d = new Duracion();

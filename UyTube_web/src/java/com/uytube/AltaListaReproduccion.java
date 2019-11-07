@@ -99,7 +99,7 @@ public class AltaListaReproduccion extends HttpServlet {
             }
 
             String pNombreLista = request.getParameter("nombreL");
-            String pPrivacidad = request.getParameter("privacidad_1");
+            String pPrivacidad = request.getParameter("privacidad");
             String pCategoria = request.getParameter("categoria");
 
             DtUsuario usu = sys.obtenerUsuarioActual();

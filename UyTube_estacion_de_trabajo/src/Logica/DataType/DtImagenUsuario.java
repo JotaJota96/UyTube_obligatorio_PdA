@@ -15,7 +15,11 @@ public class DtImagenUsuario {
         this.imagen = imagen;
         this.nombreArchivo = nombreArchivo;
     }
-
+    
+    public DtImagenUsuario() {
+    }
+    
+    //*********************************************************************
     public String getNickname() {
         return nickname;
     }

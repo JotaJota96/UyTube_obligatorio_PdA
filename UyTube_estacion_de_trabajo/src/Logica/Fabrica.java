@@ -4,12 +4,21 @@ import Logica.Controladores.CAdmin;
 import Logica.Controladores.CUsuario;
 import Logica.Interfaces.IAdmin;
 import Logica.Interfaces.IUsuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.ws.Endpoint;
 
 
 /* Clase Singleton */
 public class Fabrica {
-
+    public static void main(String[] args) {
+        try {
+            getInstancia().publicarWebService();
+            System.out.println("Servicio OK");
+        } catch (Exception ex) {
+            Logger.getLogger(Fabrica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private static Fabrica instancia = null;
 
     private Fabrica() {

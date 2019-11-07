@@ -11,6 +11,10 @@ public class DtCategoria {
         this.nombre = nombre;
     }
 
+    public DtCategoria() {
+    }
+    
+    //*********************************************************************
     public String getNombre() {
         return nombre;
     }

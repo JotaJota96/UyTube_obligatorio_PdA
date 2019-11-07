@@ -16,7 +16,11 @@ public abstract class DtPersona {
         this.apellido = apellido;
         this.contrasenia = contrasenia;
     }
-
+    
+    public DtPersona() {
+    }
+    
+    //*********************************************************************
     public String getNombre() {
         return nombre;
     }

@@ -18,6 +18,10 @@ public class DtCanal {
         this.privacidad = privacidad;
     }
 
+    public DtCanal() {
+    }
+    
+    //*********************************************************************
     public int getId() {
         return id;
     }

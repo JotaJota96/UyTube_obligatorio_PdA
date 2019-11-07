@@ -30,7 +30,11 @@ public class DtListaDeReproduccion {
         this.categoria = categoria;
         this.nombreDuenio = nombreDuenio;
     }
+
+    public DtListaDeReproduccion() {
+    }
     
+    //*********************************************************************
     public int getId() {
         return id;
     }
