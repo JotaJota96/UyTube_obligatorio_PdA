@@ -74,7 +74,7 @@
 
                                     <!-- Agregar Listas-->
                                     <div class="">
-                                        <form class="form-signin" action="/uytube/lista-agregar" method="post">
+                                        <form class="form-signin" action="lista-agregar" method="post">
                                             <br>
                                             <br>
                                             <h1 class="h3 mb-4 font-weight-normal" id="Texto_ingrese">Ingrese sus datos</h1>
@@ -119,7 +119,7 @@
                                             <div class="bd-light">
                                                 <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
                                                     <div class=" btn-group mr-2" role="group" aria-label="Third group">
-                                                        <a href="/uytube/presentacion"> 
+                                                        <a href="presentacion"> 
                                                             <button type="button" class="btn btn-danger">CANCELAR</button>
                                                         </a>
                                                     </div> 

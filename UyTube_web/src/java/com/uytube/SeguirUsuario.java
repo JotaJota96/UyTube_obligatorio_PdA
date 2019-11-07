@@ -46,7 +46,7 @@ public class SeguirUsuario extends HttpServlet {
             sys.seleccionarUsuario(nick);
             sys.seguirUsuario();
             
-            response.sendRedirect("/uytube/usuario-consultar?id=" + nick);
+            response.sendRedirect("usuario-consultar?id=" + nick);
             
         } catch (Exception e) {
             Funciones.Funciones.showLog(e);

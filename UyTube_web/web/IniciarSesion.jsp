@@ -70,7 +70,7 @@
                                 
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">	
-                                        <form class="form-signin" action="/uytube/inicio-sesion" method="post">
+                                        <form class="form-signin" action="inicio-sesion" method="post">
                                             <img class="mb-4" src="imagenes/UyTubeAlfa.png" alt="UyTube" >
                                             <h1 class="h3 mb-3 font-weight-normal" id="Texto_ingrese">Ingrese por favor</h1>
                                             <label for="inputEmail" class="sr-only" id="label_email">Nickname/Email</label>
@@ -89,7 +89,7 @@
                                             %>
                                             <button class="btn btn-lg btn-primary btn-block mb-4" type="submit" id="btn_Ingresar">Ingresar</button>
 
-                                            <a href="/uytube/usuario-agregar" >Registrase</a>
+                                            <a href="usuario-agregar" >Registrase</a>
 
                                             <br><br>
                                             <p class="mt-5 mb-3 text-muted" id="texto_copy">&copy; 2019-2020</p>

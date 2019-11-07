@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube - 404</title>
+        <title>UyTube - 401</title>
         
     <style>
         *
@@ -276,7 +276,7 @@
                 %>
                 
                 <h2 class="h1">
-                    <a href="/uytube/">Ir al inicio</a>
+                    <a href="presentacion">Ir al inicio</a>
                 </h2>
             </div>
         </div>

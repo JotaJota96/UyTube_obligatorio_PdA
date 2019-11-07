@@ -72,7 +72,7 @@
                         <div class="contenido">
                             <section class="contenido-flexible">								
                                 <div class="container">
-                                    <form class="form-modificar-lista" action="/uytube/lista-modificar" method="post" >
+                                    <form class="form-modificar-lista" action="lista-modificar" method="post" >
                                         <br>
                                         <h4>Lista de reproducción particulares</h4>
                                         <br>
@@ -161,7 +161,7 @@
                                             <div class="bd-light " >
                                                 <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
                                                     <div class="p-2 btn-group mr-2" role="group" aria-label="Third group">
-                                                        <a href="/uytube/presentacion"> 
+                                                        <a href="presentacion"> 
                                                             <button type="button" class="btn btn-danger">CANCELAR</button>
                                                         </a>
                                                     </div> 

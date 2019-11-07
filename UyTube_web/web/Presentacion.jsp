@@ -81,11 +81,11 @@
                                         String Imagen = Funciones.Funciones.obtenerImagenDeVideo(idV, 2);
                                 %> 
                                 <div class="card" >
-                                    <a href="/uytube/video-consultar?id=<%= vid.getId()%>">
+                                    <a href="video-consultar?id=<%= vid.getId()%>">
                                         <img src="<%= Imagen%>" class="card-img-top" alt="Nombre del video">
                                     </a>
                                         <div class="card-body overflow-auto">
-                                            <a href="/uytube/video-consultar?id=<%= vid.getId()%>">
+                                            <a href="video-consultar?id=<%= vid.getId()%>">
                                                 <h6 class="card-title"><%= vid.getNombre()%></h6>
                                             </a>
                                         </div>

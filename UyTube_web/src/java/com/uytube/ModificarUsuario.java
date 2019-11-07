@@ -179,7 +179,7 @@ public class ModificarUsuario extends HttpServlet {
                 sys.altaImagenDeUsuario(dtiu);
             }
             
-            response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
+            response.sendRedirect("usuario-consultar?id=" + Usu.getNickname());
 
         } catch (Exception e) {
             Funciones.Funciones.showLog(e);

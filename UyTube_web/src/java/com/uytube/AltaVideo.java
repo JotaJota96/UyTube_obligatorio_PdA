@@ -159,7 +159,7 @@ public class AltaVideo extends HttpServlet {
                 }
             }
             
-            response.sendRedirect("/uytube/video-consultar?id=" + idNuevoVideo);
+            response.sendRedirect("video-consultar?id=" + idNuevoVideo);
             
         } catch (Exception e) {
             Funciones.Funciones.showLog(e);

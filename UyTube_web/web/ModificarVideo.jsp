@@ -73,7 +73,7 @@
                             <section class="contenido-flexible">
                                 <!--================== Aca va el contenido central para agregar ========================== -->					
                                 <h3>Modificar de video</h3>			
-                                <form class="form-alta-video" action="/uytube/video-modificar" method="post" >
+                                <form class="form-alta-video" action="video-modificar" method="post" >
                                     <div class="form-group row">
                                         <div class="form-group col-md-9">
                                             <label for="inputNombre">Nombre</label>

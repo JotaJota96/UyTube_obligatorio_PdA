@@ -148,7 +148,7 @@ public class AltaUsuario extends HttpServlet {
             
             request.getSession().setMaxInactiveInterval(14400);
             request.getSession().setAttribute("usuario", nuevoUsuario);
-            response.sendRedirect("/uytube/usuario-consultar?id=" + Usu.getNickname());
+            response.sendRedirect("usuario-consultar?id=" + Usu.getNickname());
             
         } catch (Exception e) {
             Funciones.Funciones.showLog(e);

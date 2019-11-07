@@ -260,7 +260,7 @@
                 </div>
                 <h2 class="h1">¡Uy!, parece que se nos cayó yerba en el servidor</h2>
                 <h2 class="h1">
-                    <a href="/uytube/">Ir al inicio</a>
+                    <a href="presentacion">Ir al inicio</a>
                 </h2>
             </div>
         </div>
