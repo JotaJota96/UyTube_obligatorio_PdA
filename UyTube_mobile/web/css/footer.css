@@ -1,0 +1,22 @@
+.footer {
+  background-color: #00001a;
+  border-bottom: 2px solid #5aa1e3;
+  padding: 1rem;
+  margin-bottom: 2px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start; }
+
+@media (min-width: 388px) and (max-width: 500px) {
+  .footer {
+    padding: 1rem 0.625rem; } }
+@media (min-width: 501px) and (max-width: 575.98px) {
+  .footer {
+    padding: 1rem 0.625rem; } }
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .footer {
+    padding: 1rem 0.625rem; } }
+
+/*# sourceMappingURL=footer.css.map */

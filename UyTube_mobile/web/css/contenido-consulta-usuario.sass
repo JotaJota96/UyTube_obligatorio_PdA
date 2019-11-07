@@ -1,0 +1,135 @@
+@import _colores
+
+.principal
+    background-color: $colorGrisClaro
+    min-height: 800px
+    border-bottom: 2px solid $colorCelesteClaro
+    border-top: 2px solid $colorCelesteClaro
+    width: 100%
+
+.contenido    
+    background-color: $colorGrisClaro
+    padding: 16px
+    margin-left: auto
+    margin-right: auto
+    width: 1070px   
+    height: 100%
+    .contenido-flexible
+        background-color: $colorGrisClaro
+        margin-bottom: 16px
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        flex-wrap: wrap
+        flex-grow: 0
+        flex-shrink: 0
+        h3
+            width: 100%
+        #btnBaja, #btnBuscar
+            height: 38px
+            min-width: 198px
+
+// Para un maximo de 340px ================================================================================  
+@media (max-width: 340px) 
+    .container-fluid
+        padding-left: 0px
+        padding-right: 0px
+    
+    //estilos del contenido principal
+    .contenido
+        width: 100%
+        padding-left: 2px
+        padding-right: 2px
+        .contenido-flexible
+            width: 100%
+            justify-content: flex-start
+            
+
+// Para dispositivos mayores a 340 y menores a 388 ==============================================================
+@media (min-width: 341px) and (max-width: 387px)
+    .container-fluid
+        padding-left: 0px
+        padding-right: 0px
+    
+    //estilos del contenido principal
+    .contenido
+        width: 330px
+        padding-left: 2px
+        padding-right: 2px
+        .contenido-flexible
+            width: 100%
+            justify-content: flex-start
+            
+    
+// Para dispositivos mayores a 387 y menores a 500 ================================================================
+@media (min-width: 388px) and (max-width: 500px)
+    .container-fluid
+        padding-left: 0px
+        padding-right: 0px
+    
+    //estilos del contenido principal
+    .contenido
+        width: 388px
+        padding-left: 2px
+        padding-right: 2px
+        .contenido-flexible
+            width: 100%
+            justify-content: flex-start
+            
+        .h3
+            width: 90%
+      
+        
+// Extra small devices (portrait phones, less than 576px) =======================================================
+@media (min-width: 501px) and (max-width: 575.98px)
+    .container-fluid
+        padding-left: 0px
+        padding-right: 0px
+    
+    //Estilos del contenido principal
+    .contenido
+        width: 501px
+        .contenido-flexible
+            width: 100%
+            justify-content: flex-start
+            
+
+// Small devices (landscape phones, 576px and up) ================================================================
+@media (min-width: 576px) and (max-width: 767.98px)
+    .container-fluid
+        padding-left: 0px
+        padding-right: 0px
+    
+    //Estilos del contenido principal
+    .contenido
+        width: 576px
+        .contenido-flexible
+            width: 100%
+            justify-content: flex-start
+            
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px)
+    .container-fluid
+        padding-left: 0px
+        padding-right: 0px
+    
+    //Estilos del contenido principal
+    .contenido
+        width: 664px
+        .contenido-flexible
+            width: 100%
+            justify-content: flex-start
+    
+    
+// Large devices (desktops, 992px and up) =======================================================================
+@media (min-width: 992px)
+    .container-fluid
+        padding-left: 0px
+        padding-right: 0px
+    //Estilos del contenido principal
+    .contenido
+        width: 872px
+        .contenido-flexible
+            width: 100%
+            justify-content: flex-start
