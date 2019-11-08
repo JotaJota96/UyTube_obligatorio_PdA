@@ -16,6 +16,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKey;
@@ -24,29 +26,30 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "lista_de_reproduccion")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class ListaDeReproduccion implements Serializable {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    protected Integer id;
     
     @Column(name = "nombre")
-    private String nombre;
+    protected String nombre;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "privacidad")
-    private Privacidad privacidad;
+    protected Privacidad privacidad;
     
     @Column(name = "eliminado")
-    private boolean eliminado;
+    protected boolean eliminado;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
-    private TipoListaDeReproduccion tipo;
+    protected TipoListaDeReproduccion tipo;
     
     @Column(name = "categoria")
-    private String categoria;
+    protected String categoria;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -54,7 +57,7 @@ public class ListaDeReproduccion implements Serializable {
             joinColumns={@JoinColumn(name="id_lista", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="id_video", referencedColumnName="id")})
     @MapKey(name = "id")
-    private Map<Integer, Video> misVideos;
+    protected Map<Integer, Video> misVideos;
     
     //-----------------------------------------------------------------------------
     public ListaDeReproduccion() {

@@ -32,6 +32,7 @@ public class ObjectFactory {
     private final static QName _LiberarMemoriaListaDeReproduccion_QNAME = new QName("http://Controladores.Logica/", "liberarMemoriaListaDeReproduccion");
     private final static QName _IniciarSesionUsuario_QNAME = new QName("http://Controladores.Logica/", "iniciarSesionUsuario");
     private final static QName _ListarVideosDeUsuario_QNAME = new QName("http://Controladores.Logica/", "listarVideosDeUsuario");
+    private final static QName _AgregarVideoAHistorialResponse_QNAME = new QName("http://Controladores.Logica/", "agregarVideoAHistorialResponse");
     private final static QName _SesionIniciadaResponse_QNAME = new QName("http://Controladores.Logica/", "sesionIniciadaResponse");
     private final static QName _LiberarMemoriaUsuario_QNAME = new QName("http://Controladores.Logica/", "liberarMemoriaUsuario");
     private final static QName _LiberarMemoriaUsuarioResponse_QNAME = new QName("http://Controladores.Logica/", "liberarMemoriaUsuarioResponse");
@@ -86,6 +87,7 @@ public class ObjectFactory {
     private final static QName _ListarVideosDeUsuarioResponse_QNAME = new QName("http://Controladores.Logica/", "listarVideosDeUsuarioResponse");
     private final static QName _ListarComentariosDeVideo_QNAME = new QName("http://Controladores.Logica/", "listarComentariosDeVideo");
     private final static QName _ListarComentariosDeVideoResponse_QNAME = new QName("http://Controladores.Logica/", "listarComentariosDeVideoResponse");
+    private final static QName _AgregarVideoAHistorial_QNAME = new QName("http://Controladores.Logica/", "agregarVideoAHistorial");
     private final static QName _ObtenerImagenDeUsuario_QNAME = new QName("http://Controladores.Logica/", "obtenerImagenDeUsuario");
     private final static QName _BuscarResponse_QNAME = new QName("http://Controladores.Logica/", "buscarResponse");
     private final static QName _ExisteImagenDeUsuario_QNAME = new QName("http://Controladores.Logica/", "existeImagenDeUsuario");
@@ -434,6 +436,14 @@ public class ObjectFactory {
      */
     public ObtenerImagenDeUsuario createObtenerImagenDeUsuario() {
         return new ObtenerImagenDeUsuario();
+    }
+
+    /**
+     * Create an instance of {@link AgregarVideoAHistorial }
+     * 
+     */
+    public AgregarVideoAHistorial createAgregarVideoAHistorial() {
+        return new AgregarVideoAHistorial();
     }
 
     /**
@@ -869,6 +879,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AgregarVideoAHistorialResponse }
+     * 
+     */
+    public AgregarVideoAHistorialResponse createAgregarVideoAHistorialResponse() {
+        return new AgregarVideoAHistorialResponse();
+    }
+
+    /**
      * Create an instance of {@link IniciarSesionUsuario }
      * 
      */
@@ -1074,6 +1092,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "listarVideosDeUsuario")
     public JAXBElement<ListarVideosDeUsuario> createListarVideosDeUsuario(ListarVideosDeUsuario value) {
         return new JAXBElement<ListarVideosDeUsuario>(_ListarVideosDeUsuario_QNAME, ListarVideosDeUsuario.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AgregarVideoAHistorialResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "agregarVideoAHistorialResponse")
+    public JAXBElement<AgregarVideoAHistorialResponse> createAgregarVideoAHistorialResponse(AgregarVideoAHistorialResponse value) {
+        return new JAXBElement<AgregarVideoAHistorialResponse>(_AgregarVideoAHistorialResponse_QNAME, AgregarVideoAHistorialResponse.class, null, value);
     }
 
     /**
@@ -1560,6 +1587,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "listarComentariosDeVideoResponse")
     public JAXBElement<ListarComentariosDeVideoResponse> createListarComentariosDeVideoResponse(ListarComentariosDeVideoResponse value) {
         return new JAXBElement<ListarComentariosDeVideoResponse>(_ListarComentariosDeVideoResponse_QNAME, ListarComentariosDeVideoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AgregarVideoAHistorial }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "agregarVideoAHistorial")
+    public JAXBElement<AgregarVideoAHistorial> createAgregarVideoAHistorial(AgregarVideoAHistorial value) {
+        return new JAXBElement<AgregarVideoAHistorial>(_AgregarVideoAHistorial_QNAME, AgregarVideoAHistorial.class, null, value);
     }
 
     /**

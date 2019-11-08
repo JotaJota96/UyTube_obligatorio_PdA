@@ -1,5 +1,6 @@
 package Logica.Clases;
 
+import JPAControllerClasses.ListaDeReproduccionHistorialJpaController;
 import JPAControllerClasses.ListaDeReproduccionJpaController;
 import JPAControllerClasses.VideoJpaController;
 import Logica.Enumerados.Privacidad;
@@ -162,10 +163,17 @@ public class Canal implements Serializable {
         }
         // agrega las que pasaron el filtro anterior
         for (String lista : listas) {
-            ListaDeReproduccion nuevaLista = new ListaDeReproduccion(0, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED");
-         // crea la tupla en la base de datos
-         // asi se genera el ID y se puede agregar al Map
-            new ListaDeReproduccionJpaController().create(nuevaLista);
+            ListaDeReproduccion nuevaLista;
+            // crea la lista de reproduccion distinguiendo si es Historial o no
+            // crea la tupla en la base de datos
+            // asi se genera el ID y se puede agregar al Map
+            if (lista.equals("Historial")){
+                nuevaLista = new ListaDeReproduccionHistorial(0, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED");
+                new ListaDeReproduccionHistorialJpaController().create((ListaDeReproduccionHistorial) nuevaLista);
+            }else{
+                nuevaLista = new ListaDeReproduccion(0, lista, Privacidad.PRIVADO, TipoListaDeReproduccion.POR_DEFECTO, "UNDEFINED");
+               new ListaDeReproduccionJpaController().create(nuevaLista);
+            }
             this.misListas.put(nuevaLista.getId(), nuevaLista);
         }
     }
@@ -294,8 +302,35 @@ public class Canal implements Serializable {
         this.misVideos.put(vd.getId(), vd);
     }
 
+    void agregarVideoAHistorial(Video v) {
+        if (v == null){
+            throw new RuntimeException("El video no puede ser null");
+        }
+        int idHistorial = 0;
+        for (Map.Entry<Integer, ListaDeReproduccion> it : misListas.entrySet()) {
+            if (it.getValue() instanceof ListaDeReproduccionHistorial){
+                idHistorial = it.getKey();
+                break;
+            }
+        }
+        if (idHistorial == 0){
+            throw new RuntimeException("No se encontro el historial");
+        }
+        
+        this.misListas.get(idHistorial).agregarVideoA(v);
+        
+        try {
+            new ListaDeReproduccionJpaController().edit(this.misListas.get(idHistorial));
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    
     public void agregarVideoALista(int id, Video video) {
         if (this.misListas.containsKey(id)) {
+            if (this.misListas.get(id) instanceof ListaDeReproduccionHistorial){
+                throw new RuntimeException("No se pueden agregar videos al historial");
+            }
             this.misListas.get(id).agregarVideoA(video);
             try {
                 new ListaDeReproduccionJpaController().edit(this.misListas.get(id));
@@ -330,7 +365,11 @@ public class Canal implements Serializable {
             if(soloParticulares && m.getValue().getTipo()==TipoListaDeReproduccion.POR_DEFECTO){
                 continue;
             }
-            ret.add(m.getValue().getDt());
+            if (m.getValue() instanceof ListaDeReproduccionHistorial){
+                ret.add(((ListaDeReproduccionHistorial) m.getValue()).getDt());
+            }else{
+                ret.add(m.getValue().getDt());
+            }
         }
 
         return ret;
@@ -363,7 +402,11 @@ public class Canal implements Serializable {
 
     public ArrayList<DtVideo> listarVideosDeListaDeReproduccion(int id) {
         if (this.misListas.containsKey(id)) {
-            return this.misListas.get(id).listarVideos();
+            if (this.misListas.get(id) instanceof ListaDeReproduccionHistorial){
+                return ((ListaDeReproduccionHistorial) this.misListas.get(id)).listarVideos();
+            }else{
+                return this.misListas.get(id).listarVideos();
+            }
         } else {
             throw new RuntimeException("La lista de reproduccion no pertenece al canal");
         }
@@ -447,7 +490,11 @@ public class Canal implements Serializable {
         if (ldr == null){
             throw new RuntimeException("La lista de reproduccion no pertenece al canal");
         }else{
-            return ldr.getDt();
+            if (this.misListas.get(id) instanceof ListaDeReproduccionHistorial){
+                return ((ListaDeReproduccionHistorial) ldr).getDt();
+            }else{
+                return ldr.getDt();
+            }
         }
     }
     
@@ -464,7 +511,7 @@ public class Canal implements Serializable {
         for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
             // hace un getDT y lo agrega a la coleccion de retorno
             if (m.getValue().getCategoria().equals(cat)) {
-                ret.add(m.getValue().getDt());
+                ret.add(obtenerListaDeReproduccion(m.getKey()));
             }
         }
         
@@ -509,7 +556,11 @@ public class Canal implements Serializable {
 
     public void quitarVideoDeListaDeReproduccion(int idLista, int idVideo) {
         if (this.misListas.containsKey(idLista)) {
-            this.misListas.get(idLista).quitarVideo(idVideo);
+            if (this.misListas.get(idLista) instanceof ListaDeReproduccionHistorial){
+                ((ListaDeReproduccionHistorial) this.misListas.get(idLista)).quitarVideo(idVideo);
+            }else{
+                this.misListas.get(idLista).quitarVideo(idVideo);
+            }
             try {
                 new ListaDeReproduccionJpaController().edit(this.misListas.get(idLista));
             } catch (Exception e) {

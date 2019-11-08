@@ -17,6 +17,7 @@ INSERT INTO public.categoria (nombre) VALUES
 -- Listas por defecto
 INSERT INTO public.lista_por_defecto (nombre) VALUES 
 ('Ver mas tarde')
+,('Historial')
 ;
 
 -- Canales
@@ -97,20 +98,39 @@ https://www.flickr.com/photos/projectapolloarchive/21489361038/in/album-72157659
 
 
 -- Listas de reproduccion
-INSERT INTO public.lista_de_reproduccion (categoria,eliminado,nombre,privacidad,tipo,id_canal) VALUES 
-('UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',1)
-,('UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',2)
-,('UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',3)
-,('UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',4)
-,('UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',5)
-,('MUSICA',false,'Mis covers','PUBLICO','PARTICULAR',1)
-,('GAMING',false,'Minecraft','PRIVADO','PARTICULAR',1)
-,('UNDEFINED',false,'Pasar el rato','PRIVADO','PARTICULAR',2)
-,('UNDEFINED',false,'Bolso siempre bolso naa','PUBLICO','PARTICULAR',3)
-,('MUSICA',false,'Oasis','PUBLICO','PARTICULAR',4)
-,('UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',6)
-,('UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',7)
-,('UNDEFINED',false,'videos de terraboludos','PRIVADO','PARTICULAR',7)
+INSERT INTO public.lista_de_reproduccion (dtype,categoria,eliminado,nombre,privacidad,tipo,id_canal) VALUES 
+('ListaDeReproduccion','UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',1)
+,('ListaDeReproduccion','UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',2)
+,('ListaDeReproduccion','UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',3)
+,('ListaDeReproduccion','UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',4)
+,('ListaDeReproduccion','UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',5)
+,('ListaDeReproduccion','MUSICA',false,'Mis covers','PUBLICO','PARTICULAR',1)
+,('ListaDeReproduccion','GAMING',false,'Minecraft','PRIVADO','PARTICULAR',1)
+,('ListaDeReproduccion','UNDEFINED',false,'Pasar el rato','PRIVADO','PARTICULAR',2)
+,('ListaDeReproduccion','UNDEFINED',false,'Bolso siempre bolso naa','PUBLICO','PARTICULAR',3)
+,('ListaDeReproduccion','MUSICA',false,'Oasis','PUBLICO','PARTICULAR',4)
+,('ListaDeReproduccion','UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',6)
+,('ListaDeReproduccion','UNDEFINED',false,'Ver mas tarde','PRIVADO','POR_DEFECTO',7)
+,('ListaDeReproduccion','UNDEFINED',false,'videos de terraboludos','PRIVADO','PARTICULAR',7)
+,('ListaDeReproduccionHistorial','UNDEFINED',false,'Historial','PRIVADO','POR_DEFECTO',1)
+,('ListaDeReproduccionHistorial','UNDEFINED',false,'Historial','PRIVADO','POR_DEFECTO',2)
+,('ListaDeReproduccionHistorial','UNDEFINED',false,'Historial','PRIVADO','POR_DEFECTO',3)
+,('ListaDeReproduccionHistorial','UNDEFINED',false,'Historial','PRIVADO','POR_DEFECTO',4)
+,('ListaDeReproduccionHistorial','UNDEFINED',false,'Historial','PRIVADO','POR_DEFECTO',5)
+,('ListaDeReproduccionHistorial','UNDEFINED',false,'Historial','PRIVADO','POR_DEFECTO',6)
+,('ListaDeReproduccionHistorial','UNDEFINED',false,'Historial','PRIVADO','POR_DEFECTO',7)
+;
+
+
+-- Listas de reproduccion historial
+INSERT INTO public.lista_de_reproduccion_historial (id) VALUES 
+(14)
+,(15)
+,(16)
+,(17)
+,(18)
+,(19)
+,(20)
 ;
 
 -- Comentarios

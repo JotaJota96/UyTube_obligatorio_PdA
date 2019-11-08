@@ -76,10 +76,12 @@ public class DtVideo {
     }
 
     public Time getDuracion() {
+        if (duracion == null) return null;
         return duracion.toSqlDate();
     }
 
     public Date getFechaPublicacion() {
+        if (fechaPublicacion == null) return null;
         return fechaPublicacion.toSqlDate();
     }
 

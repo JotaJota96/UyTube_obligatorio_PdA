@@ -123,6 +123,20 @@ public class Usuario extends Persona{
         return new DtUsuario(this.id, super.getContrasenia(), super.getNombre(), super.getApellido(), this.correo, this.fechaNacimiento, this.fechaEliminado, this.imagen, this.seguidores);
     }
     
+    //----------------------------------------------------------------------------------------
+    public void agregarVideoAHistorial(int idVideo, Usuario Usu) {
+        if(Usu == null){
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        Video v = null;
+        try {
+            v = Usu.obtenerVideo(idVideo);
+        } catch (Exception e) {
+            throw new RuntimeException("El video no pertenece al usuario: " + Usu.getNickname());
+        }
+        this.MiCanal.agregarVideoAHistorial(v);
+    }
+    
     public void eliminar(Date fecha) {
         this.fechaEliminado = fecha;
         this.eliminado = true;
@@ -143,7 +157,6 @@ public class Usuario extends Persona{
             throw new RuntimeException(e.getMessage());
         }
     }
-    
     public void actualizarListasPorDefecto(ArrayList<String> listas){
         this.MiCanal.actualizarListasPorDefecto(listas);
         try {
@@ -396,5 +409,6 @@ public class Usuario extends Persona{
         }
         return this.MiCanal.validarListaParticular(nombre);
     }
+
 }
 

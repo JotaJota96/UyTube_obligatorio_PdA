@@ -10,7 +10,14 @@ import javax.jws.soap.SOAPBinding;
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public interface IUsuario {
-
+    
+    /**
+     * Agrega el video idVideoSeleccionado al historial del usuario con sesion
+     * iniciada (si es que hay)
+     */
+    @WebMethod
+    public void agregarVideoAHistorial();
+    
     /**
      * Agrega el video idVideoSeleccionado que pertenece a usuarioSeleccionado,
      * a la lista indicada perteneciente a usuarioActual

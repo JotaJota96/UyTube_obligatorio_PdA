@@ -30,33 +30,78 @@ public interface CUsuario {
      * @param arg0
      */
     @WebMethod
-    @RequestWrapper(localName = "altaVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaVideo")
-    @ResponseWrapper(localName = "altaVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/altaVideoRequest", output = "http://Controladores.Logica/CUsuario/altaVideoResponse")
-    public void altaVideo(
+    @RequestWrapper(localName = "altaListaDeReproduccionParticular", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaListaDeReproduccionParticular")
+    @ResponseWrapper(localName = "altaListaDeReproduccionParticularResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaListaDeReproduccionParticularResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/altaListaDeReproduccionParticularRequest", output = "http://Controladores.Logica/CUsuario/altaListaDeReproduccionParticularResponse")
+    public void altaListaDeReproduccionParticular(
         @WebParam(name = "arg0", targetNamespace = "")
-        DtVideo arg0);
+        DtListaDeReproduccion arg0);
 
     /**
      * 
      * @return
-     *     returns java.util.List<java.lang.String>
+     *     returns boolean
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarCategorias", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarCategorias")
-    @ResponseWrapper(localName = "listarCategoriasResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarCategoriasResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/listarCategoriasRequest", output = "http://Controladores.Logica/CUsuario/listarCategoriasResponse")
-    public List<String> listarCategorias();
+    @RequestWrapper(localName = "elUsuarioSeleccionadoEsElUsuarioActual", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ElUsuarioSeleccionadoEsElUsuarioActual")
+    @ResponseWrapper(localName = "elUsuarioSeleccionadoEsElUsuarioActualResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ElUsuarioSeleccionadoEsElUsuarioActualResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/elUsuarioSeleccionadoEsElUsuarioActualRequest", output = "http://Controladores.Logica/CUsuario/elUsuarioSeleccionadoEsElUsuarioActualResponse")
+    public boolean elUsuarioSeleccionadoEsElUsuarioActual();
 
     /**
      * 
+     * @param arg0
      */
     @WebMethod
-    @RequestWrapper(localName = "seguirUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeguirUsuario")
-    @ResponseWrapper(localName = "seguirUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeguirUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/seguirUsuarioRequest", output = "http://Controladores.Logica/CUsuario/seguirUsuarioResponse")
-    public void seguirUsuario();
+    @RequestWrapper(localName = "valorarVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValorarVideo")
+    @ResponseWrapper(localName = "valorarVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValorarVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/valorarVideoRequest", output = "http://Controladores.Logica/CUsuario/valorarVideoResponse")
+    public void valorarVideo(
+        @WebParam(name = "arg0", targetNamespace = "")
+        DtValoracion arg0);
+
+    /**
+     * 
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "sesionIniciada", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SesionIniciada")
+    @ResponseWrapper(localName = "sesionIniciadaResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SesionIniciadaResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/sesionIniciadaRequest", output = "http://Controladores.Logica/CUsuario/sesionIniciadaResponse")
+    public boolean sesionIniciada();
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @RequestWrapper(localName = "altaUsuarioCanal", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaUsuarioCanal")
+    @ResponseWrapper(localName = "altaUsuarioCanalResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaUsuarioCanalResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/altaUsuarioCanalRequest", output = "http://Controladores.Logica/CUsuario/altaUsuarioCanalResponse")
+    public void altaUsuarioCanal(
+        @WebParam(name = "arg0", targetNamespace = "")
+        DtUsuario arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        DtCanal arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "existeEmail", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ExisteEmail")
+    @ResponseWrapper(localName = "existeEmailResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ExisteEmailResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/existeEmailRequest", output = "http://Controladores.Logica/CUsuario/existeEmailResponse")
+    public boolean existeEmail(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
 
     /**
      * 
@@ -75,24 +120,48 @@ public interface CUsuario {
 
     /**
      * 
+     * @param arg0
      */
     @WebMethod
-    @RequestWrapper(localName = "cerrarSesion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.CerrarSesion")
-    @ResponseWrapper(localName = "cerrarSesionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.CerrarSesionResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/cerrarSesionRequest", output = "http://Controladores.Logica/CUsuario/cerrarSesionResponse")
-    public void cerrarSesion();
+    @RequestWrapper(localName = "modificarVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarVideo")
+    @ResponseWrapper(localName = "modificarVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/modificarVideoRequest", output = "http://Controladores.Logica/CUsuario/modificarVideoResponse")
+    public void modificarVideo(
+        @WebParam(name = "arg0", targetNamespace = "")
+        DtVideo arg0);
+
+    /**
+     * 
+     */
+    @WebMethod
+    @RequestWrapper(localName = "bajaUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.BajaUsuario")
+    @ResponseWrapper(localName = "bajaUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.BajaUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/bajaUsuarioRequest", output = "http://Controladores.Logica/CUsuario/bajaUsuarioResponse")
+    public void bajaUsuario();
+
+    /**
+     * 
+     */
+    @WebMethod
+    @RequestWrapper(localName = "seguirUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeguirUsuario")
+    @ResponseWrapper(localName = "seguirUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeguirUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/seguirUsuarioRequest", output = "http://Controladores.Logica/CUsuario/seguirUsuarioResponse")
+    public void seguirUsuario();
 
     /**
      * 
      * @param arg0
+     * @return
+     *     returns logica.controladores.DtVideo
      */
     @WebMethod
-    @RequestWrapper(localName = "altaComentario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaComentario")
-    @ResponseWrapper(localName = "altaComentarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaComentarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/altaComentarioRequest", output = "http://Controladores.Logica/CUsuario/altaComentarioResponse")
-    public void altaComentario(
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "seleccionarVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeleccionarVideo")
+    @ResponseWrapper(localName = "seleccionarVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeleccionarVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/seleccionarVideoRequest", output = "http://Controladores.Logica/CUsuario/seleccionarVideoResponse")
+    public DtVideo seleccionarVideo(
         @WebParam(name = "arg0", targetNamespace = "")
-        DtComentario arg0);
+        int arg0);
 
     /**
      * 
@@ -120,27 +189,12 @@ public interface CUsuario {
      * @param arg0
      */
     @WebMethod
-    @RequestWrapper(localName = "modificarVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarVideo")
-    @ResponseWrapper(localName = "modificarVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/modificarVideoRequest", output = "http://Controladores.Logica/CUsuario/modificarVideoResponse")
-    public void modificarVideo(
+    @RequestWrapper(localName = "altaComentario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaComentario")
+    @ResponseWrapper(localName = "altaComentarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaComentarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/altaComentarioRequest", output = "http://Controladores.Logica/CUsuario/altaComentarioResponse")
+    public void altaComentario(
         @WebParam(name = "arg0", targetNamespace = "")
-        DtVideo arg0);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @RequestWrapper(localName = "altaUsuarioCanal", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaUsuarioCanal")
-    @ResponseWrapper(localName = "altaUsuarioCanalResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaUsuarioCanalResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/altaUsuarioCanalRequest", output = "http://Controladores.Logica/CUsuario/altaUsuarioCanalResponse")
-    public void altaUsuarioCanal(
-        @WebParam(name = "arg0", targetNamespace = "")
-        DtUsuario arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        DtCanal arg1);
+        DtComentario arg0);
 
     /**
      * 
@@ -157,65 +211,86 @@ public interface CUsuario {
     /**
      * 
      * @param arg0
-     * @return
-     *     returns logica.controladores.DtVideo
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "seleccionarVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeleccionarVideo")
-    @ResponseWrapper(localName = "seleccionarVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeleccionarVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/seleccionarVideoRequest", output = "http://Controladores.Logica/CUsuario/seleccionarVideoResponse")
-    public DtVideo seleccionarVideo(
+    @RequestWrapper(localName = "altaVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaVideo")
+    @ResponseWrapper(localName = "altaVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/altaVideoRequest", output = "http://Controladores.Logica/CUsuario/altaVideoResponse")
+    public void altaVideo(
         @WebParam(name = "arg0", targetNamespace = "")
-        int arg0);
+        DtVideo arg0);
 
     /**
      * 
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarCategorias", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarCategorias")
+    @ResponseWrapper(localName = "listarCategoriasResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarCategoriasResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/listarCategoriasRequest", output = "http://Controladores.Logica/CUsuario/listarCategoriasResponse")
+    public List<String> listarCategorias();
+
+    /**
+     * 
+     */
+    @WebMethod
+    @RequestWrapper(localName = "cerrarSesion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.CerrarSesion")
+    @ResponseWrapper(localName = "cerrarSesionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.CerrarSesionResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/cerrarSesionRequest", output = "http://Controladores.Logica/CUsuario/cerrarSesionResponse")
+    public void cerrarSesion();
+
+    /**
+     * 
+     */
+    @WebMethod
+    @RequestWrapper(localName = "liberarMemoriaUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaUsuario")
+    @ResponseWrapper(localName = "liberarMemoriaUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/liberarMemoriaUsuarioRequest", output = "http://Controladores.Logica/CUsuario/liberarMemoriaUsuarioResponse")
+    public void liberarMemoriaUsuario();
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<logica.controladores.DtComentario>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarComentariosDeVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarComentariosDeVideo")
+    @ResponseWrapper(localName = "listarComentariosDeVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarComentariosDeVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/listarComentariosDeVideoRequest", output = "http://Controladores.Logica/CUsuario/listarComentariosDeVideoResponse")
+    public List<DtComentario> listarComentariosDeVideo();
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<logica.controladores.DtUsuario>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarUsuarioSeguidos", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarUsuarioSeguidos")
+    @ResponseWrapper(localName = "listarUsuarioSeguidosResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarUsuarioSeguidosResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/listarUsuarioSeguidosRequest", output = "http://Controladores.Logica/CUsuario/listarUsuarioSeguidosResponse")
+    public List<DtUsuario> listarUsuarioSeguidos();
+
+    /**
+     * 
+     * @param arg1
      * @param arg0
      * @return
      *     returns boolean
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "existeEmail", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ExisteEmail")
-    @ResponseWrapper(localName = "existeEmailResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ExisteEmailResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/existeEmailRequest", output = "http://Controladores.Logica/CUsuario/existeEmailResponse")
-    public boolean existeEmail(
+    @RequestWrapper(localName = "iniciarSesionUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.IniciarSesionUsuario")
+    @ResponseWrapper(localName = "iniciarSesionUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.IniciarSesionUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/iniciarSesionUsuarioRequest", output = "http://Controladores.Logica/CUsuario/iniciarSesionUsuarioResponse")
+    public boolean iniciarSesionUsuario(
         @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
-
-    /**
-     * 
-     */
-    @WebMethod
-    @RequestWrapper(localName = "bajaUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.BajaUsuario")
-    @ResponseWrapper(localName = "bajaUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.BajaUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/bajaUsuarioRequest", output = "http://Controladores.Logica/CUsuario/bajaUsuarioResponse")
-    public void bajaUsuario();
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @RequestWrapper(localName = "altaListaDeReproduccionParticular", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaListaDeReproduccionParticular")
-    @ResponseWrapper(localName = "altaListaDeReproduccionParticularResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaListaDeReproduccionParticularResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/altaListaDeReproduccionParticularRequest", output = "http://Controladores.Logica/CUsuario/altaListaDeReproduccionParticularResponse")
-    public void altaListaDeReproduccionParticular(
-        @WebParam(name = "arg0", targetNamespace = "")
-        DtListaDeReproduccion arg0);
-
-    /**
-     * 
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "elUsuarioSeleccionadoEsElUsuarioActual", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ElUsuarioSeleccionadoEsElUsuarioActual")
-    @ResponseWrapper(localName = "elUsuarioSeleccionadoEsElUsuarioActualResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ElUsuarioSeleccionadoEsElUsuarioActualResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/elUsuarioSeleccionadoEsElUsuarioActualRequest", output = "http://Controladores.Logica/CUsuario/elUsuarioSeleccionadoEsElUsuarioActualResponse")
-    public boolean elUsuarioSeleccionadoEsElUsuarioActual();
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
 
     /**
      * 
@@ -225,84 +300,63 @@ public interface CUsuario {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerPropietarioDeListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeListaDeReproduccion")
-    @ResponseWrapper(localName = "obtenerPropietarioDeListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeListaDeReproduccionResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeListaDeReproduccionResponse")
-    public DtUsuario obtenerPropietarioDeListaDeReproduccion(
+    @RequestWrapper(localName = "obtenerPropietarioDeVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeVideo")
+    @ResponseWrapper(localName = "obtenerPropietarioDeVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeVideoRequest", output = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeVideoResponse")
+    public DtUsuario obtenerPropietarioDeVideo(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0);
 
     /**
      * 
-     */
-    @WebMethod
-    @RequestWrapper(localName = "liberarMemoriaListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaListaDeReproduccion")
-    @ResponseWrapper(localName = "liberarMemoriaListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaListaDeReproduccionResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/liberarMemoriaListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/liberarMemoriaListaDeReproduccionResponse")
-    public void liberarMemoriaListaDeReproduccion();
-
-    /**
-     * 
      * @param arg0
      * @return
-     *     returns java.util.List<logica.controladores.DtListaDeReproduccion>
+     *     returns logica.controladores.DtListaDeReproduccion
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarListasDeReproduccionDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarListasDeReproduccionDeUsuario")
-    @ResponseWrapper(localName = "listarListasDeReproduccionDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarListasDeReproduccionDeUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/listarListasDeReproduccionDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/listarListasDeReproduccionDeUsuarioResponse")
-    public List<DtListaDeReproduccion> listarListasDeReproduccionDeUsuario(
+    @RequestWrapper(localName = "seleccionarListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeleccionarListaDeReproduccion")
+    @ResponseWrapper(localName = "seleccionarListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeleccionarListaDeReproduccionResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/seleccionarListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/seleccionarListaDeReproduccionResponse")
+    public DtListaDeReproduccion seleccionarListaDeReproduccion(
         @WebParam(name = "arg0", targetNamespace = "")
-        boolean arg0);
+        int arg0);
 
     /**
      * 
      * @return
-     *     returns java.util.List<logica.controladores.DtVideo>
+     *     returns logica.controladores.DtUsuario
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarVideosDeListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarVideosDeListaDeReproduccion")
-    @ResponseWrapper(localName = "listarVideosDeListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarVideosDeListaDeReproduccionResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/listarVideosDeListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/listarVideosDeListaDeReproduccionResponse")
-    public List<DtVideo> listarVideosDeListaDeReproduccion();
+    @RequestWrapper(localName = "obtenerUsuarioActual", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerUsuarioActual")
+    @ResponseWrapper(localName = "obtenerUsuarioActualResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerUsuarioActualResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/obtenerUsuarioActualRequest", output = "http://Controladores.Logica/CUsuario/obtenerUsuarioActualResponse")
+    public DtUsuario obtenerUsuarioActual();
 
     /**
      * 
      * @return
-     *     returns boolean
+     *     returns java.util.List<logica.controladores.DtUsuario>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "sesionIniciada", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SesionIniciada")
-    @ResponseWrapper(localName = "sesionIniciadaResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SesionIniciadaResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/sesionIniciadaRequest", output = "http://Controladores.Logica/CUsuario/sesionIniciadaResponse")
-    public boolean sesionIniciada();
+    @RequestWrapper(localName = "listarUsuarioSeguidores", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarUsuarioSeguidores")
+    @ResponseWrapper(localName = "listarUsuarioSeguidoresResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarUsuarioSeguidoresResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/listarUsuarioSeguidoresRequest", output = "http://Controladores.Logica/CUsuario/listarUsuarioSeguidoresResponse")
+    public List<DtUsuario> listarUsuarioSeguidores();
 
     /**
      * 
      * @param arg0
      */
     @WebMethod
-    @RequestWrapper(localName = "valorarVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValorarVideo")
-    @ResponseWrapper(localName = "valorarVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValorarVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/valorarVideoRequest", output = "http://Controladores.Logica/CUsuario/valorarVideoResponse")
-    public void valorarVideo(
+    @RequestWrapper(localName = "altaImagenDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaImagenDeUsuario")
+    @ResponseWrapper(localName = "altaImagenDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaImagenDeUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/altaImagenDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/altaImagenDeUsuarioResponse")
+    public void altaImagenDeUsuario(
         @WebParam(name = "arg0", targetNamespace = "")
-        DtValoracion arg0);
-
-    /**
-     * 
-     * @return
-     *     returns logica.controladores.DtValoracion
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerValoracionDada", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerValoracionDada")
-    @ResponseWrapper(localName = "obtenerValoracionDadaResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerValoracionDadaResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/obtenerValoracionDadaRequest", output = "http://Controladores.Logica/CUsuario/obtenerValoracionDadaResponse")
-    public DtValoracion obtenerValoracionDada();
+        DtImagenUsuario arg0);
 
     /**
      * 
@@ -322,6 +376,54 @@ public interface CUsuario {
     /**
      * 
      * @return
+     *     returns logica.controladores.DtImagenUsuario
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerImagenDeUsuarioPorDefecto", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerImagenDeUsuarioPorDefecto")
+    @ResponseWrapper(localName = "obtenerImagenDeUsuarioPorDefectoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerImagenDeUsuarioPorDefectoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/obtenerImagenDeUsuarioPorDefectoRequest", output = "http://Controladores.Logica/CUsuario/obtenerImagenDeUsuarioPorDefectoResponse")
+    public DtImagenUsuario obtenerImagenDeUsuarioPorDefecto();
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<logica.controladores.DtValoracion>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerValoracionesDeVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerValoracionesDeVideo")
+    @ResponseWrapper(localName = "obtenerValoracionesDeVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerValoracionesDeVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/obtenerValoracionesDeVideoRequest", output = "http://Controladores.Logica/CUsuario/obtenerValoracionesDeVideoResponse")
+    public List<DtValoracion> obtenerValoracionesDeVideo();
+
+    /**
+     * 
+     */
+    @WebMethod
+    @RequestWrapper(localName = "liberarMemoriaVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaVideo")
+    @ResponseWrapper(localName = "liberarMemoriaVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/liberarMemoriaVideoRequest", output = "http://Controladores.Logica/CUsuario/liberarMemoriaVideoResponse")
+    public void liberarMemoriaVideo();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<java.lang.Object>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "buscarPorCategoria", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.BuscarPorCategoria")
+    @ResponseWrapper(localName = "buscarPorCategoriaResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.BuscarPorCategoriaResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/buscarPorCategoriaRequest", output = "http://Controladores.Logica/CUsuario/buscarPorCategoriaResponse")
+    public List<Object> buscarPorCategoria(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @return
      *     returns logica.controladores.DtCanal
      */
     @WebMethod
@@ -330,45 +432,6 @@ public interface CUsuario {
     @ResponseWrapper(localName = "obtenerCanalDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerCanalDeUsuarioResponse")
     @Action(input = "http://Controladores.Logica/CUsuario/obtenerCanalDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/obtenerCanalDeUsuarioResponse")
     public DtCanal obtenerCanalDeUsuario();
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.controladores.DtListaDeReproduccion
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "seleccionarListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeleccionarListaDeReproduccion")
-    @ResponseWrapper(localName = "seleccionarListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.SeleccionarListaDeReproduccionResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/seleccionarListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/seleccionarListaDeReproduccionResponse")
-    public DtListaDeReproduccion seleccionarListaDeReproduccion(
-        @WebParam(name = "arg0", targetNamespace = "")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @RequestWrapper(localName = "modificarListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarListaDeReproduccion")
-    @ResponseWrapper(localName = "modificarListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarListaDeReproduccionResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/modificarListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/modificarListaDeReproduccionResponse")
-    public void modificarListaDeReproduccion(
-        @WebParam(name = "arg0", targetNamespace = "")
-        DtListaDeReproduccion arg0);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<logica.controladores.DtVideo>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarVideosDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarVideosDeUsuario")
-    @ResponseWrapper(localName = "listarVideosDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarVideosDeUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/listarVideosDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/listarVideosDeUsuarioResponse")
-    public List<DtVideo> listarVideosDeUsuario();
 
     /**
      * 
@@ -390,45 +453,12 @@ public interface CUsuario {
      * @param arg0
      */
     @WebMethod
-    @RequestWrapper(localName = "altaImagenDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaImagenDeUsuario")
-    @ResponseWrapper(localName = "altaImagenDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AltaImagenDeUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/altaImagenDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/altaImagenDeUsuarioResponse")
-    public void altaImagenDeUsuario(
+    @RequestWrapper(localName = "modificarListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarListaDeReproduccion")
+    @ResponseWrapper(localName = "modificarListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarListaDeReproduccionResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/modificarListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/modificarListaDeReproduccionResponse")
+    public void modificarListaDeReproduccion(
         @WebParam(name = "arg0", targetNamespace = "")
-        DtImagenUsuario arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @RequestWrapper(localName = "modificarImagenDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarImagenDeUsuario")
-    @ResponseWrapper(localName = "modificarImagenDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarImagenDeUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/modificarImagenDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/modificarImagenDeUsuarioResponse")
-    public void modificarImagenDeUsuario(
-        @WebParam(name = "arg0", targetNamespace = "")
-        DtImagenUsuario arg0);
-
-    /**
-     * 
-     */
-    @WebMethod
-    @RequestWrapper(localName = "liberarMemoriaVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaVideo")
-    @ResponseWrapper(localName = "liberarMemoriaVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/liberarMemoriaVideoRequest", output = "http://Controladores.Logica/CUsuario/liberarMemoriaVideoResponse")
-    public void liberarMemoriaVideo();
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @RequestWrapper(localName = "eliminarImagenDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.EliminarImagenDeUsuario")
-    @ResponseWrapper(localName = "eliminarImagenDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.EliminarImagenDeUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/eliminarImagenDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/eliminarImagenDeUsuarioResponse")
-    public void eliminarImagenDeUsuario(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+        DtListaDeReproduccion arg0);
 
     /**
      * 
@@ -444,42 +474,33 @@ public interface CUsuario {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
      * @return
-     *     returns logica.controladores.DtImagenUsuario
+     *     returns boolean
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerImagenDeUsuarioPorDefecto", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerImagenDeUsuarioPorDefecto")
-    @ResponseWrapper(localName = "obtenerImagenDeUsuarioPorDefectoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerImagenDeUsuarioPorDefectoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/obtenerImagenDeUsuarioPorDefectoRequest", output = "http://Controladores.Logica/CUsuario/obtenerImagenDeUsuarioPorDefectoResponse")
-    public DtImagenUsuario obtenerImagenDeUsuarioPorDefecto();
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<logica.controladores.DtComentario>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarComentariosDeVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarComentariosDeVideo")
-    @ResponseWrapper(localName = "listarComentariosDeVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarComentariosDeVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/listarComentariosDeVideoRequest", output = "http://Controladores.Logica/CUsuario/listarComentariosDeVideoResponse")
-    public List<DtComentario> listarComentariosDeVideo();
+    @RequestWrapper(localName = "validarNuevaListaParticular", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValidarNuevaListaParticular")
+    @ResponseWrapper(localName = "validarNuevaListaParticularResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValidarNuevaListaParticularResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/validarNuevaListaParticularRequest", output = "http://Controladores.Logica/CUsuario/validarNuevaListaParticularResponse")
+    public boolean validarNuevaListaParticular(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        int arg1);
 
     /**
      * 
      * @param arg0
-     * @return
-     *     returns logica.controladores.DtUsuario
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerPropietarioDeVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeVideo")
-    @ResponseWrapper(localName = "obtenerPropietarioDeVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeVideoRequest", output = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeVideoResponse")
-    public DtUsuario obtenerPropietarioDeVideo(
+    @RequestWrapper(localName = "eliminarImagenDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.EliminarImagenDeUsuario")
+    @ResponseWrapper(localName = "eliminarImagenDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.EliminarImagenDeUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/eliminarImagenDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/eliminarImagenDeUsuarioResponse")
+    public void eliminarImagenDeUsuario(
         @WebParam(name = "arg0", targetNamespace = "")
-        int arg0);
+        String arg0);
 
     /**
      * 
@@ -498,93 +519,36 @@ public interface CUsuario {
 
     /**
      * 
-     * @param arg0
+     */
+    @WebMethod
+    @RequestWrapper(localName = "agregarVideoAHistorial", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AgregarVideoAHistorial")
+    @ResponseWrapper(localName = "agregarVideoAHistorialResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.AgregarVideoAHistorialResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/agregarVideoAHistorialRequest", output = "http://Controladores.Logica/CUsuario/agregarVideoAHistorialResponse")
+    public void agregarVideoAHistorial();
+
+    /**
+     * 
      * @return
-     *     returns java.util.List<java.lang.Object>
+     *     returns logica.controladores.DtValoracion
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "buscarPorCategoria", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.BuscarPorCategoria")
-    @ResponseWrapper(localName = "buscarPorCategoriaResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.BuscarPorCategoriaResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/buscarPorCategoriaRequest", output = "http://Controladores.Logica/CUsuario/buscarPorCategoriaResponse")
-    public List<Object> buscarPorCategoria(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+    @RequestWrapper(localName = "obtenerValoracionDada", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerValoracionDada")
+    @ResponseWrapper(localName = "obtenerValoracionDadaResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerValoracionDadaResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/obtenerValoracionDadaRequest", output = "http://Controladores.Logica/CUsuario/obtenerValoracionDadaResponse")
+    public DtValoracion obtenerValoracionDada();
 
     /**
      * 
      * @param arg0
-     * @return
-     *     returns logica.controladores.DtUsuario
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerPropietarioDeCanal", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeCanal")
-    @ResponseWrapper(localName = "obtenerPropietarioDeCanalResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeCanalResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeCanalRequest", output = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeCanalResponse")
-    public DtUsuario obtenerPropietarioDeCanal(
+    @RequestWrapper(localName = "modificarImagenDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarImagenDeUsuario")
+    @ResponseWrapper(localName = "modificarImagenDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ModificarImagenDeUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/modificarImagenDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/modificarImagenDeUsuarioResponse")
+    public void modificarImagenDeUsuario(
         @WebParam(name = "arg0", targetNamespace = "")
-        int arg0);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "validarNuevoVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValidarNuevoVideo")
-    @ResponseWrapper(localName = "validarNuevoVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValidarNuevoVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/validarNuevoVideoRequest", output = "http://Controladores.Logica/CUsuario/validarNuevoVideoResponse")
-    public boolean validarNuevoVideo(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        int arg1);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<logica.controladores.DtUsuario>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarUsuarioSeguidores", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarUsuarioSeguidores")
-    @ResponseWrapper(localName = "listarUsuarioSeguidoresResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarUsuarioSeguidoresResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/listarUsuarioSeguidoresRequest", output = "http://Controladores.Logica/CUsuario/listarUsuarioSeguidoresResponse")
-    public List<DtUsuario> listarUsuarioSeguidores();
-
-    /**
-     * 
-     * @return
-     *     returns logica.controladores.DtUsuario
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerUsuarioActual", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerUsuarioActual")
-    @ResponseWrapper(localName = "obtenerUsuarioActualResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerUsuarioActualResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/obtenerUsuarioActualRequest", output = "http://Controladores.Logica/CUsuario/obtenerUsuarioActualResponse")
-    public DtUsuario obtenerUsuarioActual();
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "iniciarSesionUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.IniciarSesionUsuario")
-    @ResponseWrapper(localName = "iniciarSesionUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.IniciarSesionUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/iniciarSesionUsuarioRequest", output = "http://Controladores.Logica/CUsuario/iniciarSesionUsuarioResponse")
-    public boolean iniciarSesionUsuario(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        String arg1);
+        DtImagenUsuario arg0);
 
     /**
      * 
@@ -615,36 +579,18 @@ public interface CUsuario {
 
     /**
      * 
+     * @param arg0
      * @return
-     *     returns java.util.List<logica.controladores.DtUsuario>
+     *     returns logica.controladores.DtUsuario
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarUsuarioSeguidos", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarUsuarioSeguidos")
-    @ResponseWrapper(localName = "listarUsuarioSeguidosResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarUsuarioSeguidosResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/listarUsuarioSeguidosRequest", output = "http://Controladores.Logica/CUsuario/listarUsuarioSeguidosResponse")
-    public List<DtUsuario> listarUsuarioSeguidos();
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<logica.controladores.DtValoracion>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerValoracionesDeVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerValoracionesDeVideo")
-    @ResponseWrapper(localName = "obtenerValoracionesDeVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerValoracionesDeVideoResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/obtenerValoracionesDeVideoRequest", output = "http://Controladores.Logica/CUsuario/obtenerValoracionesDeVideoResponse")
-    public List<DtValoracion> obtenerValoracionesDeVideo();
-
-    /**
-     * 
-     */
-    @WebMethod
-    @RequestWrapper(localName = "liberarMemoriaUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaUsuario")
-    @ResponseWrapper(localName = "liberarMemoriaUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaUsuarioResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/liberarMemoriaUsuarioRequest", output = "http://Controladores.Logica/CUsuario/liberarMemoriaUsuarioResponse")
-    public void liberarMemoriaUsuario();
+    @RequestWrapper(localName = "obtenerPropietarioDeCanal", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeCanal")
+    @ResponseWrapper(localName = "obtenerPropietarioDeCanalResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeCanalResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeCanalRequest", output = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeCanalResponse")
+    public DtUsuario obtenerPropietarioDeCanal(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0);
 
     /**
      * 
@@ -663,6 +609,18 @@ public interface CUsuario {
 
     /**
      * 
+     * @return
+     *     returns java.util.List<logica.controladores.DtVideo>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarVideosDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarVideosDeUsuario")
+    @ResponseWrapper(localName = "listarVideosDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarVideosDeUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/listarVideosDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/listarVideosDeUsuarioResponse")
+    public List<DtVideo> listarVideosDeUsuario();
+
+    /**
+     * 
      * @param arg1
      * @param arg0
      * @return
@@ -670,13 +628,64 @@ public interface CUsuario {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "validarNuevaListaParticular", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValidarNuevaListaParticular")
-    @ResponseWrapper(localName = "validarNuevaListaParticularResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValidarNuevaListaParticularResponse")
-    @Action(input = "http://Controladores.Logica/CUsuario/validarNuevaListaParticularRequest", output = "http://Controladores.Logica/CUsuario/validarNuevaListaParticularResponse")
-    public boolean validarNuevaListaParticular(
+    @RequestWrapper(localName = "validarNuevoVideo", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValidarNuevoVideo")
+    @ResponseWrapper(localName = "validarNuevoVideoResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ValidarNuevoVideoResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/validarNuevoVideoRequest", output = "http://Controladores.Logica/CUsuario/validarNuevoVideoResponse")
+    public boolean validarNuevoVideo(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
         int arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.controladores.DtUsuario
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerPropietarioDeListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeListaDeReproduccion")
+    @ResponseWrapper(localName = "obtenerPropietarioDeListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ObtenerPropietarioDeListaDeReproduccionResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/obtenerPropietarioDeListaDeReproduccionResponse")
+    public DtUsuario obtenerPropietarioDeListaDeReproduccion(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0);
+
+    /**
+     * 
+     */
+    @WebMethod
+    @RequestWrapper(localName = "liberarMemoriaListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaListaDeReproduccion")
+    @ResponseWrapper(localName = "liberarMemoriaListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.LiberarMemoriaListaDeReproduccionResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/liberarMemoriaListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/liberarMemoriaListaDeReproduccionResponse")
+    public void liberarMemoriaListaDeReproduccion();
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<logica.controladores.DtVideo>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarVideosDeListaDeReproduccion", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarVideosDeListaDeReproduccion")
+    @ResponseWrapper(localName = "listarVideosDeListaDeReproduccionResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarVideosDeListaDeReproduccionResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/listarVideosDeListaDeReproduccionRequest", output = "http://Controladores.Logica/CUsuario/listarVideosDeListaDeReproduccionResponse")
+    public List<DtVideo> listarVideosDeListaDeReproduccion();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<logica.controladores.DtListaDeReproduccion>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarListasDeReproduccionDeUsuario", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarListasDeReproduccionDeUsuario")
+    @ResponseWrapper(localName = "listarListasDeReproduccionDeUsuarioResponse", targetNamespace = "http://Controladores.Logica/", className = "logica.controladores.ListarListasDeReproduccionDeUsuarioResponse")
+    @Action(input = "http://Controladores.Logica/CUsuario/listarListasDeReproduccionDeUsuarioRequest", output = "http://Controladores.Logica/CUsuario/listarListasDeReproduccionDeUsuarioResponse")
+    public List<DtListaDeReproduccion> listarListasDeReproduccionDeUsuario(
+        @WebParam(name = "arg0", targetNamespace = "")
+        boolean arg0);
 
 }

@@ -110,6 +110,20 @@ public class CUsuario implements IUsuario {
 
     //******************** Funciones de la interfaz ************************
     @Override
+    public void agregarVideoAHistorial() {
+        if (usuarioActual == null){
+            throw new RuntimeException("No se ha iniciado sesión");
+        }
+        if (usuarioSeleccionado == null){
+            throw new RuntimeException("El sistema no tiene un usuario seleccionado");
+        }
+        if (idVideoSeleccionado == 0){
+            throw new RuntimeException("El sistema no tiene un video seleccionado");
+        }
+        usuarioActual.agregarVideoAHistorial(idVideoSeleccionado, usuarioSeleccionado);
+    }
+
+    @Override
     public void agregarVideoAListaDeReproduccion(int idLista) {
         if (usuarioActual == null){
             throw new RuntimeException("No se ha iniciado sesión");
