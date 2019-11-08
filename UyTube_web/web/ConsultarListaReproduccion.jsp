@@ -4,6 +4,8 @@
     Author     : administrador
 --%>
 
+<%@page import="logica.controladores.DtRegistroHistorial"%>
+<%@page import="logica.controladores.DtListaDeReproduccionHistorial"%>
 <%@page import="logica.controladores.TipoListaDeReproduccion"%>
 <%@page import="logica.controladores.DtVideo"%>
 <%@page import="logica.controladores.DtListaDeReproduccion"%>
@@ -32,7 +34,7 @@
         <link rel="stylesheet" type="text/css" href="css/contenido-buscar.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube</title>
+        <title>UyTube - <%= listasRep.getNombre() %></title>
     </head>
     <body>
         <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
@@ -119,6 +121,11 @@
                                     <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="nav-VIDEO-tab">
                                         <!--PRIMER VIDEO-->
                                         <%
+                                            DtListaDeReproduccionHistorial historial = null;
+                                            if (listasRep instanceof DtListaDeReproduccionHistorial){
+                                                historial = (DtListaDeReproduccionHistorial) listasRep;
+                                            }
+                                            int i = 0;
                                             for (DtVideo elem : videos) {
                                                 String id = Funciones.Funciones.extraerIDYoutube(elem.getUrlVideoOriginal());
                                         %>
@@ -136,6 +143,21 @@
                                                         <h5><%= elem.getNombre() %></h5>
                                                     </a>
                                                     <p><%= elem.getDescripcion()%></p>
+                                                    <%
+                                                        if (historial != null) {
+                                                            DtRegistroHistorial reg = historial.getRegistros().get(i);
+                                                            i++;
+                                                            int cantVisitas = reg.getCantVisitas();
+                                                            String ultimaVez = Funciones.Funciones.darFormatoFecha(reg.getUltimaVez());
+                                                            // Funciones.Funciones.darFormatoFecha(reg.getUltimaVez())
+                                                    %>
+                                                    Cantidad de visitas: <%= cantVisitas %>
+                                                    <br>
+                                                    Ultima visita: <%= ultimaVez %>
+
+                                                    <%
+                                                        }
+                                                    %>
                                                 </div>
                                             </div>
                                         </div>

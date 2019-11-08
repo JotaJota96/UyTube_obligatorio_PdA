@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DtListaDeReproduccion {
-    private int id;
-    private String nombre;
-    private Privacidad privacidad;
-    private TipoListaDeReproduccion tipo;
-    private String categoria;
-    private String nombreDuenio;
+    protected int id;
+    protected String nombre;
+    protected Privacidad privacidad;
+    protected TipoListaDeReproduccion tipo;
+    protected String categoria;
+    protected String nombreDuenio;
     
     public DtListaDeReproduccion(int id, String nombre, Privacidad privacidad, TipoListaDeReproduccion tipo, String categoria) {
         this.id = id;

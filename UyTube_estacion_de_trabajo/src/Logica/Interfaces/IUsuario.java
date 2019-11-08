@@ -14,9 +14,12 @@ public interface IUsuario {
     /**
      * Agrega el video idVideoSeleccionado al historial del usuario con sesion
      * iniciada (si es que hay)
+     *
+     * @return Siempre retorna null. (si la hacia void el Web Service no
+     * publicaba la clase 'DtListaDeReproduccionHistorial'
      */
     @WebMethod
-    public void agregarVideoAHistorial();
+    public DtListaDeReproduccionHistorial agregarVideoAHistorial();
     
     /**
      * Agrega el video idVideoSeleccionado que pertenece a usuarioSeleccionado,

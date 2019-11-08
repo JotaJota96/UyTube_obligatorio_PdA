@@ -34,7 +34,7 @@
         <link rel="stylesheet" type="text/css" href="css/contenido-buscar.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube</title>
+        <title>UyTube - Buscar</title>
     </head>
     <body>
         <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">

@@ -9,7 +9,6 @@ import logica.controladores.DtValoracion;
 import logica.controladores.DtVideo;
 import logica.controladores.TipoValoracion;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -61,6 +60,9 @@ public class ConsultaVideo extends HttpServlet {
                 sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
                 listas = (ArrayList<DtListaDeReproduccion>) sys.listarListasDeReproduccionDeUsuario(true);
                 sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                
+                // agrega el video al historial
+                sys.agregarVideoAHistorial();
             }
             
             String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, sesionIniciada);

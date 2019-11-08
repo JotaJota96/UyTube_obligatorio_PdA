@@ -14,6 +14,7 @@ import Logica.DataType.DtCanal;
 import Logica.DataType.DtComentario;
 import Logica.DataType.DtImagenUsuario;
 import Logica.DataType.DtListaDeReproduccion;
+import Logica.DataType.DtListaDeReproduccionHistorial;
 import Logica.DataType.DtUsuario;
 import Logica.DataType.DtValoracion;
 import Logica.DataType.DtVideo;
@@ -110,7 +111,7 @@ public class CUsuario implements IUsuario {
 
     //******************** Funciones de la interfaz ************************
     @Override
-    public void agregarVideoAHistorial() {
+    public DtListaDeReproduccionHistorial agregarVideoAHistorial() {
         if (usuarioActual == null){
             throw new RuntimeException("No se ha iniciado sesión");
         }
@@ -121,6 +122,9 @@ public class CUsuario implements IUsuario {
             throw new RuntimeException("El sistema no tiene un video seleccionado");
         }
         usuarioActual.agregarVideoAHistorial(idVideoSeleccionado, usuarioSeleccionado);
+        //Siempre retorna null. 
+        // si la hacia void el Web Service no publicaba la clase 'DtListaDeReproduccionHistorial'
+        return null;
     }
 
     @Override

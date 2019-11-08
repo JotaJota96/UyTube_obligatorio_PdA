@@ -28,7 +28,7 @@
         <link rel="stylesheet" type="text/css" href="css/contenido-consulta-usuario.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube - Mod.Lista</title>
+        <title>UyTube - Modificar lista <%= listasRep.getNombre() %> </title>
     </head>
     <body>
 

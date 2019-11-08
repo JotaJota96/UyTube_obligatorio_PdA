@@ -959,11 +959,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DtRegistroHistorial }
+     * 
+     */
+    public DtRegistroHistorial createDtRegistroHistorial() {
+        return new DtRegistroHistorial();
+    }
+
+    /**
      * Create an instance of {@link DtUsuario }
      * 
      */
     public DtUsuario createDtUsuario() {
         return new DtUsuario();
+    }
+
+    /**
+     * Create an instance of {@link DtListaDeReproduccionHistorial }
+     * 
+     */
+    public DtListaDeReproduccionHistorial createDtListaDeReproduccionHistorial() {
+        return new DtListaDeReproduccionHistorial();
     }
 
     /**

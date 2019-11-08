@@ -51,7 +51,7 @@
        	<link rel="stylesheet" type="text/css" href="css/contenido-alta-usuario.css">
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
 
-        <title>UyTube</title>
+        <title>UyTube - Modificar usuario <%= usuario.getNickname() %></title>
     </head>
     <body>
 

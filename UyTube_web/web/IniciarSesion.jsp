@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css" href="css/contenido-iniciar-sesion.css">	
         <link rel="stylesheet" type="text/css" href="iconos/style.css">
         <link rel="icon" type="image/png" href="imagenes/icono.png" />
-        <title>UyTube</title>
+        <title>UyTube - Iniciar sesión</title>
     </head>
     <body>
 

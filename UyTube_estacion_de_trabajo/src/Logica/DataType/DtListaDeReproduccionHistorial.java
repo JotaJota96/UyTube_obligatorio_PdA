@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DtListaDeReproduccionHistorial extends DtListaDeReproduccion {
 
-    ArrayList<DtRegistroHistorial> registros;
+    ArrayList<DtRegistroHistorial> registros = new ArrayList();
 
     //*********************************************************************
     public DtListaDeReproduccionHistorial() {
