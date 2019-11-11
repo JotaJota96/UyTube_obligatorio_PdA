@@ -141,7 +141,7 @@ public class Funciones {
         System.out.println("///////////////////////////////////");
     }
     
-    private boolean esUnDispositivoMovil(HttpServletRequest request){
+    public static boolean esUnDispositivoMovil(HttpServletRequest request){
         /**
          * El plan B en caso de que esta funcion no funcione (osea, que sea una
          * disfuncion) es utilizar esta clase: 
@@ -185,6 +185,17 @@ public class Funciones {
         return false;
     }
     
+    public static boolean isNumeric(String cadena) {
+        boolean resultado;
+        try {
+            Integer.parseInt(cadena);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+        return resultado;
+    }
+
     public static String darFormatoFecha(Fecha f){
         int anio = f.getAnio();
         int mes = f.getMes();
