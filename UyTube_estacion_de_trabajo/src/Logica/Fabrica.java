@@ -62,7 +62,7 @@ public class Fabrica {
      */
     public String publicarWebService() throws Exception {
         // url en la cual se publicara el Web Service
-        String url = "http://localhost:9789/UyTube_ws";
+        String url = Configuracion.Configuracion.getValue("rutaPublicacionWebService");
         // publica en la URL la instancia de IUsuario obtenida
         Endpoint.publish(url, this.getIUsuario());
         return url;
