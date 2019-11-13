@@ -155,7 +155,7 @@
                                                 <span id="txtDisLike" class="badge badge-light"><%= video.getCantDisLikes()%></span>
                                             </button>
                                         </div>
-
+                                        
                                         <!-- Boton agregar a lista de reproduccion -->
                                         <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">                                            
                                             <button data-toggle="modal" type="button" id="btnAgregarALista" data-target="#ventanaModalAgregarALista" class="btn btn-info icon-add-to-list">
@@ -180,11 +180,18 @@
                                         <%
                                             }
                                         %>
-
+                                        
                                     </div>
                                     <%
                                         }
                                     %>
+
+                                    <!-- Boton compartir -->
+                                    <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">                                            
+                                        <button data-toggle="modal" type="button" id="btnCompartir" data-target="#ventanaModalCompartir" class="btn btn-info icon-share1">
+                                            COMPARTIR
+                                        </button>
+                                    </div>
 
                                     <br><hr class="mb-2"><br>
 
@@ -296,6 +303,36 @@
             </div>
         </div>
 
+        <!-- ventanaModalCompartir -->
+        <div class="modal fade" id="ventanaModalCompartir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Compartir</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Copia el siguiente enlace y compartelo con tus amigos
+                    </div>
+                    <div class="modal-body">
+                        <%
+                            String urlAcortada = Funciones.Funciones.getEnVEntry("urlAcortadaVideo");
+                            urlAcortada += video.getId();
+                        %>
+                        <%= urlAcortada %>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        
         <!-- Tabla emergente de valoraciones -->
         <%
             if (propietarioDelVideo) {
