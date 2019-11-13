@@ -41,7 +41,7 @@ public class IniciarSesion extends HttpServlet {
             CUsuario sys = servicio.getCUsuarioPort();
             
             if (sys.sesionIniciada()){
-                response.sendRedirect("");
+                response.sendRedirect("presentacion");
                 return;
             }
             
@@ -114,7 +114,7 @@ public class IniciarSesion extends HttpServlet {
                 //si coincide usuario y password y además no hay sesión iniciada
                 sesion.setMaxInactiveInterval(14400);
                 sesion.setAttribute("usuario", usuario);
-
+                sesion.setAttribute("sys", sys);
                 //redirijo a página con información de login exitoso
                 rd = request.getRequestDispatcher("/");
             } else {
