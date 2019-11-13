@@ -8,6 +8,6 @@
 <!DOCTYPE html>
 <html lang="es">
     <body>
-         <% response.sendRedirect("presentacion"); %>
+         <% response.sendRedirect("inicio-sesion"); %>
     </body>
 </html>
