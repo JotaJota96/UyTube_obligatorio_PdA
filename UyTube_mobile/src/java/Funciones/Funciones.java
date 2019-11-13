@@ -226,4 +226,17 @@ public class Funciones {
         
         return strHoras + ":" + strMinutos + ":" + strSegundos;
     }
+    
+    public static String getEnVEntry(String clave) {
+        // https://stackoverflow.com/questions/4195688/how-can-i-read-context-parameter-web-xml-values-in-a-non-servlet-java-file
+        try {
+            // Get the base naming context
+            javax.naming.Context env = (javax.naming.Context) new javax.naming.InitialContext().lookup("java:comp/env");
+            // Get a single value
+            return (String) env.lookup(clave);
+        } catch (javax.naming.NamingException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+    
 }

@@ -5,7 +5,7 @@
     <env-entry> 
         <env-entry-name>rutaPublicacionWebService</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>http://localhost:9789/UyTube_ws2?wsdl</env-entry-value> 
+        <env-entry-value>http://localhost:9789/UyTube_ws?wsdl</env-entry-value> 
     </env-entry>
     <env-entry> 
         <!-- URL de este servidor -->

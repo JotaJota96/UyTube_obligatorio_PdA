@@ -27,7 +27,7 @@ public class FiltroVideo implements Filter {
     private static final boolean debug = true;
 
     // Declaro como constante el patron de este filtro
-    private final String patronFiltroURL = "/v/";
+    private final String patronFiltroURL = Funciones.Funciones.getEnVEntry("patronURLFiltroVideo");
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
