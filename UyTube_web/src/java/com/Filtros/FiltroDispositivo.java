@@ -28,8 +28,8 @@ public class FiltroDispositivo implements Filter {
     private static final boolean debug = true;
 
     private final boolean esteEsElServidorMobile = false;
-    private final String urlDeEsteServidor = "/uytube/";
-    private final String urlDelOtroServidor = "/uytube-mobile/";
+    private final String urlDeEsteServidor = Funciones.Funciones.getEnVEntry("urlDeEsteServidor");
+    private final String urlDelOtroServidor = Funciones.Funciones.getEnVEntry("urlDelOtroServidor");
     
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently

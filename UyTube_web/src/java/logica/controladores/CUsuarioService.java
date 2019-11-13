@@ -30,7 +30,8 @@ public class CUsuarioService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:9789/UyTube_ws?wsdl");
+            String wsdl_path = Funciones.Funciones.getEnVEntry("rutaPublicacionWebService");
+            url = new URL(wsdl_path);
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
