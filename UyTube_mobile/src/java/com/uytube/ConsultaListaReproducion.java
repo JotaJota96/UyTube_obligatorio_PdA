@@ -40,6 +40,11 @@ public class ConsultaListaReproducion extends HttpServlet {
             CUsuarioService servicio = new CUsuarioService();
             CUsuario sys = servicio.getCUsuarioPort();
             
+            if (!sys.sesionIniciada()){
+                response.sendRedirect("inicio-sesion");
+                return;
+            }
+            
             boolean sesionIniciada = sys.sesionIniciada();
             String lista = request.getParameter("id");
             int idLista = Integer.parseInt(lista);

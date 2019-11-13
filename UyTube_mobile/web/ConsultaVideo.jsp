@@ -59,12 +59,9 @@
                     %>
                     <jsp:include page="include/menu-usuario.jsp" />
                     <%
-                    } else {
+                    } 
                     %>
-                    <jsp:include page="include/menu-visitante.jsp" />
-                    <%
-                        }
-                    %>
+                    
                 </div>
             </div>		
         </div>

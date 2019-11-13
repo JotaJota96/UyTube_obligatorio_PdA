@@ -14,7 +14,7 @@
          <% 
             CUsuarioService servicio = new CUsuarioService();
             CUsuario sys = servicio.getCUsuarioPort();
-           
+         
             if (sys.sesionIniciada()){
                 response.sendRedirect("presentacion");
                 return;

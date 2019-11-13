@@ -58,12 +58,9 @@
                             if (sesionIniciada) {
                         %>
                         <jsp:include page="include/menu-usuario.jsp" />
-                        <%                        } else {
+                        <%                        } 
                         %>
-                        <jsp:include page="include/menu-visitante.jsp" />
-                        <%
-                            }
-                        %>
+                        
 
                         <div class="contenido">
                             <section class="contenido-flexible">

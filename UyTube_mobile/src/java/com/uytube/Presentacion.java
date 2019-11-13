@@ -42,6 +42,11 @@ public class Presentacion extends HttpServlet {
             CUsuarioService servicio = new CUsuarioService();
             CUsuario sys = servicio.getCUsuarioPort();
             
+            if (!sys.sesionIniciada()){
+                response.sendRedirect("inicio-sesion");
+                return;
+            }
+            
             boolean sesionIniciada = sys.sesionIniciada();
             ArrayList<Object> videos = (ArrayList<Object>) sys.buscar("", Filtrado.VIDEOS, Ordenacion.FECHA_DESCENDENTE);
 

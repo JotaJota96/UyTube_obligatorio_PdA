@@ -46,12 +46,9 @@
                     %>
                      <jsp:include page="include/header-usuario.jsp" />
                     <%
-                        } else {
-                    %>
-                    <jsp:include page="include/header-visitante.jsp" />
-                    <%
                         }
                     %>
+                    
                 </div>
             </div>		
         </div>
@@ -73,12 +70,9 @@
                         %>
                         <jsp:include page="include/menu-usuario.jsp" />
                         <%
-                        } else {
+                        } 
                         %>
-                        <jsp:include page="include/menu-visitante.jsp" />
-                        <%
-                            }
-                        %>
+                        
 
                         <div class="contenido">
                             <section class="contenido-flexible">								
@@ -150,32 +144,6 @@
                                             </div>
                                         </div>
                                         <br>
-                                        <%
-                                                }else if (o instanceof DtCanal){
-                                                    DtCanal e = (DtCanal) o;
-                                                    // buena suerte entendiendo esto...
-                                                    DtUsuario usu = sys.obtenerPropietarioDeCanal(e.getId());
-                                        %>
-                                        <div class="canal bd-highlight">
-                                            <div class="bd-highlight caja-imagen">
-                                                <div class="bd-highlight">
-                                                    <a href="usuario-consultar?id=<%= usu.getNickname() %>">
-                                                       <img src="usuario-imagen?id=<%= usu.getNickname() %>" class="align-self-center rounded-circle" alt="Cinque Terre" >
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="bd-highlight caja-texto">
-                                                <div class="overflow-auto bg-light">
-                                                    <h5 class="mt-0">
-                                                        <a href="usuario-consultar?id=<%= usu.getNickname() %>">
-                                                            <%= e.getNombre() %>
-                                                        </a>
-                                                    </h5>
-                                                    <p><%= e.getDescripcion() %></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br> 
                                         <%
                                                 }
                                             }

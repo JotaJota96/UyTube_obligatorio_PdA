@@ -46,7 +46,7 @@ public class CerrarSesion extends HttpServlet {
             if (sys.sesionIniciada()) {
                 sys.cerrarSesion();
             }
-            response.sendRedirect("presentacion");
+            response.sendRedirect("inicio-sesion");
         } catch (Exception e) {
             Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar

@@ -39,6 +39,11 @@ public class ConsultaVideo extends HttpServlet {
             CUsuarioService servicio = new CUsuarioService();
             CUsuario sys = servicio.getCUsuarioPort();
             
+            if (!sys.sesionIniciada()){
+                response.sendRedirect("inicio-sesion");
+                return;
+            }
+            
             String strIDVideo = request.getParameter("id");
             int idVideo = Integer.valueOf(strIDVideo);
             
