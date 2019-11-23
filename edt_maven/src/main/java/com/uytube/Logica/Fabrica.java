@@ -12,14 +12,7 @@ import javax.xml.ws.Endpoint;
 
 /* Clase Singleton */
 public class Fabrica {
-    public static void main(String[] args) {
-        try {
-            getInstancia().publicarWebService();
-            System.out.println("Servicio OK");
-        } catch (Exception ex) {
-            Logger.getLogger(Fabrica.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    private static Endpoint wsEndpoint = null;
     private static Fabrica instancia = null;
 
     private Fabrica() {
@@ -65,8 +58,20 @@ public class Fabrica {
         // url en la cual se publicara el Web Service
         String url = Configuracion.getValue("rutaPublicacionWebService");
         // publica en la URL la instancia de IUsuario obtenida
-        Endpoint.publish(url, this.getIUsuario());
+        wsEndpoint = Endpoint.publish(url, this.getIUsuario());
         return url;
+    }
+    
+    public void desPublicarWebService(){
+        if (WebServiceIsON()){
+            ((CUsuario) this.getIUsuario()).reset();
+            wsEndpoint.stop();
+            wsEndpoint = null;
+        }
+    }
+    
+    public boolean WebServiceIsON(){
+        return (wsEndpoint != null && wsEndpoint.isPublished());
     }
 
 }

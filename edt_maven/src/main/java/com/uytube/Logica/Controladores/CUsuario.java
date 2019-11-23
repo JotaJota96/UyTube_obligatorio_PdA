@@ -56,6 +56,12 @@ public class CUsuario implements IUsuario {
         }
         return instancia;
     }
+    public void reset(){
+        this.usuarioActual = null;
+        this.usuarioSeleccionado = null;
+        this.idListaSeleccionada = 0;
+        this.idVideoSeleccionado = 0;
+    }
   
     //***************** Traer datos de la base de datos *******************
     /**

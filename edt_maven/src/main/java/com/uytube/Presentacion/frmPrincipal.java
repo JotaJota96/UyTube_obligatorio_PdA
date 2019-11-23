@@ -94,6 +94,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         mitListarCategorias = new javax.swing.JMenuItem();
         menuAbout = new javax.swing.JMenu();
         mitAcercaDeNos = new javax.swing.JMenuItem();
+        menuWebService = new javax.swing.JMenu();
+        mitWebService = new javax.swing.JMenuItem();
 
         jMenuItem14.setText("jMenuItem14");
 
@@ -376,6 +378,20 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         barraDeMenu.add(menuAbout);
 
+        menuWebService.setText("Web Service");
+        menuWebService.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        mitWebService.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mitWebService.setText("Web Service");
+        mitWebService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitWebServiceActionPerformed(evt);
+            }
+        });
+        menuWebService.add(mitWebService);
+
+        barraDeMenu.add(menuWebService);
+
         setJMenuBar(barraDeMenu);
 
         pack();
@@ -450,7 +466,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void mitListarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitListarUsuariosActionPerformed
         //Usuario->listar usuario
-        new frmListarUsuarios(this, true).setVisible(true);
+        new frmWebService(this, true).setVisible(true);
     }//GEN-LAST:event_mitListarUsuariosActionPerformed
 
     private void mitSeguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitSeguirUsuarioActionPerformed
@@ -547,6 +563,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         new frmConsultaUsuarioEliminado(this, true).setVisible(true);
     }//GEN-LAST:event_mitConsultaUsuarioEliminadoActionPerformed
 
+    private void mitWebServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitWebServiceActionPerformed
+        // Web Service -> Web Service
+        new frmWebService(this, true).setVisible(true);
+    }//GEN-LAST:event_mitWebServiceActionPerformed
+
     
     private void activarBarraDeMenu(boolean b){
         menuUsuario.setEnabled(b);
@@ -560,6 +581,7 @@ public class frmPrincipal extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         // Publicacion del Web Service
+        /*
         try {
             String url = Fabrica.getInstancia().publicarWebService();
             System.out.println("Se ha publicado el Web Service en la siguiente URL:");
@@ -571,7 +593,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             System.out.println(e.getMessage());
             System.err.println("------------------------------------------");
         }
-        
+        */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Metal".equals(info.getName())) {
@@ -626,6 +648,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuSesion;
     private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenu menuVideo;
+    private javax.swing.JMenu menuWebService;
     private javax.swing.JMenuItem mitAcercaDeNos;
     private javax.swing.JMenuItem mitAgregarVideoAListaDeReproduccion;
     private javax.swing.JMenuItem mitCerrarSesion;
@@ -650,6 +673,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mitSeguirUsuario;
     private javax.swing.JMenuItem mitSeguirUsuario1;
     private javax.swing.JMenuItem mitValorarVideo;
+    private javax.swing.JMenuItem mitWebService;
     private javax.swing.JDesktopPane pnlFondo;
     public static javax.swing.ButtonGroup privacidad_NuevaLR;
     public static javax.swing.ButtonGroup privacidad_modListaR;
