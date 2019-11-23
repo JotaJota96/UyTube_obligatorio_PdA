@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -13,6 +14,9 @@ import sun.awt.image.ByteArrayImageSource;
 import sun.awt.image.ToolkitImage;
 
 public class FuncionesImagenes {
+    
+    private static final FuncionesImagenes INSTANCE = new FuncionesImagenes();
+    private FuncionesImagenes(){}
     
     public static byte[] pathToByteArray(String ruta) {
         try {
@@ -96,9 +100,9 @@ public class FuncionesImagenes {
     
     public static void cargarImagenPorDefectoEnJlabel(javax.swing.JLabel jLabelx) {
         jLabelx.setText(null);
-        String Ruta = "Imagenes\\ukp.png";
+        URL path = INSTANCE.getClass().getClassLoader().getResource("ukp.png");
         // Carga la imagen a la variable de tipo Image
-        Image img = new ImageIcon(Ruta).getImage();
+        Image img = new ImageIcon(path).getImage();
         // Crea un ImageIcon a partir de la imagen (obtiene las dimenciones del jLbel y escala la imagen para que entre en el mismo)
         ImageIcon icono = new ImageIcon(
                 img.getScaledInstance(jLabelx.getWidth(), jLabelx.getHeight(), Image.SCALE_SMOOTH)

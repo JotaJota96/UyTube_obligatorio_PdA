@@ -957,7 +957,7 @@ public class CUsuario implements IUsuario {
     @Override
     public DtImagenUsuario obtenerImagenDeUsuarioPorDefecto() {
         try {
-            InputStream in = getClass().getResourceAsStream("/imagenes/ukp.png");
+            InputStream in = getClass().getResourceAsStream("/ukp.png");
             //File f = new File(getClass().getResource("/imagenes/ukp.png").getFile());
             //File f = new File(connection.getJarFileURL().toURI()); //asociamos el archivo fisico
             //InputStream is = new FileInputStream(f); //lo abrimos. Lo importante es que sea un InputStream

@@ -19,6 +19,7 @@ import com.uytube.Logica.Clases.ListaPorDefecto;
 import com.uytube.Logica.DatosDePrueba;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 // Colecciones
 import java.util.Map;
 import java.util.TreeMap;
@@ -1054,7 +1055,8 @@ public class CAdmin implements IAdmin{
     @Override
     public DtImagenUsuario obtenerImagenDeUsuarioPorDefecto() {
         try {
-            InputStream in = getClass().getResourceAsStream("/imagenes/ukp.png");
+            InputStream in = getClass().getResourceAsStream("/ukp.png");
+            System.out.println("in: " + in);
             //File f = new File(getClass().getResource("/imagenes/ukp.png").getFile());
             //File f = new File(connection.getJarFileURL().toURI()); //asociamos el archivo fisico
             //InputStream is = new FileInputStream(f); //lo abrimos. Lo importante es que sea un InputStream

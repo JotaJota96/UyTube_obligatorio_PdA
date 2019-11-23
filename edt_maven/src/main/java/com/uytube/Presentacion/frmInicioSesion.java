@@ -4,6 +4,7 @@ import com.uytube.Logica.Fabrica;
 import com.uytube.Logica.Interfaces.IAdmin;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -23,7 +24,8 @@ public class frmInicioSesion extends javax.swing.JDialog {
         
         // Coloca la imagen del login
         lbImagen.setText(null);
-        Image img = new ImageIcon("Imagenes/ukp.png").getImage();
+        URL path = this.getClass().getClassLoader().getResource("ukp.png");
+        Image img = new ImageIcon(path).getImage();
         ImageIcon img2 = new ImageIcon(img.getScaledInstance(lbImagen.getWidth(), lbImagen.getHeight(), Image.SCALE_SMOOTH));
         lbImagen.setIcon(img2);
         

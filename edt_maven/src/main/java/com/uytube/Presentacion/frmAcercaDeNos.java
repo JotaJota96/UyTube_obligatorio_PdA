@@ -1,5 +1,6 @@
 package com.uytube.Presentacion;
 import java.awt.Image;
+import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class frmAcercaDeNos extends javax.swing.JDialog {
@@ -10,8 +11,8 @@ public class frmAcercaDeNos extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         
-        lbImagen.setText(null);
-        Image img7 = new ImageIcon("Imagenes/about.png").getImage();
+        URL path = this.getClass().getClassLoader().getResource("about.png");
+        Image img7 = new ImageIcon(path).getImage();
         ImageIcon img8 = new ImageIcon(img7.getScaledInstance(lbImagen.getWidth(), lbImagen.getHeight(), Image.SCALE_SMOOTH));
         lbImagen.setIcon(img8);
     }

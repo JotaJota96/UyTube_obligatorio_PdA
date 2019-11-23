@@ -30,7 +30,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         // originalmente se usaba la siguiente linea: 
         //Image img3 = new ImageIcon("Imagenes/des.jpeg").getImage();
         // Pero para cargar la imagen que esta en el .jar se usa esta:
-        URL path = this.getClass().getClassLoader().getResource("Imagenes/des.jpeg");
+        URL path = this.getClass().getClassLoader().getResource("des.jpeg");
         Image img3 = new ImageIcon(path).getImage();
         ImageIcon img4 = new ImageIcon(img3.getScaledInstance(lbFondo.getWidth(), lbFondo.getHeight(), Image.SCALE_SMOOTH));
         lbFondo.setIcon(img4);
@@ -42,7 +42,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     public Image getTconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Imagenes/icono.jpg"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icono.jpg"));
         return retValue;
     }
 
