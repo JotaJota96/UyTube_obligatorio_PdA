@@ -1,8 +1,5 @@
 package com.uytube.Presentacion;
 
-import com.uytube.Logica.DataType.DtUsuario;
-import com.uytube.Logica.DataType.DtImagenUsuario;
-import com.uytube.Logica.Fabrica;
 import com.uytube.Presentacion.Categoria.*;
 import com.uytube.Presentacion.ListaDeReproduccion.*;
 import com.uytube.Presentacion.Usuario.*;
@@ -92,10 +89,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         mitNuevaCategoria = new javax.swing.JMenuItem();
         mitConsultarCategoria = new javax.swing.JMenuItem();
         mitListarCategorias = new javax.swing.JMenuItem();
-        menuAbout = new javax.swing.JMenu();
-        mitAcercaDeNos = new javax.swing.JMenuItem();
         menuWebService = new javax.swing.JMenu();
         mitWebService = new javax.swing.JMenuItem();
+        menuAbout = new javax.swing.JMenu();
+        mitAcercaDeNos = new javax.swing.JMenuItem();
 
         jMenuItem14.setText("jMenuItem14");
 
@@ -364,20 +361,6 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         barraDeMenu.add(menuCategoria);
 
-        menuAbout.setText("About");
-        menuAbout.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
-        mitAcercaDeNos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mitAcercaDeNos.setText("Acerca de nos");
-        mitAcercaDeNos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mitAcercaDeNosActionPerformed(evt);
-            }
-        });
-        menuAbout.add(mitAcercaDeNos);
-
-        barraDeMenu.add(menuAbout);
-
         menuWebService.setText("Web Service");
         menuWebService.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
@@ -391,6 +374,20 @@ public class frmPrincipal extends javax.swing.JFrame {
         menuWebService.add(mitWebService);
 
         barraDeMenu.add(menuWebService);
+
+        menuAbout.setText("About");
+        menuAbout.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        mitAcercaDeNos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mitAcercaDeNos.setText("Acerca de nos");
+        mitAcercaDeNos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitAcercaDeNosActionPerformed(evt);
+            }
+        });
+        menuAbout.add(mitAcercaDeNos);
+
+        barraDeMenu.add(menuAbout);
 
         setJMenuBar(barraDeMenu);
 

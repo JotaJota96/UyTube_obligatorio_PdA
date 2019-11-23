@@ -4,16 +4,15 @@
  * and open the template in the editor.
  */
 package com.uytube.Presentacion;
-import java.util.ArrayList;
-import com.uytube.Logica.DataType.DtUsuario;
 import com.uytube.Logica.Fabrica;
-import com.uytube.Logica.Interfaces.IAdmin;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 public class frmWebService extends javax.swing.JDialog {
     
     Fabrica f;
+    java.awt.Color colorBotonRojo = new java.awt.Color(255, 23, 23);
+    java.awt.Color colorBotonVerde = new java.awt.Color(0, 180, 0);
+    
     public frmWebService(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -22,16 +21,19 @@ public class frmWebService extends javax.swing.JDialog {
         actualizarInformacion();
     }
 
-    
     private void actualizarInformacion(){
         String textoBoton, textoInfo;
+        java.awt.Color color;
         if (f.WebServiceIsON()){
             textoInfo = "El Web Service se encuentra en ejecución";
             textoBoton = "Detener";
+            color = colorBotonRojo;
         }else{
             textoInfo = "El Web Service se encuentra detenido";
             textoBoton = "Iniciar";
+            color = colorBotonVerde;
         }
+        btnAccion.setBackground(color);
         btnAccion.setEnabled(true);
         btnAccion.setText(textoBoton);
         lbInfo.setText(textoInfo);
