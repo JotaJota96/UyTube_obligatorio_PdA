@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-@WebService(endpointInterface = "Logica.Controladores.CUsuario")
+@WebService(endpointInterface = "com.uytube.Logica.Controladores.CUsuario")
 public class CUsuario implements IUsuario {
     private static CUsuario instancia = null;
     private Usuario usuarioActual;

@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class Configuracion {
 
-    private static final String NOMBRE_ARCHIVO = "src/Configuracion/configuracion.properties";
+    private static final String NOMBRE_ARCHIVO = "configuracion.properties";
     
     public static String getValue(String clave) {
         Exception ex = null;
@@ -46,7 +46,7 @@ public class Configuracion {
             contenido += "rutaPublicacionWebService: Ruta en la cual se publicara el Web Service\n";
             
             // Agrego las propiedades a guardar
-            propiedades.setProperty("rutaPublicacionWebService", "http://192.168.1.7:9789/UyTube_ws");
+            propiedades.setProperty("rutaPublicacionWebService", "http://localhost:9789/UyTube_ws");
             
             // creo un flujo de salida mediante el cual se escribiran los datos
             FileOutputStream out = new FileOutputStream(NOMBRE_ARCHIVO);

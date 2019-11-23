@@ -561,7 +561,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     public static void main(String args[]) {
         // Publicacion del Web Service
         try {
-            String url = "";//Fabrica.getInstancia().publicarWebService();
+            String url = Fabrica.getInstancia().publicarWebService();
             System.out.println("Se ha publicado el Web Service en la siguiente URL:");
             System.out.println(url);
             System.out.println("El WSDL se encuentra disponible en:");

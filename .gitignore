@@ -10,3 +10,4 @@ nbdist/
 UyTube_aplicacion/.jacocoverage/*
 UyTube_aplicacion/jacoco.exec*
 /edt_maven/target/
+edt_maven/configuracion.properties
