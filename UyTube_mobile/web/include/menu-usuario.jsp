@@ -1,3 +1,4 @@
+<%@page import="logica.controladores.DtListaDeReproduccion"%>
 <%@page import="logica.controladores.CUsuarioService"%>
 <%@page import="logica.controladores.CUsuario"%>
 <%@page import="java.util.ArrayList"%>

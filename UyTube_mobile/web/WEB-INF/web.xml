@@ -2,34 +2,34 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <!-- //////////////////////////////////////////////////////////////// -->
     <!-- Variables de entorno del servidor -->
-    <env-entry> 
+    <env-entry>
         <env-entry-name>rutaPublicacionWebService</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>http://localhost:9789/UyTube_ws?wsdl</env-entry-value> 
+        <env-entry-value>http://localhost:9789/UyTube_ws?wsdl</env-entry-value>
     </env-entry>
-    <env-entry> 
+    <env-entry>
         <!-- URL de este servidor -->
         <env-entry-name>urlDeEsteServidor</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>/uytube-mobile/</env-entry-value> 
+        <env-entry-value>/uytube-mobile/</env-entry-value>
     </env-entry>
-    <env-entry> 
+    <env-entry>
         <!-- URL del servidor al cual se debe redireccionar segun tipo de dispositivo -->
         <env-entry-name>urlDelOtroServidor</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>/uytube/</env-entry-value> 
+        <env-entry-value>/uytube/</env-entry-value>
     </env-entry>
-    <env-entry> 
+    <env-entry>
         <!-- Patron de filtrado de las URL acortadas para compartir video -->
         <env-entry-name>patronURLFiltroVideo</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>/v/</env-entry-value> 
+        <env-entry-value>/v/</env-entry-value>
     </env-entry>
-    <env-entry> 
+    <env-entry>
         <!-- Patron de filtrado de las URL acortadas para compartir video -->
         <env-entry-name>urlAcortadaVideo</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>http://localhost:8084/uytube/v/</env-entry-value> 
+        <env-entry-value>http://localhost:8084/uytube/v/</env-entry-value>
     </env-entry>
     <!-- Fin de variables de entorno del servidor -->
     <!-- //////////////////////////////////////////////////////////////// -->
@@ -74,26 +74,6 @@
         <servlet-class>com.uytube.PeticionAjax</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AgregarVideoAListaReproduccion</servlet-name>
-        <servlet-class>com.uytube.AgregarVideoAListaReproduccion</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>QuitarVideoDeListaReproduccion</servlet-name>
-        <servlet-class>com.uytube.QuitarVideoDeListaReproduccion</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AgregarValoracion</servlet-name>
-        <servlet-class>com.uytube.AgregarValoracion</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AgregarComentario</servlet-name>
-        <servlet-class>com.uytube.AgregarComentario</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ListarCategoria</servlet-name>
-        <servlet-class>com.uytube.ListarCategoria</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Buscar</servlet-name>
         <servlet-class>com.uytube.Buscar</servlet-class>
     </servlet>
@@ -120,26 +100,6 @@
     <servlet-mapping>
         <servlet-name>PeticionAjax</servlet-name>
         <url-pattern>/consultar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AgregarVideoAListaReproduccion</servlet-name>
-        <url-pattern>/lista-agregar-video</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>QuitarVideoDeListaReproduccion</servlet-name>
-        <url-pattern>/lista-quitar-video</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AgregarValoracion</servlet-name>
-        <url-pattern>/video-agregar-valoracion</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AgregarComentario</servlet-name>
-        <url-pattern>/video-agregar-comentario</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ListarCategoria</servlet-name>
-        <url-pattern>/categoria-listar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Buscar</servlet-name>

@@ -202,85 +202,6 @@ public class ConsultaVideo extends HttpServlet {
                     break;
                     */
                 }
-                // ---- Acciones relacionadas a COMENTAR VIDEO ----
-                case "comentarVideo":
-                case "responderComentario": {
-                    // Se extraen los datos recibidos
-                    String texto = request.getParameter("texto");
-                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
-                    int idComentario = -1;
-                    if (request.getParameter("idComentario") != null) {
-                        idComentario = Integer.valueOf(request.getParameter("idComentario"));
-                    }       // se seleccionan el usuario due;o del video y el video (por las dudas)
-                    DtUsuario usuarioDuenioDelVideo = sys.obtenerPropietarioDeVideo(idVideo);
-                    sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
-                    sys.seleccionarVideo(idVideo);
-                    // Crea el DT y lo manda al sistema
-                    DtComentario dtc = new DtComentario();
-                    dtc.setId(0);
-                    dtc.setNickname("");
-                    Fecha f = new Fecha();
-                    f.setAnio(Funciones.fechaActual().getYear() +1900);
-                    f.setDia(Funciones.fechaActual().getDate());
-                    f.setMes(Funciones.fechaActual().getMonth() +1);
-                    dtc.setFecha(f);
-                    dtc.setTexto(texto);
-                    dtc.setNivelSubComentario(0);
-                    
-                    if (idComentario <= 0) {
-                        sys.altaComentario(dtc);
-                    } else {
-                        sys.altaSubComentario(dtc, idComentario);
-                    }       // se obtienen los comentarios y se genera el HTML para actualizar la p'pagina
-                    ArrayList<DtComentario> comentarios = (ArrayList<DtComentario>) sys.listarComentariosDeVideo();
-                    String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, true);
-                    // la funcion 'obtenerImagenesDeUsuarios' selecciona usuarios asi que por las dudas lo vuelvo a seleccionar para que la logica quede coherente
-                    sys.seleccionarUsuario(usuarioDuenioDelVideo.getNickname());
-                    respuesta = htmlComentarios;
-                    response.getWriter().write(respuesta);
-                    break;
-                }
-                // ---- Acciones relacionadas a AGREGAR VIDEO A LISTA DE REPRODUCCION----
-                case "agregarALista":{
-                    
-                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
-                    int idLista = Integer.valueOf(request.getParameter("idLista"));
-                    
-                    sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
-                    sys.seleccionarVideo(idVideo);
-                    sys.agregarVideoAListaDeReproduccion(idLista);
-                     
-                    
-                    respuesta = "ok";
-                    response.getWriter().write(respuesta);
-                    break;
-                }
-                case "quitarDeLista":{
-                    
-                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
-                    int idLista = Integer.valueOf(request.getParameter("idLista"));
-                    
-                    sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
-                    sys.seleccionarListaDeReproduccion(idLista);
-                    sys.quitarVideoDeListaDeReproduccion(idVideo);
-                    sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
-                    
-                    respuesta = "ok";
-                    response.getWriter().write(respuesta);
-                    break;
-                }
-                    
-                case "listarValoraciones":{
-                    int idVideo = Integer.valueOf(request.getParameter("idVideo"));
-                    respuesta = "";
-                    sys.seleccionarVideo(idVideo);
-                    ArrayList<DtValoracion> valoraciones = (ArrayList<DtValoracion>) sys.obtenerValoracionesDeVideo();
-                    for (DtValoracion val : valoraciones){
-                        respuesta += val.getNickname() + ":" + val.getVal() + ";";
-                    }
-                    response.getWriter().write(respuesta);
-                    break;
-                }
                 default:
                     break;
             }
@@ -318,9 +239,7 @@ public class ConsultaVideo extends HttpServlet {
         ret += "        <img class=\"mr-3\" src=\"" + imgPerfil + "\" width=\"50\" height=\"50\">";
         ret += "        <div class=\"media-body\">";
         ret += "            <h5 class=\"mt-0\">";
-        ret += "                <a href=\"usuario-consultar?id=" + c.getNickname() + "\">";
-        ret += "                   " + c.getNickname();
-        ret += "                </a>";
+        ret += "               " + c.getNickname();
         ret += "            </h5>";
         ret += "            " + c.getTexto() + " (" + strFecha + ")";
         ret += "            <br>";
@@ -337,19 +256,13 @@ public class ConsultaVideo extends HttpServlet {
         <img class="mr-3" src="IMAGEN DE PERFIL" width="50" height="50">
         <div class="media-body">
             <h5 class="mt-0">
-                <a href="usuario-consulta?id=NICKNAME DEL USUARIO">
-                    NICKNAME DEL USUARIO
-                </a>
+                NICKNAME DEL USUARIO
             </h5>
             TEXTO DEL COMENTARIO (dd/mm/yyyy)
-            <br>
-            <button type="button" onmouseover="idComentario = this.getAttribute('value');" value="ID DE COMENTARIO" class="btn btn-primary responder" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Responder</button>
             <br>
             // RESPUESTAS DEL COMENTARIO
         </div>
     </div>
     */
-    
-    
     
 }

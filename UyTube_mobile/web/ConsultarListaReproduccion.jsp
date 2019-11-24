@@ -4,6 +4,7 @@
     Author     : administrador
 --%>
 
+<%@page import="logica.controladores.DtRegistroHistorial"%>
 <%@page import="logica.controladores.DtListaDeReproduccionHistorial"%>
 <%@page import="logica.controladores.TipoListaDeReproduccion"%>
 <%@page import="logica.controladores.DtVideo"%>
@@ -96,17 +97,6 @@
                                             <h5><%= listasRep.getPrivacidad()%></h5>
                                             <h5><%= listasRep.getCategoria()%></h5> 
                                         </div>
-                                        <%
-                                            if (sesionIniciada && propietario && listasRep.getTipo() != TipoListaDeReproduccion.POR_DEFECTO) {
-                                        %>
-                                        <div class="p-2 d-flex align-items-end">
-                                            <a href="lista-modificar?idUsu=<%= usuario%>&idList=<%= listasRep.getId()%>">
-                                                <button type="button" class="btn btn-primary">MODIFICAR</button>
-                                            </a>
-                                        </div>
-                                        <%
-                                            }
-                                        %>
                                     </div>
 
                                     <!--FIN INFORMACION LISTA.REP-->

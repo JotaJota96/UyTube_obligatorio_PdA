@@ -33,14 +33,10 @@ and open the template in the editor.
                     </div>
                     <div class="perfil item-header item-header3 flex-row justify-content-lg-space-between">
                         <div class="flex-row justify-content-lg-space-between alig-content-center" id="nombrePerfil">
-                            <a href="usuario-consultar?id=<%= usu.getNickname()%>">
-                                <%= usu.getNickname()%>
-                            </a>
+                            <%= usu.getNickname()%>
                         </div>	
                         <div class="fotoPerfil">
-                            <a href="usuario-consultar?id=<%= usu.getNickname()%>">
-                                <img id="fotoPerfil" src="usuario-imagen?id=<%= usu.getNickname() %>" alt="Perfil">
-                            </a>
+                            <img id="fotoPerfil" src="usuario-imagen?id=<%= usu.getNickname() %>" alt="Perfil">
                         </div>
                     </div>
                 </nav>					
