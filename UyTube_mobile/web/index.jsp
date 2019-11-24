@@ -4,6 +4,7 @@
     Author     : administrador
 --%>
 
+<%@page import="logica.controladores.DtUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,6 +17,11 @@
             CUsuario sys = servicio.getCUsuarioPort();
          
             if (sys.sesionIniciada()){
+/*              HttpSession sesion = request.getSession();
+                DtUsuario usuario = sys.obtenerUsuarioActual();
+                sesion.setMaxInactiveInterval(14400);
+                sesion.setAttribute("usuario", usuario);
+*/
                 response.sendRedirect("presentacion");
                 return;
             }else{

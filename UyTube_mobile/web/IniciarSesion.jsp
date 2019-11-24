@@ -86,7 +86,7 @@
                                             %>
                                             <div class="checkbox mb-3">
                                                 <label>
-                                                    <input type="checkbox" value="remember-me" id="check_recuerdarme"> Recordarme
+                                                    <input type="checkbox" name="recordarme" value="remember-me" id="check_recuerdarme"> Recordarme
                                                 </label>
                                             </div>
                                             <button class="btn btn-lg btn-primary btn-block mb-4" type="submit" id="btn_Ingresar">Ingresar</button>
