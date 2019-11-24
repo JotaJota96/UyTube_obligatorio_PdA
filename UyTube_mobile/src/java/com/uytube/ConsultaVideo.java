@@ -66,6 +66,7 @@ public class ConsultaVideo extends HttpServlet {
                 sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
                 listas = (ArrayList<DtListaDeReproduccion>) sys.listarListasDeReproduccionDeUsuario(true);
                 sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(idVideo).getNickname());
+                sys.agregarVideoAHistorial();
             }
             
             String htmlComentarios = htmlDeSeccionDeComentarios(comentarios, sesionIniciada);
@@ -323,21 +324,11 @@ public class ConsultaVideo extends HttpServlet {
         ret += "            </h5>";
         ret += "            " + c.getTexto() + " (" + strFecha + ")";
         ret += "            <br>";
-        if (mostrarBotonResponder){
-            ret += "            <button type=\"button\" onmouseover=\"idComentario = this.getAttribute('value');\" value=\"" + c.getId() + "\" class=\"btn btn-primary responder\" data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\">Responder</button>";
-        }
-        ret += "            <br>";
-        
-        if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() > c.getNivelSubComentario())){
-                ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
-        }
-        
         ret += "    </div>";
         ret += "</div>";
         
-        if ( (!comentarios.isEmpty()) && (comentarios.get(0).getNivelSubComentario() == c.getNivelSubComentario())){
-                ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
-        }
+        ret += htmlDeSeccionDeComentarios(comentarios, mostrarBotonResponder);
+        
         return ret;
     }
     /*

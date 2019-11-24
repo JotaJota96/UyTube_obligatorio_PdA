@@ -4,6 +4,7 @@
     Author     : administrador
 --%>
 
+<%@page import="logica.controladores.DtListaDeReproduccionHistorial"%>
 <%@page import="logica.controladores.CUsuario"%>
 <%@page import="logica.controladores.CUsuarioService"%>
 <%@page import="logica.controladores.Privacidad"%>
@@ -357,6 +358,10 @@
                             String idLista, nombreList, icono, checked, idCheckbox; 
                             sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
                             for (DtListaDeReproduccion dl : listas) {
+                                if (dl instanceof DtListaDeReproduccionHistorial) {
+                                    continue;
+                                }
+                                
                                 idLista = String.valueOf(dl.getId());
                                 idCheckbox = "checkbox"+idLista;
                                 nombreList = dl.getNombre();

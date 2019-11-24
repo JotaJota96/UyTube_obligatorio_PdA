@@ -41,8 +41,9 @@ public class IniciarSesion extends HttpServlet {
             CUsuario sys = servicio.getCUsuarioPort();
             
             if (sys.sesionIniciada()){
-                response.sendRedirect("");
-                return;
+                throw new RuntimeException("Ups, parece que hay demasiados usuarios conectados");
+                //response.sendRedirect("");
+                //return;
             }
             
             DtUsuario usuario = (DtUsuario) request.getSession().getAttribute("usuario");

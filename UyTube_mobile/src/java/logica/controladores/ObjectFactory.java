@@ -32,6 +32,7 @@ public class ObjectFactory {
     private final static QName _LiberarMemoriaListaDeReproduccion_QNAME = new QName("http://Controladores.Logica/", "liberarMemoriaListaDeReproduccion");
     private final static QName _IniciarSesionUsuario_QNAME = new QName("http://Controladores.Logica/", "iniciarSesionUsuario");
     private final static QName _ListarVideosDeUsuario_QNAME = new QName("http://Controladores.Logica/", "listarVideosDeUsuario");
+    private final static QName _AgregarVideoAHistorialResponse_QNAME = new QName("http://Controladores.Logica/", "agregarVideoAHistorialResponse");
     private final static QName _SesionIniciadaResponse_QNAME = new QName("http://Controladores.Logica/", "sesionIniciadaResponse");
     private final static QName _LiberarMemoriaUsuario_QNAME = new QName("http://Controladores.Logica/", "liberarMemoriaUsuario");
     private final static QName _LiberarMemoriaUsuarioResponse_QNAME = new QName("http://Controladores.Logica/", "liberarMemoriaUsuarioResponse");
@@ -86,6 +87,7 @@ public class ObjectFactory {
     private final static QName _ListarVideosDeUsuarioResponse_QNAME = new QName("http://Controladores.Logica/", "listarVideosDeUsuarioResponse");
     private final static QName _ListarComentariosDeVideo_QNAME = new QName("http://Controladores.Logica/", "listarComentariosDeVideo");
     private final static QName _ListarComentariosDeVideoResponse_QNAME = new QName("http://Controladores.Logica/", "listarComentariosDeVideoResponse");
+    private final static QName _AgregarVideoAHistorial_QNAME = new QName("http://Controladores.Logica/", "agregarVideoAHistorial");
     private final static QName _ObtenerImagenDeUsuario_QNAME = new QName("http://Controladores.Logica/", "obtenerImagenDeUsuario");
     private final static QName _BuscarResponse_QNAME = new QName("http://Controladores.Logica/", "buscarResponse");
     private final static QName _ExisteImagenDeUsuario_QNAME = new QName("http://Controladores.Logica/", "existeImagenDeUsuario");
@@ -100,6 +102,7 @@ public class ObjectFactory {
     private final static QName _AltaSubComentarioResponse_QNAME = new QName("http://Controladores.Logica/", "altaSubComentarioResponse");
     private final static QName _AltaSubComentario_QNAME = new QName("http://Controladores.Logica/", "altaSubComentario");
     private final static QName _ModificarVideo_QNAME = new QName("http://Controladores.Logica/", "modificarVideo");
+    private final static QName _Reset_QNAME = new QName("http://Controladores.Logica/", "reset");
     private final static QName _ObtenerCanalDeUsuarioResponse_QNAME = new QName("http://Controladores.Logica/", "obtenerCanalDeUsuarioResponse");
     private final static QName _QuitarVideoDeListaDeReproduccionResponse_QNAME = new QName("http://Controladores.Logica/", "quitarVideoDeListaDeReproduccionResponse");
     private final static QName _LiberarMemoriaListaDeReproduccionResponse_QNAME = new QName("http://Controladores.Logica/", "liberarMemoriaListaDeReproduccionResponse");
@@ -121,6 +124,7 @@ public class ObjectFactory {
     private final static QName _ObtenerValoracionesDeVideoResponse_QNAME = new QName("http://Controladores.Logica/", "obtenerValoracionesDeVideoResponse");
     private final static QName _EliminarImagenDeUsuarioResponse_QNAME = new QName("http://Controladores.Logica/", "eliminarImagenDeUsuarioResponse");
     private final static QName _LiberarMemoriaVideoResponse_QNAME = new QName("http://Controladores.Logica/", "liberarMemoriaVideoResponse");
+    private final static QName _ResetResponse_QNAME = new QName("http://Controladores.Logica/", "resetResponse");
     private final static QName _BajaUsuarioResponse_QNAME = new QName("http://Controladores.Logica/", "bajaUsuarioResponse");
     private final static QName _ValidarNuevaListaParticular_QNAME = new QName("http://Controladores.Logica/", "validarNuevaListaParticular");
     private final static QName _ExisteNickname_QNAME = new QName("http://Controladores.Logica/", "existeNickname");
@@ -154,6 +158,14 @@ public class ObjectFactory {
      */
     public BajaUsuarioResponse createBajaUsuarioResponse() {
         return new BajaUsuarioResponse();
+    }
+
+    /**
+     * Create an instance of {@link ResetResponse }
+     * 
+     */
+    public ResetResponse createResetResponse() {
+        return new ResetResponse();
     }
 
     /**
@@ -325,6 +337,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Reset }
+     * 
+     */
+    public Reset createReset() {
+        return new Reset();
+    }
+
+    /**
      * Create an instance of {@link ModificarVideo }
      * 
      */
@@ -434,6 +454,14 @@ public class ObjectFactory {
      */
     public ObtenerImagenDeUsuario createObtenerImagenDeUsuario() {
         return new ObtenerImagenDeUsuario();
+    }
+
+    /**
+     * Create an instance of {@link AgregarVideoAHistorial }
+     * 
+     */
+    public AgregarVideoAHistorial createAgregarVideoAHistorial() {
+        return new AgregarVideoAHistorial();
     }
 
     /**
@@ -869,6 +897,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AgregarVideoAHistorialResponse }
+     * 
+     */
+    public AgregarVideoAHistorialResponse createAgregarVideoAHistorialResponse() {
+        return new AgregarVideoAHistorialResponse();
+    }
+
+    /**
      * Create an instance of {@link IniciarSesionUsuario }
      * 
      */
@@ -941,11 +977,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DtRegistroHistorial }
+     * 
+     */
+    public DtRegistroHistorial createDtRegistroHistorial() {
+        return new DtRegistroHistorial();
+    }
+
+    /**
      * Create an instance of {@link DtUsuario }
      * 
      */
     public DtUsuario createDtUsuario() {
         return new DtUsuario();
+    }
+
+    /**
+     * Create an instance of {@link DtListaDeReproduccionHistorial }
+     * 
+     */
+    public DtListaDeReproduccionHistorial createDtListaDeReproduccionHistorial() {
+        return new DtListaDeReproduccionHistorial();
     }
 
     /**
@@ -1074,6 +1126,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "listarVideosDeUsuario")
     public JAXBElement<ListarVideosDeUsuario> createListarVideosDeUsuario(ListarVideosDeUsuario value) {
         return new JAXBElement<ListarVideosDeUsuario>(_ListarVideosDeUsuario_QNAME, ListarVideosDeUsuario.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AgregarVideoAHistorialResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "agregarVideoAHistorialResponse")
+    public JAXBElement<AgregarVideoAHistorialResponse> createAgregarVideoAHistorialResponse(AgregarVideoAHistorialResponse value) {
+        return new JAXBElement<AgregarVideoAHistorialResponse>(_AgregarVideoAHistorialResponse_QNAME, AgregarVideoAHistorialResponse.class, null, value);
     }
 
     /**
@@ -1563,6 +1624,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AgregarVideoAHistorial }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "agregarVideoAHistorial")
+    public JAXBElement<AgregarVideoAHistorial> createAgregarVideoAHistorial(AgregarVideoAHistorial value) {
+        return new JAXBElement<AgregarVideoAHistorial>(_AgregarVideoAHistorial_QNAME, AgregarVideoAHistorial.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerImagenDeUsuario }{@code >}}
      * 
      */
@@ -1686,6 +1756,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "modificarVideo")
     public JAXBElement<ModificarVideo> createModificarVideo(ModificarVideo value) {
         return new JAXBElement<ModificarVideo>(_ModificarVideo_QNAME, ModificarVideo.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Reset }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "reset")
+    public JAXBElement<Reset> createReset(Reset value) {
+        return new JAXBElement<Reset>(_Reset_QNAME, Reset.class, null, value);
     }
 
     /**
@@ -1875,6 +1954,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "liberarMemoriaVideoResponse")
     public JAXBElement<LiberarMemoriaVideoResponse> createLiberarMemoriaVideoResponse(LiberarMemoriaVideoResponse value) {
         return new JAXBElement<LiberarMemoriaVideoResponse>(_LiberarMemoriaVideoResponse_QNAME, LiberarMemoriaVideoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ResetResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://Controladores.Logica/", name = "resetResponse")
+    public JAXBElement<ResetResponse> createResetResponse(ResetResponse value) {
+        return new JAXBElement<ResetResponse>(_ResetResponse_QNAME, ResetResponse.class, null, value);
     }
 
     /**
