@@ -13,7 +13,6 @@
 <%
     ArrayList<String> opcionesFiltro = new ArrayList();
     opcionesFiltro.add("Todo");
-    opcionesFiltro.add("Canales");
     opcionesFiltro.add("Videos");
     opcionesFiltro.add("Listas");
     

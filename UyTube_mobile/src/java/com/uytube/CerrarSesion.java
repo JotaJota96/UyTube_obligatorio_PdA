@@ -8,6 +8,7 @@ package com.uytube;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,13 +41,33 @@ public class CerrarSesion extends HttpServlet {
             // cierra la sesion HTTP (si es que hay una iniciada)
             HttpSession session = request.getSession(false);
             if (session != null) {
+                session.setAttribute("usuario", null);
                 session.invalidate();
             }
             // Cierra la sesion en el sistema (si es que hay una iniciada)
             if (sys.sesionIniciada()) {
                 sys.cerrarSesion();
             }
-            response.sendRedirect("presentacion");
+
+            //obtiene array con todas las Cookies del usuario
+            Cookie[] misCookies = request.getCookies();
+            //Busca las cookies para eliminarlas
+            if (misCookies != null) {
+                // Elimina una por una todas las cookies
+                response.setContentType("text/html");
+                for (Cookie miCooki : misCookies) {
+                    System.out.println("Borrando cookie nombre: " + miCooki.getName() + ", valor: " + miCooki.getValue());
+                    miCooki.setValue("");
+                    miCooki.setMaxAge(0);
+                    miCooki.setPath("/");
+                    response.addCookie(miCooki);
+
+                }
+//                response.flushBuffer();
+//                response.reset();
+            }
+
+            response.sendRedirect("inicio-sesion");
         } catch (Exception e) {
             Funciones.Funciones.showLog(e);
             RequestDispatcher rd; //objeto para despachar

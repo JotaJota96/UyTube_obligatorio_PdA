@@ -39,6 +39,11 @@ public class Buscar extends HttpServlet {
         try {
             CUsuarioService servicio = new CUsuarioService();
             CUsuario sys = servicio.getCUsuarioPort();
+            
+            if (!sys.sesionIniciada()){
+                response.sendRedirect("inicio-sesion");
+                return;
+            }
             //-----------------------------------------------------
             String Categoria = request.getParameter("categoria");
             String Texto = request.getParameter("texto");
@@ -48,12 +53,10 @@ public class Buscar extends HttpServlet {
             ArrayList<Object> Ret = null;
             
             if (Categoria == null || Categoria.equalsIgnoreCase("")) {
-                Filtrado Fil = Filtrado.TODO;
+                Filtrado Fil = Filtrado.VIDEOS;
                 Ordenacion ord = Ordenacion.FECHA_DESCENDENTE;
 
-                if (Filtro != null && Filtro.equalsIgnoreCase("CANALES")) {
-                    Fil = Filtrado.CANALES;
-                }
+                
                 if (Filtro != null && (Filtro.equalsIgnoreCase("LISTAS") || Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS_DE_REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCIóN") || Filtro.equalsIgnoreCase("LISTAS_DE_REPRODUCCIÓN"))) {
                     Fil = Filtrado.LISTAS_DE_REPRODUCCION;
                 }

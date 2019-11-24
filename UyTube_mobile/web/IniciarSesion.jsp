@@ -58,16 +58,13 @@
                             if (sesionIniciada) {
                         %>
                         <jsp:include page="include/menu-usuario.jsp" />
-                        <%                        } else {
+                        <%                        } 
                         %>
-                        <jsp:include page="include/menu-visitante.jsp" />
-                        <%
-                            }
-                        %>
+                        
 
                         <div class="contenido">
                             <section class="contenido-flexible">
-                                
+
                                 <div class="principal d-flex flex-row justify-content-center">
                                     <section class="d-flex  flex-lg-row flex-wrap justify-content-lg-between">	
                                         <form class="form-signin" action="inicio-sesion" method="post">
@@ -87,13 +84,18 @@
                                             <%
                                                 }
                                             %>
+                                            <div class="checkbox mb-3">
+                                                <label>
+                                                    <input type="checkbox" name="recordarme" value="remember-me" id="check_recuerdarme"> Recordarme
+                                                </label>
+                                            </div>
                                             <button class="btn btn-lg btn-primary btn-block mb-4" type="submit" id="btn_Ingresar">Ingresar</button>
 
                                             <a href="usuario-agregar" >Registrase</a>
 
                                             <br><br>
                                             <p class="mt-5 mb-3 text-muted" id="texto_copy">&copy; 2019-2020</p>
-                                            
+
                                         </form>	
                                     </section>
                                 </div>										
@@ -105,7 +107,7 @@
             </div>
         </div>
 
-        
+
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 

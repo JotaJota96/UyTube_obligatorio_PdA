@@ -7,9 +7,11 @@ package com.uytube;
 
 import logica.controladores.DtUsuario;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,11 +42,17 @@ public class IniciarSesion extends HttpServlet {
             CUsuarioService servicio = new CUsuarioService();
             CUsuario sys = servicio.getCUsuarioPort();
             
-            if (sys.sesionIniciada()){
-                response.sendRedirect("");
+            String paramUser = "";
+            String paramPassword = "";
+            RequestDispatcher rd; //objeto para despachar
+            //obtiene todas las Cookies del usuario
+            Cookie[] misCookies = request.getCookies();
+
+            if (sys.sesionIniciada()) {
+                response.sendRedirect("presentacion");
                 return;
             }
-            
+
             DtUsuario usuario = (DtUsuario) request.getSession().getAttribute("usuario");
             boolean sesReq = usuario != null;
             boolean sesSys = sys.sesionIniciada();
@@ -74,7 +82,47 @@ public class IniciarSesion extends HttpServlet {
                 return;
             }
 
-            RequestDispatcher rd; //objeto para despachar
+            //Busca las cookies para iniciar sesión
+            if (misCookies != null) {
+                for (Cookie miCooki : misCookies) {
+                    if ("usuario.nickName".equals(miCooki.getName())) {
+                        paramUser = miCooki.getValue();
+                    }
+                    if ("usuario.password".equals(miCooki.getName())) {
+                        paramPassword = miCooki.getValue();
+                    }
+                }
+
+                if (!paramPassword.equals("") && !paramUser.equals("")) {
+                    //System.out.println("Password de cookie: " + paramPassword);
+
+                    HttpSession sesion = request.getSession();
+                    if (sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute("usuario") == null) {
+                        usuario = sys.obtenerUsuarioActual();
+
+                        //Crea las Cookies                           
+                        Cookie claveCookie = new Cookie("usuario.password", paramPassword);
+                        Cookie usuarioCookie = new Cookie("usuario.nickName", paramUser);
+                        //Setea el tiempo de vida de las Cookies en 7 dias
+                        claveCookie.setMaxAge(604800);
+                        usuarioCookie.setMaxAge(604800);
+                        //Setea la ruta
+                        claveCookie.setPath("/");
+                        usuarioCookie.setPath("/");
+                        //Envia la Cookie al usuario
+                        response.addCookie(claveCookie);
+                        response.addCookie(usuarioCookie);
+                        //si coincide usuario y password y además no hay sesión iniciada
+                        sesion.setMaxInactiveInterval(14400);
+                        sesion.setAttribute("usuario", usuario);
+                        //redirijo a página con información de login exitoso
+                        rd = request.getRequestDispatcher("/");
+                        rd.forward(request, response);
+                        return;
+                    }
+                }
+            }
+
             rd = request.getRequestDispatcher("/IniciarSesion.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
@@ -104,13 +152,33 @@ public class IniciarSesion extends HttpServlet {
 
             String paramUser = request.getParameter("user");
             String paramPassword = request.getParameter("password");
+            //System.out.println("tipo "+ request.getParameter("recordarme").getClass());
+            String paramRecordarme = "";
+            if (request.getParameter("recordarme") != null) {
+                paramRecordarme = request.getParameter("recordarme");
+            }
             RequestDispatcher rd; //objeto para despachar
-            
+
             HttpSession sesion = request.getSession();
             //sesion.invalidate();
-            
+
             if (sys.iniciarSesionUsuario(paramUser, paramPassword) && sesion.getAttribute("usuario") == null) {
                 DtUsuario usuario = sys.obtenerUsuarioActual();
+
+                if (paramRecordarme.equals("remember-me")) {
+                    //Crea las Cookies
+                    Cookie claveCookie = new Cookie("usuario.password", paramPassword);
+                    Cookie usuarioCookie = new Cookie("usuario.nickName", paramUser);
+                    //Setea el tiempo de vida de las Cookies en 7 dias
+                    claveCookie.setMaxAge(604800);
+                    usuarioCookie.setMaxAge(604800);
+                    //Setea la ruta
+                    claveCookie.setPath("/");
+                    usuarioCookie.setPath("/");
+                    //Envia la Cookie al usuario
+                    response.addCookie(claveCookie);
+                    response.addCookie(usuarioCookie);
+                }
                 //si coincide usuario y password y además no hay sesión iniciada
                 sesion.setMaxInactiveInterval(14400);
                 sesion.setAttribute("usuario", usuario);

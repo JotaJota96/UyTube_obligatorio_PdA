@@ -66,44 +66,12 @@
         <servlet-class>com.uytube.Presentacion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ConsultaUsuario</servlet-name>
-        <servlet-class>com.uytube.ConsultaUsuario</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CerrarSesion</servlet-name>
         <servlet-class>com.uytube.CerrarSesion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AltaVideo</servlet-name>
-        <servlet-class>com.uytube.AltaVideo</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>PeticionAjax</servlet-name>
         <servlet-class>com.uytube.PeticionAjax</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AltaUsuario</servlet-name>
-        <servlet-class>com.uytube.AltaUsuario</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ModificarUsuario</servlet-name>
-        <servlet-class>com.uytube.ModificarUsuario</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ListarUsuario</servlet-name>
-        <servlet-class>com.uytube.ListarUsuario</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SeguirUsuario</servlet-name>
-        <servlet-class>com.uytube.SeguirUsuario</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AltaListaReproduccion</servlet-name>
-        <servlet-class>com.uytube.AltaListaReproduccion</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ModificarListaReproduccion</servlet-name>
-        <servlet-class>com.uytube.ModificarListaReproduccion</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AgregarVideoAListaReproduccion</servlet-name>
@@ -112,10 +80,6 @@
     <servlet>
         <servlet-name>QuitarVideoDeListaReproduccion</servlet-name>
         <servlet-class>com.uytube.QuitarVideoDeListaReproduccion</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ModificarVideo</servlet-name>
-        <servlet-class>com.uytube.ModificarVideo</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AgregarValoracion</servlet-name>
@@ -150,44 +114,12 @@
         <url-pattern>/inicio-sesion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AltaVideo</servlet-name>
-        <url-pattern>/video-agregar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AltaUsuario</servlet-name>
-        <url-pattern>/usuario-agregar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ConsultaVideo</servlet-name>
         <url-pattern>/video-consultar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ConsultaUsuario</servlet-name>
-        <url-pattern>/usuario-consultar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>PeticionAjax</servlet-name>
         <url-pattern>/consultar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ModificarUsuario</servlet-name>
-        <url-pattern>/usuario-modificar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ListarUsuario</servlet-name>
-        <url-pattern>/usuario-listar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SeguirUsuario</servlet-name>
-        <url-pattern>/usuario-seguir</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AltaListaReproduccion</servlet-name>
-        <url-pattern>/lista-agregar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ModificarListaReproduccion</servlet-name>
-        <url-pattern>/lista-modificar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AgregarVideoAListaReproduccion</servlet-name>
@@ -196,10 +128,6 @@
     <servlet-mapping>
         <servlet-name>QuitarVideoDeListaReproduccion</servlet-name>
         <url-pattern>/lista-quitar-video</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ModificarVideo</servlet-name>
-        <url-pattern>/video-modificar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AgregarValoracion</servlet-name>
