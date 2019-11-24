@@ -91,7 +91,7 @@
                                             </div>
                                             <button class="btn btn-lg btn-primary btn-block mb-4" type="submit" id="btn_Ingresar">Ingresar</button>
 
-                                            <a href="usuario-agregar" >Registrase</a>
+                                           <!-- <a href="usuario-agregar" >Registrase</a> -->
 
                                             <br><br>
                                             <p class="mt-5 mb-3 text-muted" id="texto_copy">&copy; 2019-2020</p>
