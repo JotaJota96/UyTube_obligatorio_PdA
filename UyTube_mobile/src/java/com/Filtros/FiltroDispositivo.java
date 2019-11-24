@@ -26,10 +26,19 @@ import javax.servlet.http.HttpServletResponse;
 public class FiltroDispositivo implements Filter {
     
     private static final boolean debug = true;
-
+    
+    /** Para acceder desde la PC: Comentar las siguientes 3 lineas y descomentar las segundas 3... */
+    
     private final boolean esteEsElServidorMobile = true;
     private final String urlDeEsteServidor = Funciones.Funciones.getEnVEntry("urlDeEsteServidor");
     private final String urlDelOtroServidor = Funciones.Funciones.getEnVEntry("urlDelOtroServidor");
+    /*
+    // Lineas provisorias de prueba
+    private final boolean esteEsElServidorMobile = !true;
+    private final String urlDelOtroServidor = Funciones.Funciones.getEnVEntry("urlDeEsteServidor");
+    private final String urlDeEsteServidor = Funciones.Funciones.getEnVEntry("urlDelOtroServidor");
+    */
+    
     
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently

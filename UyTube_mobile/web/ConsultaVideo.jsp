@@ -83,7 +83,7 @@
                         %>
                         <jsp:include page="include/header-usuario.jsp" />
                         <%
-                        } else {
+                            } else {
                         %>
                         <jsp:include page="include/header-visitante.jsp" />
                         <%
@@ -104,7 +104,7 @@
                                             <%= video.getNombre()%>   
                                         </h3>
                                     </div>
-
+                                    
                                     <%
                                         // obtiene URL para enbeber el video
                                         String videoEmbebido = Funciones.Funciones.obtenerEnlaceEmbebido(
@@ -114,9 +114,8 @@
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <iframe id="video" value="<%= video.getId()%>" class="embed-responsive-item" src="<%= videoEmbebido%>" allowfullscreen></iframe>
                                     </div>
-
-
-                                    <!-- BOTONES PARA LIKE, DISLIKE y AGREGAR A LISTA-->
+                                    
+                                    <!-- BOTONES PARA LIKE, DISLIKE -->
                                     <%
                                         if (sesionIniciada) {
                                     %>
@@ -154,30 +153,8 @@
                                         </div>
 
                                         <!-- Boton agregar a lista de reproduccion -->
-                                        <div class="p-2 btn-group mr-3" role="group" aria-label="Third group">                                            
-                                            <button data-toggle="modal" type="button" id="btnAgregarALista" data-target="#ventanaModalAgregarALista" class="btn btn-info icon-add-to-list">
-                                                LISTA DE REPRODUCCIÓN
-                                            </button>
-                                        </div>
-
-                                        <%
-                                            if (propietarioDelVideo) {
-                                        %>
                                         <!-- Boton modificar video -->
-                                        <div class="p-2 btn-group" role="group" aria-label="Third group">
-                                            <a href="video-modificar?id=<%= video.getId()%>">
-                                                <button type="button" id="btnModificarVideo" class="btn btn-primary icon-cog mr-2">
-                                                    MODIFICAR
-                                                </button>
-                                            </a>
-                                            <button href="#ventanaModalValoraciones" data-toggle="modal" type="button" id="btnListarValoraciones" class="btn btn-info icon-info-with-circle">
-                                                QUIÉN VALORÓ
-                                            </button>
-                                        </div>
-                                        <%
-                                            }
-                                        %>
-
+                                        <!-- Se sacaron, no van -->
                                     </div>
                                     <%
                                         }
@@ -195,13 +172,11 @@
                                             <img class="align-self-center mr-3" src="<%= rutaDeImagenDePerfil%>" width="70" height="70" alt="<%= textoAlternativo%>">
                                         </div>
                                         <div class="bd-highlight" >
-                                            <a href="usuario-consultar?id=<%= usuario.getNickname()%>">
-                                                <h5><%= canal.getNombre()%></h5>
-                                            </a>
+                                            <h5><%= canal.getNombre()%></h5>
                                         </div>
                                     </div>
                                     <br>
-
+                                    
                                     <!-- DESCRIPCION DEL VIDEO -->
                                     <div class="bd-highlight" >
                                         <h5>Fecha de publicación: <%= Funciones.Funciones.darFormatoFecha(video.getFechaPublicacion()) %></h5>
@@ -217,31 +192,7 @@
                                     <br><hr class="mb-2"><br>
 
                                     <!--==================== INGRESO DE COMENTARIOS ====================-->
-
-                                    <%
-                                        if (sesionIniciada) {
-                                    %>
-                                    <div class="bd-highlight" >
-                                        <div class="bd-light" >
-                                            <h5>COMENTARIOS</h5>
-                                        </div>
-                                        <div class="bd-light" >
-                                            <textarea class="form-control" name="descripcion" id="input_descripcion" placeholder="Agrega un comentario.." rows="3"></textarea>
-                                        </div>
-                                        <div class="bd-light " >
-                                            <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
-                                                <div class="p-2 btn-group mr-2" role="group" aria-label="Third group">
-                                                    <button type="button" id="btnCancelar" class="btn btn-danger">CANCELAR</button>
-                                                </div> 
-                                                <div class="p-2 btn-group" role="group" aria-label="Third group">
-                                                    <button type="button" id="btnComentar" class="btn btn-success">COMENTAR</button>
-                                                </div>  
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <%
-                                        }
-                                    %>
+                                    <!-- Se saca, aca no va -->
                                     <!--==================== FIN DE INGRESO DE COMENTARIOS ====================-->
 
                                     <br>
@@ -292,113 +243,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Tabla emergente de valoraciones -->
-        <%
-            if (propietarioDelVideo) {
-        %>
-        <div class="modal fade" id="ventanaModalValoraciones">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Valoraciones</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <table class="table table-striped table-fixed" id="tblValoraciones">
-                        <thead id="tblHead">
-                            <tr>
-                                <th>Usuario</th>
-                                <th>Valoración</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tblValoraciones-bodyRows">
-                            <!-- El contenido es obtenido por jQuery -->
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <%
-            }
-        %>
-        <!-- FIN de Tabla emergente de valoraciones -->
-
-        <style>
-            .table-fixed tbody {
-                display:block;
-                height:250px; /* Altura a la cual aparece el scroll */
-                overflow:auto;
-            }
-            .table-fixed thead, .table-fixed tbody tr {
-                display:table;
-                width:100%;
-            }
-        </style>
-
-        <!-- Modal Agregar a lista de reproduccion -->
-        <%    
-            if (sesionIniciada){
-        %>
-        <div class="modal fade" id="ventanaModalAgregarALista" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalScrollableTitle">Guardar en ...</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <% 
-                            CUsuarioService servicio = new CUsuarioService();
-                            CUsuario sys = servicio.getCUsuarioPort();
-                            String idLista, nombreList, icono, checked, idCheckbox; 
-                            sys.seleccionarUsuario(sys.obtenerUsuarioActual().getNickname());
-                            for (DtListaDeReproduccion dl : listas) {
-                                if (dl instanceof DtListaDeReproduccionHistorial) {
-                                    continue;
-                                }
-                                
-                                idLista = String.valueOf(dl.getId());
-                                idCheckbox = "checkbox"+idLista;
-                                nombreList = dl.getNombre();
-                                if( dl.getPrivacidad() == Privacidad.PRIVADO){
-                                    icono = "icon-lock1";
-                                }else{
-                                    icono = "icon-earth";
-                                }
-                                sys.seleccionarListaDeReproduccion(dl.getId());
-                                checked = "";
-                                for (DtVideo dv : sys.listarVideosDeListaDeReproduccion()) {
-                                    if( video.getId() == dv.getId()){
-                                        checked = "checked";
-                                        break;
-                                    }
-                                }    
-                        %>
-                        <div class="form-check">
-                            <input class="form-check-input checkLista" type="checkbox" <%= checked %> value="<%= idLista %>" id="<%=idCheckbox%>">
-                            <label class="form-check-label" for="<%=idCheckbox%>"><%= nombreList %> <span class="<%= icono%>"></span></label>
-                        </div>
-                        <%
-                            }
-                            sys.seleccionarUsuario(sys.obtenerPropietarioDeVideo(video.getId()).getNickname());
-                        %>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <%
-            }
-        %>
+        
         <%@ include file='include/widgets.html' %>
         <%@ include file='include/footer.html' %>
 

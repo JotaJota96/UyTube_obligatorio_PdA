@@ -359,19 +359,27 @@ public class Canal implements Serializable {
 
     public ArrayList<DtListaDeReproduccion> listarListasDeReproduccion(boolean soloParticulares) {
         ArrayList<DtListaDeReproduccion> ret = new ArrayList();
+        ArrayList<DtListaDeReproduccion> listasPorDefecto = new ArrayList();
+        ArrayList<DtListaDeReproduccion> listasParticulares = new ArrayList();
+        
         // porDefecto = false --> lista todas las listas
         // porDefecto = true --> lista solo las particulares
         for (Map.Entry<Integer, ListaDeReproduccion> m : misListas.entrySet()) {
             if(soloParticulares && m.getValue().getTipo()==TipoListaDeReproduccion.POR_DEFECTO){
                 continue;
             }
-            if (m.getValue() instanceof ListaDeReproduccionHistorial){
-                ret.add(((ListaDeReproduccionHistorial) m.getValue()).getDt());
+            if (m.getValue().getTipo() == TipoListaDeReproduccion.POR_DEFECTO){
+                if (m.getValue() instanceof ListaDeReproduccionHistorial){
+                    listasPorDefecto.add(((ListaDeReproduccionHistorial) m.getValue()).getDt());
+                }else{
+                    listasPorDefecto.add(m.getValue().getDt());
+                }
             }else{
-                ret.add(m.getValue().getDt());
+                listasParticulares.add(m.getValue().getDt());
             }
         }
-
+        ret.addAll(listasPorDefecto);
+        ret.addAll(listasParticulares);
         return ret;
     }
 
