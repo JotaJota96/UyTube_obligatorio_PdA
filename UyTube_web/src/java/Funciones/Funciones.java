@@ -148,6 +148,14 @@ public class Funciones {
          * https://github.com/ahand/mobileesp/tree/master/Java
          */
         String ua = request.getHeader("User-Agent");
+        
+        // Primero descartemos lo obvio, si dice 'Mobile' es un dispositivo movil
+        String[] mobile = {"mobile", "Mobile", "MOBILE"};
+        for (String s : mobile) {
+            if (ua.contains(s)) {
+                return true;
+            }
+        }
         //System.out.println("El cliente es: " + ua);
         String[] so = {"Linux", "Windows", "Mac OS", "Iphone", "Android"};
         //String cliente = "";
@@ -155,7 +163,7 @@ public class Funciones {
             switch (item) {
                 case "Linux":
                     //console.log(ua);
-                    if (ua.indexOf("Android") != -1 && ua.indexOf("Linux") != -1) {
+                    if (ua.indexOf("Android") != -1) {
                         //cliente = "Estás usando android";
                         return true;
                     }
