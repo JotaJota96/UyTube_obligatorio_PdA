@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import logica.controladores.CUsuario;
 import logica.controladores.CUsuarioService;
 import logica.controladores.Fecha;
@@ -42,6 +43,11 @@ public class ConsultaVideo extends HttpServlet {
             if (!sys.sesionIniciada()){
                 response.sendRedirect("inicio-sesion");
                 return;
+            }else{
+                HttpSession sesion = request.getSession();
+                DtUsuario usuario = sys.obtenerUsuarioActual();
+                sesion.setMaxInactiveInterval(14400);
+                sesion.setAttribute("usuario", usuario);
             }
             
             String strIDVideo = request.getParameter("id");
