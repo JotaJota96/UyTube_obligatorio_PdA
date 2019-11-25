@@ -51,22 +51,17 @@
         <title>UyTube - <%= video.getNombre()%></title>
     </head>
     <body>
-        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Inclusion de la barra superior -->
-                    <%
-                        if (sesionIniciada) {
-                    %>
-                    <jsp:include page="include/menu-usuario.jsp" />
-                    <%
-                    } 
-                    %>
-                    
-                </div>
-            </div>		
-        </div>
-
+<%
+            if (sesionIniciada) {
+        %>
+        <jsp:include page="include/header-usuario.jsp" />
+        <%
+        } else {
+        %>
+        <jsp:include page="include/header-visitante.jsp" />
+        <%
+            }
+        %>
         <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
             <div class="row">
                 <div class="col-12">
@@ -74,20 +69,17 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid" style="padding-left: 0; padding-right: 0px;">
+        <div class="container-fluid" style="padding-left: 0; padding-right: 0px; ">
             <div class="row">
                 <div class="col-12">
-                    <section class="principal">	
+                    <section class="principal">						
+
                         <%
                             if (sesionIniciada) {
                         %>
-                        <jsp:include page="include/header-usuario.jsp" />
+                        <jsp:include page="include/menu-usuario.jsp" />
                         <%
-                            } else {
-                        %>
-                        <jsp:include page="include/header-visitante.jsp" />
-                        <%
-                            }
+                        } 
                         %>
 
                         <div class="contenido">
