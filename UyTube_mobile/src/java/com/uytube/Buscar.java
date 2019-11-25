@@ -53,9 +53,8 @@ public class Buscar extends HttpServlet {
             ArrayList<Object> Ret = null;
             
             if (Categoria == null || Categoria.equalsIgnoreCase("")) {
-                Filtrado Fil = Filtrado.VIDEOS;
+                Filtrado Fil = Filtrado.TODO;
                 Ordenacion ord = Ordenacion.FECHA_DESCENDENTE;
-
                 
                 if (Filtro != null && (Filtro.equalsIgnoreCase("LISTAS") || Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS_DE_REPRODUCCION") || Filtro.equalsIgnoreCase("LISTAS DE REPRODUCCIóN") || Filtro.equalsIgnoreCase("LISTAS_DE_REPRODUCCIÓN"))) {
                     Fil = Filtrado.LISTAS_DE_REPRODUCCION;

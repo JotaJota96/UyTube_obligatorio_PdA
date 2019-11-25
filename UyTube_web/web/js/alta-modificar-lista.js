@@ -1,7 +1,7 @@
 $("#nombreLista").keyup(function(){
     var valorIngresado = $("#nombreLista").val();
     
-    $.get("/uytube/consultar",
+    $.get("consultar",
         {
           accion: "validarNombreLista",
           dato: valorIngresado

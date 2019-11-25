@@ -44,7 +44,7 @@
                     <%
                         if (sesionIniciada) {
                     %>
-                     <jsp:include page="include/header-usuario.jsp" />
+                    <jsp:include page="include/header-usuario.jsp" />
                     <%
                         }
                     %>

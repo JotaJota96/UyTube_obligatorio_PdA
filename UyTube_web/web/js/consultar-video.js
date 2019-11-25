@@ -7,7 +7,7 @@
 //Boton me gusta
 $("#btnLike").on('click',function(){
     var idVideo = $("#video").attr("value");
-    $.post("/uytube/video-consultar",
+    $.post("video-consultar",
         {
           accion: "like",
           idVideo: idVideo
@@ -30,7 +30,7 @@ $("#btnLike").on('click',function(){
 //boton no me gusta
 $("#btnDisLike").on('click',function(){
     var idVideo = $("#video").attr("value");
-    $.post("/uytube/video-consultar",
+    $.post("video-consultar",
         {
           accion: "disLike",
           idVideo: idVideo
@@ -58,7 +58,7 @@ $("#btnComentar").on('click',function(){
         alert("¡El campo comentario está vacío!");
     }else{
         idVideo = $("#video").attr("value");
-        $.post("/uytube/video-consultar",{
+        $.post("video-consultar",{
             accion: "comentarVideo",
             texto: texto.val(),
             idVideo: idVideo
@@ -79,7 +79,7 @@ var agregarALista = function(){
     //$("#agregarALista .close").click(); //Cierra el modal
     //alert($("#defaultCheck1").value());
     alert("Diste click");
-    // $.post("/uytube/video-consultar",
+    // $.post("video-consultar",
     //     {
     //       accion: "agregarALista" 
     //     }, function(respuesta, status){
@@ -92,7 +92,7 @@ $(".checkLista").on('change', function(){
     var id_video = $("#video").attr("value");
     var id_lista = $(this).val();
     if($(this).prop('checked') == true){  
-        $.post("/uytube/video-consultar",
+        $.post("video-consultar",
         {
           accion: "agregarALista",
           idVideo: id_video,
@@ -104,7 +104,7 @@ $(".checkLista").on('change', function(){
         });
        
     }else{
-        $.post("/uytube/video-consultar",
+        $.post("video-consultar",
         {
           accion: "quitarDeLista",
           idVideo: id_video,
@@ -123,7 +123,7 @@ $("#btnListarValoraciones").on('click',function(){
     var idVideo = $("#video").attr("value");
     // mando una peticion post a esa ruta con los parametros entre {}, 
     // y defino una funcion callback (ejecuta al recibir respuesta
-    $.post("/uytube/video-consultar",
+    $.post("video-consultar",
         {
           accion: "listarValoraciones" ,
             idVideo: idVideo
@@ -162,7 +162,7 @@ var responderComentario = function(){
         }else{
             var idVideo = $("#video").attr("value"); 
             console.log("texto: "+texto+", idVideo: "+idVideo+" idComentario: "+idComentario);         
-            $.post("/uytube/video-consultar",{
+            $.post("video-consultar",{
                 accion: "responderComentario",
                 texto: texto,
                 idVideo: idVideo,

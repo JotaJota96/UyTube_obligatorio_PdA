@@ -329,9 +329,6 @@
                 </div>
             </div>
         </div>
-
-        
-        
         
         <!-- Tabla emergente de valoraciones -->
         <%

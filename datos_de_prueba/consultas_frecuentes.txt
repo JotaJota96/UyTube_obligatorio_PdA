@@ -1,0 +1,20 @@
+SELECT 
+	v.id, 
+	v.cant_likes, 
+	v.cant_dislikes, 
+	COALESCE(likes.likes, 0),
+	COALESCE(dislikes.dislikes, '0')
+FROM video v
+LEFT JOIN (
+	SELECT id_video, count(*) AS likes
+	FROM valoracion
+	WHERE val = 'LIKE'
+	GROUP BY id_video
+) likes ON likes.id_video = v.id
+LEFT JOIN (
+	SELECT id_video, count(*) AS dislikes
+	FROM valoracion
+	WHERE val = 'DISLIKE'
+	GROUP BY id_video
+) dislikes ON dislikes.id_video = v.id
+WHERE cant_likes != likes.likes OR cant_dislikes != dislikes.dislikes

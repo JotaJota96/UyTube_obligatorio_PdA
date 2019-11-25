@@ -6,7 +6,7 @@ $("#input_Nickname").keyup(function(){
     $("#input_Nombre_canal").val($("#input_Nickname").val());
     
     //Realiza la consulta utilizando AJAX al servidor
-    $.get("/uytube/consultar",
+    $.get("consultar",
         {
           dato: valorIngresado,
           accion: "validarNickname" 
@@ -26,7 +26,7 @@ $("#email").keyup(function(){
     var valorIngresado = $("#email").val();
     
     //Realiza la consulta utilizando AJAX al servidor
-    $.get("/uytube/consultar",
+    $.get("consultar",
         {
           dato: valorIngresado,
           accion: "validarEmail" 

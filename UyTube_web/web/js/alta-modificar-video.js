@@ -6,7 +6,7 @@ $("#inputNombre").keyup(function(){
         idVideo = 0;
     }
     
-    $.get("/uytube/consultar",
+    $.get("consultar",
         {
           idVideo: idVideo,
           accion: "validarNombreVideo",
