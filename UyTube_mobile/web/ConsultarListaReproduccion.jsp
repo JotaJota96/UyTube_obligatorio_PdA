@@ -81,10 +81,8 @@
                                 <div class="container">
 
                                     <!-- INFORMACION LISTA.REP-->
+                                    <h3>LISTA DE REPRODUCCIÓN</h3>
                                     <div class="d-flex bd-highlight">
-                                        <div class="bd-highlight">
-                                            <img src="imagenes/lista.jpg" width="246" height="138">
-                                        </div>
                                         <div class="pl-3 p-2 bd-highlight">
                                             <h5>Nombre: </h5>
                                             <h5>Tipo:</h5>
